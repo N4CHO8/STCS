@@ -4,6 +4,8 @@
 
 Este repositorio es la base tecnica del proyecto universitario. Su meta actual es ofrecer una estructura clara, funcional y facil de extender para las historias de usuario futuras.
 
+Si quieres revisar la arquitectura objetivo del sistema pensando en despliegue real, revisa tambien `docs/TITLE_ARCHITECTURE.md`.
+
 ## Como esta organizado
 
 ### 1. Frontend

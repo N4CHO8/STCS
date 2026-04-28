@@ -82,6 +82,7 @@ Tambien puedes usar:
 
 - Guia general del proyecto: [docs/PROJECT_GUIDE.md](./docs/PROJECT_GUIDE.md)
 - Endpoints base del backend: [docs/API_BASE.md](./docs/API_BASE.md)
+- Arquitectura recomendada para proyecto de titulo: [docs/TITLE_ARCHITECTURE.md](./docs/TITLE_ARCHITECTURE.md)
 
 ## Estado actual
 
