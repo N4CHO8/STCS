@@ -2,23 +2,38 @@
 
 Base funcional para una aplicacion web orientada a ninos con TEA, enfocada en comunicacion con pictogramas, registro de emociones y seguimiento del progreso.
 
-## Stack
+## Base tecnica definida
 
-- Frontend: Next.js 14 + React 18 + TypeScript
-- Backend: Node.js + Express + TypeScript
-- Base de datos: PostgreSQL 16
-- Entorno local: Docker + Docker Compose
+Este repositorio ya tiene una decision tecnica tomada y debe respetarse al continuar el proyecto:
+
+- Frontend: `Next.js 14 + React 18 + TypeScript`
+- Backend: `Node.js + Express + TypeScript`
+- Base de datos: `PostgreSQL` en `Supabase`
+- Storage de recursos visuales: `Supabase Storage`
+- Entorno local: `Docker + Docker Compose`
+- Despliegue objetivo:
+  - frontend en `Vercel`
+  - backend en `Render`
+  - base de datos en `Supabase`
+- Versionamiento: `Git + GitHub`
+- Testing objetivo:
+  - `Vitest` para unitarias
+  - `Supertest` para integracion
+  - `Playwright` para E2E
+
+Si una futura rama quiere cambiar esta base, primero debe justificarlo y actualizar la documentacion en `docs/`.
 
 ## Estructura
 
 ```text
 STCS/
-|- backend/                  # API REST y conexion a PostgreSQL
-|- frontend/                 # Aplicacion web en Next.js
-|- docker/postgres/init/     # Script inicial de la base de datos
-|- docs/                     # Documentacion para el equipo
-|- .env.example              # Variables de entorno de referencia
-|- docker-compose.yml        # Orquestacion local
+|- backend/                  # API REST y logica de negocio
+|- docker/                   # inicializacion y soporte de entorno local
+|- docs/                     # documentacion tecnica y de trabajo
+|- frontend/                 # aplicacion web en Next.js
+|- scripts/                  # arranque, apagado y reseteo local
+|- .env.example              # variables de entorno de referencia
+|- docker-compose.yml        # orquestacion local
 ```
 
 ## Primer uso
@@ -55,7 +70,7 @@ Estos scripts:
 
 - `frontend`: interfaz base con paginas iniciales para las futuras historias de usuario.
 - `backend`: API REST con rutas base para autenticacion, emociones y registros.
-- `database`: PostgreSQL con tablas iniciales `users`, `emotions` y `records`.
+- `database`: PostgreSQL local para desarrollo.
 
 ## Comandos utiles
 
@@ -73,16 +88,18 @@ Tambien puedes usar:
 
 ## Flujo recomendado
 
-- Usar `frontend/src/app` para nuevas vistas y rutas.
-- Usar `frontend/src/components` para componentes reutilizables.
-- Usar `backend/src/modules` para separar rutas y controladores por dominio.
-- Usar `docs/PROJECT_GUIDE.md` antes de abrir nuevas ramas o empezar una historia de usuario.
+- Leer `docs/PROJECT_GUIDE.md` antes de abrir una nueva rama.
+- Respetar `docs/TITLE_ARCHITECTURE.md` como contrato tecnico del proyecto.
+- Usar `frontend/src/app` para rutas y `frontend/src/components` para componentes reutilizables.
+- Usar `backend/src/modules` para separar dominios del backend.
+- Mantener cada rama enfocada en una historia de usuario o mejora tecnica concreta.
 
 ## Documentacion del equipo
 
 - Guia general del proyecto: [docs/PROJECT_GUIDE.md](./docs/PROJECT_GUIDE.md)
 - Endpoints base del backend: [docs/API_BASE.md](./docs/API_BASE.md)
-- Arquitectura recomendada para proyecto de titulo: [docs/TITLE_ARCHITECTURE.md](./docs/TITLE_ARCHITECTURE.md)
+- Arquitectura y decisiones objetivo: [docs/TITLE_ARCHITECTURE.md](./docs/TITLE_ARCHITECTURE.md)
+- Reglas para contribuir al repo: [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## Estado actual
 

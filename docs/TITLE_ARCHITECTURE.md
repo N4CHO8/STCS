@@ -1,26 +1,36 @@
-# Arquitectura recomendada para STCS
+# Arquitectura objetivo de STCS
 
 ## Objetivo de esta arquitectura
 
-Esta guia define una estructura solida para que STCS pueda comenzar como proyecto universitario, crecer de forma ordenada y evolucionar hacia un sistema real desplegado en internet.
-
-La idea es que no tengas que volver a decidir la base tecnica cada vez que avances una historia de usuario. Aqui queda definido que tecnologia usar para cada parte y como organizar el desarrollo.
+Esta guia define la base tecnica que debe seguir STCS para crecer como proyecto universitario y evolucionar hacia una plataforma publica accesible por internet. Su finalidad es evitar decisiones improvisadas y mantener coherencia entre arquitectura, desarrollo y despliegue.
 
 ## Decision principal
 
-La recomendacion para STCS es:
+La arquitectura objetivo del proyecto es:
 
-- frontend en `Next.js + TypeScript`
-- backend en `Express + TypeScript`
-- base de datos en `PostgreSQL`
-- acceso a datos con `Prisma`
-- contenedores con `Docker`
-- autenticacion con `JWT + refresh tokens`
-- almacenamiento de imagenes o pictogramas en `Supabase Storage` o `S3 compatible`
-- despliegue:
-  - frontend en `Vercel`
-  - backend en `Railway`, `Render` o `Fly.io`
-  - PostgreSQL administrado en `Supabase`, `Neon` o `Railway Postgres`
+- Frontend en `Next.js + TypeScript`
+- Backend en `Node.js + Express + TypeScript`
+- Base de datos en `PostgreSQL` usando `Supabase`
+- Storage de pictogramas e imagenes en `Supabase Storage`
+- Entorno local con `Docker + Docker Compose`
+- Frontend publicado en `Vercel`
+- Backend publicado en `Render`
+- Versionamiento en `Git + GitHub`
+- Testing con:
+  - `Vitest`
+  - `Supertest`
+  - `Playwright`
+- Gestion del proyecto con `GitHub Projects`
+
+## Justificacion general
+
+Esta combinacion se eligio porque equilibra:
+
+- bajo costo para un proyecto estudiantil
+- facilidad de despliegue
+- curva de aprendizaje razonable
+- compatibilidad con el stack ya existente
+- proyeccion real hacia una plataforma web usable
 
 ## Que usar para cada cosa
 
@@ -32,6 +42,10 @@ Usar:
 - `React`
 - `TypeScript`
 
+Despliegue:
+
+- `Vercel`
+
 Responsabilidad:
 
 - interfaz visual
@@ -40,14 +54,6 @@ Responsabilidad:
 - consumo de la API
 - vistas de pictogramas, emociones, historial y progreso
 
-Recomendacion de organizacion:
-
-- `src/app`: rutas y paginas
-- `src/components`: componentes reutilizables
-- `src/features`: logica por dominio de negocio
-- `src/services`: consumo de API
-- `src/types`: tipos compartidos del frontend
-
 ### 2. Backend
 
 Usar:
@@ -55,7 +61,10 @@ Usar:
 - `Node.js`
 - `Express`
 - `TypeScript`
-- `Prisma`
+
+Despliegue:
+
+- `Render`
 
 Responsabilidad:
 
@@ -66,40 +75,41 @@ Responsabilidad:
 - endpoints REST
 - control de permisos y roles
 
-Recomendacion de organizacion:
-
-- `src/modules`: modulos del dominio
-- `src/middlewares`: autenticacion, errores, permisos
-- `src/services`: reglas de negocio reutilizables
-- `src/repositories`: acceso a datos
-- `src/lib`: utilidades internas
-- `prisma/`: esquema y migraciones
-
 ### 3. Base de datos
 
 Usar:
 
 - `PostgreSQL`
-- `Prisma ORM`
+- `Supabase`
 
 Responsabilidad:
 
 - persistencia principal del sistema
-- relaciones entre usuarios, registros, emociones, sesiones y progreso
+- relaciones entre usuarios, perfiles, emociones, registros y progreso
 
-Recomendacion:
+Region recomendada:
 
-- datos estructurados y consistentes en tablas relacionales
-- uso de `jsonb` solo para metadata flexible cuando realmente haga falta
-- migraciones versionadas con Prisma
+- `East US (North Virginia)` para mantener cercania con el backend en `Render Virginia`
 
-### 4. Autenticacion
+### 4. Storage de archivos y pictogramas
 
 Usar:
 
-- `bcrypt` para hash de contrasenas
-- `JWT` para access token
-- `refresh token` para renovacion segura de sesion
+- `Supabase Storage`
+
+Responsabilidad:
+
+- guardar pictogramas
+- guardar imagenes de apoyo
+- evitar almacenar archivos pesados directamente dentro de PostgreSQL
+
+### 5. Autenticacion
+
+Usar:
+
+- `bcrypt`
+- `JWT`
+- `refresh tokens`
 
 Roles sugeridos:
 
@@ -107,31 +117,12 @@ Roles sugeridos:
 - `therapist`
 - `guardian`
 
-Mas adelante puedes agregar:
-
-- `student` si el sistema necesita perfiles propios para ninos
-
-### 5. Archivos y pictogramas
-
-Usar:
-
-- `Supabase Storage`
-- o `Amazon S3 / Cloudflare R2`
-
-Guardar en almacenamiento externo:
-
-- pictogramas personalizados
-- imagenes de perfil
-- archivos de apoyo
-
-No guardar imagenes pesadas directamente en PostgreSQL.
-
 ### 6. Validaciones
 
 Usar:
 
-- `Zod` en backend
-- validaciones simples en frontend para UX
+- validaciones de entrada en backend
+- validaciones basicas en frontend para mejorar UX
 
 Regla recomendada:
 
@@ -142,46 +133,42 @@ Regla recomendada:
 
 Usar:
 
-- `Vitest` o `Jest` para backend
-- `Supertest` para endpoints
-- `React Testing Library` para componentes
+- `Vitest` para pruebas unitarias
+- `Supertest` para integracion de endpoints
 - `Playwright` para pruebas end-to-end
 
 Estrategia:
 
 - unitarias para logica sensible
 - integracion para API y base de datos
-- e2e para flujos clave como login, registro emocional e historial
+- E2E para flujos clave como login, registro emocional e historial
 
-### 8. Observabilidad y errores
-
-Usar:
-
-- logs claros en backend
-- `Sentry` cuando el sistema crezca
-
-Registrar al menos:
-
-- errores de API
-- errores de autenticacion
-- fallos de base de datos
-- acciones importantes del sistema
-
-### 9. Seguridad
+### 8. Versionamiento
 
 Usar:
 
-- `helmet`
-- `cors`
-- `rate limiting`
-- sanitizacion de inputs
-- manejo correcto de variables de entorno
+- `Git`
+- `GitHub`
 
-Nunca subir:
+Estrategia recomendada:
 
-- `.env`
-- secretos
-- credenciales reales
+- `main`
+- `develop`
+- `feature/*`
+- `fix/*`
+
+### 9. Gestion del proyecto
+
+Usar:
+
+- `GitHub Projects`
+- `GitHub Issues`
+
+Objetivo:
+
+- mantener backlog
+- visualizar avance
+- relacionar historias con ramas, commits y Pull Requests
 
 ## Arquitectura por capas
 
@@ -193,12 +180,12 @@ La recomendacion es usar una arquitectura simple por capas:
    - interpretan request y response
 3. `services`
    - contienen reglas de negocio
-4. `repositories`
-   - hablan con Prisma y PostgreSQL
+4. `data access`
+   - concentran consultas a PostgreSQL o servicios externos
 5. `database`
-   - PostgreSQL como fuente principal
+   - `PostgreSQL` como fuente principal
 
-Esto permite que el proyecto crezca sin mezclar logica de interfaz, negocio y base de datos en el mismo lugar.
+Esto permite que el proyecto crezca sin mezclar logica de interfaz, negocio y persistencia.
 
 ## Estructura recomendada del proyecto
 
@@ -215,27 +202,23 @@ STCS/
 |  |  |  |- history/
 |  |  |  |- progress/
 |  |  |- services/
-|  |  |- hooks/
 |  |  |- lib/
 |  |  |- types/
 |
 |- backend/
-|  |- prisma/
-|  |  |- schema.prisma
-|  |  |- migrations/
 |  |- src/
 |  |  |- config/
 |  |  |- middlewares/
 |  |  |- modules/
 |  |  |  |- auth/
 |  |  |  |- users/
+|  |  |  |- communication/
 |  |  |  |- emotions/
 |  |  |  |- records/
-|  |  |  |- communication/
 |  |  |  |- progress/
-|  |  |- repositories/
-|  |  |- services/
 |  |  |- routes/
+|  |  |- services/
+|  |  |- data/
 |  |  |- lib/
 |  |  |- types/
 |
@@ -261,8 +244,8 @@ Responsabilidad:
 Responsabilidad:
 
 - gestionar cuentas
-- perfiles de cuidadores o terapeutas
-- relacion con estudiantes o pacientes
+- relacion entre usuarios adultos y ninos
+- perfiles de acompanamiento
 
 ### 3. Communication
 
@@ -304,60 +287,19 @@ Entidades principales recomendadas:
 
 - `User`
 - `StudentProfile`
-- `EmotionRecord`
-- `BehaviorRecord`
+- `Emotion`
+- `RecordItem`
 - `Pictogram`
 - `CommunicationSession`
 - `ProgressMetric`
-- `Role`
 
 Relacion sugerida:
 
-- un `User` puede tener uno o mas perfiles asociados segun rol
+- un `User` puede acompanar uno o mas `StudentProfile`
 - un `StudentProfile` puede tener muchos registros emocionales
 - un `StudentProfile` puede tener muchos registros de conducta
-- una `CommunicationSession` puede usar muchos pictogramas
-- un `ProgressMetric` se calcula desde eventos y registros
-
-## Roadmap tecnico recomendado
-
-### Etapa 1. Base del sistema
-
-Implementar:
-
-- estructura actual del proyecto
-- PostgreSQL
-- Prisma
-- autenticacion base
-- CRUD de usuarios
-
-### Etapa 2. Funcionalidad principal
-
-Implementar:
-
-- pictogramas
-- registro emocional
-- registro de conducta
-- historial simple
-
-### Etapa 3. Seguimiento y analitica
-
-Implementar:
-
-- dashboard de progreso
-- filtros por fecha
-- metricas por usuario
-- vistas para cuidadores o terapeutas
-
-### Etapa 4. Produccion
-
-Implementar:
-
-- CI/CD
-- despliegue real
-- monitoreo
-- backups
-- politicas de seguridad
+- una `CommunicationSession` puede usar muchos `Pictogram`
+- un `ProgressMetric` se calcula desde emociones, comunicacion y registros
 
 ## Estrategia de despliegue recomendada
 
@@ -369,66 +311,38 @@ Usar:
 - PostgreSQL local
 - frontend y backend en contenedores
 
-### Staging
-
-Usar:
-
-- frontend desplegado en preview
-- backend en entorno separado
-- base de datos de pruebas
-
-Objetivo:
-
-- validar antes de pasar a produccion
-
 ### Produccion
 
 Usar:
 
 - frontend en `Vercel`
-- backend en `Railway`, `Render` o `Fly.io`
-- PostgreSQL administrado
-- almacenamiento externo para imagenes
+- backend en `Render`
+- PostgreSQL en `Supabase`
+- almacenamiento visual en `Supabase Storage`
 
-## CI/CD recomendado
+## Costo objetivo estimado
 
-Con `GitHub Actions`:
+Configuracion recomendada para inicio:
 
-- instalar dependencias
-- correr typecheck
-- correr tests
-- construir frontend y backend
+- `Vercel Hobby`: `USD 0/mes`
+- `Supabase Free`: `USD 0/mes`
+- `GitHub Free`: `USD 0/mes`
+- `Render Starter`: `USD 7/mes`
 
-Regla recomendada:
+Costo base estimado:
 
-- no desplegar a produccion si fallan pruebas o build
+- `USD 7/mes`
 
-## Variables de entorno recomendadas a futuro
+## Regla final del proyecto
 
-### Frontend
-
-- `NEXT_PUBLIC_API_URL`
-
-### Backend
-
-- `PORT`
-- `DATABASE_URL`
-- `JWT_ACCESS_SECRET`
-- `JWT_REFRESH_SECRET`
-- `CORS_ORIGIN`
-- `STORAGE_URL`
-- `STORAGE_KEY`
-- `STORAGE_SECRET`
-
-## Recomendacion final
-
-Si este proyecto realmente quiere llegar a ser un sitio usable fuera del entorno local, la mejor base tecnica es:
+Si este proyecto quiere crecer sin perder coherencia tecnica, debe mantenerse sobre esta base:
 
 - `Next.js + TypeScript`
-- `Express + TypeScript`
-- `PostgreSQL + Prisma`
-- `Docker`
-- `JWT + refresh tokens`
-- despliegue separado de frontend, backend y base de datos
+- `Node.js + Express + TypeScript`
+- `Supabase Postgres + Supabase Storage`
+- `Docker Compose` en desarrollo
+- `Vercel + Render + Supabase` en produccion
+- `Vitest + Supertest + Playwright`
+- `GitHub` para versionamiento y gestion
 
-Esa combinacion es suficientemente academica para un proyecto de titulo y suficientemente realista para evolucionar a produccion.
+Esta es la arquitectura objetivo oficial de STCS y debe considerarse como referencia para las futuras ramas del proyecto.
