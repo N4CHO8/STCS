@@ -40,3 +40,23 @@ VALUES (
   'guardian'
 )
 ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO users (id, full_name, email, password_hash, role)
+VALUES (
+  '22222222-2222-2222-2222-222222222222',
+  'Terapeuta Demo',
+  'terapeuta@stcs.local',
+  '$2a$10$iZ4eoeGIOqgVg0q.jAFbFuvSURJiyu4SwyQQKuYFWSzTdBS70PSUK',
+  'therapist'
+)
+ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO users (id, full_name, email, password_hash, role)
+VALUES (
+  '33333333-3333-3333-3333-333333333333',
+  'Administrador Demo',
+  'admin@stcs.local',
+  '$2a$10$iZ4eoeGIOqgVg0q.jAFbFuvSURJiyu4SwyQQKuYFWSzTdBS70PSUK',
+  'admin'
+)
+ON CONFLICT (email) DO NOTHING;

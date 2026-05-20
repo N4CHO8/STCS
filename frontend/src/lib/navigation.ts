@@ -1,8 +1,6 @@
 export const navigationItems = [
   { href: "/", label: "Inicio" },
-  { href: "/communication", label: "Comunicacion" },
-  { href: "/emotions", label: "Emociones" },
-  { href: "/history", label: "Seguimiento" },
+  { href: "/portal", label: "Portal" },
   { href: "/login", label: "Login" }
 ];
 

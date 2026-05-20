@@ -3,6 +3,7 @@ import { Router } from "express";
 import { testDatabaseConnection } from "../config/database";
 import { authRouter } from "../modules/auth/auth.routes";
 import { emotionsRouter } from "../modules/emotions/emotions.routes";
+import { portalRouter } from "../modules/portal/portal.routes";
 import { recordsRouter } from "../modules/records/records.routes";
 import { asyncHandler } from "../utils/asyncHandler";
 
@@ -12,7 +13,7 @@ apiRouter.get("/", (_req, res) => {
   res.json({
     name: "STCS API",
     version: "1.0.0",
-    modules: ["auth", "emotions", "records"]
+    modules: ["auth", "portal", "emotions", "records"]
   });
 });
 
@@ -26,6 +27,7 @@ apiRouter.get("/health", asyncHandler(async (_req, res) => {
 }));
 
 apiRouter.use("/auth", authRouter);
+apiRouter.use("/portal", portalRouter);
 apiRouter.use("/emotions", emotionsRouter);
 apiRouter.use("/records", recordsRouter);
 

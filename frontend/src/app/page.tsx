@@ -8,62 +8,62 @@ export default function HomePage() {
     <div className="page-stack">
       <PageHeader
         eyebrow="Inicio"
-        title="Una base clara para acompanar la comunicacion y el progreso"
-        description="Este proyecto parte con una experiencia simple, accesible y tranquila, pensada para crecer hacia pictogramas, registro emocional y seguimiento del desarrollo."
+        title="Demo segura de acceso y seguimiento para STCS"
+        description="Esta version del proyecto muestra un flujo real de inicio de sesion con control de acceso por rol, pensado para proteger la informacion y presentar el riesgo tecnico mitigado."
       />
 
       <section className="stats-grid" aria-label="Resumen del sistema">
         <StatCard
           value="3"
-          label="modulos iniciales"
-          note="Comunicacion, emociones y seguimiento."
+          label="roles demo"
+          note="Cuidador, especialista y administrador."
         />
         <StatCard
-          value="100%"
-          label="entorno dockerizado"
-          note="Frontend, backend y PostgreSQL listos para local."
+          value="JWT"
+          label="autenticacion activa"
+          note="Token local para proteger el acceso a la informacion."
         />
         <StatCard
           value={apiBaseUrl}
-          label="API base"
-          note="Variable preparada para futuras integraciones."
+          label="API protegida"
+          note="Backend listo para validar sesion y permisos por rol."
         />
       </section>
 
       <section className="feature-grid">
         <FeatureCard
-          title="Comunicacion con pictogramas"
-          description="La base visual ya contempla botones grandes, categorias claras y espacio para construir frases con apoyo visual."
+          title="Login real para la demo"
+          description="La aplicacion ya no muestra solo una maqueta. Ahora valida credenciales, genera sesion y restringe el acceso segun el usuario."
           accent="blue"
         />
         <FeatureCard
-          title="Registro de emociones"
-          description="Se deja una estructura amigable para registrar estados emocionales con intensidad, observaciones y contexto."
+          title="Informacion protegida por rol"
+          description="Cada actor ingresa a un portal distinto: cuidador, especialista o administrador, mostrando solo la informacion que le corresponde."
           accent="green"
         />
         <FeatureCard
-          title="Seguimiento del progreso"
-          description="El historial y los indicadores base ya estan preparados para sumar metricas, tendencias y visualizaciones."
+          title="Prototipo verificable"
+          description="La mitigacion del riesgo se puede evidenciar con acceso valido, rechazo sin token y proteccion real de la informacion."
           accent="orange"
         />
       </section>
 
       <section className="two-column-section">
         <article className="soft-panel">
-          <h2>Principios de diseno presentes desde el inicio</h2>
+          <h2>Usuarios demo disponibles</h2>
           <ul className="clean-list">
-            <li>Jerarquia visual suave y facil de escanear.</li>
-            <li>Bloques amplios, contrastes cuidados y lenguaje simple.</li>
-            <li>Navegacion consistente para bajar la carga cognitiva.</li>
+            <li>`demo@stcs.local` / `Demo1234!`</li>
+            <li>`terapeuta@stcs.local` / `Demo1234!`</li>
+            <li>`admin@stcs.local` / `Demo1234!`</li>
           </ul>
         </article>
 
         <article className="soft-panel">
-          <h2>Proximas historias de usuario sugeridas</h2>
+          <h2>Ruta sugerida para la presentacion</h2>
           <ul className="clean-list">
-            <li>Catalogo real de pictogramas por categoria.</li>
-            <li>Persistencia de emociones y registros por usuario.</li>
-            <li>Panel de progreso con indicadores visuales.</li>
+            <li>Ingresar a `Login` con un usuario demo.</li>
+            <li>Mostrar el `Portal` con informacion segun el rol.</li>
+            <li>Explicar que el acceso queda protegido por JWT.</li>
           </ul>
         </article>
       </section>

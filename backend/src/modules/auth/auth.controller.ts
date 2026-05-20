@@ -2,8 +2,11 @@ import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 
+import { env } from "../../config/env";
 import { query } from "../../config/database";
 import { CreateUserInput, User, UserRole } from "../../models/User";
+import { createJwtToken } from "../../utils/jwt";
+import { AuthenticatedRequest, AuthTokenPayload } from "./auth.types";
 
 interface UserRow {
   id: string;
@@ -27,10 +30,15 @@ const mapUser = (row: UserRow): User => ({
 export const getAuthOverview = (_req: Request, res: Response): void => {
   res.json({
     module: "auth",
-    message: "Base de autenticacion disponible para extender.",
+    message: "Modulo de autenticacion con JWT listo para proteger el acceso en la app.",
     endpoints: [
       "POST /api/auth/register",
-      "POST /api/auth/login"
+      "POST /api/auth/login",
+      "GET /api/auth/me",
+      "GET /api/portal/resumen",
+      "GET /api/portal/guardian",
+      "GET /api/portal/especialista",
+      "GET /api/portal/admin"
     ]
   });
 };
@@ -101,9 +109,47 @@ export const login = async (
     return;
   }
 
+  const tokenPayload: AuthTokenPayload = {
+    sub: user.id,
+    email: user.email,
+    role: user.role,
+    fullName: user.full_name
+  };
+
+  const token = createJwtToken(tokenPayload, env.jwtAccessSecret, 60 * 60 * 2);
+
   res.json({
-    message: "Inicio de sesion base exitoso.",
-    token: "dev-token-replace-with-jwt",
+    message: "Inicio de sesion exitoso.",
+    token,
+    expiresIn: "2h",
     user: mapUser(user)
+  });
+};
+
+export const getAuthenticatedUser = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  const userId = req.authUser?.sub;
+
+  if (!userId) {
+    res.status(401).json({
+      message: "No se pudo identificar al usuario autenticado."
+    });
+    return;
+  }
+
+  const result = await query<UserRow>("SELECT * FROM users WHERE id = $1", [userId]);
+
+  if (!result.rowCount) {
+    res.status(404).json({
+      message: "Usuario no encontrado."
+    });
+    return;
+  }
+
+  res.json({
+    message: "Usuario autenticado obtenido correctamente.",
+    user: mapUser(result.rows[0])
   });
 };

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { AuthStatus } from "@/components/auth/AuthStatus";
 import { navigationItems } from "@/lib/navigation";
 
 export function Navbar() {
@@ -35,6 +36,8 @@ export function Navbar() {
           );
         })}
       </nav>
+
+      <AuthStatus />
     </header>
   );
 }

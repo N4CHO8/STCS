@@ -13,5 +13,7 @@ export const env = {
   databaseUrl:
     process.env.DATABASE_URL ??
     "postgresql://stcs_user:stcs_password@database:5432/stcs_db",
-  corsOrigin: process.env.CORS_ORIGIN ?? "http://localhost:3000"
+  corsOrigin: process.env.CORS_ORIGIN ?? "http://localhost:3000",
+  jwtAccessSecret:
+    process.env.JWT_ACCESS_SECRET ?? "stcs-dev-jwt-secret-cambiar-en-produccion"
 };

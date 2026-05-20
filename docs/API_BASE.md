@@ -18,7 +18,15 @@
 - `POST /auth/register`
   - crea un usuario base
 - `POST /auth/login`
-  - valida credenciales y devuelve un token de desarrollo
+  - valida credenciales y devuelve un token JWT
+- `GET /auth/me`
+  - devuelve el usuario autenticado
+
+Header requerido para rutas protegidas:
+
+```text
+Authorization: Bearer <token>
+```
 
 Body sugerido para registro:
 
@@ -66,11 +74,29 @@ Body sugerido:
 }
 ```
 
+### Portal protegido
+
+- `GET /portal/resumen`
+  - requiere token valido y devuelve informacion basica de la sesion
+- `GET /portal/guardian`
+  - requiere token valido y rol `guardian`
+- `GET /portal/especialista`
+  - requiere token valido y rol `therapist`
+- `GET /portal/admin`
+  - requiere token valido y rol `admin`
+
 ## Usuario demo
 
-Despues de ejecutar `docker compose down -v` y volver a levantar el entorno, se crea un usuario de apoyo:
+Despues de ejecutar `docker compose down -v` y volver a levantar el entorno, se crean usuarios de apoyo para probar autenticacion y roles:
 
-- email: `demo@stcs.local`
-- password: `Demo1234!`
+- `guardian`
+  - email: `demo@stcs.local`
+  - password: `Demo1234!`
+- `therapist`
+  - email: `terapeuta@stcs.local`
+  - password: `Demo1234!`
+- `admin`
+  - email: `admin@stcs.local`
+  - password: `Demo1234!`
 
-Este usuario existe solo para pruebas locales y debe reemplazarse por un flujo de autenticacion real en futuras historias.
+Este set de usuarios existe solo para pruebas locales del prototipo de mitigacion del riesgo tecnico y para la demo de login dentro de la app.
