@@ -1,72 +1,170 @@
-import { FeatureCard } from "@/components/ui/FeatureCard";
-import { PageHeader } from "@/components/ui/PageHeader";
-import { StatCard } from "@/components/ui/StatCard";
-import { apiBaseUrl } from "@/lib/navigation";
+import Link from "next/link";
+import {
+  Apple,
+  Bath,
+  BookOpen,
+  Brush,
+  CalendarDays,
+  ClipboardList,
+  Clock,
+  Gamepad2,
+  GlassWater,
+  HandHeart,
+  HeartPulse,
+  Home,
+  MessageSquare,
+  Moon,
+  Smile,
+  Volume2
+} from "lucide-react";
+
+const coreWords = [
+  { icon: <GlassWater />, label: "Quiero agua", group: "Necesidad" },
+  { icon: <Apple />, label: "Tengo hambre", group: "Necesidad" },
+  { icon: <Bath />, label: "Ir al bano", group: "Rutina" },
+  { icon: <HandHeart />, label: "Ayudame", group: "Apoyo" },
+  { icon: <Smile />, label: "Estoy bien", group: "Emocion" },
+  { icon: <Moon />, label: "Descansar", group: "Estado" },
+  { icon: <Brush />, label: "Pintar", group: "Actividad" },
+  { icon: <Gamepad2 />, label: "Jugar", group: "Actividad" },
+  { icon: <BookOpen />, label: "Leer", group: "Actividad" }
+];
+
+const routine = [
+  { time: "08:30", title: "Llegada", status: "Listo" },
+  { time: "10:00", title: "Actividad guiada", status: "Ahora" },
+  { time: "11:15", title: "Descanso visual", status: "Luego" }
+];
+
+const quickLinks = [
+  {
+    href: "/communication",
+    icon: <MessageSquare />,
+    label: "Comunicar",
+    detail: "Abrir tablero"
+  },
+  {
+    href: "/emotions",
+    icon: <HeartPulse />,
+    label: "Emocion",
+    detail: "Registrar ahora"
+  },
+  {
+    href: "/history",
+    icon: <ClipboardList />,
+    label: "Historial",
+    detail: "Ver seguimiento"
+  }
+];
 
 export default function HomePage() {
   return (
-    <div className="page-stack">
-      <PageHeader
-        eyebrow="Inicio"
-        title="Demo segura de acceso y seguimiento para STCS"
-        description="Esta version del proyecto muestra un flujo real de inicio de sesion con control de acceso por rol, pensado para proteger la informacion y presentar el riesgo tecnico mitigado."
-      />
-
-      <section className="stats-grid" aria-label="Resumen del sistema">
-        <StatCard
-          value="3"
-          label="roles demo"
-          note="Cuidador, especialista y administrador."
-        />
-        <StatCard
-          value="JWT"
-          label="autenticacion activa"
-          note="Token local para proteger el acceso a la informacion."
-        />
-        <StatCard
-          value={apiBaseUrl}
-          label="API protegida"
-          note="Backend listo para validar sesion y permisos por rol."
-        />
+    <div className="daily-board">
+      <section className="workspace-header" aria-label="Resumen del dia">
+        <div>
+          <span className="section-label">Panel principal</span>
+          <h1>Tablero del dia</h1>
+          <p>
+            Comunicacion rapida, emociones y rutina en una sola pantalla.
+          </p>
+        </div>
+        <div className="today-chip">
+          <CalendarDays aria-hidden="true" />
+          <span>Hoy</span>
+        </div>
       </section>
 
-      <section className="feature-grid">
-        <FeatureCard
-          title="Login real para la demo"
-          description="La aplicacion ya no muestra solo una maqueta. Ahora valida credenciales, genera sesion y restringe el acceso segun el usuario."
-          accent="blue"
-        />
-        <FeatureCard
-          title="Informacion protegida por rol"
-          description="Cada actor ingresa a un portal distinto: cuidador, especialista o administrador, mostrando solo la informacion que le corresponde."
-          accent="green"
-        />
-        <FeatureCard
-          title="Prototipo verificable"
-          description="La mitigacion del riesgo se puede evidenciar con acceso valido, rechazo sin token y proteccion real de la informacion."
-          accent="orange"
-        />
+      <section className="message-strip" aria-label="Frase activa">
+        <div>
+          <span className="section-label">Frase activa</span>
+          <div className="sentence-builder">
+            <span>Yo</span>
+            <span>quiero</span>
+            <span>agua</span>
+          </div>
+        </div>
+        <div className="message-actions">
+          <button className="primary-button" type="button">
+            <Volume2 aria-hidden="true" />
+            Hablar
+          </button>
+          <button className="quiet-button" type="button">
+            Limpiar
+          </button>
+        </div>
       </section>
 
-      <section className="two-column-section">
-        <article className="soft-panel">
-          <h2>Usuarios demo disponibles</h2>
-          <ul className="clean-list">
-            <li>`demo@stcs.local` / `Demo1234!`</li>
-            <li>`terapeuta@stcs.local` / `Demo1234!`</li>
-            <li>`admin@stcs.local` / `Demo1234!`</li>
-          </ul>
-        </article>
+      <div className="board-layout">
+        <section className="tool-section" aria-label="Pictogramas frecuentes">
+          <div className="section-heading">
+            <div>
+              <span className="section-label">Comunicacion</span>
+              <h2>Pictogramas frecuentes</h2>
+            </div>
+            <Link className="text-link" href="/communication">
+              Ver tablero
+            </Link>
+          </div>
 
-        <article className="soft-panel">
-          <h2>Ruta sugerida para la presentacion</h2>
-          <ul className="clean-list">
-            <li>Ingresar a `Login` con un usuario demo.</li>
-            <li>Mostrar el `Portal` con informacion segun el rol.</li>
-            <li>Explicar que el acceso queda protegido por JWT.</li>
-          </ul>
-        </article>
-      </section>
+          <div className="aac-grid">
+            {coreWords.map((word) => (
+              <button className="aac-tile" type="button" key={word.label}>
+                <span className="tile-icon" aria-hidden="true">
+                  {word.icon}
+                </span>
+                <strong>{word.label}</strong>
+                <small>{word.group}</small>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <aside className="side-panel" aria-label="Rutina y acciones">
+          <section className="tool-section compact-section">
+            <div className="section-heading">
+              <div>
+                <span className="section-label">Ahora</span>
+                <h2>Rutina</h2>
+              </div>
+              <Clock aria-hidden="true" />
+            </div>
+
+            <div className="routine-list">
+              {routine.map((item) => (
+                <article className="routine-item" key={item.title}>
+                  <span>{item.time}</span>
+                  <strong>{item.title}</strong>
+                  <small>{item.status}</small>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="tool-section compact-section">
+            <span className="section-label">Acciones</span>
+            <div className="quick-action-list">
+              {quickLinks.map((item) => (
+                <Link className="quick-action" href={item.href} key={item.href}>
+                  <span aria-hidden="true">{item.icon}</span>
+                  <strong>{item.label}</strong>
+                  <small>{item.detail}</small>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="tool-section compact-section">
+            <div className="progress-summary">
+              <Home aria-hidden="true" />
+              <div>
+                <span className="section-label">Seguimiento</span>
+                <h2>Dia estable</h2>
+                <p>2 registros, 1 emocion positiva y rutina sin alertas.</p>
+              </div>
+            </div>
+          </section>
+        </aside>
+      </div>
     </div>
   );
 }

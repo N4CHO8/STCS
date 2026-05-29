@@ -1,13 +1,22 @@
+import {
+  Apple,
+  Bath,
+  Brush,
+  GlassWater,
+  HandHeart,
+  Moon
+} from "lucide-react";
+
 import { PageHeader } from "@/components/ui/PageHeader";
 import { PictogramTile } from "@/components/ui/PictogramTile";
 
 const pictograms = [
-  { emoji: "🧃", label: "Quiero jugo", category: "Necesidades" },
-  { emoji: "🍎", label: "Tengo hambre", category: "Necesidades" },
-  { emoji: "🚻", label: "Ir al bano", category: "Rutinas" },
-  { emoji: "🎨", label: "Quiero pintar", category: "Actividades" },
-  { emoji: "😴", label: "Tengo sueno", category: "Estado" },
-  { emoji: "🤝", label: "Ayudame", category: "Apoyo" }
+  { icon: <GlassWater />, label: "Quiero agua", category: "Necesidad" },
+  { icon: <Apple />, label: "Tengo hambre", category: "Necesidad" },
+  { icon: <Bath />, label: "Ir al bano", category: "Rutina" },
+  { icon: <Brush />, label: "Quiero pintar", category: "Actividad" },
+  { icon: <Moon />, label: "Tengo sueno", category: "Estado" },
+  { icon: <HandHeart />, label: "Ayudame", category: "Apoyo" }
 ];
 
 export default function CommunicationPage() {
@@ -15,21 +24,27 @@ export default function CommunicationPage() {
     <div className="page-stack">
       <PageHeader
         eyebrow="Comunicacion"
-        title="Estructura inicial para pictogramas"
-        description="Esta vista deja preparada una grilla visual simple y botones amplios para construir la futura experiencia de comunicacion asistida."
+        title="Tablero de pictogramas"
+        description="Selecciona pictogramas grandes y consistentes para formar una frase corta."
       />
 
-      <section className="soft-panel">
-        <h2>Frase en construccion</h2>
-        <div className="sentence-builder" aria-label="Area visual de frase">
-          <span>Yo</span>
-          <span>quiero</span>
-          <span>jugo</span>
+      <section className="message-strip" aria-label="Frase actual">
+        <div>
+          <span className="section-label">Frase actual</span>
+          <div className="sentence-builder">
+            <span>Yo</span>
+            <span>quiero</span>
+            <span>agua</span>
+          </div>
         </div>
-        <p className="section-note">
-          Este bloque sera el punto de partida para combinar pictogramas y formar
-          mensajes completos.
-        </p>
+        <div className="message-actions">
+          <button className="primary-button" type="button">
+            Hablar
+          </button>
+          <button className="quiet-button" type="button">
+            Limpiar
+          </button>
+        </div>
       </section>
 
       <section className="pictogram-grid" aria-label="Pictogramas disponibles">

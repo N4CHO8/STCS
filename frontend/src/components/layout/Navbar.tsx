@@ -14,9 +14,9 @@ export function Navbar() {
       <div className="brand-block">
         <span className="brand-badge">STCS</span>
         <div>
-          <p className="brand-title">Sistema TEA de Comunicacion y Seguimiento</p>
+          <p className="brand-title">Comunicacion y seguimiento</p>
           <p className="brand-subtitle">
-            Base visual y tecnica para avanzar por historias de usuario.
+            Tablero diario para comunicarse, registrar y revisar avances.
           </p>
         </div>
       </div>
