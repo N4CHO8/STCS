@@ -32,18 +32,16 @@ export const createJwtToken = <T extends object>(
   secret: string,
   expiresInSeconds: number
 ): string => {
+  const nowInSeconds = Math.floor(Date.now() / 1000);
   const header = {
     alg: "HS256",
     typ: "JWT"
   };
-
-  const nowInSeconds = Math.floor(Date.now() / 1000);
   const fullPayload = {
     ...payload,
     iat: nowInSeconds,
     exp: nowInSeconds + expiresInSeconds
   };
-
   const encodedHeader = toBase64Url(JSON.stringify(header));
   const encodedPayload = toBase64Url(JSON.stringify(fullPayload));
   const unsignedToken = `${encodedHeader}.${encodedPayload}`;

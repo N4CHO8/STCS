@@ -34,7 +34,7 @@ export const verifyToken = (
   }
 
   try {
-    const payload = verifyJwtToken(token, env.jwtAccessSecret) as AuthTokenPayload;
+    const payload = verifyJwtToken<AuthTokenPayload>(token, env.jwtAccessSecret);
     req.authUser = payload;
     next();
   } catch {

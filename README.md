@@ -80,6 +80,14 @@ docker compose down
 docker compose down -v
 ```
 
+Para validar la base de datos configurada en `.env`:
+
+```bash
+cd backend
+npm run db:check
+npm run db:apply-schema
+```
+
 Tambien puedes usar:
 
 - `.\scripts\dev-up.ps1`
@@ -99,6 +107,7 @@ Tambien puedes usar:
 - Guia general del proyecto: [docs/PROJECT_GUIDE.md](./docs/PROJECT_GUIDE.md)
 - Endpoints base del backend: [docs/API_BASE.md](./docs/API_BASE.md)
 - Arquitectura y decisiones objetivo: [docs/TITLE_ARCHITECTURE.md](./docs/TITLE_ARCHITECTURE.md)
+- Guia de despliegue: [docs/DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md)
 - Reglas para contribuir al repo: [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## Estado actual

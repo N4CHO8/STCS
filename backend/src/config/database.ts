@@ -2,8 +2,17 @@ import { Pool, QueryResult, QueryResultRow } from "pg";
 
 import { env } from "./env";
 
+const removeSslModeParameter = (databaseUrl: string): string =>
+  databaseUrl
+    .replace("?sslmode=require&", "?")
+    .replace("&sslmode=require", "")
+    .replace("?sslmode=require", "");
+
 export const pool = new Pool({
-  connectionString: env.databaseUrl
+  connectionString: env.databaseSsl
+    ? removeSslModeParameter(env.databaseUrl)
+    : env.databaseUrl,
+  ssl: env.databaseSsl ? { rejectUnauthorized: false } : undefined
 });
 
 export const query = async <T extends QueryResultRow>(
