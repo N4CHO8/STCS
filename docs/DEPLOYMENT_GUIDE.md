@@ -132,6 +132,8 @@ Build Command: npm run build
 Output Directory: .next
 ```
 
+El `Root Directory` es obligatorio porque el repositorio es un monorepo. Si queda como `.` Vercel intentara compilar desde la raiz del repositorio y fallara con el error `Couldn't find any pages or app directory`.
+
 Variable de entorno en Vercel:
 
 ```env
