@@ -5,7 +5,12 @@ coverage
 .env
 .env.local
 .env.*.local
+.env.production
+.vercel
+.turbo
+*.tsbuildinfo
 frontend/.next
+frontend/.vercel
 frontend/node_modules
 backend/node_modules
 backend/dist
