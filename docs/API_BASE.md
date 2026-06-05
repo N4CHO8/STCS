@@ -41,9 +41,12 @@ Body sugerido para registro:
 ### Emotions
 
 - `GET /emotions`
-  - lista los registros de emociones recientes
+  - requiere token valido
+  - lista solo emociones visibles para el usuario autenticado
+  - acepta `?userId=<id-del-nino>` para pedir un perfil especifico
 - `POST /emotions`
-  - crea un registro emocional base
+  - requiere token valido
+  - crea un registro emocional solo si el usuario autenticado tiene permiso sobre `userId`
 
 Body sugerido:
 
@@ -59,9 +62,12 @@ Body sugerido:
 ### Records
 
 - `GET /records`
-  - lista los registros observacionales recientes
+  - requiere token valido
+  - lista solo registros visibles para el usuario autenticado
+  - acepta `?userId=<id-del-nino>` para pedir un perfil especifico
 - `POST /records`
-  - crea un registro base de comportamiento o seguimiento
+  - requiere token valido
+  - crea un registro base solo si el usuario autenticado tiene permiso sobre `userId`
 
 Body sugerido:
 
@@ -100,3 +106,13 @@ Despues de ejecutar `docker compose down -v` y volver a levantar el entorno, se 
   - password: `Demo1234!`
 
 Este set de usuarios existe solo para pruebas locales del prototipo de mitigacion del riesgo tecnico y para la demo de login dentro de la app.
+
+## Demo de proteccion de datos
+
+Para demostrar que la mitigacion no depende solo del login, se agrego una prueba automatizada:
+
+```powershell
+.\scripts\demo-security.ps1
+```
+
+La prueba inicia sesion como `demo@stcs.local`, consulta los registros del nino asignado y luego intenta consultar los registros de otro nino. El resultado esperado es `200 OK` para el primer caso y `403 Forbidden` para el segundo.

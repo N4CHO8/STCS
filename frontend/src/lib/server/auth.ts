@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { verifyJwtToken } from "./jwt";
 
-export type UserRole = "guardian" | "therapist" | "admin";
+export type UserRole = "guardian" | "therapist" | "admin" | "child";
 
 export interface AuthTokenPayload {
   sub: string;

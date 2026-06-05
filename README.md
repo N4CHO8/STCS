@@ -108,6 +108,7 @@ Tambien puedes usar:
 - Endpoints base del backend: [docs/API_BASE.md](./docs/API_BASE.md)
 - Arquitectura y decisiones objetivo: [docs/TITLE_ARCHITECTURE.md](./docs/TITLE_ARCHITECTURE.md)
 - Guia de despliegue: [docs/DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md)
+- Mitigacion de riesgo tecnico: [docs/SECURITY_MITIGATION.md](./docs/SECURITY_MITIGATION.md)
 - Reglas para contribuir al repo: [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## Estado actual
@@ -117,7 +118,8 @@ Esta base deja listo:
 - entorno local completo con Docker
 - estructura inicial de frontend y backend
 - conexion a PostgreSQL
-- endpoints base
+- endpoints base protegidos por JWT y permisos
 - UI accesible y simple para continuar las historias de usuario
+- demo tecnica de proteccion de datos con `.\scripts\demo-security.ps1`
 
-No incluye aun logica completa de autenticacion, persistencia avanzada ni implementacion real de pictogramas.
+No incluye aun persistencia avanzada de pictogramas ni flujos completos de gestion de usuarios.

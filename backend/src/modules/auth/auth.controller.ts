@@ -38,7 +38,9 @@ export const getAuthOverview = (_req: Request, res: Response): void => {
       "GET /api/portal/resumen",
       "GET /api/portal/guardian",
       "GET /api/portal/especialista",
-      "GET /api/portal/admin"
+      "GET /api/portal/admin",
+      "GET /api/records?userId=<id>",
+      "GET /api/emotions?userId=<id>"
     ]
   });
 };

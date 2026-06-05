@@ -5,6 +5,11 @@ export interface JwtPayload {
   iat?: number;
 }
 
+interface JwtHeader {
+  alg?: string;
+  typ?: string;
+}
+
 const toBase64Url = (value: string): string =>
   Buffer.from(value)
     .toString("base64")
@@ -63,6 +68,12 @@ export const verifyJwtToken = <T extends JwtPayload = JwtPayload>(
   }
 
   const unsignedToken = `${encodedHeader}.${encodedPayload}`;
+  const header = JSON.parse(fromBase64Url(encodedHeader)) as JwtHeader;
+
+  if (header.alg !== "HS256" || header.typ !== "JWT") {
+    throw new Error("Algoritmo de token no permitido.");
+  }
+
   const expectedSignature = signSegment(unsignedToken, secret);
   const expectedBuffer = Buffer.from(expectedSignature);
   const signatureBuffer = Buffer.from(signature);
