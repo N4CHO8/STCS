@@ -1,170 +1,168 @@
 import Link from "next/link";
 import {
-  Apple,
-  Bath,
-  BookOpen,
-  Brush,
-  CalendarDays,
+  ArrowRight,
   ClipboardList,
-  Clock,
-  Gamepad2,
-  GlassWater,
-  HandHeart,
   HeartPulse,
-  Home,
   MessageSquare,
-  Moon,
-  Smile,
+  Mic2,
+  PencilRuler,
+  ShieldCheck,
+  Sparkles,
   Volume2
 } from "lucide-react";
 
-const coreWords = [
-  { icon: <GlassWater />, label: "Quiero agua", group: "Necesidad" },
-  { icon: <Apple />, label: "Tengo hambre", group: "Necesidad" },
-  { icon: <Bath />, label: "Ir al bano", group: "Rutina" },
-  { icon: <HandHeart />, label: "Ayudame", group: "Apoyo" },
-  { icon: <Smile />, label: "Estoy bien", group: "Emocion" },
-  { icon: <Moon />, label: "Descansar", group: "Estado" },
-  { icon: <Brush />, label: "Pintar", group: "Actividad" },
-  { icon: <Gamepad2 />, label: "Jugar", group: "Actividad" },
-  { icon: <BookOpen />, label: "Leer", group: "Actividad" }
-];
+import { defaultPictograms, pictogramCategories } from "@/lib/pictograms";
 
-const routine = [
-  { time: "08:30", title: "Llegada", status: "Listo" },
-  { time: "10:00", title: "Actividad guiada", status: "Ahora" },
-  { time: "11:15", title: "Descanso visual", status: "Luego" }
-];
+const previewButtons = defaultPictograms.filter((item) =>
+  [
+    "core-i",
+    "core-want",
+    "need-water",
+    "emo-sad",
+    "sens-quiet",
+    "school-dont-understand",
+    "health-pain",
+    "social-thanks"
+  ].includes(item.id)
+);
 
-const quickLinks = [
+const demoSteps = [
   {
-    href: "/communication",
-    icon: <MessageSquare />,
-    label: "Comunicar",
-    detail: "Abrir tablero"
+    icon: <MessageSquare aria-hidden="true" />,
+    title: "1. Elegir",
+    text: "El nino toca pictogramas grandes organizados por categorias."
   },
   {
-    href: "/emotions",
-    icon: <HeartPulse />,
-    label: "Emocion",
-    detail: "Registrar ahora"
+    icon: <Mic2 aria-hidden="true" />,
+    title: "2. Formar",
+    text: "La app arma mensajes simples como: yo quiero agua."
   },
   {
-    href: "/history",
-    icon: <ClipboardList />,
-    label: "Historial",
-    detail: "Ver seguimiento"
+    icon: <Volume2 aria-hidden="true" />,
+    title: "3. Hablar",
+    text: "El mensaje se puede reproducir por voz para el cuidador."
+  }
+];
+
+const evidenceCards = [
+  {
+    icon: <Sparkles aria-hidden="true" />,
+    value: `${pictogramCategories.length}`,
+    label: "categorias CAA"
+  },
+  {
+    icon: <PencilRuler aria-hidden="true" />,
+    value: `${defaultPictograms.length}`,
+    label: "botones base"
+  },
+  {
+    icon: <ShieldCheck aria-hidden="true" />,
+    value: "6-10",
+    label: "anos objetivo"
   }
 ];
 
 export default function HomePage() {
   return (
-    <div className="daily-board">
-      <section className="workspace-header" aria-label="Resumen del dia">
-        <div>
-          <span className="section-label">Panel principal</span>
-          <h1>Tablero del dia</h1>
+    <div className="presentation-home">
+      <section className="hero-panel" aria-label="Presentacion del prototipo">
+        <div className="hero-copy">
+          <span className="section-label">Prototipo de mitigacion tecnica</span>
+          <h1>Comunicacion clara con pictogramas para ninos con TEA</h1>
           <p>
-            Comunicacion rapida, emociones y rutina en una sola pantalla.
+            STCS valida el flujo central de la app: elegir pictogramas, formar
+            un mensaje simple, escucharlo por voz y adaptar el tablero segun
+            las necesidades del nino.
           </p>
-        </div>
-        <div className="today-chip">
-          <CalendarDays aria-hidden="true" />
-          <span>Hoy</span>
-        </div>
-      </section>
 
-      <section className="message-strip" aria-label="Frase activa">
-        <div>
-          <span className="section-label">Frase activa</span>
-          <div className="sentence-builder">
-            <span>Yo</span>
-            <span>quiero</span>
-            <span>agua</span>
+          <div className="hero-actions">
+            <Link className="hero-primary-link" href="/communication">
+              Abrir tablero CAA
+              <ArrowRight aria-hidden="true" />
+            </Link>
+            <Link className="hero-secondary-link" href="/history">
+              Ver seguimiento
+            </Link>
           </div>
         </div>
-        <div className="message-actions">
-          <button className="primary-button" type="button">
+
+        <div className="hero-demo-card" aria-label="Ejemplo de mensaje">
+          <span className="demo-label">Mensaje de ejemplo</span>
+          <div className="demo-message-row">
+            <span>🙂 Yo</span>
+            <span>🤲 quiero</span>
+            <span>💧 agua</span>
+          </div>
+          <div className="demo-speech">
             <Volume2 aria-hidden="true" />
-            Hablar
-          </button>
-          <button className="quiet-button" type="button">
-            Limpiar
-          </button>
+            <strong>La app puede leer el mensaje en voz alta</strong>
+          </div>
         </div>
       </section>
 
-      <div className="board-layout">
-        <section className="tool-section" aria-label="Pictogramas frecuentes">
+      <section className="evidence-grid" aria-label="Evidencia del prototipo">
+        {evidenceCards.map((card) => (
+          <article className="evidence-card" key={card.label}>
+            <span>{card.icon}</span>
+            <strong>{card.value}</strong>
+            <p>{card.label}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="home-two-column">
+        <article className="preview-panel">
           <div className="section-heading">
             <div>
-              <span className="section-label">Comunicacion</span>
-              <h2>Pictogramas frecuentes</h2>
+              <span className="section-label">Vista rapida</span>
+              <h2>Botones pensados para comunicar</h2>
             </div>
             <Link className="text-link" href="/communication">
-              Ver tablero
+              Probar
             </Link>
           </div>
 
-          <div className="aac-grid">
-            {coreWords.map((word) => (
-              <button className="aac-tile" type="button" key={word.label}>
-                <span className="tile-icon" aria-hidden="true">
-                  {word.icon}
-                </span>
-                <strong>{word.label}</strong>
-                <small>{word.group}</small>
-              </button>
+          <div className="home-aac-preview">
+            {previewButtons.map((item) => (
+              <div className={`home-aac-button tone-${item.tone}`} key={item.id}>
+                <span aria-hidden="true">{item.emoji}</span>
+                <strong>{item.label}</strong>
+              </div>
             ))}
           </div>
-        </section>
+        </article>
 
-        <aside className="side-panel" aria-label="Rutina y acciones">
-          <section className="tool-section compact-section">
-            <div className="section-heading">
-              <div>
-                <span className="section-label">Ahora</span>
-                <h2>Rutina</h2>
-              </div>
-              <Clock aria-hidden="true" />
-            </div>
-
-            <div className="routine-list">
-              {routine.map((item) => (
-                <article className="routine-item" key={item.title}>
-                  <span>{item.time}</span>
-                  <strong>{item.title}</strong>
-                  <small>{item.status}</small>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="tool-section compact-section">
-            <span className="section-label">Acciones</span>
-            <div className="quick-action-list">
-              {quickLinks.map((item) => (
-                <Link className="quick-action" href={item.href} key={item.href}>
-                  <span aria-hidden="true">{item.icon}</span>
-                  <strong>{item.label}</strong>
-                  <small>{item.detail}</small>
-                </Link>
-              ))}
-            </div>
-          </section>
-
-          <section className="tool-section compact-section">
-            <div className="progress-summary">
-              <Home aria-hidden="true" />
-              <div>
-                <span className="section-label">Seguimiento</span>
-                <h2>Dia estable</h2>
-                <p>2 registros, 1 emocion positiva y rutina sin alertas.</p>
-              </div>
-            </div>
-          </section>
+        <aside className="demo-flow-panel">
+          <span className="section-label">Como se demuestra</span>
+          <h2>Flujo corto para la presentacion</h2>
+          <div className="demo-step-list">
+            {demoSteps.map((step) => (
+              <article className="demo-step" key={step.title}>
+                <span>{step.icon}</span>
+                <div>
+                  <strong>{step.title}</strong>
+                  <p>{step.text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </aside>
-      </div>
+      </section>
+
+      <section className="presenter-strip" aria-label="Modulos disponibles">
+        <Link href="/communication">
+          <MessageSquare aria-hidden="true" />
+          Comunicacion
+        </Link>
+        <Link href="/emotions">
+          <HeartPulse aria-hidden="true" />
+          Emociones
+        </Link>
+        <Link href="/history">
+          <ClipboardList aria-hidden="true" />
+          Historial
+        </Link>
+      </section>
     </div>
   );
 }

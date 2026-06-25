@@ -12,7 +12,7 @@ import {
   type PictogramTone
 } from "@/lib/pictograms";
 
-const STORAGE_KEY = "stcs-aac-board-v1";
+const STORAGE_KEY = "stcs-aac-board-v2";
 
 const emptyForm = {
   id: "",
@@ -32,9 +32,14 @@ const toneOptions: Array<{ value: PictogramTone; label: string }> = [
   { value: "angry", label: "Alerta" },
   { value: "calm", label: "Calma" },
   { value: "action", label: "Accion" },
+  { value: "sensory", label: "Sensorial" },
+  { value: "school", label: "Colegio" },
+  { value: "health", label: "Salud" },
   { value: "place", label: "Lugar" },
   { value: "person", label: "Persona" },
   { value: "routine", label: "Rutina" },
+  { value: "object", label: "Objeto" },
+  { value: "social", label: "Social" },
   { value: "question", label: "Pregunta" },
   { value: "custom", label: "Personalizado" }
 ];

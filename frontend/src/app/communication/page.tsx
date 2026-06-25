@@ -6,8 +6,8 @@ export default function CommunicationPage() {
     <div className="page-stack">
       <PageHeader
         eyebrow="Comunicacion"
-        title="Elige botones para hablar"
-        description="Tablero visual con pictogramas organizados por categorias. Los cuidadores pueden agregar y ajustar botones."
+        title="Tablero CAA para hablar con pictogramas"
+        description="Selecciona botones, forma mensajes simples y usa la voz del navegador. Los cuidadores pueden agregar o editar pictogramas."
       />
 
       <CommunicationPrototype />
