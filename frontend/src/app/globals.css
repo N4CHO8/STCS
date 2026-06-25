@@ -196,9 +196,189 @@ input {
 
 .page-stack,
 .daily-board,
-.presentation-home {
+.presentation-home,
+.home-board {
   display: grid;
   gap: 18px;
+}
+
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+  gap: 16px;
+  align-items: stretch;
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid var(--stroke);
+  background:
+    radial-gradient(circle at 12% 12%, rgba(217, 239, 255, 0.9), transparent 28%),
+    radial-gradient(circle at 88% 18%, rgba(217, 243, 222, 0.9), transparent 26%),
+    linear-gradient(135deg, #fffdf7 0%, #eef7f0 100%);
+  box-shadow: var(--shadow);
+}
+
+.home-hero-copy {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+}
+
+.home-hero-copy h1 {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.15rem, 5vw, 4.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.home-big-action {
+  display: grid;
+  grid-template-columns: 52px 1fr 32px;
+  gap: 14px;
+  align-items: center;
+  min-height: 150px;
+  padding: 18px;
+  border-radius: 18px;
+  background: var(--blue);
+  color: #ffffff;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.45rem;
+  font-weight: 900;
+}
+
+.home-big-action svg:first-child {
+  width: 52px;
+  height: 52px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.home-big-action svg:last-child {
+  width: 28px;
+  height: 28px;
+}
+
+.home-message-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 18px;
+  background: var(--surface);
+  border: 2px solid var(--stroke-strong);
+  box-shadow: var(--shadow);
+}
+
+.home-message-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.home-message-row span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 58px;
+  min-width: 86px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--surface-yellow);
+  border: 2px solid #e0c678;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 900;
+}
+
+.home-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.home-action-card {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  grid-template-areas:
+    "icon title"
+    "icon detail";
+  align-items: center;
+  column-gap: 12px;
+  min-height: 96px;
+  padding: 16px;
+  border-radius: 18px;
+  background: var(--surface);
+  border: 1px solid var(--stroke);
+  box-shadow: var(--shadow);
+}
+
+.home-action-card > span {
+  grid-area: icon;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: var(--surface-blue);
+  color: var(--blue);
+}
+
+.home-action-card strong {
+  grid-area: title;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.15rem;
+}
+
+.home-action-card small {
+  grid-area: detail;
+  color: var(--text-secondary);
+  font-weight: 800;
+}
+
+.daily-side-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.daily-card,
+.caregiver-shortcut {
+  background: var(--surface);
+  border: 1px solid var(--stroke);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.daily-card {
+  padding: 16px;
+}
+
+.caregiver-shortcut {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+}
+
+.caregiver-shortcut > svg {
+  width: 50px;
+  height: 50px;
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--surface-green);
+  color: var(--green);
+}
+
+.caregiver-shortcut strong,
+.caregiver-shortcut small {
+  display: block;
+}
+
+.caregiver-shortcut small {
+  margin-top: 4px;
+  color: var(--text-secondary);
+  font-weight: 800;
 }
 
 .hero-panel {
@@ -1504,6 +1684,7 @@ input {
 @media (max-width: 1020px) {
   .board-layout,
   .hero-panel,
+  .home-hero,
   .communication-category-panel,
   .communication-layout,
   .aac-board-shell,
@@ -1520,6 +1701,7 @@ input {
   }
 
   .evidence-grid,
+  .home-actions-grid,
   .home-aac-preview,
   .aac-category-strip {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1543,6 +1725,7 @@ input {
   .workspace-header,
   .page-header,
   .message-strip,
+  .home-message-card,
   .aac-message-bar {
     display: grid;
   }
@@ -1568,6 +1751,7 @@ input {
   .pictogram-grid,
   .category-tabs,
   .evidence-grid,
+  .home-actions-grid,
   .home-aac-preview,
   .aac-category-strip,
   .emotion-grid,
@@ -1596,6 +1780,7 @@ input {
   .pictogram-grid,
   .category-tabs,
   .evidence-grid,
+  .home-actions-grid,
   .home-aac-preview,
   .aac-category-strip,
   .emotion-grid,
