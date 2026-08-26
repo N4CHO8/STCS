@@ -12,6 +12,8 @@ La arquitectura objetivo del proyecto es:
 - Backend en `Node.js + Express + TypeScript`
 - Base de datos en `PostgreSQL` usando `Supabase`
 - Storage de pictogramas e imagenes en `Supabase Storage`
+- Dispositivo de comunicacion en `ESP32-S3` con pantalla redonda tactil
+- Firmware en `PlatformIO` o `Arduino IDE`
 - Entorno local con `Docker + Docker Compose`
 - Frontend publicado en `Vercel`
 - Backend publicado en `Render`
@@ -31,6 +33,7 @@ Esta combinacion se eligio porque equilibra:
 - curva de aprendizaje razonable
 - compatibilidad con el stack ya existente
 - proyeccion real hacia una plataforma web usable
+- posibilidad de validar un comunicador fisico diferenciado de aplicaciones moviles existentes
 
 ## Que usar para cada cosa
 
@@ -103,7 +106,23 @@ Responsabilidad:
 - guardar imagenes de apoyo
 - evitar almacenar archivos pesados directamente dentro de PostgreSQL
 
-### 5. Autenticacion
+### 5. Dispositivo ESP32-S3
+
+Usar:
+
+- placa `ESP32-S3`
+- pantalla redonda tactil
+- firmware con `PlatformIO` o `Arduino IDE`
+
+Responsabilidad:
+
+- mostrar un tablero reducido de pictogramas
+- permitir seleccion tactil de mensajes frecuentes
+- funcionar como comunicador fisico rapido
+- guardar eventos basicos cuando no exista conexion
+- sincronizar configuraciones y registros con la plataforma web mediante Wi-Fi
+
+### 6. Autenticacion
 
 Usar:
 
@@ -117,7 +136,7 @@ Roles sugeridos:
 - `therapist`
 - `guardian`
 
-### 6. Validaciones
+### 7. Validaciones
 
 Usar:
 
@@ -129,7 +148,7 @@ Regla recomendada:
 - el frontend ayuda al usuario
 - el backend valida de verdad
 
-### 7. Pruebas
+### 8. Pruebas
 
 Usar:
 
@@ -143,7 +162,7 @@ Estrategia:
 - integracion para API y base de datos
 - E2E para flujos clave como login, registro emocional e historial
 
-### 8. Versionamiento
+### 9. Versionamiento
 
 Usar:
 
@@ -157,7 +176,7 @@ Estrategia recomendada:
 - `feature/*`
 - `fix/*`
 
-### 9. Gestion del proyecto
+### 10. Gestion del proyecto
 
 Usar:
 
@@ -213,6 +232,7 @@ STCS/
 |  |  |  |- auth/
 |  |  |  |- users/
 |  |  |  |- communication/
+|  |  |  |- device-sync/
 |  |  |  |- emotions/
 |  |  |  |- records/
 |  |  |  |- progress/
@@ -221,6 +241,13 @@ STCS/
 |  |  |- data/
 |  |  |- lib/
 |  |  |- types/
+|
+|- firmware/
+|  |- README.md
+|  |- src/
+|  |- include/
+|  |- lib/
+|  |- test/
 |
 |- docs/
 |- scripts/
@@ -281,6 +308,15 @@ Responsabilidad:
 - generar indicadores
 - mostrar avances por periodos
 
+### 7. DeviceSync
+
+Responsabilidad:
+
+- preparar configuraciones para el ESP32-S3
+- enviar catalogo reducido de pictogramas al dispositivo
+- recibir eventos de comunicacion generados desde la placa
+- manejar estados de sincronizacion pendiente cuando no haya Wi-Fi
+
 ## Modelo de datos sugerido
 
 Entidades principales recomendadas:
@@ -291,6 +327,8 @@ Entidades principales recomendadas:
 - `RecordItem`
 - `Pictogram`
 - `CommunicationSession`
+- `Device`
+- `DeviceEvent`
 - `ProgressMetric`
 
 Relacion sugerida:
@@ -299,6 +337,7 @@ Relacion sugerida:
 - un `StudentProfile` puede tener muchos registros emocionales
 - un `StudentProfile` puede tener muchos registros de conducta
 - una `CommunicationSession` puede usar muchos `Pictogram`
+- un `Device` pertenece a un perfil de nino y puede generar muchos `DeviceEvent`
 - un `ProgressMetric` se calcula desde emociones, comunicacion y registros
 
 ## Estrategia de despliegue recomendada
@@ -319,6 +358,7 @@ Usar:
 - backend en `Render`
 - PostgreSQL en `Supabase`
 - almacenamiento visual en `Supabase Storage`
+- dispositivo ESP32-S3 conectado por Wi-Fi a la API cuando exista disponibilidad
 
 ## Costo objetivo estimado
 
@@ -339,6 +379,7 @@ Si este proyecto quiere crecer sin perder coherencia tecnica, debe mantenerse so
 
 - `Next.js + TypeScript`
 - `Node.js + Express + TypeScript`
+- `ESP32-S3` como prototipo fisico de comunicacion CAA
 - `Supabase Postgres + Supabase Storage`
 - `Docker Compose` en desarrollo
 - `Vercel + Render + Supabase` en produccion

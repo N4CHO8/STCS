@@ -5,9 +5,9 @@ export default function CommunicationPage() {
   return (
     <div className="page-stack">
       <PageHeader
-        eyebrow="Comunicacion"
-        title="Tablero CAA para hablar con pictogramas"
-        description="Selecciona botones, forma mensajes simples y usa la voz del navegador. Los cuidadores pueden agregar o editar pictogramas."
+        eyebrow="Comunicador"
+        title="Tablero CAA para el dispositivo ESP32"
+        description="Configura pictogramas, prueba mensajes simples y prepara el contenido que usara la pantalla tactil redonda."
       />
 
       <CommunicationPrototype />

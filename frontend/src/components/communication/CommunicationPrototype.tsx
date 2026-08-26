@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { Eraser, Plus, RotateCcw, Save, Settings, Volume2 } from "lucide-react";
+import { Cpu, Eraser, Plus, RotateCcw, Save, Settings, Volume2, Wifi } from "lucide-react";
 
 import { PictogramTile } from "@/components/ui/PictogramTile";
 import {
@@ -224,6 +224,48 @@ export function CommunicationPrototype() {
       </section>
 
       {feedback ? <p className="aac-feedback">{feedback}</p> : null}
+
+      <section className="device-sync-panel" aria-label="Vista previa del dispositivo">
+        <div className="device-sync-copy">
+          <span className="section-label">Dispositivo</span>
+          <h2>Vista compacta para ESP32-S3</h2>
+          <p>
+            Esta previsualizacion ayuda a definir que botones caben mejor en una
+            pantalla redonda: categorias cortas, acciones prioritarias y baja
+            carga visual.
+          </p>
+          <div className="device-sync-tags" aria-label="Estado de integracion">
+            <span>
+              <Cpu aria-hidden="true" />
+              Firmware por implementar
+            </span>
+            <span>
+              <Wifi aria-hidden="true" />
+              Sincronizacion futura
+            </span>
+          </div>
+        </div>
+
+        <div className="mini-round-device">
+          <div className="mini-round-title">
+            <strong>{activeCategoryInfo?.label ?? "Tablero"}</strong>
+            <small>{visiblePictograms.length} botones</small>
+          </div>
+          <div className="mini-round-grid">
+            {visiblePictograms.slice(0, 6).map((pictogram) => (
+              <button
+                className={`mini-round-button tone-${pictogram.tone}`}
+                key={pictogram.id}
+                onClick={() => handleSelectPictogram(pictogram)}
+                type="button"
+              >
+                <span aria-hidden="true">{pictogram.emoji}</span>
+                <small>{pictogram.label}</small>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="aac-category-strip" aria-label="Categorias de comunicacion">
         {pictogramCategories.map((category) => (

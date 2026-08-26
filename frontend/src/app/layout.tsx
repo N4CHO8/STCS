@@ -18,7 +18,8 @@ const atkinson = Atkinson_Hyperlegible({
 
 export const metadata: Metadata = {
   title: "STCS",
-  description: "Base funcional para una app TEA con pictogramas y seguimiento."
+  description:
+    "Plataforma STCS para configurar comunicacion CAA y seguimiento con dispositivo ESP32-S3."
 };
 
 export default function RootLayout({

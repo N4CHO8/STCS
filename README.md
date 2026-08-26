@@ -1,6 +1,6 @@
 # STCS
 
-Base funcional para una aplicacion web orientada a ninos con TEA, enfocada en comunicacion con pictogramas, registro de emociones y seguimiento del progreso.
+Base funcional para STCS, un sistema de comunicacion aumentativa y alternativa para ninos con TEA. El proyecto combina una plataforma web para cuidadores y especialistas con un futuro dispositivo fisico basado en ESP32-S3 con pantalla redonda tactil.
 
 ## Base tecnica definida
 
@@ -10,6 +10,8 @@ Este repositorio ya tiene una decision tecnica tomada y debe respetarse al conti
 - Backend: `Node.js + Express + TypeScript`
 - Base de datos: `PostgreSQL` en `Supabase`
 - Storage de recursos visuales: `Supabase Storage`
+- Dispositivo objetivo: `ESP32-S3` con pantalla redonda tactil
+- Firmware objetivo: `PlatformIO` o `Arduino IDE`
 - Entorno local: `Docker + Docker Compose`
 - Despliegue objetivo:
   - frontend en `Vercel`
@@ -30,6 +32,7 @@ STCS/
 |- backend/                  # API REST y logica de negocio
 |- docker/                   # inicializacion y soporte de entorno local
 |- docs/                     # documentacion tecnica y de trabajo
+|- firmware/                 # base documental para el futuro codigo ESP32-S3
 |- frontend/                 # aplicacion web en Next.js
 |- scripts/                  # arranque, apagado y reseteo local
 |- .env.example              # variables de entorno de referencia
@@ -68,9 +71,10 @@ Estos scripts:
 
 ## Servicios disponibles
 
-- `frontend`: interfaz base con paginas iniciales para las futuras historias de usuario.
+- `frontend`: plataforma web para configurar pictogramas, probar comunicacion CAA y revisar seguimiento.
 - `backend`: API REST con rutas base para autenticacion, emociones y registros.
 - `database`: PostgreSQL local para desarrollo.
+- `firmware`: espacio reservado para el comunicador fisico ESP32-S3.
 
 ## Comandos utiles
 
@@ -119,7 +123,8 @@ Esta base deja listo:
 - estructura inicial de frontend y backend
 - conexion a PostgreSQL
 - endpoints base protegidos por JWT y permisos
-- UI accesible y simple para continuar las historias de usuario
+- UI accesible orientada a configurar un tablero CAA y preparar la futura integracion con ESP32-S3
+- definicion inicial del rol del dispositivo fisico dentro del sistema
 - demo tecnica de proteccion de datos con `.\scripts\demo-security.ps1`
 
-No incluye aun persistencia avanzada de pictogramas ni flujos completos de gestion de usuarios.
+No incluye aun firmware funcional para la placa, sincronizacion real con ESP32 ni persistencia avanzada de pictogramas.

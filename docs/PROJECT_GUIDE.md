@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Este repositorio es la base tecnica del proyecto universitario STCS. Su objetivo no es solo servir como prototipo local, sino establecer una estructura clara para evolucionar hacia una plataforma web publica de comunicacion y seguimiento para ninos con TEA.
+Este repositorio es la base tecnica del proyecto universitario STCS. Su objetivo es establecer una estructura clara para evolucionar hacia un sistema compuesto por plataforma web y dispositivo fisico ESP32-S3, orientado a comunicacion con pictogramas y seguimiento para ninos con TEA.
 
 La base arquitectonica del proyecto ya esta definida y debe respetarse. Si necesitas revisar las decisiones tecnicas principales, consulta tambien `docs/TITLE_ARCHITECTURE.md`.
 
@@ -18,6 +18,7 @@ Responsabilidades:
 - organizar paginas y componentes reutilizables
 - consumir el backend desde `NEXT_PUBLIC_API_URL`
 - preparar vistas para comunicacion, emociones, historial y progreso
+- configurar el tablero CAA que usara el dispositivo ESP32-S3
 
 Carpetas importantes:
 
@@ -36,6 +37,7 @@ Responsabilidades:
 - centralizar validaciones y logica de negocio
 - administrar conexion a PostgreSQL
 - preparar control de acceso, usuarios, seguimiento y progreso
+- exponer servicios para sincronizar pictogramas, sesiones y registros del dispositivo
 
 Carpetas importantes:
 
@@ -43,6 +45,18 @@ Carpetas importantes:
 - `src/models`: tipos base del dominio
 - `src/modules`: modulos por dominio
 - `src/routes`: composicion principal de rutas
+
+### 3. Firmware ESP32
+
+Ubicacion: `firmware/`
+
+Responsabilidades:
+
+- preparar el futuro codigo del dispositivo ESP32-S3
+- definir flujo tactil para pantalla redonda
+- recibir o cargar configuraciones de pictogramas
+- guardar eventos basicos cuando no haya conexion
+- sincronizar registros con la plataforma web cuando exista Wi-Fi
 
 ## Base tecnica obligatoria
 
@@ -52,6 +66,8 @@ Las decisiones actuales del proyecto son:
 - Backend: `Node.js + Express + TypeScript`
 - Base de datos: `PostgreSQL` en `Supabase`
 - Storage visual: `Supabase Storage`
+- Dispositivo: `ESP32-S3` con pantalla redonda tactil
+- Firmware: `PlatformIO` o `Arduino IDE`
 - Entorno local: `Docker + Docker Compose`
 - Frontend publicado: `Vercel`
 - Backend publicado: `Render`
@@ -70,6 +86,7 @@ Actualmente existen bases para:
 - `auth`
 - `emotions`
 - `records`
+- `communication`
 
 El proyecto debe crecer hacia estos modulos objetivo:
 
@@ -79,6 +96,7 @@ El proyecto debe crecer hacia estos modulos objetivo:
 4. `emotions`
 5. `records`
 6. `progress`
+7. `device-sync`
 
 ## Convenciones recomendadas
 
@@ -86,6 +104,7 @@ El proyecto debe crecer hacia estos modulos objetivo:
 - Crear nuevos modulos del backend dentro de `backend/src/modules/<modulo>`.
 - Crear componentes reutilizables antes de repetir estructuras de UI.
 - Mantener el lenguaje del dominio consistente entre frontend, backend y base de datos.
+- Separar claramente funciones de cuidador/especialista y funciones del nino en el dispositivo.
 - Documentar decisiones importantes en `docs/`.
 - No introducir nuevas tecnologias sin justificacion tecnica clara.
 
@@ -133,6 +152,8 @@ Opcion manual:
 - autenticacion real con JWT y roles
 - gestion de usuarios y perfiles
 - integracion real de pictogramas
+- sincronizacion web-dispositivo ESP32
+- firmware inicial del comunicador fisico
 - historial y progreso persistente
 - pruebas automatizadas
 - despliegue publico en `Vercel + Render + Supabase`
