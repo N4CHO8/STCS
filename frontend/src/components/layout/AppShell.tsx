@@ -11,9 +11,9 @@ interface AppShellProps {
 
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
-  const isDashboardHome = pathname === "/";
+  const usesStandaloneLayout = pathname === "/" || pathname === "/login";
 
-  if (isDashboardHome) {
+  if (usesStandaloneLayout) {
     return <main>{children}</main>;
   }
 

@@ -1,4 +1,4 @@
-export type UserRole = "guardian" | "therapist" | "admin" | "child";
+export type UserRole = "guardian" | "therapist" | "admin" | "child" | "teacher";
 
 export interface AuthUser {
   id: string;
@@ -70,6 +70,8 @@ export const getRoleLabel = (role: UserRole): string => {
       return "Cuidador";
     case "therapist":
       return "Especialista";
+    case "teacher":
+      return "Docente";
     case "admin":
       return "Administrador";
     case "child":

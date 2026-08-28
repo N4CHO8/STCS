@@ -5,6 +5,7 @@ import { mapUser, UserRow } from "@/lib/server/auth";
 import { query } from "@/lib/server/db";
 import { createJwtToken } from "@/lib/server/jwt";
 import { getJwtSecret } from "@/lib/server/auth";
+import { ensureStcsSchema } from "@/lib/server/stcsData";
 
 export const dynamic = "force-dynamic";
 
@@ -20,6 +21,8 @@ export async function POST(request: NextRequest) {
       { status: 400 }
     );
   }
+
+  await ensureStcsSchema();
 
   const result = await query<UserRow>("SELECT * FROM users WHERE email = $1", [
     email.toLowerCase()
