@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
-import { Atkinson_Hyperlegible, Lexend } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 
 import { AppShell } from "@/components/layout/AppShell";
 
 import "./globals.css";
 
-const lexend = Lexend({
+const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-display"
 });
 
-const atkinson = Atkinson_Hyperlegible({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "700"],
   variable: "--font-body"
 });
 
@@ -29,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${lexend.variable} ${atkinson.variable}`}>
+      <body className={`${outfit.variable} ${inter.variable}`}>
         <AppShell>{children}</AppShell>
       </body>
     </html>
