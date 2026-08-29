@@ -50,7 +50,7 @@ La app crea tablas y datos demo al iniciar sesion si la base esta vacia.
 ## Usuarios demo
 
 ```text
-demo@stcs.local / Demo1234!       -> Cuidadora
+cuidadora@stcs.local / Demo1234!  -> Cuidadora
 docente@stcs.local / Demo1234!    -> Docente
 terapeuta@stcs.local / Demo1234!  -> Especialista
 admin@stcs.local / Demo1234!      -> Administrador

@@ -249,7 +249,7 @@ export const ensureStcsSchema = async () => {
 
 const seedStcsDemoData = async () => {
   const demoUsers = [
-    ["11111111-1111-1111-1111-111111111111", "Cuidadora Laura", "demo@stcs.local", "guardian"],
+    ["11111111-1111-1111-1111-111111111111", "Cuidadora Laura", "cuidadora@stcs.local", "guardian"],
     ["22222222-2222-2222-2222-222222222222", "Especialista Marco", "terapeuta@stcs.local", "therapist"],
     ["33333333-3333-3333-3333-333333333333", "Administrador Demo", "admin@stcs.local", "admin"],
     ["44444444-4444-4444-4444-444444444444", "Mateo Rojas", "mateo@stcs.local", "child"],
@@ -290,11 +290,8 @@ const seedStcsDemoData = async () => {
 
   await query(
     `INSERT INTO devices (id, student_profile_id, device_code, name, status, battery_level, wifi_ssid, firmware_version, last_sync_at)
-     VALUES ($1, $2, 'STCS-ESP32-001', 'Comunicador Mateo', 'connected', 82, 'Casa_2.4G', 'v0.1.0', NOW() - INTERVAL '18 minutes')
+     VALUES ($1, $2, 'STCS-ESP32-001', 'Comunicador Mateo', 'pending', 0, NULL, 'v0.1.0', NULL)
      ON CONFLICT (device_code) DO UPDATE SET
-       status = EXCLUDED.status,
-       battery_level = EXCLUDED.battery_level,
-       wifi_ssid = EXCLUDED.wifi_ssid,
        firmware_version = EXCLUDED.firmware_version,
        updated_at = NOW()`,
     [DEVICE_ID, MATEO_PROFILE_ID]
@@ -322,48 +319,8 @@ const seedStcsDemoData = async () => {
     );
   }
 
-  const existingEvents = await query<{ count: string }>(
-    "SELECT COUNT(*)::text AS count FROM device_events WHERE student_profile_id = $1",
-    [MATEO_PROFILE_ID]
-  );
-
-  if (Number(existingEvents.rows[0].count) > 0) {
-    return;
-  }
-
-  const events = [
-    ["pictogram_selected", "Selecciono: Agua", "Casa", "Dispositivo ESP32", null, null, { category: "Necesidades", pictogramId: "e0000000-0000-0000-0000-000000000001" }, "30 minutes"],
-    ["emotion_recorded", "Emocion: Ansioso", "Colegio", "Docente Ana", "ansioso", 3, { category: "Emociones" }, "2 hours"],
-    ["sync_completed", "Sincronizacion completada", "Dispositivo", "Sistema", null, null, { category: "Sistema" }, "4 hours"],
-    ["pictogram_selected", "Selecciono: Comer", "Casa", "Dispositivo ESP32", null, null, { category: "Necesidades", pictogramId: "e0000000-0000-0000-0000-000000000002" }, "1 day"],
-    ["emotion_recorded", "Emocion: Tranquilo", "Casa", "Cuidadora Laura", "tranquilo", 4, { category: "Emociones" }, "1 day"],
-    ["pictogram_selected", "Selecciono: Ayuda", "Colegio", "Dispositivo ESP32", null, null, { category: "Apoyo", pictogramId: "e0000000-0000-0000-0000-000000000004" }, "2 days"],
-    ["pictogram_selected", "Selecciono: Colegio", "Casa", "Dispositivo ESP32", null, null, { category: "Lugares", pictogramId: "e0000000-0000-0000-0000-000000000008" }, "3 days"],
-    ["emotion_recorded", "Emocion: Feliz", "Terapia", "Especialista Marco", "feliz", 5, { category: "Emociones" }, "4 days"]
-  ];
-
-  for (const event of events) {
-    await query(
-      `INSERT INTO device_events (
-         id, device_id, student_profile_id, event_type, action_label, context,
-         actor_name, emotion, intensity, payload, occurred_at
-       )
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10::jsonb, NOW() - ($11::interval))`,
-      [
-        randomUUID(),
-        DEVICE_ID,
-        MATEO_PROFILE_ID,
-        event[0],
-        event[1],
-        event[2],
-        event[3],
-        event[4],
-        event[5],
-        JSON.stringify(event[6]),
-        event[7]
-      ]
-    );
-  }
+  // No se crean eventos demo: historial, metricas y progreso deben quedar vacios
+  // hasta que el ESP32 real envie datos a la API.
 };
 
 const getAccessibleProfile = async (
@@ -426,6 +383,7 @@ export const getStcsOverview = async (
         `SELECT *
          FROM device_events
          WHERE student_profile_id = $1
+           AND payload->>'source' = 'esp32-device'
          ORDER BY occurred_at DESC
          LIMIT 10`,
         [profile.id]
@@ -435,10 +393,12 @@ export const getStcsOverview = async (
            COUNT(*) FILTER (
              WHERE event_type = 'pictogram_selected'
                AND occurred_at::date = CURRENT_DATE
+               AND payload->>'source' = 'esp32-device'
            )::int AS interactions_today,
            COUNT(*) FILTER (
              WHERE event_type = 'emotion_recorded'
                AND occurred_at::date = CURRENT_DATE
+               AND payload->>'source' = 'esp32-device'
            )::int AS emotions_today
          FROM device_events
          WHERE student_profile_id = $1`,
@@ -452,6 +412,7 @@ export const getStcsOverview = async (
          LEFT JOIN device_events de
            ON de.student_profile_id = $1
           AND de.event_type = 'pictogram_selected'
+          AND de.payload->>'source' = 'esp32-device'
           AND de.occurred_at::date = days.day::date
          GROUP BY days.day
          ORDER BY days.day`,
@@ -460,7 +421,9 @@ export const getStcsOverview = async (
       query<{ name: string; value: number }>(
         `SELECT COALESCE(payload->>'category', 'Sistema') AS name, COUNT(*)::int AS value
          FROM device_events
-         WHERE student_profile_id = $1 AND event_type = 'pictogram_selected'
+         WHERE student_profile_id = $1
+           AND event_type = 'pictogram_selected'
+           AND payload->>'source' = 'esp32-device'
          GROUP BY COALESCE(payload->>'category', 'Sistema')
          ORDER BY value DESC`,
         [profile.id]
@@ -474,6 +437,7 @@ export const getStcsOverview = async (
          LEFT JOIN device_events de
            ON de.student_profile_id = $1
           AND de.event_type = 'emotion_recorded'
+          AND de.payload->>'source' = 'esp32-device'
           AND de.occurred_at::date BETWEEN days.day::date AND (days.day::date + 4)
          GROUP BY days.day
          ORDER BY days.day`,
@@ -518,6 +482,7 @@ export const createDeviceEvent = async (
     category?: string;
     emotion?: string;
     intensity?: number;
+    source?: string;
   }
 ): Promise<DeviceEvent> => {
   await ensureStcsSchema();
@@ -545,7 +510,7 @@ export const createDeviceEvent = async (
   const payload = {
     pictogramId: input.pictogramId ?? null,
     category: input.category ?? "Sistema",
-    source: "web-simulation"
+    source: input.source ?? "esp32-device"
   };
 
   const result = await query<EventRow>(

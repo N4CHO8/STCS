@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
     category?: string;
     emotion?: string;
     intensity?: number;
+    source?: string;
   };
 
   if (!input.eventType || !input.actionLabel) {
@@ -37,12 +38,13 @@ export async function POST(request: NextRequest) {
       pictogramId: input.pictogramId,
       category: input.category,
       emotion: input.emotion,
-      intensity: input.intensity
+      intensity: input.intensity,
+      source: input.source
     });
 
     return NextResponse.json(
       {
-        message: "Evento ficticio del ESP32 guardado en la base de datos.",
+        message: "Evento del ESP32 guardado en la base de datos.",
         data: event
       },
       { status: 201 }
