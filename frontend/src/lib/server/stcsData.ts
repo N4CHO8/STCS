@@ -263,8 +263,10 @@ const seedStcsDemoData = async () => {
     await query(
       `INSERT INTO users (id, full_name, email, password_hash, role)
        VALUES ($1, $2, $3, $4, $5)
-       ON CONFLICT (email) DO UPDATE SET
+       ON CONFLICT (id) DO UPDATE SET
          full_name = EXCLUDED.full_name,
+         email = EXCLUDED.email,
+         password_hash = EXCLUDED.password_hash,
          role = EXCLUDED.role,
          updated_at = NOW()`,
       [id, fullName, email, demoPasswordHash, role]

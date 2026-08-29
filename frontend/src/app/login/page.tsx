@@ -69,7 +69,7 @@ async function authenticateUser(email: string, password: string): Promise<AuthSe
     body: JSON.stringify({ email, password })
   });
 
-  const payload = (await response.json()) as AuthSession & { message?: string };
+  const payload = await parseAuthResponse(response);
 
   if (!response.ok || !payload.token || !payload.user) {
     throw new Error(payload.message ?? "Credenciales invalidas.");
@@ -80,6 +80,24 @@ async function authenticateUser(email: string, password: string): Promise<AuthSe
     expiresIn: payload.expiresIn,
     user: payload.user
   };
+}
+
+async function parseAuthResponse(response: Response): Promise<AuthSession & { message?: string }> {
+  const text = await response.text();
+
+  if (!text) {
+    return {
+      message: "La API no devolvio una respuesta valida."
+    } as AuthSession & { message?: string };
+  }
+
+  try {
+    return JSON.parse(text) as AuthSession & { message?: string };
+  } catch {
+    return {
+      message: "La API devolvio una respuesta no valida."
+    } as AuthSession & { message?: string };
+  }
 }
 
 function LoginBrandPanel() {

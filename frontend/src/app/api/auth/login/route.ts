@@ -10,50 +10,62 @@ import { ensureStcsSchema } from "@/lib/server/stcsData";
 export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
-  const { email, password } = (await request.json()) as {
-    email?: string;
-    password?: string;
-  };
+  try {
+    const { email, password } = (await request.json()) as {
+      email?: string;
+      password?: string;
+    };
 
-  if (!email || !password) {
+    if (!email || !password) {
+      return NextResponse.json(
+        { message: "email y password son obligatorios." },
+        { status: 400 }
+      );
+    }
+
+    await ensureStcsSchema();
+
+    const result = await query<UserRow>("SELECT * FROM users WHERE email = $1", [
+      email.toLowerCase()
+    ]);
+
+    if (!result.rowCount) {
+      return NextResponse.json({ message: "Credenciales invalidas." }, { status: 401 });
+    }
+
+    const user = result.rows[0];
+    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+
+    if (!isPasswordValid) {
+      return NextResponse.json({ message: "Credenciales invalidas." }, { status: 401 });
+    }
+
+    const token = createJwtToken(
+      {
+        sub: user.id,
+        email: user.email,
+        role: user.role,
+        fullName: user.full_name
+      },
+      getJwtSecret(),
+      60 * 60 * 2
+    );
+
+    return NextResponse.json({
+      message: "Inicio de sesion exitoso.",
+      token,
+      expiresIn: "2h",
+      user: mapUser(user)
+    });
+  } catch (error) {
     return NextResponse.json(
-      { message: "email y password son obligatorios." },
-      { status: 400 }
+      {
+        message:
+          error instanceof Error
+            ? error.message
+            : "No fue posible procesar el inicio de sesion."
+      },
+      { status: 500 }
     );
   }
-
-  await ensureStcsSchema();
-
-  const result = await query<UserRow>("SELECT * FROM users WHERE email = $1", [
-    email.toLowerCase()
-  ]);
-
-  if (!result.rowCount) {
-    return NextResponse.json({ message: "Credenciales invalidas." }, { status: 401 });
-  }
-
-  const user = result.rows[0];
-  const isPasswordValid = await bcrypt.compare(password, user.password_hash);
-
-  if (!isPasswordValid) {
-    return NextResponse.json({ message: "Credenciales invalidas." }, { status: 401 });
-  }
-
-  const token = createJwtToken(
-    {
-      sub: user.id,
-      email: user.email,
-      role: user.role,
-      fullName: user.full_name
-    },
-    getJwtSecret(),
-    60 * 60 * 2
-  );
-
-  return NextResponse.json({
-    message: "Inicio de sesion exitoso.",
-    token,
-    expiresIn: "2h",
-    user: mapUser(user)
-  });
 }
