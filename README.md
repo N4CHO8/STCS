@@ -1,130 +1,92 @@
 # STCS
 
-Base funcional para STCS, un sistema de comunicacion aumentativa y alternativa para ninos con TEA. El proyecto combina una plataforma web para cuidadores y especialistas con un futuro dispositivo fisico basado en ESP32-S3 con pantalla redonda tactil.
+STCS es un proyecto de comunicacion aumentativa y alternativa para ninos con TEA. La version final se organiza en tres piezas principales:
 
-## Base tecnica definida
+- Plataforma web para cuidadores, docentes, especialistas y administradores.
+- Base de datos PostgreSQL en Supabase.
+- Dispositivo fisico ESP32-S3 con pantalla redonda tactil programado con PlatformIO.
 
-Este repositorio ya tiene una decision tecnica tomada y debe respetarse al continuar el proyecto:
+El nino interactua con el dispositivo ESP32. La web se usa para configurar pictogramas, revisar eventos, consultar historial y analizar progreso.
 
-- Frontend: `Next.js 14 + React 18 + TypeScript`
-- Backend: `Node.js + Express + TypeScript`
-- Base de datos: `PostgreSQL` en `Supabase`
-- Storage de recursos visuales: `Supabase Storage`
-- Dispositivo objetivo: `ESP32-S3` con pantalla redonda tactil
-- Firmware objetivo: `PlatformIO` o `Arduino IDE`
-- Entorno local: `Docker + Docker Compose`
-- Despliegue objetivo:
-  - frontend en `Vercel`
-  - backend en `Render`
-  - base de datos en `Supabase`
-- Versionamiento: `Git + GitHub`
-- Testing objetivo:
-  - `Vitest` para unitarias
-  - `Supertest` para integracion
-  - `Playwright` para E2E
+## Stack final
 
-Si una futura rama quiere cambiar esta base, primero debe justificarlo y actualizar la documentacion en `docs/`.
+- Web: `Next.js 14`, `React`, `TypeScript`, `Tailwind CSS`.
+- API: `Next.js API Routes` dentro de `frontend/src/app/api`.
+- Base de datos: `Supabase PostgreSQL`.
+- Firmware: `PlatformIO + Arduino framework`.
+- Dispositivo objetivo: `Waveshare ESP32-S3-Touch-LCD-1.46`.
+- Despliegue web: `Vercel`.
+- Versionamiento: `Git + GitHub`.
 
 ## Estructura
 
 ```text
 STCS/
-|- backend/                  # API REST y logica de negocio
-|- docker/                   # inicializacion y soporte de entorno local
-|- docs/                     # documentacion tecnica y de trabajo
-|- firmware/                 # base documental para el futuro codigo ESP32-S3
-|- frontend/                 # aplicacion web en Next.js
-|- scripts/                  # arranque, apagado y reseteo local
-|- .env.example              # variables de entorno de referencia
-|- docker-compose.yml        # orquestacion local
+|- frontend/                 # Plataforma web y API routes para Vercel
+|- firmware/
+|  |- stcs-esp32/             # Proyecto PlatformIO del dispositivo
+|- docs/                     # Documentacion vigente del proyecto
+|- supabase/                 # Esquema SQL base para Supabase
+|- .env.example              # Variables necesarias para desarrollo
+|- .env.production.example   # Variables necesarias para Vercel
 ```
 
-## Primer uso
+## Ejecutar la plataforma web
 
-### Opcion rapida recomendada
-
-En PowerShell:
+1. Crear `.env` desde `.env.example`.
+2. Completar `DATABASE_URL` con la cadena de conexion de Supabase.
+3. Entrar al frontend e instalar dependencias:
 
 ```powershell
-.\scripts\dev-up.ps1
+cd frontend
+npm install
+npm run dev
 ```
 
-En macOS o Linux:
+4. Abrir [http://localhost:3000](http://localhost:3000).
 
-```bash
-./scripts/dev-up.sh
+La app crea tablas y datos demo al iniciar sesion si la base esta vacia.
+
+## Usuarios demo
+
+```text
+demo@stcs.local / Demo1234!       -> Cuidadora
+docente@stcs.local / Demo1234!    -> Docente
+terapeuta@stcs.local / Demo1234!  -> Especialista
+admin@stcs.local / Demo1234!      -> Administrador
 ```
 
-Estos scripts:
+## Ejecutar el firmware
 
-- crean `.env` automaticamente desde `.env.example` si todavia no existe
-- levantan frontend, backend y base de datos con Docker
+1. Instalar Visual Studio Code.
+2. Instalar la extension PlatformIO IDE.
+3. Abrir el proyecto `firmware/stcs-esp32`.
+4. Ejecutar `Build`.
+5. Cuando la placa este disponible, conectar por USB-C y ejecutar `Upload`.
+6. Abrir `Serial Monitor` a `115200`.
 
-### Opcion manual
+El firmware actual valida ambiente, memoria, catalogo inicial de pictogramas y escaneo Wi-Fi. La integracion real de pantalla/touch se hara con los ejemplos oficiales de Waveshare.
 
-1. Copia `.env.example` a `.env`.
-2. Ejecuta `docker compose up --build`.
-3. Abre:
-   - Frontend: [http://localhost:3000](http://localhost:3000)
-   - Backend: [http://localhost:4000/api](http://localhost:4000/api)
-   - Healthcheck: [http://localhost:4000/api/health](http://localhost:4000/api/health)
+## Documentacion util
 
-## Servicios disponibles
-
-- `frontend`: plataforma web para configurar pictogramas, probar comunicacion CAA y revisar seguimiento.
-- `backend`: API REST con rutas base para autenticacion, emociones y registros.
-- `database`: PostgreSQL local para desarrollo.
-- `firmware`: espacio reservado para el comunicador fisico ESP32-S3.
-
-## Comandos utiles
-
-```bash
-docker compose up --build
-docker compose down
-docker compose down -v
-```
-
-Para validar la base de datos configurada en `.env`:
-
-```bash
-cd backend
-npm run db:check
-npm run db:apply-schema
-```
-
-Tambien puedes usar:
-
-- `.\scripts\dev-up.ps1`
-- `.\scripts\dev-down.ps1`
-- `.\scripts\dev-reset.ps1`
-
-## Flujo recomendado
-
-- Leer `docs/PROJECT_GUIDE.md` antes de abrir una nueva rama.
-- Respetar `docs/TITLE_ARCHITECTURE.md` como contrato tecnico del proyecto.
-- Usar `frontend/src/app` para rutas y `frontend/src/components` para componentes reutilizables.
-- Usar `backend/src/modules` para separar dominios del backend.
-- Mantener cada rama enfocada en una historia de usuario o mejora tecnica concreta.
-
-## Documentacion del equipo
-
-- Guia general del proyecto: [docs/PROJECT_GUIDE.md](./docs/PROJECT_GUIDE.md)
-- Endpoints base del backend: [docs/API_BASE.md](./docs/API_BASE.md)
-- Arquitectura y decisiones objetivo: [docs/TITLE_ARCHITECTURE.md](./docs/TITLE_ARCHITECTURE.md)
-- Guia de despliegue: [docs/DEPLOYMENT_GUIDE.md](./docs/DEPLOYMENT_GUIDE.md)
-- Mitigacion de riesgo tecnico: [docs/SECURITY_MITIGATION.md](./docs/SECURITY_MITIGATION.md)
-- Reglas para contribuir al repo: [CONTRIBUTING.md](./CONTRIBUTING.md)
+- [Alcance funcional web + ESP32](./docs/ALCANCE_FUNCIONAL_WEB_ESP32.md)
+- [Arquitectura final](./docs/ARQUITECTURA_FINAL.md)
+- [Esquema Supabase](./supabase/schema.sql)
+- [Firmware ESP32](./firmware/stcs-esp32/README.md)
 
 ## Estado actual
 
-Esta base deja listo:
+- Web redisenada para adultos responsables del nino.
+- Login con perfiles demo.
+- Dashboard protegido con datos desde Supabase.
+- Eventos ficticios del ESP32 guardados en base de datos.
+- Historial y graficos alimentados desde eventos registrados.
+- Proyecto PlatformIO creado y compilando correctamente.
 
-- entorno local completo con Docker
-- estructura inicial de frontend y backend
-- conexion a PostgreSQL
-- endpoints base protegidos por JWT y permisos
-- UI accesible orientada a configurar un tablero CAA y preparar la futura integracion con ESP32-S3
-- definicion inicial del rol del dispositivo fisico dentro del sistema
-- demo tecnica de proteccion de datos con `.\scripts\demo-security.ps1`
+## Pendientes principales
 
-No incluye aun firmware funcional para la placa, sincronizacion real con ESP32 ni persistencia avanzada de pictogramas.
+- Integrar drivers oficiales de pantalla/touch Waveshare.
+- Mostrar pictogramas reales en la pantalla redonda.
+- Enviar eventos reales desde ESP32 a la API.
+- Agregar gestion completa de pictogramas desde la web.
+- Automatizar pruebas de los flujos principales.

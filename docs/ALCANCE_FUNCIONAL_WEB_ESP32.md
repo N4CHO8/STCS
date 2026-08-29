@@ -1,6 +1,6 @@
 # Alcance funcional de la plataforma web STCS
 
-La plataforma web STCS esta orientada a cuidadores, docentes, especialistas y administradores. El nino no interactua directamente con la web: la comunicacion principal ocurre mediante el dispositivo fisico ESP32-S3 con pantalla redonda.
+La plataforma web STCS esta orientada a cuidadores, docentes, especialistas y administradores. El nino no interactua directamente con la web: la comunicacion principal ocurre mediante el dispositivo fisico Waveshare ESP32-S3-Touch-LCD-1.46 con pantalla redonda tactil.
 
 ## Funcionalidades implementadas para el prototipo
 
@@ -14,7 +14,7 @@ La plataforma web STCS esta orientada a cuidadores, docentes, especialistas y ad
 
 5. Simulacion de datos del ESP32: como aun no existe el dispositivo fisico conectado, la web permite registrar eventos ficticios al seleccionar pictogramas, sincronizar o reiniciar el dispositivo.
 
-6. Persistencia en base de datos: los eventos simulados se guardan en PostgreSQL/Supabase mediante API routes de Next.js.
+6. Persistencia en base de datos: los eventos simulados se guardan en PostgreSQL/Supabase mediante API Routes de Next.js desplegadas en Vercel.
 
 7. Historial: la web muestra los ultimos eventos registrados, indicando accion, contexto, actor y fecha.
 

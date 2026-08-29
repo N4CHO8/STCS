@@ -1,10 +1,14 @@
 # Firmware ESP32-S3
 
-Esta carpeta queda reservada para el futuro firmware del comunicador fisico STCS.
-
 ## Objetivo del dispositivo
 
-El dispositivo ESP32-S3 con pantalla redonda tactil funcionara como un comunicador CAA portatil. Su objetivo es permitir que el nino seleccione pictogramas frecuentes sin depender de un celular o computador.
+El dispositivo Waveshare ESP32-S3-Touch-LCD-1.46 funcionara como un comunicador CAA portatil. Su objetivo es permitir que el nino seleccione pictogramas frecuentes desde una pantalla redonda tactil, sin depender de un celular o computador.
+
+El proyecto PlatformIO activo esta en:
+
+```text
+firmware/stcs-esp32
+```
 
 ## Responsabilidades esperadas
 
@@ -18,8 +22,8 @@ El dispositivo ESP32-S3 con pantalla redonda tactil funcionara como un comunicad
 
 - Placa: ESP32-S3.
 - Pantalla: redonda tactil.
-- Firmware: PlatformIO o Arduino IDE.
-- Comunicacion: HTTPS/JSON con la API del backend.
+- Firmware: PlatformIO con Arduino framework.
+- Comunicacion: HTTPS/JSON con las API Routes de Next.js desplegadas en Vercel.
 - Persistencia local: memoria flash para configuracion y cola de eventos pendientes.
 
 ## Primera iteracion sugerida
@@ -29,7 +33,7 @@ El dispositivo ESP32-S3 con pantalla redonda tactil funcionara como un comunicad
 3. Detectar coordenadas tactiles.
 4. Mostrar una grilla inicial de 4 a 6 pictogramas.
 5. Registrar seleccion localmente.
-6. Preparar envio futuro al backend cuando exista Wi-Fi.
+6. Preparar envio futuro a las API Routes de la plataforma web cuando exista Wi-Fi.
 
 ## Relacion con la app web
 

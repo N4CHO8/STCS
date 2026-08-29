@@ -1,100 +1,47 @@
 # Contribuir a STCS
 
-## Objetivo
+Este repositorio debe mantenerse alineado con la arquitectura final definida para el proyecto: web en Vercel, base de datos en Supabase y dispositivo ESP32-S3 con PlatformIO.
 
-Este archivo define como continuar el proyecto sin romper la arquitectura ya acordada. Antes de implementar una historia nueva, revisa este documento junto a `README.md` y `docs/TITLE_ARCHITECTURE.md`.
+## Linea base
 
-## Decisiones tecnicas que se deben respetar
+La rama `main` representa la linea base estable. Cada avance importante debe quedar en un commit claro y, cuando corresponda, asociado a una tarea de Jira.
 
-- Frontend obligatorio: `Next.js + TypeScript`
-- Backend obligatorio: `Node.js + Express + TypeScript`
-- Base de datos obligatoria: `PostgreSQL` en `Supabase`
-- Storage de pictogramas e imagenes: `Supabase Storage`
-- Entorno local obligatorio: `Docker + Docker Compose`
-- Frontend productivo: `Vercel`
-- Backend productivo: `Render`
-- Versionamiento: `Git + GitHub`
-- Testing objetivo:
-  - `Vitest` para unitarias
-  - `Supertest` para integracion
-  - `Playwright` para E2E
-- Gestion del proyecto: `GitHub Projects`
+## Ramas
 
-No cambies estas decisiones sin documentar la razon tecnica y actualizar `docs/`.
+- `main`: version estable del proyecto.
+- `feature/<nombre>`: nuevas funcionalidades.
+- `fix/<nombre>`: correcciones.
+- `docs/<nombre>`: cambios de documentacion.
+- `firmware/<nombre>`: trabajo especifico del ESP32.
 
-## Arquitectura que debe seguirse
+## Convenciones de commit
 
-### Frontend
+Usar mensajes breves en espanol:
 
-- `src/app` para rutas y paginas.
-- `src/components` para componentes reutilizables.
-- `src/features` para logica por dominio a medida que el proyecto crezca.
-- `src/services` para llamadas a la API.
-- `src/types` para tipos compartidos del frontend.
+```text
+feat: agregar configuracion inicial del ESP32
+fix: corregir carga de eventos del dashboard
+docs: actualizar arquitectura final
+chore: limpiar archivos obsoletos
+```
 
-### Backend
+## Reglas de desarrollo
 
-- `src/routes` para composicion general de rutas.
-- `src/modules/<dominio>` para separar cada modulo del sistema.
-- Dentro de cada modulo, separar al menos:
-  - `routes`
-  - `controllers`
-  - `services`
-- Mantener la logica HTTP separada de la logica de negocio.
+- No volver a introducir backend Express, Docker o Render sin justificarlo.
+- Usar API Routes de Next.js para la API desplegada en Vercel.
+- Usar Supabase PostgreSQL como fuente principal de datos.
+- Mantener el firmware dentro de `firmware/stcs-esp32`.
+- No subir archivos temporales de presentacion como `.pptx`.
+- Actualizar `README.md` o `docs/` cuando cambie arquitectura, variables o flujo del dispositivo.
 
-### Dominios objetivo del sistema
+## Validacion antes de commit
 
-- `auth`
-- `users`
-- `communication`
-- `emotions`
-- `records`
-- `progress`
+```powershell
+cd frontend
+npm run build
+```
 
-## Regla para nuevas ramas
-
-Usar esta estrategia:
-
-- `main`: version estable
-- `develop`: integracion
-- `feature/<nombre-corto>`: funcionalidad nueva
-- `fix/<nombre-corto>`: correccion tecnica
-
-Cada rama debe abordar una sola historia de usuario o una mejora tecnica concreta.
-
-## Regla para pruebas
-
-Cuando una funcionalidad agregue logica real, debe venir acompanada por pruebas acordes:
-
-- logica aislada: `Vitest`
-- endpoints o contratos HTTP: `Supertest`
-- flujos completos de usuario: `Playwright`
-
-Si una rama no agrega tests porque aun es solo estructura, debe dejarlo explicado en el PR.
-
-## Regla para documentacion
-
-Actualiza documentacion cuando una rama cambie:
-
-- arquitectura
-- contratos API
-- estructura de datos
-- variables de entorno
-- despliegue
-
-Archivos a revisar segun el cambio:
-
-- `README.md`
-- `docs/API_BASE.md`
-- `docs/PROJECT_GUIDE.md`
-- `docs/TITLE_ARCHITECTURE.md`
-
-## Regla para despliegue
-
-- Desarrollo local: `Docker Compose`
-- Frontend publicado: `Vercel`
-- Backend publicado: `Render`
-- Base de datos: `Supabase`
-- Recursos visuales: `Supabase Storage`
-
-No construir nuevas funcionalidades pensando solo en local. Cada modulo debe poder evolucionar despues a esta arquitectura objetivo.
+```powershell
+cd firmware/stcs-esp32
+C:\Users\nacho\.platformio\penv\Scripts\platformio.exe run
+```

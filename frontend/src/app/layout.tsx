@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 
-import { AppShell } from "@/components/layout/AppShell";
-
 import "./globals.css";
 
 const outfit = Outfit({
@@ -29,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${outfit.variable} ${inter.variable}`}>
-        <AppShell>{children}</AppShell>
+        {children}
       </body>
     </html>
   );
