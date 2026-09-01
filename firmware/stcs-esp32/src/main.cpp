@@ -21,10 +21,38 @@ void printDeviceInfo() {
   Serial.println("STCS - Prototipo ESP32");
   Serial.println("----------------------");
   Serial.printf("Dispositivo: %s\n", STCS_DEVICE_ID);
+  Serial.printf("API base: %s\n", STCS_API_BASE_URL);
   Serial.printf("Pantalla objetivo: %dx%d px\n", STCS_SCREEN_WIDTH, STCS_SCREEN_HEIGHT);
   Serial.printf("Flash detectada: %u MB\n", ESP.getFlashChipSize() / (1024 * 1024));
   Serial.printf("PSRAM detectada: %s\n", psramFound() ? "si" : "no");
   Serial.printf("Memoria libre: %u bytes\n", ESP.getFreeHeap());
+}
+
+void printApiContracts() {
+  JsonDocument configRequest;
+  configRequest["method"] = "GET";
+  configRequest["url"] = String(STCS_API_BASE_URL) + "/devices/" + STCS_DEVICE_ID + "/config";
+  configRequest["header"] = "x-stcs-device-key";
+
+  JsonDocument eventRequest;
+  eventRequest["method"] = "POST";
+  eventRequest["url"] = String(STCS_API_BASE_URL) + "/devices/" + STCS_DEVICE_ID + "/events";
+  JsonObject body = eventRequest["body"].to<JsonObject>();
+  body["eventType"] = "pictogram_selected";
+  body["pictogramId"] = "agua";
+  body["category"] = "Necesidades";
+  body["message"] = "quiero agua";
+  body["batteryLevel"] = 85;
+
+  Serial.println();
+  Serial.println("Contrato para descargar configuracion:");
+  serializeJsonPretty(configRequest, Serial);
+  Serial.println();
+
+  Serial.println();
+  Serial.println("Contrato para enviar eventos:");
+  serializeJsonPretty(eventRequest, Serial);
+  Serial.println();
 }
 
 void printInitialCatalog() {
@@ -79,6 +107,7 @@ void setup() {
 
   printDeviceInfo();
   printInitialCatalog();
+  printApiContracts();
   scanWifiNetworks();
 
   Serial.println();

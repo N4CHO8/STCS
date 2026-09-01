@@ -24,6 +24,17 @@ STCS usa una arquitectura web + dispositivo IoT. La plataforma web administra co
 6. La API guarda eventos en Supabase.
 7. La web muestra historial, metricas y progreso.
 
+## Endpoints del dispositivo
+
+El ESP32 usara una API key privada mediante el header `x-stcs-device-key`.
+
+```text
+GET /api/stcs/devices/{deviceCode}/config
+POST /api/stcs/devices/{deviceCode}/events
+```
+
+El primer endpoint entrega la configuracion activa del tablero. El segundo registra eventos reales del dispositivo, como seleccion de pictogramas, sincronizacion, estado de bateria o errores tecnicos.
+
 ## Decisiones
 
 - La web no esta disenada para uso directo del nino.

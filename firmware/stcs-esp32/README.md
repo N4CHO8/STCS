@@ -28,9 +28,33 @@ El firmware inicial valida que el ambiente funcione antes de integrar pantalla y
 
 - Compila con framework Arduino.
 - Imprime informacion del dispositivo por monitor serial.
+- Imprime la URL base de la API STCS.
 - Detecta Flash y PSRAM.
 - Carga un catalogo inicial de pictogramas en JSON.
+- Documenta el contrato HTTP para descargar configuracion y enviar eventos.
 - Escanea redes Wi-Fi cercanas.
+
+## Contrato inicial con la plataforma web
+
+El dispositivo se comunicara con la plataforma mediante Wi-Fi usando HTTP/HTTPS y una API key privada en el header `x-stcs-device-key`.
+
+```text
+GET /api/stcs/devices/STCS-ESP32-001/config
+POST /api/stcs/devices/STCS-ESP32-001/events
+```
+
+Ejemplo de evento enviado por el ESP32:
+
+```json
+{
+  "eventType": "pictogram_selected",
+  "pictogramId": "agua",
+  "category": "Necesidades",
+  "message": "quiero agua",
+  "batteryLevel": 85,
+  "firmwareVersion": "v0.1.0"
+}
+```
 
 ## Siguiente paso
 

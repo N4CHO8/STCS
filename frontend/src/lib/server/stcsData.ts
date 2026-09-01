@@ -67,6 +67,12 @@ export interface StcsOverview {
   recentActivity: DeviceEvent[];
 }
 
+export interface DeviceBoardConfig {
+  device: DeviceInfo;
+  profile: StudentProfile;
+  pictograms: PictogramConfig[];
+}
+
 interface ProfileRow extends QueryResultRow {
   id: string;
   child_user_id: string;
@@ -78,6 +84,7 @@ interface ProfileRow extends QueryResultRow {
 
 interface DeviceRow extends QueryResultRow {
   id: string;
+  student_profile_id: string;
   device_code: string;
   name: string;
   status: string;
@@ -156,6 +163,32 @@ const mapEvent = (row: EventRow): DeviceEvent => ({
   occurredAt: row.occurred_at.toISOString(),
   payload: row.payload ?? {}
 });
+
+const getDeviceByCode = async (deviceCode: string): Promise<DeviceRow> => {
+  const result = await query<DeviceRow>(
+    "SELECT * FROM devices WHERE device_code = $1 LIMIT 1",
+    [deviceCode]
+  );
+
+  if (!result.rowCount) {
+    throw new Error("No existe un dispositivo asociado a ese codigo.");
+  }
+
+  return result.rows[0];
+};
+
+const getProfileById = async (profileId: string): Promise<StudentProfile> => {
+  const result = await query<ProfileRow>(
+    "SELECT * FROM student_profiles WHERE id = $1 LIMIT 1",
+    [profileId]
+  );
+
+  if (!result.rowCount) {
+    throw new Error("No existe un perfil asociado al dispositivo.");
+  }
+
+  return mapProfile(result.rows[0]);
+};
 
 export const ensureStcsSchema = async () => {
   if (schemaReady) {
@@ -474,6 +507,39 @@ export const getStcsOverview = async (
   };
 };
 
+export const getDeviceBoardConfig = async (
+  deviceCode: string
+): Promise<DeviceBoardConfig> => {
+  await ensureStcsSchema();
+
+  const device = await getDeviceByCode(deviceCode);
+  const profile = await getProfileById(device.student_profile_id);
+  const pictogramsResult = await query<PictogramRow>(
+    `SELECT *
+     FROM pictograms
+     WHERE student_profile_id = $1 AND is_active = TRUE
+     ORDER BY position ASC, label ASC`,
+    [device.student_profile_id]
+  );
+
+  await query(
+    `UPDATE devices
+     SET status = 'connected', last_sync_at = NOW(), updated_at = NOW()
+     WHERE id = $1`,
+    [device.id]
+  );
+
+  return {
+    device: mapDevice({
+      ...device,
+      status: "connected",
+      last_sync_at: new Date()
+    }),
+    profile,
+    pictograms: pictogramsResult.rows.map(mapPictogram)
+  };
+};
+
 export const createDeviceEvent = async (
   authUser: AuthTokenPayload,
   input: {
@@ -544,6 +610,74 @@ export const createDeviceEvent = async (
       [device.id]
     );
   }
+
+  return mapEvent(result.rows[0]);
+};
+
+export const createDeviceEventFromDevice = async (
+  deviceCode: string,
+  input: {
+    eventType: string;
+    actionLabel?: string;
+    context?: string;
+    pictogramId?: string;
+    category?: string;
+    message?: string;
+    emotion?: string;
+    intensity?: number;
+    batteryLevel?: number;
+    firmwareVersion?: string;
+    wifiSsid?: string;
+  }
+): Promise<DeviceEvent> => {
+  await ensureStcsSchema();
+
+  const device = await getDeviceByCode(deviceCode);
+  const eventType = input.eventType || "pictogram_selected";
+  const payload = {
+    category: input.category ?? "Sistema",
+    message: input.message ?? null,
+    pictogramId: input.pictogramId ?? null,
+    source: "esp32-device"
+  };
+
+  const result = await query<EventRow>(
+    `INSERT INTO device_events (
+       id, device_id, student_profile_id, event_type, action_label, context,
+       actor_name, emotion, intensity, payload, occurred_at
+     )
+     VALUES ($1, $2, $3, $4, $5, $6, 'Dispositivo ESP32', $7, $8, $9::jsonb, NOW())
+     RETURNING *`,
+    [
+      randomUUID(),
+      device.id,
+      device.student_profile_id,
+      eventType,
+      input.actionLabel ?? "Evento del dispositivo",
+      input.context ?? "Dispositivo",
+      input.emotion ?? null,
+      input.intensity ?? null,
+      JSON.stringify(payload)
+    ]
+  );
+
+  await query(
+    `UPDATE devices
+     SET
+       status = 'connected',
+       battery_level = COALESCE($2, battery_level),
+       wifi_ssid = COALESCE($3, wifi_ssid),
+       firmware_version = COALESCE($4, firmware_version),
+       last_sync_at = NOW(),
+       updated_at = NOW()
+     WHERE id = $1`,
+    [
+      device.id,
+      input.batteryLevel ?? null,
+      input.wifiSsid ?? null,
+      input.firmwareVersion ?? null
+    ]
+  );
 
   return mapEvent(result.rows[0]);
 };

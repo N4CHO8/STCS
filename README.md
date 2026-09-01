@@ -71,6 +71,7 @@ El firmware actual valida ambiente, memoria, catalogo inicial de pictogramas y e
 
 - [Alcance funcional web + ESP32](./docs/ALCANCE_FUNCIONAL_WEB_ESP32.md)
 - [Arquitectura final](./docs/ARQUITECTURA_FINAL.md)
+- [Integracion ESP32-Web](./docs/INTEGRACION_ESP32_WEB.md)
 - [Esquema Supabase](./supabase/schema.sql)
 - [Firmware ESP32](./firmware/stcs-esp32/README.md)
 
@@ -79,8 +80,8 @@ El firmware actual valida ambiente, memoria, catalogo inicial de pictogramas y e
 - Web redisenada para adultos responsables del nino.
 - Login con perfiles demo.
 - Dashboard protegido con datos desde Supabase.
-- Eventos ficticios del ESP32 guardados en base de datos.
-- Historial y graficos alimentados desde eventos registrados.
+- Endpoints preparados para recibir eventos reales del ESP32.
+- Historial y graficos preparados para mostrarse cuando existan eventos reales del dispositivo.
 - Proyecto PlatformIO creado y compilando correctamente.
 
 ## Pendientes principales
