@@ -47,6 +47,15 @@ npm run dev
 
 La app crea tablas y datos demo al iniciar sesion si la base esta vacia.
 
+Para cargar datos de prueba completos en Supabase:
+
+```powershell
+cd frontend
+npm run seed:stcs
+```
+
+Este comando crea usuarios demo, el perfil de Mateo, el dispositivo `STCS-ESP32-001`, pictogramas CAA iniciales y eventos simulados del dispositivo.
+
 ## Usuarios demo
 
 ```text
