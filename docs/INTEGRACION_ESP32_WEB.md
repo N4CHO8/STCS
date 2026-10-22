@@ -37,12 +37,13 @@ Respuesta esperada:
     },
     "pictograms": [
       {
-        "id": "e0000000-0000-0000-0000-000000000001",
+        "id": "caa00000-0000-4000-8000-000000000001",
         "label": "Agua",
-        "message": "quiero agua",
+        "message": "Quiero agua",
         "category": "Necesidades",
         "colorTone": "sky",
         "iconName": "Droplets",
+        "imagePath": "/pictograms/water.png",
         "position": 1
       }
     ]
@@ -65,15 +66,35 @@ Body:
 ```json
 {
   "eventType": "pictogram_selected",
-  "actionLabel": "Selecciono: Agua",
-  "pictogramId": "e0000000-0000-0000-0000-000000000001",
+  "externalEventId": "esp32-001-000045",
+  "pictogramId": "caa00000-0000-4000-8000-000000000001",
+  "context": "Sala de clases",
+  "occurredAt": "2026-10-18T14:30:00-03:00",
   "category": "Necesidades",
   "message": "quiero agua",
   "batteryLevel": 85,
-  "firmwareVersion": "v0.1.0",
+  "firmwareVersion": "v0.3.0-wifi",
   "wifiSsid": "MiWifi"
 }
 ```
+
+El firmware tambien puede enviar `pictogramLabel` junto con `category` cuando no
+disponga del UUID. La API resuelve el pictograma activo del perfil y guarda su
+UUID real:
+
+```json
+{
+  "eventType": "pictogram_selected",
+  "externalEventId": "esp32-001-000046",
+  "pictogramLabel": "Agua",
+  "category": "Necesidades",
+  "context": "Sala de clases"
+}
+```
+
+`externalEventId` identifica una interaccion local. Si el dispositivo reintenta el
+mismo envio por una interrupcion Wi-Fi, la API responde con el evento existente y
+no crea un duplicado.
 
 ## Comandos de prueba sin dispositivo
 
@@ -87,7 +108,7 @@ curl.exe -H "x-stcs-device-key: <clave>" https://tu-dominio.vercel.app/api/stcs/
 curl.exe -X POST https://tu-dominio.vercel.app/api/stcs/devices/STCS-ESP32-001/events `
   -H "Content-Type: application/json" `
   -H "x-stcs-device-key: <clave>" `
-  -d "{\"eventType\":\"pictogram_selected\",\"actionLabel\":\"Selecciono: Agua\",\"pictogramId\":\"e0000000-0000-0000-0000-000000000001\",\"category\":\"Necesidades\",\"message\":\"quiero agua\",\"batteryLevel\":85,\"firmwareVersion\":\"v0.1.0\"}"
+  -d "{\"eventType\":\"pictogram_selected\",\"actionLabel\":\"Selecciono: Agua\",\"pictogramId\":\"caa00000-0000-4000-8000-000000000001\",\"category\":\"Necesidades\",\"message\":\"Quiero agua\",\"batteryLevel\":85,\"firmwareVersion\":\"v0.3.0-wifi\"}"
 ```
 
 ## Flujo definido
@@ -99,3 +120,22 @@ curl.exe -X POST https://tu-dominio.vercel.app/api/stcs/devices/STCS-ESP32-001/e
 5. El ESP32 envia eventos a la API.
 6. La API guarda eventos en Supabase.
 7. La web muestra historial, metricas y progreso.
+
+## Configuracion inicial de WiFi
+
+El USB se utiliza solamente para guardar la red en la memoria NVS del ESP32:
+
+1. Abrir `Dispositivos` en Chrome o Edge.
+2. Escribir el nombre y la clave de una red WiFi de 2.4 GHz.
+3. Pulsar `Guardar WiFi en el ESP32` y seleccionar el puerto de la placa.
+4. Esperar hasta 30 segundos para la primera sincronizacion.
+
+La clave se envia directamente desde el navegador al puerto USB y no se guarda
+en la plataforma. Despues de este paso, el ESP32 consulta la configuracion cada
+15 segundos y envia los eventos directamente por HTTPS. Cambiar de seccion,
+cerrar el navegador o usar la web desde otro computador no corta la conexion.
+
+El catalogo de la web se limita a las mismas imagenes ARASAAC compiladas en el
+firmware. Cada categoria admite hasta ocho pictogramas en dos paginas de cuatro.
+En el ESP32 se cambia de pagina deslizando hacia la izquierda o la derecha. El
+texto, la frase y el color se pueden editar; la imagen se elige del catalogo compatible.

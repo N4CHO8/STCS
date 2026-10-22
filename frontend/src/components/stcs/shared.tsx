@@ -127,19 +127,27 @@ export function SectionTitle({ children }: { children: ReactNode }) {
 
 export function SmallButton({
   children,
-  muted = false
+  disabled = false,
+  muted = false,
+  onClick,
+  type = "button"
 }: {
   children: ReactNode;
+  disabled?: boolean;
   muted?: boolean;
+  onClick?: () => void;
+  type?: "button" | "submit";
 }) {
   return (
     <button
-      className={`rounded-lg px-4 py-2 text-sm font-bold transition ${
+      className={`rounded-lg px-4 py-2 text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-50 ${
         muted
           ? "bg-stone-100 text-stone-500 hover:bg-stone-200"
           : "bg-[#518b51] text-white hover:bg-[#457745]"
       }`}
-      type="button"
+      disabled={disabled}
+      onClick={onClick}
+      type={type}
     >
       {children}
     </button>
@@ -198,9 +206,15 @@ export function ActivityItem({
     <div className={`flex gap-3 ${large ? "rounded-xl border border-stone-200 p-4" : ""}`}>
       <span className="mt-1 h-2 w-2 rounded-full bg-[#518b51]" />
       <div className="min-w-0 flex-1">
-        <p className="font-semibold text-stone-600">{event.actionLabel}</p>
-        <p className="text-xs font-medium text-stone-400">
-          {formatDateTime(event.occurredAt)} | {event.actorName}
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <p className="font-semibold text-stone-600">{event.actionLabel}</p>
+          <time className="text-xs font-semibold text-stone-400" dateTime={event.occurredAt}>
+            {formatDateTime(event.occurredAt)}
+          </time>
+        </div>
+        <p className="mt-1 text-xs font-medium text-stone-400">
+          {event.context} | {event.actorName}
+          {typeof event.payload.category === "string" ? ` | ${event.payload.category}` : ""}
         </p>
       </div>
     </div>
@@ -259,11 +273,12 @@ export function AddSpaceButton() {
   );
 }
 
-export function EditIconButton({ label }: { label: string }) {
+export function EditIconButton({ label, onClick }: { label: string; onClick: () => void }) {
   return (
     <button
       aria-label={label}
       className="absolute right-3 top-3 rounded-lg p-1 text-stone-300 hover:bg-stone-100 hover:text-stone-500"
+      onClick={onClick}
       type="button"
     >
       <Pencil className="h-4 w-4" />

@@ -15,6 +15,7 @@ import {
 } from "@/components/stcs/views";
 import {
   FALLBACK_OVERVIEW,
+  isDeviceOnline,
   mapPictogram
 } from "@/lib/stcsUi";
 import {
@@ -23,10 +24,15 @@ import {
   getRoleLabel,
   type AuthSession
 } from "@/lib/auth";
-import type { StcsOverview, TabId } from "@/types/stcs";
+import type { DeviceEvent, PictogramConfig, StcsOverview, TabId } from "@/types/stcs";
 
 type OverviewResponse = {
   data?: StcsOverview;
+  message?: string;
+};
+
+type HistoryResponse = {
+  data?: DeviceEvent[];
   message?: string;
 };
 
@@ -40,6 +46,8 @@ export default function HomePage() {
   const [session, setSession] = useState<AuthSession | null>(null);
   const [overview, setOverview] = useState<StcsOverview>(FALLBACK_OVERVIEW);
   const [isLoading, setIsLoading] = useState(true);
+  const [historyEvents, setHistoryEvents] = useState<DeviceEvent[]>([]);
+  const [isHistoryLoading, setIsHistoryLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
@@ -75,6 +83,7 @@ export default function HomePage() {
         }
 
         setOverview(payload.data);
+        setHistoryEvents(payload.data.recentActivity);
         setErrorMessage("");
       } catch {
         setErrorMessage("No fue posible conectar con la API.");
@@ -86,18 +95,97 @@ export default function HomePage() {
     void loadOverview();
   }, [router]);
 
+  useEffect(() => {
+    if (!session) {
+      return;
+    }
+
+    const refresh = async () => {
+      try {
+        const response = await fetch("/api/stcs/overview", {
+          headers: { Authorization: `Bearer ${session.token}` },
+          cache: "no-store"
+        });
+        const payload = (await response.json()) as OverviewResponse;
+
+        if (response.ok && payload.data) {
+          setOverview(payload.data);
+          setHistoryEvents(payload.data.recentActivity);
+        }
+      } catch {
+        // The next interval retries without interrupting the current workflow.
+      }
+    };
+
+    const interval = window.setInterval(() => void refresh(), 15_000);
+    return () => window.clearInterval(interval);
+  }, [session]);
+
   const handleLogout = () => {
     clearAuthSession();
     router.replace("/login");
   };
 
+  const loadHistory = async () => {
+    if (!session) {
+      return;
+    }
+
+    setIsHistoryLoading(true);
+
+    try {
+      const response = await fetch("/api/stcs/events", {
+        headers: { Authorization: `Bearer ${session.token}` },
+        cache: "no-store"
+      });
+      const payload = (await response.json()) as HistoryResponse;
+
+      if (!response.ok || !payload.data) {
+        setErrorMessage(payload.message ?? "No fue posible cargar el historial.");
+        return;
+      }
+
+      setHistoryEvents(payload.data);
+      setErrorMessage("");
+    } catch {
+      setErrorMessage("No fue posible conectar con el historial.");
+    } finally {
+      setIsHistoryLoading(false);
+    }
+  };
+
   const selectTab = (tabId: TabId) => {
     setActiveTab(tabId);
     setIsMenuOpen(false);
+
+    if (tabId === "history") {
+      void loadHistory();
+    }
+  };
+
+  const handlePictogramSaved = (saved: PictogramConfig) => {
+    setOverview((current) => {
+      const exists = current.pictograms.some((item) => item.id === saved.id);
+      const pictograms = exists
+        ? current.pictograms.map((item) => item.id === saved.id ? saved : item)
+        : [...current.pictograms, saved];
+
+      return {
+        ...current,
+        pictograms: pictograms.sort((a, b) => a.position - b.position || a.label.localeCompare(b.label))
+      };
+    });
+  };
+
+  const handlePictogramDeleted = (pictogramId: string) => {
+    setOverview((current) => ({
+      ...current,
+      pictograms: current.pictograms.filter((item) => item.id !== pictogramId)
+    }));
   };
 
   const displayName = getDisplayName(session, overview.user.name);
-  const hasDeviceData = overview.recentActivity.length > 0;
+  const hasDeviceData = isDeviceOnline(overview.device.status, overview.device.lastSyncAt);
   const pictograms = overview.pictograms.map(mapPictogram);
   const roleLabel = getRoleLabel(
     (session?.user.role ?? overview.user.role) as AuthSession["user"]["role"]
@@ -128,19 +216,32 @@ export default function HomePage() {
               {isLoading ? <LoadingState /> : null}
 
               {!isLoading && activeTab === "dashboard" ? (
-                <DashboardView data={overview} name={displayName} />
+                <DashboardView data={overview} name={displayName} onNavigate={selectTab} />
               ) : null}
               {!isLoading && activeTab === "communicator" ? (
-                <CommunicatorView pictograms={pictograms} />
+                <CommunicatorView
+                  onDeleted={handlePictogramDeleted}
+                  onSaved={handlePictogramSaved}
+                  pictograms={pictograms}
+                  token={session?.token ?? ""}
+                />
               ) : null}
               {!isLoading && activeTab === "history" ? (
-                <HistoryView events={overview.recentActivity} />
+                <HistoryView
+                  events={historyEvents}
+                  isRefreshing={isHistoryLoading}
+                  onRefresh={() => void loadHistory()}
+                />
               ) : null}
               {!isLoading && activeTab === "progress" ? (
                 <ProgressView data={overview} />
               ) : null}
               {!isLoading && activeTab === "devices" ? (
-                <DevicesView device={overview.device} hasDeviceData={hasDeviceData} />
+                <DevicesView
+                  device={overview.device}
+                  hasDeviceData={hasDeviceData}
+                  onEventSaved={() => void loadHistory()}
+                />
               ) : null}
             </div>
           </main>

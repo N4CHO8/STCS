@@ -1,17 +1,20 @@
 import {
   AlertTriangle,
+  ArrowRight,
   Bath,
   CheckCircle2,
   Clock,
   Cpu,
   Droplets,
   Frown,
+  Gamepad2,
   HelpCircle,
   Home,
   LayoutDashboard,
   LineChart,
   MapPin,
   MessageCircle,
+  Moon,
   School,
   Settings2,
   Smile,
@@ -53,10 +56,10 @@ export const FALLBACK_OVERVIEW: StcsOverview = {
     lastSyncAt: null
   },
   pictograms: [
-    { id: "quiero", label: "Quiero", message: "quiero", category: "Acciones", colorTone: "sky", iconName: "MessageCircle", position: 1 },
-    { id: "agua", label: "Agua", message: "quiero agua", category: "Necesidades", colorTone: "blue", iconName: "Droplets", position: 2 },
-    { id: "bano", label: "Bano", message: "quiero ir al bano", category: "Necesidades", colorTone: "sage", iconName: "Bath", position: 3 },
-    { id: "feliz", label: "Feliz", message: "estoy feliz", category: "Emociones", colorTone: "yellow", iconName: "Smile", position: 4 }
+    { id: "quiero", label: "Quiero", message: "quiero", category: "Acciones", colorTone: "sky", iconName: "MessageCircle", imagePath: null, position: 1 },
+    { id: "agua", label: "Agua", message: "quiero agua", category: "Necesidades", colorTone: "blue", iconName: "Droplets", imagePath: "/pictograms/water.png", position: 2 },
+    { id: "bano", label: "Bano", message: "quiero ir al bano", category: "Necesidades", colorTone: "sage", iconName: "Bath", imagePath: "/pictograms/bathroom.png", position: 3 },
+    { id: "feliz", label: "Feliz", message: "estoy feliz", category: "Emociones", colorTone: "yellow", iconName: "Smile", imagePath: "/pictograms/happy.png", position: 4 }
   ],
   metrics: {
     interactionsToday: 0,
@@ -79,16 +82,19 @@ export const NAV_TABS: Array<{ id: TabId; label: string; icon: LucideIcon }> = [
 
 const ICONS: Record<string, LucideIcon> = {
   AlertTriangle,
+  ArrowRight,
   Bath,
   CheckCircle2,
   Clock,
   Cpu,
   Droplets,
   Frown,
+  Gamepad2,
   HelpCircle,
   Home,
   MapPin,
   MessageCircle,
+  Moon,
   School,
   Smile,
   Utensils,
@@ -133,6 +139,15 @@ export const formatDateTime = (value: string | null): string => {
     hour: "2-digit",
     minute: "2-digit"
   });
+};
+
+export const isDeviceOnline = (status: string, lastSyncAt: string | null) => {
+  if (status !== "connected" || !lastSyncAt) {
+    return false;
+  }
+
+  const lastSync = new Date(lastSyncAt).getTime();
+  return Number.isFinite(lastSync) && Date.now() - lastSync < 90_000;
 };
 
 export const hasWeeklyData = (items: StcsOverview["weeklyUse"]) =>

@@ -81,6 +81,7 @@ El firmware actual valida ambiente, memoria, catalogo inicial de pictogramas y e
 - [Alcance funcional web + ESP32](./docs/ALCANCE_FUNCIONAL_WEB_ESP32.md)
 - [Arquitectura final](./docs/ARQUITECTURA_FINAL.md)
 - [Integracion ESP32-Web](./docs/INTEGRACION_ESP32_WEB.md)
+- [Implementacion y demo del Hito 2](./docs/HITO2_IMPLEMENTACION.md)
 - [Esquema Supabase](./supabase/schema.sql)
 - [Firmware ESP32](./firmware/stcs-esp32/README.md)
 
@@ -89,8 +90,9 @@ El firmware actual valida ambiente, memoria, catalogo inicial de pictogramas y e
 - Web redisenada para adultos responsables del nino.
 - Login con perfiles demo.
 - Dashboard protegido con datos desde Supabase.
-- Endpoints preparados para recibir eventos reales del ESP32.
-- Historial y graficos preparados para mostrarse cuando existan eventos reales del dispositivo.
+- Configuracion de pictogramas con alta, edicion y persistencia en Supabase.
+- Endpoint validado e idempotente para eventos reales del ESP32.
+- Historial con fecha, accion, contexto, actor y filtros.
 - Proyecto PlatformIO creado y compilando correctamente.
 
 ## Pendientes principales
@@ -98,5 +100,5 @@ El firmware actual valida ambiente, memoria, catalogo inicial de pictogramas y e
 - Integrar drivers oficiales de pantalla/touch Waveshare.
 - Mostrar pictogramas reales en la pantalla redonda.
 - Enviar eventos reales desde ESP32 a la API.
-- Agregar gestion completa de pictogramas desde la web.
+- Integrar el envio Wi-Fi del firmware con los endpoints ya implementados.
 - Automatizar pruebas de los flujos principales.

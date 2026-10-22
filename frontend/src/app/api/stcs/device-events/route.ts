@@ -21,6 +21,7 @@ export async function POST(request: NextRequest) {
     emotion?: string;
     intensity?: number;
     source?: string;
+    message?: string;
   };
 
   if (!input.eventType || !input.actionLabel) {
@@ -39,7 +40,8 @@ export async function POST(request: NextRequest) {
       category: input.category,
       emotion: input.emotion,
       intensity: input.intensity,
-      source: input.source
+      source: input.source,
+      message: input.message
     });
 
     return NextResponse.json(

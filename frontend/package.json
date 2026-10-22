@@ -6,7 +6,8 @@
     "dev": "next dev --hostname 0.0.0.0 --port 3000",
     "build": "next build",
     "start": "next start --hostname 0.0.0.0 --port 3000",
-    "seed:stcs": "node scripts/seed-stcs-demo.mjs"
+    "seed:stcs": "node scripts/seed-stcs-demo.mjs",
+    "verify:hito2": "node scripts/verify-hito2.mjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

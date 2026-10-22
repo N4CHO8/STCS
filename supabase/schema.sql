@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS pictograms (
   category VARCHAR(60) NOT NULL,
   color_tone VARCHAR(40) NOT NULL,
   icon_name VARCHAR(60) NOT NULL,
+  image_path VARCHAR(255),
   position INTEGER NOT NULL DEFAULT 0,
   is_active BOOLEAN NOT NULL DEFAULT TRUE,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -59,6 +60,8 @@ CREATE TABLE IF NOT EXISTS device_events (
   id UUID PRIMARY KEY,
   device_id UUID NOT NULL REFERENCES devices(id) ON DELETE CASCADE,
   student_profile_id UUID NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
+  pictogram_id UUID REFERENCES pictograms(id) ON DELETE SET NULL,
+  external_event_id VARCHAR(100),
   event_type VARCHAR(60) NOT NULL,
   action_label VARCHAR(150) NOT NULL,
   context VARCHAR(80) NOT NULL,
@@ -76,3 +79,17 @@ CREATE INDEX IF NOT EXISTS idx_devices_student_profile_id ON devices(student_pro
 CREATE INDEX IF NOT EXISTS idx_pictograms_student_profile_id ON pictograms(student_profile_id);
 CREATE INDEX IF NOT EXISTS idx_device_events_profile_date ON device_events(student_profile_id, occurred_at DESC);
 CREATE INDEX IF NOT EXISTS idx_device_events_device_id ON device_events(device_id);
+CREATE INDEX IF NOT EXISTS idx_device_events_pictogram_id ON device_events(pictogram_id);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_pictograms_profile_label_category
+  ON pictograms(student_profile_id, LOWER(label), LOWER(category))
+  WHERE is_active = TRUE;
+CREATE UNIQUE INDEX IF NOT EXISTS uq_device_events_external_id
+  ON device_events(device_id, external_event_id)
+  WHERE external_event_id IS NOT NULL;
+
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_access ENABLE ROW LEVEL SECURITY;
+ALTER TABLE student_profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE devices ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pictograms ENABLE ROW LEVEL SECURITY;
+ALTER TABLE device_events ENABLE ROW LEVEL SECURITY;

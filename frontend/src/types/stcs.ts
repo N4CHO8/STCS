@@ -27,11 +27,13 @@ export type PictogramConfig = {
   category: string;
   colorTone: string;
   iconName: string;
+  imagePath: string | null;
   position: number;
 };
 
 export type DeviceEvent = {
   id: string;
+  pictogramId: string | null;
   eventType: string;
   actionLabel: string;
   context: string;

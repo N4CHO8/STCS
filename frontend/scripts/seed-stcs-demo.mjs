@@ -69,42 +69,29 @@ const users = [
 ];
 
 const pictograms = [
-  ["e0000000-0000-0000-0000-000000000001", "Quiero", "quiero", "Acciones", "sky", "MessageCircle", 1],
-  ["e0000000-0000-0000-0000-000000000002", "No quiero", "no quiero", "Acciones", "rose", "AlertTriangle", 2],
-  ["e0000000-0000-0000-0000-000000000003", "Necesito", "necesito", "Acciones", "violet", "HelpCircle", 3],
-  ["e0000000-0000-0000-0000-000000000004", "Ayuda", "necesito ayuda", "Acciones", "rose", "HelpCircle", 4],
-  ["e0000000-0000-0000-0000-000000000005", "Descansar", "quiero descansar", "Acciones", "indigo", "Clock", 5],
-  ["e0000000-0000-0000-0000-000000000006", "Jugar", "quiero jugar", "Acciones", "orange", "Smile", 6],
-  ["e0000000-0000-0000-0000-000000000007", "Agua", "quiero agua", "Necesidades", "blue", "Droplets", 7],
-  ["e0000000-0000-0000-0000-000000000008", "Comer", "quiero comer", "Necesidades", "amber", "Utensils", 8],
-  ["e0000000-0000-0000-0000-000000000009", "Bano", "quiero ir al bano", "Necesidades", "cyan", "Bath", 9],
-  ["e0000000-0000-0000-0000-000000000010", "Dolor", "me duele", "Necesidades", "rose", "AlertTriangle", 10],
-  ["e0000000-0000-0000-0000-000000000011", "Abrigo", "tengo frio", "Necesidades", "sky", "CheckCircle2", 11],
-  ["e0000000-0000-0000-0000-000000000012", "Dormir", "quiero dormir", "Rutinas", "indigo", "Clock", 12],
-  ["e0000000-0000-0000-0000-000000000013", "Feliz", "estoy feliz", "Emociones", "yellow", "Smile", 13],
-  ["e0000000-0000-0000-0000-000000000014", "Triste", "estoy triste", "Emociones", "blue", "Frown", 14],
-  ["e0000000-0000-0000-0000-000000000015", "Enojado", "estoy enojado", "Emociones", "orange", "AlertTriangle", 15],
-  ["e0000000-0000-0000-0000-000000000016", "Tranquilo", "estoy tranquilo", "Emociones", "emerald", "CheckCircle2", 16],
-  ["e0000000-0000-0000-0000-000000000017", "Ansioso", "estoy ansioso", "Emociones", "rose", "AlertTriangle", 17],
-  ["e0000000-0000-0000-0000-000000000018", "Cansado", "estoy cansado", "Emociones", "violet", "Clock", 18],
-  ["e0000000-0000-0000-0000-000000000019", "Mama", "quiero a mama", "Personas", "yellow", "MessageCircle", 19],
-  ["e0000000-0000-0000-0000-000000000020", "Papa", "quiero a papa", "Personas", "sky", "MessageCircle", 20],
-  ["e0000000-0000-0000-0000-000000000021", "Profesora", "quiero a la profesora", "Personas", "indigo", "School", 21],
-  ["e0000000-0000-0000-0000-000000000022", "Casa", "quiero ir a casa", "Lugares", "emerald", "Home", 22],
-  ["e0000000-0000-0000-0000-000000000023", "Colegio", "quiero ir al colegio", "Lugares", "indigo", "School", 23],
-  ["e0000000-0000-0000-0000-000000000024", "Esperar", "puedo esperar", "Rutinas", "amber", "Clock", 24]
+  ["caa00000-0000-4000-8000-000000000001", "Agua", "Quiero agua", "Necesidades", "sky", "Droplets", "/pictograms/water.png", 1],
+  ["caa00000-0000-4000-8000-000000000002", "Comida", "Quiero comida", "Necesidades", "amber", "Utensils", "/pictograms/food.png", 2],
+  ["caa00000-0000-4000-8000-000000000003", "Bano", "Necesito ir al bano", "Necesidades", "cyan", "Bath", "/pictograms/bathroom-need.png", 3],
+  ["caa00000-0000-4000-8000-000000000004", "Ayuda", "Necesito ayuda", "Necesidades", "rose", "HelpCircle", "/pictograms/help.png", 4],
+  ["caa00000-0000-4000-8000-000000000005", "Feliz", "Estoy feliz", "Emociones", "yellow", "Smile", "/pictograms/happy.png", 5],
+  ["caa00000-0000-4000-8000-000000000006", "Triste", "Estoy triste", "Emociones", "blue", "Frown", "/pictograms/sad.png", 6],
+  ["caa00000-0000-4000-8000-000000000007", "Enojado", "Estoy enojado", "Emociones", "rose", "AlertTriangle", "/pictograms/angry.png", 7],
+  ["caa00000-0000-4000-8000-000000000008", "Cansado", "Estoy cansado", "Emociones", "violet", "Clock", "/pictograms/tired.png", 8],
+  ["caa00000-0000-4000-8000-000000000009", "Jugar", "Quiero jugar", "Acciones", "emerald", "Gamepad2", "/pictograms/play.png", 9],
+  ["caa00000-0000-4000-8000-000000000010", "Comer", "Quiero comer", "Acciones", "orange", "Utensils", "/pictograms/eat.png", 10],
+  ["caa00000-0000-4000-8000-000000000011", "Dormir", "Quiero dormir", "Acciones", "indigo", "Moon", "/pictograms/sleep.png", 11],
+  ["caa00000-0000-4000-8000-000000000012", "Ir", "Quiero ir", "Acciones", "cyan", "ArrowRight", "/pictograms/go.png", 12],
+  ["caa00000-0000-4000-8000-000000000013", "Casa", "Quiero ir a casa", "Lugares", "orange", "Home", "/pictograms/home.png", 13],
+  ["caa00000-0000-4000-8000-000000000014", "Escuela", "Quiero ir a la escuela", "Lugares", "blue", "School", "/pictograms/school.png", 14],
+  ["caa00000-0000-4000-8000-000000000015", "Bano", "Quiero ir al bano", "Lugares", "emerald", "Bath", "/pictograms/bathroom-place.png", 15],
+  ["caa00000-0000-4000-8000-000000000016", "Parque", "Quiero ir al parque", "Lugares", "sage", "MapPin", "/pictograms/park.png", 16],
+  ["caa00000-0000-4000-8000-000000000017", "Dolor", "Me duele", "Necesidades", "rose", "AlertTriangle", "/pictograms/pain.png", 17],
+  ["caa00000-0000-4000-8000-000000000018", "Miedo", "Tengo miedo", "Emociones", "violet", "Frown", "/pictograms/fear.png", 18],
+  ["caa00000-0000-4000-8000-000000000019", "Hablar", "Quiero hablar", "Acciones", "sky", "MessageCircle", "/pictograms/talk.png", 19],
+  ["caa00000-0000-4000-8000-000000000020", "Hospital", "Quiero ir al hospital", "Lugares", "blue", "MapPin", "/pictograms/hospital.png", 20]
 ];
 
-const events = [
-  ["f0000000-0000-0000-0000-000000000001", "pictogram_selected", "Selecciono: Quiero", "Casa", "Acciones", null, null, "quiero", "e0000000-0000-0000-0000-000000000001", "2 hours"],
-  ["f0000000-0000-0000-0000-000000000002", "pictogram_selected", "Selecciono: Agua", "Casa", "Necesidades", null, null, "quiero agua", "e0000000-0000-0000-0000-000000000007", "110 minutes"],
-  ["f0000000-0000-0000-0000-000000000003", "emotion_recorded", "Emocion registrada: Tranquilo", "Casa", "Emociones", "tranquilo", 4, "estoy tranquilo", "e0000000-0000-0000-0000-000000000016", "90 minutes"],
-  ["f0000000-0000-0000-0000-000000000004", "pictogram_selected", "Selecciono: Bano", "Colegio", "Necesidades", null, null, "quiero ir al bano", "e0000000-0000-0000-0000-000000000009", "1 day"],
-  ["f0000000-0000-0000-0000-000000000005", "emotion_recorded", "Emocion registrada: Ansioso", "Colegio", "Emociones", "ansioso", 3, "estoy ansioso", "e0000000-0000-0000-0000-000000000017", "2 days"],
-  ["f0000000-0000-0000-0000-000000000006", "pictogram_selected", "Selecciono: Ayuda", "Colegio", "Acciones", null, null, "necesito ayuda", "e0000000-0000-0000-0000-000000000004", "3 days"],
-  ["f0000000-0000-0000-0000-000000000007", "pictogram_selected", "Selecciono: Comer", "Casa", "Necesidades", null, null, "quiero comer", "e0000000-0000-0000-0000-000000000008", "4 days"],
-  ["f0000000-0000-0000-0000-000000000008", "emotion_recorded", "Emocion registrada: Feliz", "Casa", "Emociones", "feliz", 5, "estoy feliz", "e0000000-0000-0000-0000-000000000013", "5 days"]
-];
+const events = [];
 
 const run = async () => {
   const client = await pool.connect();
@@ -151,7 +138,7 @@ const run = async () => {
 
     await client.query(
       `INSERT INTO devices (id, student_profile_id, device_code, name, status, battery_level, wifi_ssid, firmware_version, last_sync_at)
-       VALUES ($1, $2, 'STCS-ESP32-001', 'Comunicador Mateo', 'connected', 85, 'STCS_WIFI', 'v0.1.0', NOW())
+       VALUES ($1, $2, 'STCS-ESP32-001', 'Comunicador Mateo', 'pending', 0, NULL, 'v0.4.0-pages', NULL)
        ON CONFLICT (device_code) DO UPDATE SET
          student_profile_id = EXCLUDED.student_profile_id,
          name = EXCLUDED.name,
@@ -166,14 +153,15 @@ const run = async () => {
 
     for (const pictogram of pictograms) {
       await client.query(
-        `INSERT INTO pictograms (id, student_profile_id, label, message, category, color_tone, icon_name, position, is_active)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, TRUE)
+        `INSERT INTO pictograms (id, student_profile_id, label, message, category, color_tone, icon_name, image_path, position, is_active)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, TRUE)
          ON CONFLICT (id) DO UPDATE SET
            label = EXCLUDED.label,
            message = EXCLUDED.message,
            category = EXCLUDED.category,
            color_tone = EXCLUDED.color_tone,
            icon_name = EXCLUDED.icon_name,
+           image_path = EXCLUDED.image_path,
            position = EXCLUDED.position,
            is_active = TRUE,
            updated_at = NOW()`,

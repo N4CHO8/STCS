@@ -4,6 +4,25 @@ import type { QueryResultRow } from "pg";
 import { canAccessSubject } from "./access";
 import type { AuthTokenPayload } from "./auth";
 import { query } from "./db";
+import type { DeviceEventInput, PictogramInput } from "./validation";
+import {
+  DEVICE_MAX_ITEMS_PER_CATEGORY,
+  DEVICE_PICTOGRAM_ASSETS
+} from "@/lib/pictogramCatalog";
+
+export class StcsConflictError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "StcsConflictError";
+  }
+}
+
+export class StcsNotFoundError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "StcsNotFoundError";
+  }
+}
 
 export interface StudentProfile {
   id: string;
@@ -32,11 +51,13 @@ export interface PictogramConfig {
   category: string;
   colorTone: string;
   iconName: string;
+  imagePath: string | null;
   position: number;
 }
 
 export interface DeviceEvent {
   id: string;
+  pictogramId: string | null;
   eventType: string;
   actionLabel: string;
   context: string;
@@ -101,11 +122,13 @@ interface PictogramRow extends QueryResultRow {
   category: string;
   color_tone: string;
   icon_name: string;
+  image_path: string | null;
   position: number;
 }
 
 interface EventRow extends QueryResultRow {
   id: string;
+  pictogram_id: string | null;
   event_type: string;
   action_label: string;
   context: string;
@@ -149,11 +172,13 @@ const mapPictogram = (row: PictogramRow): PictogramConfig => ({
   category: row.category,
   colorTone: row.color_tone,
   iconName: row.icon_name,
+  imagePath: row.image_path,
   position: row.position
 });
 
 const mapEvent = (row: EventRow): DeviceEvent => ({
   id: row.id,
+  pictogramId: row.pictogram_id,
   eventType: row.event_type,
   actionLabel: row.action_label,
   context: row.context,
@@ -247,6 +272,7 @@ export const ensureStcsSchema = async () => {
       category VARCHAR(60) NOT NULL,
       color_tone VARCHAR(40) NOT NULL,
       icon_name VARCHAR(60) NOT NULL,
+      image_path VARCHAR(255),
       position INTEGER NOT NULL DEFAULT 0,
       is_active BOOLEAN NOT NULL DEFAULT TRUE,
       created_at TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -257,6 +283,8 @@ export const ensureStcsSchema = async () => {
       id UUID PRIMARY KEY,
       device_id UUID NOT NULL REFERENCES devices(id) ON DELETE CASCADE,
       student_profile_id UUID NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
+      pictogram_id UUID REFERENCES pictograms(id) ON DELETE SET NULL,
+      external_event_id VARCHAR(100),
       event_type VARCHAR(60) NOT NULL,
       action_label VARCHAR(150) NOT NULL,
       context VARCHAR(80) NOT NULL,
@@ -274,6 +302,25 @@ export const ensureStcsSchema = async () => {
     CREATE INDEX IF NOT EXISTS idx_pictograms_student_profile_id ON pictograms(student_profile_id);
     CREATE INDEX IF NOT EXISTS idx_device_events_profile_date ON device_events(student_profile_id, occurred_at DESC);
     CREATE INDEX IF NOT EXISTS idx_device_events_device_id ON device_events(device_id);
+    CREATE INDEX IF NOT EXISTS idx_device_events_pictogram_id ON device_events(pictogram_id);
+
+    ALTER TABLE pictograms ADD COLUMN IF NOT EXISTS image_path VARCHAR(255);
+    ALTER TABLE device_events ADD COLUMN IF NOT EXISTS pictogram_id UUID REFERENCES pictograms(id) ON DELETE SET NULL;
+    ALTER TABLE device_events ADD COLUMN IF NOT EXISTS external_event_id VARCHAR(100);
+
+    CREATE UNIQUE INDEX IF NOT EXISTS uq_pictograms_profile_label_category
+      ON pictograms(student_profile_id, LOWER(label), LOWER(category))
+      WHERE is_active = TRUE;
+    CREATE UNIQUE INDEX IF NOT EXISTS uq_device_events_external_id
+      ON device_events(device_id, external_event_id)
+      WHERE external_event_id IS NOT NULL;
+
+    ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+    ALTER TABLE user_access ENABLE ROW LEVEL SECURITY;
+    ALTER TABLE student_profiles ENABLE ROW LEVEL SECURITY;
+    ALTER TABLE devices ENABLE ROW LEVEL SECURITY;
+    ALTER TABLE pictograms ENABLE ROW LEVEL SECURITY;
+    ALTER TABLE device_events ENABLE ROW LEVEL SECURITY;
   `);
 
   await seedStcsDemoData();
@@ -325,32 +372,27 @@ const seedStcsDemoData = async () => {
 
   await query(
     `INSERT INTO devices (id, student_profile_id, device_code, name, status, battery_level, wifi_ssid, firmware_version, last_sync_at)
-     VALUES ($1, $2, 'STCS-ESP32-001', 'Comunicador Mateo', 'pending', 0, NULL, 'v0.1.0', NULL)
-     ON CONFLICT (device_code) DO UPDATE SET
-       firmware_version = EXCLUDED.firmware_version,
-       updated_at = NOW()`,
+     VALUES ($1, $2, 'STCS-ESP32-001', 'Comunicador Mateo', 'pending', 0, NULL, 'v0.4.0-pages', NULL)
+     ON CONFLICT (device_code) DO NOTHING`,
     [DEVICE_ID, MATEO_PROFILE_ID]
   );
 
-  const pictograms = [
-    ["e0000000-0000-0000-0000-000000000001", "Agua", "quiero agua", "Necesidades", "sky", "Droplets", 1],
-    ["e0000000-0000-0000-0000-000000000002", "Comer", "quiero comer", "Necesidades", "amber", "Utensils", 2],
-    ["e0000000-0000-0000-0000-000000000003", "Bano", "quiero ir al bano", "Necesidades", "cyan", "Bath", 3],
-    ["e0000000-0000-0000-0000-000000000004", "Ayuda", "necesito ayuda", "Apoyo", "rose", "HelpCircle", 4],
-    ["e0000000-0000-0000-0000-000000000005", "Feliz", "estoy feliz", "Emociones", "yellow", "Smile", 5],
-    ["e0000000-0000-0000-0000-000000000006", "Triste", "estoy triste", "Emociones", "blue", "Frown", 6],
-    ["e0000000-0000-0000-0000-000000000007", "Casa", "quiero ir a casa", "Lugares", "emerald", "Home", 7],
-    ["e0000000-0000-0000-0000-000000000008", "Colegio", "quiero ir al colegio", "Lugares", "indigo", "School", 8],
-    ["e0000000-0000-0000-0000-000000000009", "Pausa", "necesito una pausa", "Acciones", "violet", "Clock", 9],
-    ["e0000000-0000-0000-0000-000000000010", "Salir", "quiero salir", "Acciones", "orange", "MapPin", 10]
-  ];
-
-  for (const pictogram of pictograms) {
+  for (const pictogram of DEVICE_PICTOGRAM_ASSETS) {
     await query(
-      `INSERT INTO pictograms (id, student_profile_id, label, message, category, color_tone, icon_name, position)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-       ON CONFLICT (id) DO NOTHING`,
-      [pictogram[0], MATEO_PROFILE_ID, ...pictogram.slice(1)]
+      `INSERT INTO pictograms (id, student_profile_id, label, message, category, color_tone, icon_name, image_path, position)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+       ON CONFLICT DO NOTHING`,
+      [
+        pictogram.id,
+        MATEO_PROFILE_ID,
+        pictogram.label,
+        pictogram.message,
+        pictogram.category,
+        pictogram.colorTone,
+        pictogram.iconName,
+        pictogram.imagePath,
+        pictogram.position
+      ]
     );
   }
 
@@ -515,11 +557,16 @@ export const getDeviceBoardConfig = async (
   const device = await getDeviceByCode(deviceCode);
   const profile = await getProfileById(device.student_profile_id);
   const pictogramsResult = await query<PictogramRow>(
-    `SELECT *
-     FROM pictograms
-     WHERE student_profile_id = $1 AND is_active = TRUE
+    `SELECT id, label, message, category, color_tone, icon_name, image_path, position
+     FROM (
+       SELECT p.*,
+              ROW_NUMBER() OVER (PARTITION BY category ORDER BY position ASC, label ASC) AS category_position
+       FROM pictograms p
+       WHERE student_profile_id = $1 AND is_active = TRUE
+     ) configured
+     WHERE category_position <= $2
      ORDER BY position ASC, label ASC`,
-    [device.student_profile_id]
+    [device.student_profile_id, DEVICE_MAX_ITEMS_PER_CATEGORY]
   );
 
   await query(
@@ -540,6 +587,197 @@ export const getDeviceBoardConfig = async (
   };
 };
 
+export const createPictogram = async (
+  authUser: AuthTokenPayload,
+  input: PictogramInput
+): Promise<PictogramConfig> => {
+  await ensureStcsSchema();
+
+  const profile = await getAccessibleProfile(authUser);
+  const access = await canAccessSubject(authUser, profile.childUserId);
+
+  if (!access.allowed) {
+    throw new Error("El usuario no tiene permiso para configurar este tablero.");
+  }
+
+  const categoryCount = await query<{ count: number }>(
+    `SELECT COUNT(*)::int AS count
+     FROM pictograms
+     WHERE student_profile_id = $1 AND category = $2 AND is_active = TRUE`,
+    [profile.id, input.category]
+  );
+
+  if ((categoryCount.rows[0]?.count ?? 0) >= DEVICE_MAX_ITEMS_PER_CATEGORY) {
+    throw new StcsConflictError(
+      `La pantalla admite un maximo de ${DEVICE_MAX_ITEMS_PER_CATEGORY} pictogramas por categoria.`
+    );
+  }
+
+  const positionResult = await query<{ next_position: number }>(
+    `SELECT COALESCE(MAX(position), 0)::int + 1 AS next_position
+     FROM pictograms
+     WHERE student_profile_id = $1 AND is_active = TRUE`,
+    [profile.id]
+  );
+
+  try {
+    const result = await query<PictogramRow>(
+      `INSERT INTO pictograms (
+         id, student_profile_id, label, message, category, color_tone,
+         icon_name, image_path, position, is_active
+       )
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, TRUE)
+       RETURNING *`,
+      [
+        randomUUID(),
+        profile.id,
+        input.label,
+        input.message,
+        input.category,
+        input.colorTone,
+        input.iconName,
+        input.imagePath ?? null,
+        input.position ?? positionResult.rows[0]?.next_position ?? 1
+      ]
+    );
+
+    return mapPictogram(result.rows[0]);
+  } catch (error) {
+    if ((error as { code?: string }).code === "23505") {
+      throw new StcsConflictError(
+        "Ya existe un pictograma activo con ese nombre y categoria."
+      );
+    }
+
+    throw error;
+  }
+};
+
+export const updatePictogram = async (
+  authUser: AuthTokenPayload,
+  pictogramId: string,
+  input: PictogramInput
+): Promise<PictogramConfig> => {
+  await ensureStcsSchema();
+
+  const profile = await getAccessibleProfile(authUser);
+  const access = await canAccessSubject(authUser, profile.childUserId);
+
+  if (!access.allowed) {
+    throw new Error("El usuario no tiene permiso para configurar este tablero.");
+  }
+
+  const categoryCount = await query<{ count: number }>(
+    `SELECT COUNT(*)::int AS count
+     FROM pictograms
+     WHERE student_profile_id = $1
+       AND category = $2
+       AND id <> $3
+       AND is_active = TRUE`,
+    [profile.id, input.category, pictogramId]
+  );
+
+  if ((categoryCount.rows[0]?.count ?? 0) >= DEVICE_MAX_ITEMS_PER_CATEGORY) {
+    throw new StcsConflictError(
+      `La pantalla admite un maximo de ${DEVICE_MAX_ITEMS_PER_CATEGORY} pictogramas por categoria.`
+    );
+  }
+
+  try {
+    const result = await query<PictogramRow>(
+      `UPDATE pictograms
+       SET label = $3,
+           message = $4,
+           category = $5,
+           color_tone = $6,
+           icon_name = $7,
+           image_path = $8,
+           position = COALESCE($9, position),
+           updated_at = NOW()
+       WHERE id = $1 AND student_profile_id = $2 AND is_active = TRUE
+       RETURNING *`,
+      [
+        pictogramId,
+        profile.id,
+        input.label,
+        input.message,
+        input.category,
+        input.colorTone,
+        input.iconName,
+        input.imagePath ?? null,
+        input.position ?? null
+      ]
+    );
+
+    if (!result.rowCount) {
+      throw new StcsNotFoundError("No se encontro el pictograma solicitado.");
+    }
+
+    return mapPictogram(result.rows[0]);
+  } catch (error) {
+    if ((error as { code?: string }).code === "23505") {
+      throw new StcsConflictError(
+        "Ya existe un pictograma activo con ese nombre y categoria."
+      );
+    }
+
+    throw error;
+  }
+};
+
+export const deletePictogram = async (
+  authUser: AuthTokenPayload,
+  pictogramId: string
+): Promise<void> => {
+  await ensureStcsSchema();
+
+  const profile = await getAccessibleProfile(authUser);
+  const access = await canAccessSubject(authUser, profile.childUserId);
+
+  if (!access.allowed) {
+    throw new Error("El usuario no tiene permiso para configurar este tablero.");
+  }
+
+  const result = await query(
+    `UPDATE pictograms
+     SET is_active = FALSE, updated_at = NOW()
+     WHERE id = $1 AND student_profile_id = $2 AND is_active = TRUE`,
+    [pictogramId, profile.id]
+  );
+
+  if (!result.rowCount) {
+    throw new StcsNotFoundError("No se encontro el pictograma solicitado.");
+  }
+};
+
+export const getDeviceEventHistory = async (
+  authUser: AuthTokenPayload,
+  filters: { context?: string; eventType?: string } = {}
+): Promise<DeviceEvent[]> => {
+  await ensureStcsSchema();
+
+  const profile = await getAccessibleProfile(authUser);
+  const access = await canAccessSubject(authUser, profile.childUserId);
+
+  if (!access.allowed) {
+    throw new Error("El usuario no tiene permiso para ver este historial.");
+  }
+
+  const result = await query<EventRow>(
+    `SELECT *
+     FROM device_events
+     WHERE student_profile_id = $1
+       AND payload->>'source' = 'esp32-device'
+       AND ($2::text IS NULL OR context = $2)
+       AND ($3::text IS NULL OR event_type = $3)
+     ORDER BY occurred_at DESC, created_at DESC
+     LIMIT 100`,
+    [profile.id, filters.context ?? null, filters.eventType ?? null]
+  );
+
+  return result.rows.map(mapEvent);
+};
+
 export const createDeviceEvent = async (
   authUser: AuthTokenPayload,
   input: {
@@ -551,6 +789,7 @@ export const createDeviceEvent = async (
     emotion?: string;
     intensity?: number;
     source?: string;
+    message?: string;
   }
 ): Promise<DeviceEvent> => {
   await ensureStcsSchema();
@@ -573,29 +812,49 @@ export const createDeviceEvent = async (
     throw new Error("No existe dispositivo asociado al perfil.");
   }
 
+  const pictogramResult = input.pictogramId
+    ? await query<PictogramRow>(
+        `SELECT * FROM pictograms
+         WHERE id = $1 AND student_profile_id = $2 AND is_active = TRUE
+         LIMIT 1`,
+        [input.pictogramId, profile.id]
+      )
+    : null;
+  const pictogram = pictogramResult?.rows[0];
+
+  if (input.pictogramId && !pictogram) {
+    throw new StcsNotFoundError(
+      "El pictograma no existe o no pertenece al perfil asociado al dispositivo."
+    );
+  }
+
   const eventType = input.eventType || "pictogram_selected";
   const actionLabel = input.actionLabel || "Evento del dispositivo";
   const payload = {
-    pictogramId: input.pictogramId ?? null,
-    category: input.category ?? "Sistema",
+    pictogramId: pictogram?.id ?? null,
+    category: input.category ?? pictogram?.category ?? "Sistema",
+    message: input.message ?? pictogram?.message ?? null,
     source: input.source ?? "esp32-device"
   };
 
   const result = await query<EventRow>(
     `INSERT INTO device_events (
-       id, device_id, student_profile_id, event_type, action_label, context,
+       id, device_id, student_profile_id, pictogram_id, event_type, action_label, context,
        actor_name, emotion, intensity, payload, occurred_at
      )
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10::jsonb, NOW())
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11::jsonb, NOW())
      RETURNING *`,
     [
       randomUUID(),
       device.id,
       profile.id,
+      pictogram?.id ?? null,
       eventType,
       actionLabel,
       input.context ?? "Simulacion",
-      eventType === "sync_completed" ? "Sistema" : "Dispositivo ESP32",
+      input.source === "esp32-device"
+        ? "Dispositivo ESP32"
+        : eventType === "sync_completed" ? "Sistema" : authUser.fullName,
       input.emotion ?? null,
       input.intensity ?? null,
       JSON.stringify(payload)
@@ -616,50 +875,92 @@ export const createDeviceEvent = async (
 
 export const createDeviceEventFromDevice = async (
   deviceCode: string,
-  input: {
-    eventType: string;
-    actionLabel?: string;
-    context?: string;
-    pictogramId?: string;
-    category?: string;
-    message?: string;
-    emotion?: string;
-    intensity?: number;
-    batteryLevel?: number;
-    firmwareVersion?: string;
-    wifiSsid?: string;
-  }
-): Promise<DeviceEvent> => {
+  input: DeviceEventInput
+): Promise<{ event: DeviceEvent; created: boolean }> => {
   await ensureStcsSchema();
 
   const device = await getDeviceByCode(deviceCode);
-  const eventType = input.eventType || "pictogram_selected";
+  const pictogramResult = input.pictogramId
+    ? await query<PictogramRow>(
+        `SELECT * FROM pictograms
+         WHERE id = $1 AND student_profile_id = $2 AND is_active = TRUE
+         LIMIT 1`,
+        [input.pictogramId, device.student_profile_id]
+      )
+    : input.pictogramLabel
+      ? await query<PictogramRow>(
+          `SELECT * FROM pictograms
+           WHERE student_profile_id = $1
+             AND LOWER(label) = LOWER($2)
+             AND ($3::text IS NULL OR LOWER(category) = LOWER($3))
+             AND is_active = TRUE
+           ORDER BY position
+           LIMIT 1`,
+          [device.student_profile_id, input.pictogramLabel, input.category ?? null]
+        )
+      : null;
+  const pictogram = pictogramResult?.rows[0];
+
+  if ((input.pictogramId || input.pictogramLabel) && !pictogram) {
+    throw new StcsNotFoundError(
+      "El pictograma no existe o no pertenece al perfil asociado al dispositivo."
+    );
+  }
+
+  const eventType = input.eventType;
+  const actionLabel =
+    input.actionLabel ??
+    (pictogram ? `Selecciono: ${pictogram.label}` : "Evento del dispositivo");
   const payload = {
-    category: input.category ?? "Sistema",
-    message: input.message ?? null,
-    pictogramId: input.pictogramId ?? null,
+    category: input.category ?? pictogram?.category ?? "Sistema",
+    message: input.message ?? pictogram?.message ?? null,
+    pictogramId: pictogram?.id ?? null,
     source: "esp32-device"
   };
 
   const result = await query<EventRow>(
     `INSERT INTO device_events (
-       id, device_id, student_profile_id, event_type, action_label, context,
-       actor_name, emotion, intensity, payload, occurred_at
+       id, device_id, student_profile_id, pictogram_id, external_event_id,
+       event_type, action_label, context, actor_name, emotion, intensity,
+       payload, occurred_at
      )
-     VALUES ($1, $2, $3, $4, $5, $6, 'Dispositivo ESP32', $7, $8, $9::jsonb, NOW())
+     VALUES (
+       $1, $2, $3, $4, $5, $6, $7, $8, 'Dispositivo ESP32', $9, $10,
+       $11::jsonb, COALESCE($12::timestamptz, NOW())
+     )
+     ON CONFLICT (device_id, external_event_id)
+       WHERE external_event_id IS NOT NULL
+       DO NOTHING
      RETURNING *`,
     [
       randomUUID(),
       device.id,
       device.student_profile_id,
+      pictogram?.id ?? null,
+      input.externalEventId ?? null,
       eventType,
-      input.actionLabel ?? "Evento del dispositivo",
-      input.context ?? "Dispositivo",
+      actionLabel,
+      input.context,
       input.emotion ?? null,
       input.intensity ?? null,
-      JSON.stringify(payload)
+      JSON.stringify(payload),
+      input.occurredAt ?? null
     ]
   );
+
+  const created = Boolean(result.rowCount);
+  const eventResult = created
+    ? result
+    : await query<EventRow>(
+        `SELECT * FROM device_events
+         WHERE device_id = $1 AND external_event_id = $2
+         LIMIT 1`,
+        [device.id, input.externalEventId]
+      );
+
+  if (!eventResult.rowCount) {
+    throw new Error("No fue posible recuperar el evento registrado.");
+  }
 
   await query(
     `UPDATE devices
@@ -679,5 +980,5 @@ export const createDeviceEventFromDevice = async (
     ]
   );
 
-  return mapEvent(result.rows[0]);
+  return { event: mapEvent(eventResult.rows[0]), created };
 };
