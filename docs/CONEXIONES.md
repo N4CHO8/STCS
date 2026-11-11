@@ -14,7 +14,7 @@
 - Enlace local: frontend/.vercel/project.json, ignorado por Git.
 - Jira: cloudId 84c0a843-624c-408d-9e8f-6b2a725bfb1c, clave TCS.
 - Supabase STCS: mvdjzjwidygmhvhfcpgg, organización Ignacio Benegas.
-- Producción: commit 4d63c4cafda2136e0de21663811fcc6e204587ee, despliegue dpl_65oQu9gvGurXsw4UGko2nq8hHWnL.
+- Producción inicial recuperada (histórica): commit 4d63c4cafda2136e0de21663811fcc6e204587ee, despliegue dpl_65oQu9gvGurXsw4UGko2nq8hHWnL.
 - stcs-hito3-ensayo es un proyecto Vercel independiente. MecaniaOS es ajeno a STCS.
 
 ## Configuración
@@ -58,3 +58,11 @@ Durante la recuperación inicial no se ejecutaron seeds ni migraciones. Vercel C
 - PostgreSQL usa verificación TLS con la CA pública de Supabase. Suite de escritura solo sobre Docker local; el entorno de desarrollo habitual sigue compartiendo Supabase.
 - Build, tipos y 107 comprobaciones aisladas aprobados. Firmware completo compilado. Detalles y límites: PRUEBAS.md y ARREGLOS_AUDITORIA.md.
 - La entrega real de correo y la activación del propietario requieren completar el flujo desde el dominio publicado; no se consideran verificadas por la configuración SMTP.
+
+## Publicación verificada
+
+- Código publicado en main: [82fd571](https://github.com/N4CHO8/STCS/commit/82fd571c0ac2ccbcc73844955e8713f4fb2cee96).
+- Vercel: dpl_3PYEUmiPddPZP41bJ759WktJ9QE5, producción READY, asociado a ese SHA y al dominio 0stcs0.vercel.app.
+- Dominio: /login y /activate devuelven 200. /api/health devuelve 200 con database connected. Las rutas de portal, eventos, registros, emociones y configuración de dispositivo rechazan solicitudes anónimas con 401.
+- La cuenta administrativa histórica se preparó para el correo real indicado por el propietario. La credencial demo está bloqueada; la contraseña se establece mediante verificación por correo. No se modificaron fichas, informes ni eventos clínicos.
+- Pendientes de cierre: recepción real del código y activación del propietario, incorporación de correos reales para los otros roles y pruebas físicas del ESP. Las cuentas históricas @stcs.local no pueden recibir correo y no obtienen sesión sin activación.

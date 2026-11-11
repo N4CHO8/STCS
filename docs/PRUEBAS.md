@@ -51,3 +51,7 @@ Las pruebas con transporte de correo ficticio validan la lógica del portal, no 
 La compilación no valida pantalla, audio, WiFi, almacenamiento NVS, pérdida de energía ni entrega de eventos en un ESP físico. La prueba de esos comportamientos requiere el dispositivo y debe registrarse por separado. Gmail SMTP tiene límites y advertencias de entregabilidad; guardar su configuración no prueba que un destinatario haya recibido el mensaje.
 
 No hay un script de ESLint configurado. Registrar revisión de tipos y formato como tales, sin llamarlas lint.
+
+## Revisión visual local
+
+Para mantener los fixtures durante una revisión en navegador, crear antes `.codex-work` en la raíz y ejecutar el runner con STCS_TEST_UI=1. Los correos ficticios se escriben en `.codex-work/ui-fixtures.json`, ignorado por Git. El runner conserva la base durante hasta cinco minutos; crear `.codex-work/ui-release` termina la pausa y ejecuta la limpieza. Retirar el archivo de liberación previo antes de repetir esa revisión. Este modo sigue exigiendo PostgreSQL y servidor aislados.
