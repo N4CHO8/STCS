@@ -1,71 +1,73 @@
+import { isAdultRole } from "@/lib/permissions";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
-import { mapUser, UserRow } from "@/lib/server/auth";
+import { UserRow } from "@/lib/server/auth";
 import { query } from "@/lib/server/db";
-import { createJwtToken } from "@/lib/server/jwt";
-import { getJwtSecret } from "@/lib/server/auth";
-import { ensureStcsSchema } from "@/lib/server/stcsData";
+import { createSession, limitAttempts } from "@/lib/server/sessions";
+import { objectInput, stringInput } from "@/lib/server/inputs";
+import { errorResponse } from "@/lib/server/apiResponse";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = (await request.json()) as {
-      email?: string;
-      password?: string;
-    };
-
-    if (!email || !password) {
+    const input = objectInput(await request.json());
+    const email = stringInput(input.email, "El correo", 120).toLowerCase();
+    if (
+      typeof input.password !== "string" ||
+      !input.password ||
+      Buffer.byteLength(input.password) > 72
+    )
       return NextResponse.json(
-        { message: "email y password son obligatorios." },
-        { status: 400 }
+        { message: "Contraseña inválida." },
+        { status: 400 },
+      );
+    const password = input.password;
+    await limitAttempts("login:" + email);
+    const result = await query<UserRow>(
+      "SELECT * FROM users WHERE email = $1",
+      [email.toLowerCase()],
+    );
+
+    if (!result.rowCount) {
+      return NextResponse.json(
+        { message: "Credenciales invalidas." },
+        { status: 401 },
       );
     }
 
-    await ensureStcsSchema();
-
-    const result = await query<UserRow>("SELECT * FROM users WHERE email = $1", [
-      email.toLowerCase()
-    ]);
-
-    if (!result.rowCount) {
-      return NextResponse.json({ message: "Credenciales invalidas." }, { status: 401 });
-    }
-
     const user = result.rows[0];
+    if (!user.is_active || !isAdultRole(user.role))
+      return NextResponse.json(
+        { message: "Credenciales invalidas." },
+        { status: 401 },
+      );
     const isPasswordValid = await bcrypt.compare(password, user.password_hash);
 
     if (!isPasswordValid) {
-      return NextResponse.json({ message: "Credenciales invalidas." }, { status: 401 });
+      return NextResponse.json(
+        { message: "Credenciales invalidas." },
+        { status: 401 },
+      );
     }
 
-    const token = createJwtToken(
-      {
-        sub: user.id,
-        email: user.email,
-        role: user.role,
-        fullName: user.full_name
-      },
-      getJwtSecret(),
-      60 * 60 * 2
-    );
-
+    // Historical demo passwords must never grant a session after the privacy rollout.
+    if (!user.credential_verified_at)
+      return NextResponse.json(
+        {
+          message: "Activa tu cuenta verificando el correo antes de ingresar.",
+        },
+        { status: 403 },
+      );
     return NextResponse.json({
-      message: "Inicio de sesion exitoso.",
-      token,
-      expiresIn: "2h",
-      user: mapUser(user)
+      message: "Inicio de sesión exitoso.",
+      ...(await createSession(user)),
     });
   } catch (error) {
-    return NextResponse.json(
-      {
-        message:
-          error instanceof Error
-            ? error.message
-            : "No fue posible procesar el inicio de sesion."
-      },
-      { status: 500 }
+    return errorResponse(
+      error,
+      "No fue posible iniciar sesión. Intenta nuevamente.",
     );
   }
 }

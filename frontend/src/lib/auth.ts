@@ -49,7 +49,20 @@ export const getAuthSession = (): AuthSession | null => {
   }
 
   try {
-    return JSON.parse(rawValue) as AuthSession;
+    const session = JSON.parse(rawValue) as AuthSession;
+    const parts = session.token.split(".");
+    const payload = JSON.parse(
+      atob(parts[1].replace(/-/g, "+").replace(/_/g, "/")),
+    );
+    if (
+      parts.length !== 3 ||
+      typeof payload.exp !== "number" ||
+      payload.exp * 1000 <= Date.now()
+    ) {
+      localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    return session;
   } catch {
     localStorage.removeItem(STORAGE_KEY);
     return null;
@@ -67,7 +80,7 @@ export const clearAuthSession = (): void => {
 export const getRoleLabel = (role: UserRole): string => {
   switch (role) {
     case "guardian":
-      return "Cuidador";
+      return "Apoderado";
     case "therapist":
       return "Especialista";
     case "teacher":

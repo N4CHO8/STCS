@@ -9,9 +9,9 @@ export const dynamic = "force-dynamic";
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { pictogramId: string } }
+  { params }: { params: Promise<{ pictogramId: string }> },
 ) {
-  const authUser = authenticateRequest(request);
+  const authUser = await authenticateRequest(request);
 
   if (isAuthError(authUser)) {
     return authUser;
@@ -20,13 +20,13 @@ export async function PUT(
   try {
     const pictogram = await updatePictogram(
       authUser,
-      params.pictogramId,
-      parsePictogramInput(await request.json())
+      (await params).pictogramId,
+      parsePictogramInput(await request.json()),
     );
 
     return NextResponse.json({
       message: "Pictograma actualizado y guardado en el tablero.",
-      data: pictogram
+      data: pictogram,
     });
   } catch (error) {
     return errorResponse(error, "No fue posible actualizar el pictograma.");
@@ -35,19 +35,19 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { pictogramId: string } }
+  { params }: { params: Promise<{ pictogramId: string }> },
 ) {
-  const authUser = authenticateRequest(request);
+  const authUser = await authenticateRequest(request);
 
   if (isAuthError(authUser)) {
     return authUser;
   }
 
   try {
-    await deletePictogram(authUser, params.pictogramId);
+    await deletePictogram(authUser, (await params).pictogramId);
 
     return NextResponse.json({
-      message: "Pictograma eliminado del tablero."
+      message: "Pictograma eliminado del tablero.",
     });
   } catch (error) {
     return errorResponse(error, "No fue posible eliminar el pictograma.");

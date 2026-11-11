@@ -125,3 +125,23 @@ conectados entre si; ambos solo requieren acceso a Internet.
 6. Construir una frase, pulsar Limpiar y confirmar que el ESP32 no se reinicia.
 7. Abrir el Monitor serie y comprobar los eventos de cada accion.
 8. Crear una frase, pulsar Reproducir y comprobar que las palabras suenan en orden.
+
+## Compilación reproducible y privacidad
+
+`lv_conf.h` está versionado y habilita las fuentes usadas por STCS y los controladores originales. Dependencias comprobadas: core esp32 3.0.2, ArduinoJson 7.4.2, lvgl 8.3.10 y ESP32-audioI2S-master 3.0.13. LVGL necesita su carpeta `demos` copiada a `src/demos` para las referencias del controlador Waveshare.
+
+En este equipo, Arduino CLI y las dependencias están en `%LOCALAPPDATA%/STCS-tools`. Desde la raíz:
+
+```powershell
+.\scripts\verify-firmware.ps1
+```
+
+El script compila una copia con clave ficticia; no flashea el dispositivo ni utiliza credenciales reales. Admite `-ArduinoCli` y `-ConfigDir` para otras instalaciones. Resultado comprobado: 2.986.393 bytes de programa (94% de 3 MB) y 163.456 bytes de variables globales (49% de RAM). Volver a comprobar el tamaño antes de agregar funciones.
+
+HTTPS valida certificados públicos y espera sincronización NTP. `STCS_TrustRoots.h` contiene raíces públicas, no secretos. Revisarlas si Vercel cambia de cadena. El backend limita la clave heredada a STCS-ESP32-001; dispositivos adicionales requieren su propio hash SHA-256 en `devices.api_key_hash` y la correspondiente clave privada en el firmware.
+
+La cola conserva hasta 24 eventos en NVS, con ID persistente entre reinicios. Los errores permanentes se guardan por separado, hasta ocho rechazados. Si ese almacén o NVS se llena, se avisa por serie sin borrar el pendiente. Una selección que no puede guardarse muestra un aviso en pantalla. Antes de tener hora válida se reconstruye el instante con millis si sigue el mismo arranque; tras reiniciar sin hora no se puede recuperar la fecha original con fiabilidad.
+
+Un tablero vacío elimina las opciones anteriores. La configuración USB espera un ACK de guardado; ese ACK no demuestra conexión WiFi posterior.
+
+Compilación completa aprobada. Pendiente en hardware: pantalla, audio, USB, recuperación NVS tras corte de energía, certificados/NTP y envío directo de eventos. El build web no cubre esas pruebas.

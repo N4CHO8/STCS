@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { errorResponse } from "@/lib/server/apiResponse";
 import { authenticateDeviceRequest } from "@/lib/server/deviceAuth";
 import { getDeviceBoardConfig } from "@/lib/server/stcsData";
 
@@ -7,30 +8,33 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { deviceCode: string } }
+  { params }: { params: Promise<{ deviceCode: string }> },
 ) {
-  const authError = authenticateDeviceRequest(request);
+  const authError = await authenticateDeviceRequest(
+    request,
+    (await params).deviceCode,
+  );
 
   if (authError) {
     return authError;
   }
 
   try {
-    const config = await getDeviceBoardConfig(params.deviceCode);
+    const config = await getDeviceBoardConfig((await params).deviceCode);
 
     return NextResponse.json({
       message: "Configuracion del dispositivo obtenida correctamente.",
-      data: config
+      // Hardware needs a board identifier, not the child's clinical file or identity.
+      data: {
+        ...config,
+        device: { ...config.device, name: "Comunicador STCS" },
+        profile: { id: config.profile.id },
+      },
     });
   } catch (error) {
-    return NextResponse.json(
-      {
-        message:
-          error instanceof Error
-            ? error.message
-            : "No fue posible obtener la configuracion del dispositivo."
-      },
-      { status: 500 }
+    return errorResponse(
+      error,
+      "No fue posible obtener la configuración del dispositivo.",
     );
   }
 }

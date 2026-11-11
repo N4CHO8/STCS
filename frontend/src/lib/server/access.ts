@@ -1,83 +1,41 @@
-import { AuthTokenPayload } from "./auth";
+import type { AuthTokenPayload } from "./auth";
 import { query } from "./db";
-
-export type AccessScope = "admin" | "own" | "assigned" | "denied";
-
+export class ForbiddenError extends Error {
+  constructor(message = "No tienes permisos para realizar esta acción.") {
+    super(message);
+  }
+}
+export type AccessScope = "own" | "assigned" | "denied";
 export interface AccessDecision {
   allowed: boolean;
   scope: AccessScope;
   reason: string;
 }
-
-interface AccessRow {
-  relationship: string;
-}
-
 export const canAccessSubject = async (
-  authUser: AuthTokenPayload,
-  subjectUserId: string
+  user: AuthTokenPayload,
+  subjectId: string,
 ): Promise<AccessDecision> => {
-  if (authUser.role === "admin") {
+  // Administration grants account management, never clinical access.
+  if (!["guardian", "therapist", "teacher"].includes(user.role))
     return {
-      allowed: true,
-      scope: "admin",
-      reason: "El rol admin puede auditar todos los registros."
+      allowed: false,
+      scope: "denied",
+      reason: "Perfil sin acceso a niños.",
     };
-  }
-
-  if (authUser.sub === subjectUserId) {
-    return {
-      allowed: true,
-      scope: "own",
-      reason: "El usuario accede solo a su propia informacion."
-    };
-  }
-
-  const access = await query<AccessRow>(
-    `SELECT relationship
-     FROM user_access
-     WHERE actor_user_id = $1 AND subject_user_id = $2
-     LIMIT 1`,
-    [authUser.sub, subjectUserId]
+  const result = await query(
+    `SELECT 1 FROM user_access WHERE actor_user_id=$1 AND subject_user_id=$2 AND relationship=$3 AND approved_at IS NOT NULL`,
+    [user.sub, subjectId, user.role],
   );
-
-  if (access.rowCount) {
-    return {
-      allowed: true,
-      scope: "assigned",
-      reason: `Acceso permitido por asignacion ${access.rows[0].relationship}.`
-    };
-  }
-
   return {
-    allowed: false,
-    scope: "denied",
-    reason: "El usuario autenticado no esta asignado a este perfil."
+    allowed: Boolean(result.rowCount),
+    scope: result.rowCount ? "assigned" : "denied",
+    reason: "Asignación vigente.",
   };
 };
-
 export const getDefaultAccessDecision = (
-  authUser: AuthTokenPayload
-): AccessDecision => {
-  if (authUser.role === "admin") {
-    return {
-      allowed: true,
-      scope: "admin",
-      reason: "Listado administrativo filtrado por permisos del servidor."
-    };
-  }
-
-  if (authUser.role === "child") {
-    return {
-      allowed: true,
-      scope: "own",
-      reason: "Listado limitado al usuario autenticado."
-    };
-  }
-
-  return {
-    allowed: true,
-    scope: "assigned",
-    reason: "Listado limitado a perfiles asignados en user_access."
-  };
-};
+  _user: AuthTokenPayload,
+): AccessDecision => ({
+  allowed: true,
+  scope: "assigned",
+  reason: "Solo perfiles asignados.",
+});

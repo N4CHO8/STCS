@@ -1,7 +1,14 @@
+import { withApi } from "@/lib/server/withApi";
+import { objectInput, uuidInput, stringInput } from "@/lib/server/inputs";
+import { InputValidationError } from "@/lib/server/validation";
+import { canReadSensitive } from "@/lib/permissions";
 import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 
-import { canAccessSubject, getDefaultAccessDecision } from "@/lib/server/access";
+import {
+  canAccessSubject,
+  getDefaultAccessDecision,
+} from "@/lib/server/access";
 import { authenticateRequest, isAuthError } from "@/lib/server/auth";
 import { query } from "@/lib/server/db";
 
@@ -32,28 +39,35 @@ const mapEmotion = (row: EmotionRow) => ({
   intensity: row.intensity,
   note: row.note,
   recordedAt: row.recorded_at.toISOString(),
-  createdAt: row.created_at.toISOString()
+  createdAt: row.created_at.toISOString(),
 });
 
-export async function GET(request: NextRequest) {
-  const authUser = authenticateRequest(request);
+async function handleGET(request: NextRequest) {
+  const authUser = await authenticateRequest(request);
 
   if (isAuthError(authUser)) {
     return authUser;
   }
 
-  const requestedUserId = request.nextUrl.searchParams.get("userId") ?? undefined;
+  if (!canReadSensitive(authUser.role))
+    return NextResponse.json(
+      { message: "Acceso restringido" },
+      { status: 403 },
+    );
+
+  const requestedUserId =
+    request.nextUrl.searchParams.get("userId") ?? undefined;
 
   if (requestedUserId) {
-    const access = await canAccessSubject(authUser, requestedUserId);
+    const access = await canAccessSubject(authUser, uuidInput(requestedUserId));
 
     if (!access.allowed) {
       return NextResponse.json(
         {
           message: "No tienes permisos para acceder a estas emociones.",
-          access
+          access,
         },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -63,82 +77,83 @@ export async function GET(request: NextRequest) {
        WHERE user_id = $1
        ORDER BY recorded_at DESC
        LIMIT 30`,
-      [requestedUserId]
+      [requestedUserId],
     );
 
     return NextResponse.json({
       message: "Listado de emociones protegido por permisos.",
       total: result.rowCount,
       access,
-      data: result.rows.map(mapEmotion)
+      data: result.rows.map(mapEmotion),
     });
   }
 
   const access = getDefaultAccessDecision(authUser);
-  const result =
-    authUser.role === "admin"
-      ? await query<EmotionRow>(
-          "SELECT * FROM emotions ORDER BY recorded_at DESC LIMIT 30"
-        )
-      : authUser.role === "child"
-        ? await query<EmotionRow>(
-            `SELECT *
-             FROM emotions
-             WHERE user_id = $1
-             ORDER BY recorded_at DESC
-             LIMIT 30`,
-            [authUser.sub]
-          )
-        : await query<EmotionRow>(
-            `SELECT e.*
-             FROM emotions e
-             INNER JOIN user_access ua ON ua.subject_user_id = e.user_id
-             WHERE ua.actor_user_id = $1
-             ORDER BY e.recorded_at DESC
-             LIMIT 30`,
-            [authUser.sub]
-          );
+  const result = await query<EmotionRow>(
+    `SELECT e.* FROM emotions e
+     JOIN user_access ua ON ua.subject_user_id=e.user_id
+     WHERE ua.actor_user_id=$1 AND ua.relationship=$2 AND ua.approved_at IS NOT NULL ORDER BY e.recorded_at DESC LIMIT 30`,
+    [authUser.sub, authUser.role],
+  );
 
   return NextResponse.json({
     message: "Listado de emociones protegido por permisos.",
     total: result.rowCount,
     access,
-    data: result.rows.map(mapEmotion)
+    data: result.rows.map(mapEmotion),
   });
 }
 
-export async function POST(request: NextRequest) {
-  const authUser = authenticateRequest(request);
+async function handlePOST(request: NextRequest) {
+  const authUser = await authenticateRequest(request);
 
   if (isAuthError(authUser)) {
     return authUser;
   }
 
-  const input = (await request.json()) as CreateEmotionInput;
+  if (!canReadSensitive(authUser.role))
+    return NextResponse.json(
+      { message: "Acceso restringido" },
+      { status: 403 },
+    );
+
+  const input = objectInput(await request.json()) as CreateEmotionInput;
 
   if (!input.userId || !input.emotion || typeof input.intensity !== "number") {
     return NextResponse.json(
       { message: "userId, emotion e intensity son obligatorios." },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   if (input.intensity < 1 || input.intensity > 5) {
     return NextResponse.json(
       { message: "intensity debe estar entre 1 y 5." },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
+  input.userId = uuidInput(input.userId);
+  input.emotion = stringInput(input.emotion, "Emoción", 60);
+  if (!Number.isInteger(input.intensity))
+    throw new InputValidationError("La intensidad debe ser un entero.");
+  if (input.note !== undefined)
+    input.note = stringInput(input.note, "Nota", 5000, false);
+  if (
+    input.recordedAt !== undefined &&
+    (typeof input.recordedAt !== "string" ||
+      Number.isNaN(Date.parse(input.recordedAt)))
+  )
+    throw new InputValidationError("Fecha inválida.");
   const access = await canAccessSubject(authUser, input.userId);
 
   if (!access.allowed) {
     return NextResponse.json(
       {
         message: "No tienes permisos para crear emociones de este usuario.",
-        access
+        access,
       },
-      { status: 403 }
+      { status: 403 },
     );
   }
 
@@ -152,16 +167,19 @@ export async function POST(request: NextRequest) {
       input.emotion,
       input.intensity,
       input.note ?? null,
-      input.recordedAt ?? null
-    ]
+      input.recordedAt ?? null,
+    ],
   );
 
   return NextResponse.json(
     {
       message: "Registro de emocion creado con permisos validados.",
       access,
-      data: mapEmotion(result.rows[0])
+      data: mapEmotion(result.rows[0]),
     },
-    { status: 201 }
+    { status: 201 },
   );
 }
+
+export const GET = withApi(handleGET);
+export const POST = withApi(handlePOST);

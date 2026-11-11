@@ -4,13 +4,13 @@ STCS es un proyecto de comunicacion aumentativa y alternativa para ninos con TEA
 
 - Plataforma web para cuidadores, docentes, especialistas y administradores.
 - Base de datos PostgreSQL en Supabase.
-- Dispositivo fisico ESP32-S3 con pantalla redonda tactil programado con PlatformIO.
+- Dispositivo fisico ESP32-S3 con pantalla redonda tactil programado con Arduino (interfaz activa) y un prototipo inicial en PlatformIO.
 
 El nino interactua con el dispositivo ESP32. La web se usa para configurar pictogramas, revisar eventos, consultar historial y analizar progreso.
 
 ## Stack final
 
-- Web: `Next.js 14`, `React`, `TypeScript`, `Tailwind CSS`.
+- Web: `Next.js 16.4.6`, `React`, `TypeScript`, `Tailwind CSS`.
 - API: `Next.js API Routes` dentro de `frontend/src/app/api`.
 - Base de datos: `Supabase PostgreSQL`.
 - Firmware: `PlatformIO + Arduino framework`.
@@ -45,25 +45,13 @@ npm run dev
 
 4. Abrir [http://localhost:3000](http://localhost:3000).
 
-La app crea tablas y datos demo al iniciar sesion si la base esta vacia.
+El inicio de sesión no crea tablas ni modifica cuentas. Aplica el esquema y las migraciones antes de iniciar una instalación nueva.
 
-Para cargar datos de prueba completos en Supabase:
+Consulta [el flujo de los cuatro perfiles](./docs/FLUJO_ROLES.md) para permisos, privacidad, administración y pruebas.
 
-```powershell
-cd frontend
-npm run seed:stcs
-```
+La activación y recuperación requieren un correo real y SMTP configurado en Supabase. El titular establece su propia contraseña; no se aceptan contraseñas demo sin verificar el correo. El administrador no puede restablecer contraseñas ni modificar correos de adultos existentes.
 
-Este comando crea usuarios demo, el perfil de Mateo, el dispositivo `STCS-ESP32-001`, pictogramas CAA iniciales y eventos simulados del dispositivo.
-
-## Usuarios demo
-
-```text
-cuidadora@stcs.local / Demo1234!  -> Cuidadora
-docente@stcs.local / Demo1234!    -> Docente
-terapeuta@stcs.local / Demo1234!  -> Especialista
-admin@stcs.local / Demo1234!      -> Administrador
-```
+Las pruebas se ejecutan contra PostgreSQL descartable en localhost, separado de Supabase. Consulta [las instrucciones y límites de verificación](./docs/PRUEBAS.md) y [las correcciones de auditoría](./docs/ARREGLOS_AUDITORIA.md). No ejecutes seeds en la base compartida.
 
 ## Ejecutar el firmware
 
@@ -71,6 +59,8 @@ admin@stcs.local / Demo1234!      -> Administrador
 2. Instalar la extension PlatformIO IDE.
 3. Abrir el proyecto `firmware/stcs-esp32`.
 4. Ejecutar `Build`.
+
+La interfaz táctil y WiFi activa está en `firmware/STCS_UI_Arduino`; su README documenta versiones y compilación. El proyecto PlatformIO conserva únicamente el prototipo de contratos inicial.
 5. Cuando la placa este disponible, conectar por USB-C y ejecutar `Upload`.
 6. Abrir `Serial Monitor` a `115200`.
 

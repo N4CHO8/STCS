@@ -1,13 +1,14 @@
 import { randomUUID } from "crypto";
 import type { QueryResultRow } from "pg";
 
-import { canAccessSubject } from "./access";
+import { canAccessSubject, ForbiddenError } from "./access";
+import { canReadSensitive, canEditBoard } from "@/lib/permissions";
 import type { AuthTokenPayload } from "./auth";
-import { query } from "./db";
+import { query, transaction } from "./db";
 import type { DeviceEventInput, PictogramInput } from "./validation";
 import {
   DEVICE_MAX_ITEMS_PER_CATEGORY,
-  DEVICE_PICTOGRAM_ASSETS
+  getCatalogAsset,
 } from "@/lib/pictogramCatalog";
 
 export class StcsConflictError extends Error {
@@ -139,19 +140,13 @@ interface EventRow extends QueryResultRow {
   payload: Record<string, unknown>;
 }
 
-const MATEO_PROFILE_ID = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb";
-const MATEO_CHILD_ID = "44444444-4444-4444-4444-444444444444";
-const DEVICE_ID = "dddddddd-dddd-dddd-dddd-dddddddddddd";
-
-let schemaReady = false;
-
 const mapProfile = (row: ProfileRow): StudentProfile => ({
   id: row.id,
   childUserId: row.child_user_id,
   displayName: row.display_name,
   age: row.age,
   supportLevel: row.support_level,
-  mainContext: row.main_context
+  mainContext: row.main_context,
 });
 
 const mapDevice = (row: DeviceRow): DeviceInfo => ({
@@ -162,7 +157,7 @@ const mapDevice = (row: DeviceRow): DeviceInfo => ({
   batteryLevel: row.battery_level,
   wifiSsid: row.wifi_ssid,
   firmwareVersion: row.firmware_version,
-  lastSyncAt: row.last_sync_at ? row.last_sync_at.toISOString() : null
+  lastSyncAt: row.last_sync_at ? row.last_sync_at.toISOString() : null,
 });
 
 const mapPictogram = (row: PictogramRow): PictogramConfig => ({
@@ -173,7 +168,7 @@ const mapPictogram = (row: PictogramRow): PictogramConfig => ({
   colorTone: row.color_tone,
   iconName: row.icon_name,
   imagePath: row.image_path,
-  position: row.position
+  position: row.position,
 });
 
 const mapEvent = (row: EventRow): DeviceEvent => ({
@@ -186,13 +181,13 @@ const mapEvent = (row: EventRow): DeviceEvent => ({
   emotion: row.emotion,
   intensity: row.intensity,
   occurredAt: row.occurred_at.toISOString(),
-  payload: row.payload ?? {}
+  payload: row.payload ?? {},
 });
 
 const getDeviceByCode = async (deviceCode: string): Promise<DeviceRow> => {
   const result = await query<DeviceRow>(
     "SELECT * FROM devices WHERE device_code = $1 LIMIT 1",
-    [deviceCode]
+    [deviceCode],
   );
 
   if (!result.rowCount) {
@@ -205,7 +200,7 @@ const getDeviceByCode = async (deviceCode: string): Promise<DeviceRow> => {
 const getProfileById = async (profileId: string): Promise<StudentProfile> => {
   const result = await query<ProfileRow>(
     "SELECT * FROM student_profiles WHERE id = $1 LIMIT 1",
-    [profileId]
+    [profileId],
   );
 
   if (!result.rowCount) {
@@ -215,226 +210,30 @@ const getProfileById = async (profileId: string): Promise<StudentProfile> => {
   return mapProfile(result.rows[0]);
 };
 
-export const ensureStcsSchema = async () => {
-  if (schemaReady) {
-    return;
-  }
-
-  await query(`
-    CREATE TABLE IF NOT EXISTS users (
-      id UUID PRIMARY KEY,
-      full_name VARCHAR(120) NOT NULL,
-      email VARCHAR(120) UNIQUE NOT NULL,
-      password_hash VARCHAR(255) NOT NULL,
-      role VARCHAR(30) NOT NULL DEFAULT 'guardian',
-      created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-      updated_at TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-
-    CREATE TABLE IF NOT EXISTS user_access (
-      actor_user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-      subject_user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-      relationship VARCHAR(30) NOT NULL,
-      created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-      PRIMARY KEY (actor_user_id, subject_user_id)
-    );
-
-    CREATE TABLE IF NOT EXISTS student_profiles (
-      id UUID PRIMARY KEY,
-      child_user_id UUID NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
-      display_name VARCHAR(120) NOT NULL,
-      age INTEGER NOT NULL CHECK (age BETWEEN 1 AND 18),
-      support_level VARCHAR(120) NOT NULL,
-      main_context VARCHAR(80) NOT NULL,
-      created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-      updated_at TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-
-    CREATE TABLE IF NOT EXISTS devices (
-      id UUID PRIMARY KEY,
-      student_profile_id UUID NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
-      device_code VARCHAR(60) UNIQUE NOT NULL,
-      name VARCHAR(120) NOT NULL,
-      status VARCHAR(40) NOT NULL DEFAULT 'offline',
-      battery_level INTEGER NOT NULL DEFAULT 0 CHECK (battery_level BETWEEN 0 AND 100),
-      wifi_ssid VARCHAR(120),
-      firmware_version VARCHAR(40) NOT NULL DEFAULT 'v0.1.0',
-      last_sync_at TIMESTAMP,
-      created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-      updated_at TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-
-    CREATE TABLE IF NOT EXISTS pictograms (
-      id UUID PRIMARY KEY,
-      student_profile_id UUID NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
-      label VARCHAR(80) NOT NULL,
-      message TEXT NOT NULL,
-      category VARCHAR(60) NOT NULL,
-      color_tone VARCHAR(40) NOT NULL,
-      icon_name VARCHAR(60) NOT NULL,
-      image_path VARCHAR(255),
-      position INTEGER NOT NULL DEFAULT 0,
-      is_active BOOLEAN NOT NULL DEFAULT TRUE,
-      created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-      updated_at TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-
-    CREATE TABLE IF NOT EXISTS device_events (
-      id UUID PRIMARY KEY,
-      device_id UUID NOT NULL REFERENCES devices(id) ON DELETE CASCADE,
-      student_profile_id UUID NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
-      pictogram_id UUID REFERENCES pictograms(id) ON DELETE SET NULL,
-      external_event_id VARCHAR(100),
-      event_type VARCHAR(60) NOT NULL,
-      action_label VARCHAR(150) NOT NULL,
-      context VARCHAR(80) NOT NULL,
-      actor_name VARCHAR(120) NOT NULL DEFAULT 'Dispositivo ESP32',
-      emotion VARCHAR(60),
-      intensity INTEGER CHECK (intensity BETWEEN 1 AND 5),
-      payload JSONB NOT NULL DEFAULT '{}'::jsonb,
-      occurred_at TIMESTAMP NOT NULL DEFAULT NOW(),
-      created_at TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-
-    CREATE INDEX IF NOT EXISTS idx_student_profiles_child_user_id ON student_profiles(child_user_id);
-    CREATE INDEX IF NOT EXISTS idx_user_access_subject_user_id ON user_access(subject_user_id);
-    CREATE INDEX IF NOT EXISTS idx_devices_student_profile_id ON devices(student_profile_id);
-    CREATE INDEX IF NOT EXISTS idx_pictograms_student_profile_id ON pictograms(student_profile_id);
-    CREATE INDEX IF NOT EXISTS idx_device_events_profile_date ON device_events(student_profile_id, occurred_at DESC);
-    CREATE INDEX IF NOT EXISTS idx_device_events_device_id ON device_events(device_id);
-    CREATE INDEX IF NOT EXISTS idx_device_events_pictogram_id ON device_events(pictogram_id);
-
-    ALTER TABLE pictograms ADD COLUMN IF NOT EXISTS image_path VARCHAR(255);
-    ALTER TABLE device_events ADD COLUMN IF NOT EXISTS pictogram_id UUID REFERENCES pictograms(id) ON DELETE SET NULL;
-    ALTER TABLE device_events ADD COLUMN IF NOT EXISTS external_event_id VARCHAR(100);
-
-    CREATE UNIQUE INDEX IF NOT EXISTS uq_pictograms_profile_label_category
-      ON pictograms(student_profile_id, LOWER(label), LOWER(category))
-      WHERE is_active = TRUE;
-    CREATE UNIQUE INDEX IF NOT EXISTS uq_device_events_external_id
-      ON device_events(device_id, external_event_id)
-      WHERE external_event_id IS NOT NULL;
-
-    ALTER TABLE users ENABLE ROW LEVEL SECURITY;
-    ALTER TABLE user_access ENABLE ROW LEVEL SECURITY;
-    ALTER TABLE student_profiles ENABLE ROW LEVEL SECURITY;
-    ALTER TABLE devices ENABLE ROW LEVEL SECURITY;
-    ALTER TABLE pictograms ENABLE ROW LEVEL SECURITY;
-    ALTER TABLE device_events ENABLE ROW LEVEL SECURITY;
-  `);
-
-  await seedStcsDemoData();
-  schemaReady = true;
-};
-
-const seedStcsDemoData = async () => {
-  const demoUsers = [
-    ["11111111-1111-1111-1111-111111111111", "Cuidadora Laura", "cuidadora@stcs.local", "guardian"],
-    ["22222222-2222-2222-2222-222222222222", "Especialista Marco", "terapeuta@stcs.local", "therapist"],
-    ["33333333-3333-3333-3333-333333333333", "Administrador Demo", "admin@stcs.local", "admin"],
-    ["44444444-4444-4444-4444-444444444444", "Mateo Rojas", "mateo@stcs.local", "child"],
-    ["55555555-5555-5555-5555-555555555555", "Lucas Vargas", "lucas@stcs.local", "child"],
-    ["aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", "Docente Ana", "docente@stcs.local", "teacher"]
-  ];
-  const demoPasswordHash =
-    "$2a$10$iZ4eoeGIOqgVg0q.jAFbFuvSURJiyu4SwyQQKuYFWSzTdBS70PSUK";
-
-  for (const [id, fullName, email, role] of demoUsers) {
-    await query(
-      `INSERT INTO users (id, full_name, email, password_hash, role)
-       VALUES ($1, $2, $3, $4, $5)
-       ON CONFLICT (id) DO UPDATE SET
-         full_name = EXCLUDED.full_name,
-         email = EXCLUDED.email,
-         password_hash = EXCLUDED.password_hash,
-         role = EXCLUDED.role,
-         updated_at = NOW()`,
-      [id, fullName, email, demoPasswordHash, role]
-    );
-  }
-
-  await query(
-    `INSERT INTO user_access (actor_user_id, subject_user_id, relationship)
-     VALUES
-       ('11111111-1111-1111-1111-111111111111', $1, 'guardian'),
-       ('22222222-2222-2222-2222-222222222222', $1, 'therapist'),
-       ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', $1, 'teacher')
-     ON CONFLICT (actor_user_id, subject_user_id) DO NOTHING`,
-    [MATEO_CHILD_ID]
-  );
-
-  await query(
-    `INSERT INTO student_profiles (id, child_user_id, display_name, age, support_level, main_context)
-     VALUES ($1, $2, 'Mateo Rojas', 8, 'Apoyo comunicacional medio', 'Casa y colegio')
-     ON CONFLICT (id) DO NOTHING`,
-    [MATEO_PROFILE_ID, MATEO_CHILD_ID]
-  );
-
-  await query(
-    `INSERT INTO devices (id, student_profile_id, device_code, name, status, battery_level, wifi_ssid, firmware_version, last_sync_at)
-     VALUES ($1, $2, 'STCS-ESP32-001', 'Comunicador Mateo', 'pending', 0, NULL, 'v0.4.0-pages', NULL)
-     ON CONFLICT (device_code) DO NOTHING`,
-    [DEVICE_ID, MATEO_PROFILE_ID]
-  );
-
-  for (const pictogram of DEVICE_PICTOGRAM_ASSETS) {
-    await query(
-      `INSERT INTO pictograms (id, student_profile_id, label, message, category, color_tone, icon_name, image_path, position)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-       ON CONFLICT DO NOTHING`,
-      [
-        pictogram.id,
-        MATEO_PROFILE_ID,
-        pictogram.label,
-        pictogram.message,
-        pictogram.category,
-        pictogram.colorTone,
-        pictogram.iconName,
-        pictogram.imagePath,
-        pictogram.position
-      ]
-    );
-  }
-
-  // No se crean eventos demo: historial, metricas y progreso deben quedar vacios
-  // hasta que el ESP32 real envie datos a la API.
-};
-
 const getAccessibleProfile = async (
-  authUser: AuthTokenPayload
+  authUser: AuthTokenPayload,
 ): Promise<StudentProfile> => {
-  const result =
-    authUser.role === "admin"
-      ? await query<ProfileRow>(
-          "SELECT * FROM student_profiles ORDER BY display_name LIMIT 1"
-        )
-      : authUser.role === "child"
-        ? await query<ProfileRow>(
-            "SELECT * FROM student_profiles WHERE child_user_id = $1 LIMIT 1",
-            [authUser.sub]
-          )
-        : await query<ProfileRow>(
-            `SELECT sp.*
-             FROM student_profiles sp
-             INNER JOIN user_access ua ON ua.subject_user_id = sp.child_user_id
-             WHERE ua.actor_user_id = $1
-             ORDER BY sp.display_name
-             LIMIT 1`,
-            [authUser.sub]
-          );
-
+  if (authUser.role === "admin" || authUser.role === "child")
+    throw new ForbiddenError();
+  const result = await query<ProfileRow>(
+    `SELECT sp.* FROM student_profiles sp
+     JOIN user_access ua ON ua.subject_user_id = sp.child_user_id
+     WHERE ua.actor_user_id = $1 AND ua.relationship = $2 AND ua.approved_at IS NOT NULL
+       AND ($3::uuid IS NULL OR sp.id = $3)
+     ORDER BY ua.created_at, sp.id LIMIT 1`,
+    [authUser.sub, authUser.role, authUser.profileId ?? null],
+  );
   if (!result.rowCount) {
-    throw new Error("No existe un perfil asignado para este usuario.");
+    throw new ForbiddenError("No existe un perfil asignado para este usuario.");
   }
 
   return mapProfile(result.rows[0]);
 };
 
 export const getStcsOverview = async (
-  authUser: AuthTokenPayload
+  authUser: AuthTokenPayload,
 ): Promise<StcsOverview> => {
-  await ensureStcsSchema();
-
+  if (!canReadSensitive(authUser.role)) throw new ForbiddenError();
   const profile = await getAccessibleProfile(authUser);
 
   const access = await canAccessSubject(authUser, profile.childUserId);
@@ -443,84 +242,91 @@ export const getStcsOverview = async (
     throw new Error("El usuario no tiene permiso para ver este perfil.");
   }
 
-  const [deviceResult, pictogramsResult, eventsResult, metricsResult, weeklyResult, categoryResult, emotionResult] =
-    await Promise.all([
-      query<DeviceRow>(
-        "SELECT * FROM devices WHERE student_profile_id = $1 ORDER BY created_at LIMIT 1",
-        [profile.id]
-      ),
-      query<PictogramRow>(
-        `SELECT *
+  const [
+    deviceResult,
+    pictogramsResult,
+    eventsResult,
+    metricsResult,
+    weeklyResult,
+    categoryResult,
+    emotionResult,
+  ] = await Promise.all([
+    query<DeviceRow>(
+      "SELECT * FROM devices WHERE student_profile_id = $1 ORDER BY created_at LIMIT 1",
+      [profile.id],
+    ),
+    query<PictogramRow>(
+      `SELECT *
          FROM pictograms
          WHERE student_profile_id = $1 AND is_active = TRUE
          ORDER BY position ASC, label ASC`,
-        [profile.id]
-      ),
-      query<EventRow>(
-        `SELECT *
+      [profile.id],
+    ),
+    query<EventRow>(
+      `SELECT *
          FROM device_events
          WHERE student_profile_id = $1
            AND payload->>'source' = 'esp32-device'
          ORDER BY occurred_at DESC
          LIMIT 10`,
-        [profile.id]
-      ),
-      query<{ interactions_today: number; emotions_today: number }>(
-        `SELECT
+      [profile.id],
+    ),
+    query<{ interactions_today: number; emotions_today: number }>(
+      `SELECT
            COUNT(*) FILTER (
              WHERE event_type = 'pictogram_selected'
-               AND occurred_at::date = CURRENT_DATE
+               AND (occurred_at AT TIME ZONE 'UTC' AT TIME ZONE 'America/Santiago')::date = (NOW() AT TIME ZONE 'America/Santiago')::date
                AND payload->>'source' = 'esp32-device'
            )::int AS interactions_today,
            COUNT(*) FILTER (
-             WHERE event_type = 'emotion_recorded'
-               AND occurred_at::date = CURRENT_DATE
+             WHERE (event_type = 'emotion_recorded' OR (event_type='pictogram_selected' AND emotion IS NOT NULL))
+               AND (occurred_at AT TIME ZONE 'UTC' AT TIME ZONE 'America/Santiago')::date = (NOW() AT TIME ZONE 'America/Santiago')::date
                AND payload->>'source' = 'esp32-device'
            )::int AS emotions_today
          FROM device_events
          WHERE student_profile_id = $1`,
-        [profile.id]
-      ),
-      query<{ day: string; interactions: number }>(
-        `SELECT
+      [profile.id],
+    ),
+    query<{ day: string; interactions: number }>(
+      `SELECT
            TO_CHAR(days.day, 'Dy') AS day,
            COUNT(de.id)::int AS interactions
-         FROM generate_series(CURRENT_DATE - INTERVAL '6 days', CURRENT_DATE, INTERVAL '1 day') AS days(day)
+         FROM generate_series((NOW() AT TIME ZONE 'America/Santiago')::date - INTERVAL '6 days', (NOW() AT TIME ZONE 'America/Santiago')::date, INTERVAL '1 day') AS days(day)
          LEFT JOIN device_events de
            ON de.student_profile_id = $1
           AND de.event_type = 'pictogram_selected'
           AND de.payload->>'source' = 'esp32-device'
-          AND de.occurred_at::date = days.day::date
+          AND (de.occurred_at AT TIME ZONE 'UTC' AT TIME ZONE 'America/Santiago')::date = days.day::date
          GROUP BY days.day
          ORDER BY days.day`,
-        [profile.id]
-      ),
-      query<{ name: string; value: number }>(
-        `SELECT COALESCE(payload->>'category', 'Sistema') AS name, COUNT(*)::int AS value
+      [profile.id],
+    ),
+    query<{ name: string; value: number }>(
+      `SELECT COALESCE(payload->>'category', 'Sistema') AS name, COUNT(*)::int AS value
          FROM device_events
          WHERE student_profile_id = $1
            AND event_type = 'pictogram_selected'
            AND payload->>'source' = 'esp32-device'
          GROUP BY COALESCE(payload->>'category', 'Sistema')
          ORDER BY value DESC`,
-        [profile.id]
-      ),
-      query<{ day: string; positive: number; difficult: number }>(
-        `SELECT
+      [profile.id],
+    ),
+    query<{ day: string; positive: number; difficult: number }>(
+      `SELECT
            TO_CHAR(days.day, 'DD') AS day,
            COUNT(de.id) FILTER (WHERE de.emotion IN ('feliz', 'tranquilo'))::int AS positive,
-           COUNT(de.id) FILTER (WHERE de.emotion IN ('frustrado', 'ansioso', 'triste'))::int AS difficult
-         FROM generate_series(CURRENT_DATE - INTERVAL '29 days', CURRENT_DATE, INTERVAL '5 days') AS days(day)
+           COUNT(de.id) FILTER (WHERE de.emotion IN ('frustrado', 'ansioso', 'triste', 'enojado', 'miedo', 'cansado'))::int AS difficult
+         FROM generate_series((NOW() AT TIME ZONE 'America/Santiago')::date - INTERVAL '29 days', (NOW() AT TIME ZONE 'America/Santiago')::date, INTERVAL '5 days') AS days(day)
          LEFT JOIN device_events de
            ON de.student_profile_id = $1
-          AND de.event_type = 'emotion_recorded'
+          AND (de.event_type = 'emotion_recorded' OR (de.event_type='pictogram_selected' AND de.emotion IS NOT NULL))
           AND de.payload->>'source' = 'esp32-device'
-          AND de.occurred_at::date BETWEEN days.day::date AND (days.day::date + 4)
+          AND (de.occurred_at AT TIME ZONE 'UTC' AT TIME ZONE 'America/Santiago')::date BETWEEN days.day::date AND (days.day::date + 4)
          GROUP BY days.day
          ORDER BY days.day`,
-        [profile.id]
-      )
-    ]);
+      [profile.id],
+    ),
+  ]);
 
   const device = deviceResult.rows[0];
 
@@ -532,7 +338,7 @@ export const getStcsOverview = async (
     user: {
       id: authUser.sub,
       name: authUser.fullName,
-      role: authUser.role
+      role: authUser.role,
     },
     profile,
     device: mapDevice(device),
@@ -540,20 +346,18 @@ export const getStcsOverview = async (
     metrics: {
       interactionsToday: metricsResult.rows[0]?.interactions_today ?? 0,
       emotionsToday: metricsResult.rows[0]?.emotions_today ?? 0,
-      deviceStatus: device.status
+      deviceStatus: device.status,
     },
     weeklyUse: weeklyResult.rows,
     categoryUse: categoryResult.rows,
     emotionProgress: emotionResult.rows,
-    recentActivity: eventsResult.rows.map(mapEvent)
+    recentActivity: eventsResult.rows.map(mapEvent),
   };
 };
 
 export const getDeviceBoardConfig = async (
-  deviceCode: string
+  deviceCode: string,
 ): Promise<DeviceBoardConfig> => {
-  await ensureStcsSchema();
-
   const device = await getDeviceByCode(deviceCode);
   const profile = await getProfileById(device.student_profile_id);
   const pictogramsResult = await query<PictogramRow>(
@@ -566,126 +370,126 @@ export const getDeviceBoardConfig = async (
      ) configured
      WHERE category_position <= $2
      ORDER BY position ASC, label ASC`,
-    [device.student_profile_id, DEVICE_MAX_ITEMS_PER_CATEGORY]
-  );
-
-  await query(
-    `UPDATE devices
-     SET status = 'connected', last_sync_at = NOW(), updated_at = NOW()
-     WHERE id = $1`,
-    [device.id]
+    [device.student_profile_id, DEVICE_MAX_ITEMS_PER_CATEGORY],
   );
 
   return {
-    device: mapDevice({
-      ...device,
-      status: "connected",
-      last_sync_at: new Date()
-    }),
+    device: mapDevice(device),
     profile,
-    pictograms: pictogramsResult.rows.map(mapPictogram)
+    pictograms: pictogramsResult.rows.map(mapPictogram),
   };
 };
 
 export const createPictogram = async (
   authUser: AuthTokenPayload,
-  input: PictogramInput
+  input: PictogramInput,
 ): Promise<PictogramConfig> => {
-  await ensureStcsSchema();
-
+  if (!canEditBoard(authUser.role)) throw new ForbiddenError();
   const profile = await getAccessibleProfile(authUser);
   const access = await canAccessSubject(authUser, profile.childUserId);
 
   if (!access.allowed) {
-    throw new Error("El usuario no tiene permiso para configurar este tablero.");
-  }
-
-  const categoryCount = await query<{ count: number }>(
-    `SELECT COUNT(*)::int AS count
-     FROM pictograms
-     WHERE student_profile_id = $1 AND category = $2 AND is_active = TRUE`,
-    [profile.id, input.category]
-  );
-
-  if ((categoryCount.rows[0]?.count ?? 0) >= DEVICE_MAX_ITEMS_PER_CATEGORY) {
-    throw new StcsConflictError(
-      `La pantalla admite un maximo de ${DEVICE_MAX_ITEMS_PER_CATEGORY} pictogramas por categoria.`
+    throw new Error(
+      "El usuario no tiene permiso para configurar este tablero.",
     );
   }
 
-  const positionResult = await query<{ next_position: number }>(
-    `SELECT COALESCE(MAX(position), 0)::int + 1 AS next_position
+  return transaction(async (client) => {
+    await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1,0))", [
+      profile.id,
+    ]);
+    const categoryCount = await client.query<{ count: number }>(
+      `SELECT COUNT(*)::int AS count
+     FROM pictograms
+     WHERE student_profile_id = $1 AND category = $2 AND is_active = TRUE`,
+      [profile.id, input.category],
+    );
+
+    if ((categoryCount.rows[0]?.count ?? 0) >= DEVICE_MAX_ITEMS_PER_CATEGORY) {
+      throw new StcsConflictError(
+        `La pantalla admite un maximo de ${DEVICE_MAX_ITEMS_PER_CATEGORY} pictogramas por categoria.`,
+      );
+    }
+
+    const positionResult = await client.query<{ next_position: number }>(
+      `SELECT COALESCE(MAX(position), 0)::int + 1 AS next_position
      FROM pictograms
      WHERE student_profile_id = $1 AND is_active = TRUE`,
-    [profile.id]
-  );
+      [profile.id],
+    );
 
-  try {
-    const result = await query<PictogramRow>(
-      `INSERT INTO pictograms (
+    try {
+      const result = await client.query<PictogramRow>(
+        `INSERT INTO pictograms (
          id, student_profile_id, label, message, category, color_tone,
          icon_name, image_path, position, is_active
        )
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, TRUE)
        RETURNING *`,
-      [
-        randomUUID(),
-        profile.id,
-        input.label,
-        input.message,
-        input.category,
-        input.colorTone,
-        input.iconName,
-        input.imagePath ?? null,
-        input.position ?? positionResult.rows[0]?.next_position ?? 1
-      ]
-    );
-
-    return mapPictogram(result.rows[0]);
-  } catch (error) {
-    if ((error as { code?: string }).code === "23505") {
-      throw new StcsConflictError(
-        "Ya existe un pictograma activo con ese nombre y categoria."
+        [
+          randomUUID(),
+          profile.id,
+          input.label,
+          input.message,
+          input.category,
+          input.colorTone,
+          input.iconName,
+          input.imagePath ?? null,
+          input.position ?? positionResult.rows[0]?.next_position ?? 1,
+        ],
       );
-    }
 
-    throw error;
-  }
+      return mapPictogram(result.rows[0]);
+    } catch (error) {
+      if ((error as { code?: string }).code === "23505") {
+        throw new StcsConflictError(
+          "Ya existe un pictograma activo con ese nombre y categoria.",
+        );
+      }
+
+      throw error;
+    }
+  });
 };
 
 export const updatePictogram = async (
   authUser: AuthTokenPayload,
   pictogramId: string,
-  input: PictogramInput
+  input: PictogramInput,
 ): Promise<PictogramConfig> => {
-  await ensureStcsSchema();
-
+  if (!canEditBoard(authUser.role)) throw new ForbiddenError();
   const profile = await getAccessibleProfile(authUser);
   const access = await canAccessSubject(authUser, profile.childUserId);
 
   if (!access.allowed) {
-    throw new Error("El usuario no tiene permiso para configurar este tablero.");
+    throw new Error(
+      "El usuario no tiene permiso para configurar este tablero.",
+    );
   }
 
-  const categoryCount = await query<{ count: number }>(
-    `SELECT COUNT(*)::int AS count
+  return transaction(async (client) => {
+    await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1,0))", [
+      profile.id,
+    ]);
+    const categoryCount = await client.query<{ count: number }>(
+      `SELECT COUNT(*)::int AS count
      FROM pictograms
      WHERE student_profile_id = $1
        AND category = $2
        AND id <> $3
        AND is_active = TRUE`,
-    [profile.id, input.category, pictogramId]
-  );
-
-  if ((categoryCount.rows[0]?.count ?? 0) >= DEVICE_MAX_ITEMS_PER_CATEGORY) {
-    throw new StcsConflictError(
-      `La pantalla admite un maximo de ${DEVICE_MAX_ITEMS_PER_CATEGORY} pictogramas por categoria.`
+      [profile.id, input.category, pictogramId],
     );
-  }
 
-  try {
-    const result = await query<PictogramRow>(
-      `UPDATE pictograms
+    if ((categoryCount.rows[0]?.count ?? 0) >= DEVICE_MAX_ITEMS_PER_CATEGORY) {
+      throw new StcsConflictError(
+        `La pantalla admite un maximo de ${DEVICE_MAX_ITEMS_PER_CATEGORY} pictogramas por categoria.`,
+      );
+    }
+
+    try {
+      const result = await client.query<PictogramRow>(
+        `UPDATE pictograms
        SET label = $3,
            message = $4,
            category = $5,
@@ -696,53 +500,55 @@ export const updatePictogram = async (
            updated_at = NOW()
        WHERE id = $1 AND student_profile_id = $2 AND is_active = TRUE
        RETURNING *`,
-      [
-        pictogramId,
-        profile.id,
-        input.label,
-        input.message,
-        input.category,
-        input.colorTone,
-        input.iconName,
-        input.imagePath ?? null,
-        input.position ?? null
-      ]
-    );
-
-    if (!result.rowCount) {
-      throw new StcsNotFoundError("No se encontro el pictograma solicitado.");
-    }
-
-    return mapPictogram(result.rows[0]);
-  } catch (error) {
-    if ((error as { code?: string }).code === "23505") {
-      throw new StcsConflictError(
-        "Ya existe un pictograma activo con ese nombre y categoria."
+        [
+          pictogramId,
+          profile.id,
+          input.label,
+          input.message,
+          input.category,
+          input.colorTone,
+          input.iconName,
+          input.imagePath ?? null,
+          input.position ?? null,
+        ],
       );
-    }
 
-    throw error;
-  }
+      if (!result.rowCount) {
+        throw new StcsNotFoundError("No se encontro el pictograma solicitado.");
+      }
+
+      return mapPictogram(result.rows[0]);
+    } catch (error) {
+      if ((error as { code?: string }).code === "23505") {
+        throw new StcsConflictError(
+          "Ya existe un pictograma activo con ese nombre y categoria.",
+        );
+      }
+
+      throw error;
+    }
+  });
 };
 
 export const deletePictogram = async (
   authUser: AuthTokenPayload,
-  pictogramId: string
+  pictogramId: string,
 ): Promise<void> => {
-  await ensureStcsSchema();
-
+  if (!canEditBoard(authUser.role)) throw new ForbiddenError();
   const profile = await getAccessibleProfile(authUser);
   const access = await canAccessSubject(authUser, profile.childUserId);
 
   if (!access.allowed) {
-    throw new Error("El usuario no tiene permiso para configurar este tablero.");
+    throw new Error(
+      "El usuario no tiene permiso para configurar este tablero.",
+    );
   }
 
   const result = await query(
     `UPDATE pictograms
      SET is_active = FALSE, updated_at = NOW()
      WHERE id = $1 AND student_profile_id = $2 AND is_active = TRUE`,
-    [pictogramId, profile.id]
+    [pictogramId, profile.id],
   );
 
   if (!result.rowCount) {
@@ -752,10 +558,14 @@ export const deletePictogram = async (
 
 export const getDeviceEventHistory = async (
   authUser: AuthTokenPayload,
-  filters: { context?: string; eventType?: string } = {}
-): Promise<DeviceEvent[]> => {
-  await ensureStcsSchema();
-
+  filters: { context?: string; eventType?: string; offset?: number } = {},
+): Promise<{
+  events: DeviceEvent[];
+  total: number;
+  offset: number;
+  hasMore: boolean;
+}> => {
+  if (!canReadSensitive(authUser.role)) throw new ForbiddenError();
   const profile = await getAccessibleProfile(authUser);
   const access = await canAccessSubject(authUser, profile.childUserId);
 
@@ -770,122 +580,41 @@ export const getDeviceEventHistory = async (
        AND payload->>'source' = 'esp32-device'
        AND ($2::text IS NULL OR context = $2)
        AND ($3::text IS NULL OR event_type = $3)
-     ORDER BY occurred_at DESC, created_at DESC
-     LIMIT 100`,
-    [profile.id, filters.context ?? null, filters.eventType ?? null]
-  );
-
-  return result.rows.map(mapEvent);
-};
-
-export const createDeviceEvent = async (
-  authUser: AuthTokenPayload,
-  input: {
-    eventType: string;
-    actionLabel: string;
-    context?: string;
-    pictogramId?: string;
-    category?: string;
-    emotion?: string;
-    intensity?: number;
-    source?: string;
-    message?: string;
-  }
-): Promise<DeviceEvent> => {
-  await ensureStcsSchema();
-
-  const profile = await getAccessibleProfile(authUser);
-  const access = await canAccessSubject(authUser, profile.childUserId);
-
-  if (!access.allowed) {
-    throw new Error("El usuario no tiene permiso para registrar eventos.");
-  }
-
-  const deviceResult = await query<DeviceRow>(
-    "SELECT * FROM devices WHERE student_profile_id = $1 ORDER BY created_at LIMIT 1",
-    [profile.id]
-  );
-
-  const device = deviceResult.rows[0];
-
-  if (!device) {
-    throw new Error("No existe dispositivo asociado al perfil.");
-  }
-
-  const pictogramResult = input.pictogramId
-    ? await query<PictogramRow>(
-        `SELECT * FROM pictograms
-         WHERE id = $1 AND student_profile_id = $2 AND is_active = TRUE
-         LIMIT 1`,
-        [input.pictogramId, profile.id]
-      )
-    : null;
-  const pictogram = pictogramResult?.rows[0];
-
-  if (input.pictogramId && !pictogram) {
-    throw new StcsNotFoundError(
-      "El pictograma no existe o no pertenece al perfil asociado al dispositivo."
-    );
-  }
-
-  const eventType = input.eventType || "pictogram_selected";
-  const actionLabel = input.actionLabel || "Evento del dispositivo";
-  const payload = {
-    pictogramId: pictogram?.id ?? null,
-    category: input.category ?? pictogram?.category ?? "Sistema",
-    message: input.message ?? pictogram?.message ?? null,
-    source: input.source ?? "esp32-device"
-  };
-
-  const result = await query<EventRow>(
-    `INSERT INTO device_events (
-       id, device_id, student_profile_id, pictogram_id, event_type, action_label, context,
-       actor_name, emotion, intensity, payload, occurred_at
-     )
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11::jsonb, NOW())
-     RETURNING *`,
+     ORDER BY occurred_at DESC, created_at DESC, id DESC
+     LIMIT 100 OFFSET $4`,
     [
-      randomUUID(),
-      device.id,
       profile.id,
-      pictogram?.id ?? null,
-      eventType,
-      actionLabel,
-      input.context ?? "Simulacion",
-      input.source === "esp32-device"
-        ? "Dispositivo ESP32"
-        : eventType === "sync_completed" ? "Sistema" : authUser.fullName,
-      input.emotion ?? null,
-      input.intensity ?? null,
-      JSON.stringify(payload)
-    ]
+      filters.context ?? null,
+      filters.eventType ?? null,
+      filters.offset ?? 0,
+    ],
   );
 
-  if (eventType === "sync_completed") {
-    await query(
-      `UPDATE devices
-       SET status = 'connected', last_sync_at = NOW(), updated_at = NOW()
-       WHERE id = $1`,
-      [device.id]
-    );
-  }
-
-  return mapEvent(result.rows[0]);
+  const count = await query<{ total: number }>(
+    `SELECT COUNT(*)::int AS total FROM device_events WHERE student_profile_id=$1 AND payload->>'source'='esp32-device' AND ($2::text IS NULL OR context=$2) AND ($3::text IS NULL OR event_type=$3)`,
+    [profile.id, filters.context ?? null, filters.eventType ?? null],
+  );
+  const total = count.rows[0].total,
+    offset = filters.offset ?? 0;
+  return {
+    events: result.rows.map(mapEvent),
+    total,
+    offset,
+    hasMore: offset + result.rows.length < total,
+  };
 };
 
 export const createDeviceEventFromDevice = async (
   deviceCode: string,
-  input: DeviceEventInput
+  input: DeviceEventInput,
 ): Promise<{ event: DeviceEvent; created: boolean }> => {
-  await ensureStcsSchema();
-
   const device = await getDeviceByCode(deviceCode);
   const pictogramResult = input.pictogramId
     ? await query<PictogramRow>(
         `SELECT * FROM pictograms
-         WHERE id = $1 AND student_profile_id = $2 AND is_active = TRUE
+         WHERE id = $1 AND student_profile_id = $2
          LIMIT 1`,
-        [input.pictogramId, device.student_profile_id]
+        [input.pictogramId, device.student_profile_id],
       )
     : input.pictogramLabel
       ? await query<PictogramRow>(
@@ -896,17 +625,34 @@ export const createDeviceEventFromDevice = async (
              AND is_active = TRUE
            ORDER BY position
            LIMIT 1`,
-          [device.student_profile_id, input.pictogramLabel, input.category ?? null]
+          [
+            device.student_profile_id,
+            input.pictogramLabel,
+            input.category ?? null,
+          ],
         )
       : null;
   const pictogram = pictogramResult?.rows[0];
 
   if ((input.pictogramId || input.pictogramLabel) && !pictogram) {
     throw new StcsNotFoundError(
-      "El pictograma no existe o no pertenece al perfil asociado al dispositivo."
+      "El pictograma no existe o no pertenece al perfil asociado al dispositivo.",
     );
   }
 
+  const emotionalSelection =
+    input.eventType === "pictogram_selected" &&
+    pictogram?.category === "Emociones";
+  const normalizedEmotion =
+    input.emotion ??
+    (emotionalSelection
+      ? (
+          getCatalogAsset(pictogram?.image_path ?? "")?.label ??
+          pictogram?.label
+        )
+          ?.toLocaleLowerCase("es")
+          .trim()
+      : undefined);
   const eventType = input.eventType;
   const actionLabel =
     input.actionLabel ??
@@ -915,7 +661,7 @@ export const createDeviceEventFromDevice = async (
     category: input.category ?? pictogram?.category ?? "Sistema",
     message: input.message ?? pictogram?.message ?? null,
     pictogramId: pictogram?.id ?? null,
-    source: "esp32-device"
+    source: "esp32-device",
   };
 
   const result = await query<EventRow>(
@@ -926,7 +672,7 @@ export const createDeviceEventFromDevice = async (
      )
      VALUES (
        $1, $2, $3, $4, $5, $6, $7, $8, 'Dispositivo ESP32', $9, $10,
-       $11::jsonb, COALESCE($12::timestamptz, NOW())
+       $11::jsonb, (COALESCE($12::timestamptz, NOW()) AT TIME ZONE 'UTC')
      )
      ON CONFLICT (device_id, external_event_id)
        WHERE external_event_id IS NOT NULL
@@ -941,11 +687,11 @@ export const createDeviceEventFromDevice = async (
       eventType,
       actionLabel,
       input.context,
-      input.emotion ?? null,
+      normalizedEmotion ?? null,
       input.intensity ?? null,
       JSON.stringify(payload),
-      input.occurredAt ?? null
-    ]
+      input.occurredAt ?? null,
+    ],
   );
 
   const created = Boolean(result.rowCount);
@@ -955,7 +701,7 @@ export const createDeviceEventFromDevice = async (
         `SELECT * FROM device_events
          WHERE device_id = $1 AND external_event_id = $2
          LIMIT 1`,
-        [device.id, input.externalEventId]
+        [device.id, input.externalEventId],
       );
 
   if (!eventResult.rowCount) {
@@ -976,8 +722,8 @@ export const createDeviceEventFromDevice = async (
       device.id,
       input.batteryLevel ?? null,
       input.wifiSsid ?? null,
-      input.firmwareVersion ?? null
-    ]
+      input.firmwareVersion ?? null,
+    ],
   );
 
   return { event: mapEvent(eventResult.rows[0]), created };

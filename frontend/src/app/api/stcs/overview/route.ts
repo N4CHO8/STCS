@@ -1,3 +1,4 @@
+import { errorResponse } from "@/lib/server/apiResponse";
 import { NextRequest, NextResponse } from "next/server";
 
 import { authenticateRequest, isAuthError } from "@/lib/server/auth";
@@ -6,7 +7,7 @@ import { getStcsOverview } from "@/lib/server/stcsData";
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
-  const authUser = authenticateRequest(request);
+  const authUser = await authenticateRequest(request);
 
   if (isAuthError(authUser)) {
     return authUser;
@@ -17,17 +18,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       message: "Resumen STCS obtenido desde la base de datos.",
-      data: overview
+      data: overview,
     });
   } catch (error) {
-    return NextResponse.json(
-      {
-        message:
-          error instanceof Error
-            ? error.message
-            : "No fue posible cargar los datos de STCS."
-      },
-      { status: 500 }
-    );
+    return errorResponse(error, "No fue posible cargar el resumen.");
   }
 }

@@ -6,6 +6,7 @@ import { CheckCircle2, LoaderCircle, Wifi } from "lucide-react";
 type SerialPort = {
   open: (options: { baudRate: number }) => Promise<void>;
   close: () => Promise<void>;
+  readable: ReadableStream<Uint8Array> | null;
   writable: WritableStream<Uint8Array> | null;
 };
 
@@ -15,12 +16,18 @@ type SerialNavigator = Navigator & {
   };
 };
 
-export function WifiDeviceProvisioner({ onConfigured }: { onConfigured: () => void }) {
+export function WifiDeviceProvisioner({
+  onConfigured,
+}: {
+  onConfigured: () => void;
+}) {
   const [ssid, setSsid] = useState("");
   const [password, setPassword] = useState("");
-  const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">(
+    "idle",
+  );
   const [message, setMessage] = useState(
-    "Configura la red una sola vez por USB. Despues el ESP32 funciona directo por WiFi."
+    "Configura la red una sola vez por USB. Despues el ESP32 funciona directo por WiFi.",
   );
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
@@ -33,6 +40,16 @@ export function WifiDeviceProvisioner({ onConfigured }: { onConfigured: () => vo
       return;
     }
 
+    if (
+      new TextEncoder().encode(ssid.trim()).length > 32 ||
+      new TextEncoder().encode(password).length > 63
+    ) {
+      setStatus("error");
+      setMessage(
+        "La red admite hasta 32 bytes y la contraseña hasta 63 bytes UTF-8.",
+      );
+      return;
+    }
     setStatus("saving");
     setMessage("Selecciona el puerto USB del ESP32...");
     let port: SerialPort | null = null;
@@ -51,17 +68,62 @@ export function WifiDeviceProvisioner({ onConfigured }: { onConfigured: () => vo
 
       const writer = port.writable.getWriter();
       const command = `STCS_WIFI_CONFIG|${JSON.stringify({ ssid: ssid.trim(), password })}\n`;
-      await writer.write(new TextEncoder().encode(command));
-      writer.releaseLock();
+      try {
+        await writer.write(new TextEncoder().encode(command));
+      } finally {
+        writer.releaseLock();
+      }
+      if (!port.readable)
+        throw new Error("El puerto no permite leer la confirmación del ESP32.");
+      const reader = port.readable.getReader();
+      let timedOut = false;
+      const timer = window.setTimeout(() => {
+        timedOut = true;
+        void reader.cancel();
+      }, 12000);
+      try {
+        let reply = "";
+        const decoder = new TextDecoder();
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done)
+            throw new Error(
+              timedOut
+                ? "El ESP32 no confirmó el guardado. Reintenta."
+                : "Se cerró el puerto sin confirmación.",
+            );
+          reply = (reply + decoder.decode(value, { stream: true })).slice(
+            -4096,
+          );
+          if (reply.includes("STCS_WIFI|state=saved")) break;
+          if (
+            /STCS_WIFI\|state=(invalid_command|missing_ssid|invalid_credentials|storage_error)/.test(
+              reply,
+            )
+          )
+            throw new Error(
+              "El ESP32 rechazó las credenciales o no pudo guardarlas.",
+            );
+        }
+      } finally {
+        clearTimeout(timer);
+        await reader.cancel().catch(() => undefined);
+        reader.releaseLock();
+      }
 
-      await new Promise((resolve) => window.setTimeout(resolve, 700));
       setStatus("saved");
-      setMessage("Red guardada. El ESP32 se conectara y sincronizara el tablero automaticamente.");
+      setMessage(
+        "El ESP32 confirmó el guardado. La conexión WiFi y sincronización quedan pendientes de comprobar.",
+      );
       setPassword("");
       onConfigured();
     } catch (error) {
       setStatus("error");
-      setMessage(error instanceof Error ? error.message : "No fue posible configurar el WiFi.");
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "No fue posible configurar el WiFi.",
+      );
     } finally {
       if (port) {
         await port.close().catch(() => undefined);
@@ -72,7 +134,9 @@ export function WifiDeviceProvisioner({ onConfigured }: { onConfigured: () => vo
   return (
     <div>
       <div className="text-center">
-        <span className={`mx-auto grid h-14 w-14 place-items-center rounded-full ${status === "saved" ? "bg-emerald-100 text-emerald-700" : "bg-stone-100 text-stone-500"}`}>
+        <span
+          className={`mx-auto grid h-14 w-14 place-items-center rounded-full ${status === "saved" ? "bg-emerald-100 text-emerald-700" : "bg-stone-100 text-stone-500"}`}
+        >
           {status === "saving" ? (
             <LoaderCircle className="h-7 w-7 animate-spin" />
           ) : status === "saved" ? (
@@ -84,7 +148,9 @@ export function WifiDeviceProvisioner({ onConfigured }: { onConfigured: () => vo
         <h2 className="mt-4 font-display text-xl font-black text-stone-600">
           Conexion WiFi del ESP32
         </h2>
-        <p className="mx-auto mt-2 max-w-xs text-sm font-medium text-stone-400">{message}</p>
+        <p className="mx-auto mt-2 max-w-xs text-sm font-medium text-stone-400">
+          {message}
+        </p>
       </div>
 
       <form className="mx-auto mt-5 grid max-w-xs gap-3" onSubmit={submit}>
@@ -93,7 +159,7 @@ export function WifiDeviceProvisioner({ onConfigured }: { onConfigured: () => vo
           <input
             autoComplete="off"
             className="mt-1 h-10 w-full rounded-lg border border-stone-200 px-3 font-normal"
-            maxLength={120}
+            maxLength={32}
             onChange={(event) => setSsid(event.target.value)}
             required
             value={ssid}

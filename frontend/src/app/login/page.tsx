@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 
@@ -33,7 +34,7 @@ export default function LoginPage() {
       setErrorMessage(
         error instanceof Error
           ? error.message
-          : "No fue posible iniciar sesion."
+          : "No fue posible iniciar sesion.",
       );
     } finally {
       setIsSubmitting(false);
@@ -60,13 +61,16 @@ export default function LoginPage() {
   );
 }
 
-async function authenticateUser(email: string, password: string): Promise<AuthSession> {
+async function authenticateUser(
+  email: string,
+  password: string,
+): Promise<AuthSession> {
   const response = await fetch("/api/auth/login", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ email, password }),
   });
 
   const payload = await parseAuthResponse(response);
@@ -78,16 +82,18 @@ async function authenticateUser(email: string, password: string): Promise<AuthSe
   return {
     token: payload.token,
     expiresIn: payload.expiresIn,
-    user: payload.user
+    user: payload.user,
   };
 }
 
-async function parseAuthResponse(response: Response): Promise<AuthSession & { message?: string }> {
+async function parseAuthResponse(
+  response: Response,
+): Promise<AuthSession & { message?: string }> {
   const text = await response.text();
 
   if (!text) {
     return {
-      message: "La API no devolvio una respuesta valida."
+      message: "La API no devolvio una respuesta valida.",
     } as AuthSession & { message?: string };
   }
 
@@ -95,7 +101,7 @@ async function parseAuthResponse(response: Response): Promise<AuthSession & { me
     return JSON.parse(text) as AuthSession & { message?: string };
   } catch {
     return {
-      message: "La API devolvio una respuesta no valida."
+      message: "La API devolvio una respuesta no valida.",
     } as AuthSession & { message?: string };
   }
 }
@@ -127,7 +133,7 @@ function LoginForm({
   onEmailChange,
   onPasswordChange,
   onSubmit,
-  password
+  password,
 }: {
   email: string;
   errorMessage: string;
@@ -181,6 +187,12 @@ function LoginForm({
           </p>
         ) : null}
       </form>
+      <Link
+        href="/activate"
+        className="mt-5 block text-sm font-semibold text-emerald-800 underline"
+      >
+        Activar o recuperar cuenta
+      </Link>
     </div>
   );
 }
@@ -191,7 +203,7 @@ function TextInput({
   onChange,
   placeholder,
   type,
-  value
+  value,
 }: {
   autoComplete: string;
   label: string;
@@ -204,6 +216,8 @@ function TextInput({
     <label className="grid gap-2 text-sm font-semibold text-stone-500">
       {label}
       <input
+        required
+        maxLength={type === "email" ? 120 : 72}
         autoComplete={autoComplete}
         className="h-12 rounded-xl border border-stone-200 bg-[#fbfbf9] px-4 text-base text-stone-600 outline-none transition focus:border-[#518b51] focus:bg-white focus:ring-4 focus:ring-emerald-50"
         onChange={(event) => onChange(event.target.value)}

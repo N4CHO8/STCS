@@ -19,7 +19,8 @@ const toBase64Url = (value: string): string =>
 
 const fromBase64Url = (value: string): string => {
   const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
-  const padding = normalized.length % 4 === 0 ? "" : "=".repeat(4 - (normalized.length % 4));
+  const padding =
+    normalized.length % 4 === 0 ? "" : "=".repeat(4 - (normalized.length % 4));
 
   return Buffer.from(`${normalized}${padding}`, "base64").toString("utf8");
 };
@@ -35,17 +36,17 @@ const signSegment = (input: string, secret: string): string =>
 export const createJwtToken = <T extends object>(
   payload: T,
   secret: string,
-  expiresInSeconds: number
+  expiresInSeconds: number,
 ): string => {
   const nowInSeconds = Math.floor(Date.now() / 1000);
   const header = {
     alg: "HS256",
-    typ: "JWT"
+    typ: "JWT",
   };
   const fullPayload = {
     ...payload,
     iat: nowInSeconds,
-    exp: nowInSeconds + expiresInSeconds
+    exp: nowInSeconds + expiresInSeconds,
   };
   const encodedHeader = toBase64Url(JSON.stringify(header));
   const encodedPayload = toBase64Url(JSON.stringify(fullPayload));
@@ -57,9 +58,11 @@ export const createJwtToken = <T extends object>(
 
 export const verifyJwtToken = <T extends JwtPayload = JwtPayload>(
   token: string,
-  secret: string
+  secret: string,
 ): T => {
-  const [encodedHeader, encodedPayload, signature] = token.split(".");
+  const segments = token.split(".");
+  if (segments.length !== 3) throw new Error("Formato de token inválido.");
+  const [encodedHeader, encodedPayload, signature] = segments;
 
   if (!encodedHeader || !encodedPayload || !signature) {
     throw new Error("Formato de token invalido.");
@@ -86,7 +89,11 @@ export const verifyJwtToken = <T extends JwtPayload = JwtPayload>(
   const payload = JSON.parse(fromBase64Url(encodedPayload)) as T;
   const nowInSeconds = Math.floor(Date.now() / 1000);
 
-  if (payload.exp && payload.exp < nowInSeconds) {
+  if (
+    typeof payload.exp !== "number" ||
+    !Number.isFinite(payload.exp) ||
+    payload.exp <= nowInSeconds
+  ) {
     throw new Error("Token expirado.");
   }
 

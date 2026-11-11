@@ -437,11 +437,11 @@ void pictogram_event(lv_event_t *event) {
          active_category->name,
          pictogram->name,
          phrase_item_count);
-  STCS_Network_QueueEvent("pictogram_selected",
+  if(!STCS_Network_QueueEvent("pictogram_selected",
                           pictogram->id,
                           pictogram->name,
                           active_category->name,
-                          pictogram->message);
+                          pictogram->message))set_status("Sin guardar: revisa conexion");
 }
 
 void back_event(lv_event_t *) {
@@ -627,7 +627,7 @@ void STCS_UI_Init(void) {
 }
 
 void STCS_UI_ApplyBoardConfig(const StcsBoardConfig *config) {
-  if (config == nullptr || config->count == 0) {
+  if (config == nullptr || config->count > STCS_MAX_PICTOGRAMS) {
     return;
   }
 

@@ -1,7 +1,14 @@
+import { withApi } from "@/lib/server/withApi";
+import { objectInput, uuidInput, stringInput } from "@/lib/server/inputs";
+import { InputValidationError } from "@/lib/server/validation";
+import { canReadSensitive } from "@/lib/permissions";
 import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 
-import { canAccessSubject, getDefaultAccessDecision } from "@/lib/server/access";
+import {
+  canAccessSubject,
+  getDefaultAccessDecision,
+} from "@/lib/server/access";
 import { authenticateRequest, isAuthError } from "@/lib/server/auth";
 import { query } from "@/lib/server/db";
 
@@ -32,28 +39,35 @@ const mapRecord = (row: RecordRow) => ({
   title: row.title,
   description: row.description,
   observedAt: row.observed_at.toISOString(),
-  createdAt: row.created_at.toISOString()
+  createdAt: row.created_at.toISOString(),
 });
 
-export async function GET(request: NextRequest) {
-  const authUser = authenticateRequest(request);
+async function handleGET(request: NextRequest) {
+  const authUser = await authenticateRequest(request);
 
   if (isAuthError(authUser)) {
     return authUser;
   }
 
-  const requestedUserId = request.nextUrl.searchParams.get("userId") ?? undefined;
+  if (!canReadSensitive(authUser.role))
+    return NextResponse.json(
+      { message: "Acceso restringido" },
+      { status: 403 },
+    );
+
+  const requestedUserId =
+    request.nextUrl.searchParams.get("userId") ?? undefined;
 
   if (requestedUserId) {
-    const access = await canAccessSubject(authUser, requestedUserId);
+    const access = await canAccessSubject(authUser, uuidInput(requestedUserId));
 
     if (!access.allowed) {
       return NextResponse.json(
         {
           message: "No tienes permisos para acceder a estos registros.",
-          access
+          access,
         },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -63,75 +77,80 @@ export async function GET(request: NextRequest) {
        WHERE user_id = $1
        ORDER BY observed_at DESC
        LIMIT 30`,
-      [requestedUserId]
+      [requestedUserId],
     );
 
     return NextResponse.json({
       message: "Listado de registros protegido por permisos.",
       total: result.rowCount,
       access,
-      data: result.rows.map(mapRecord)
+      data: result.rows.map(mapRecord),
     });
   }
 
   const access = getDefaultAccessDecision(authUser);
-  const result =
-    authUser.role === "admin"
-      ? await query<RecordRow>(
-          "SELECT * FROM records ORDER BY observed_at DESC LIMIT 30"
-        )
-      : authUser.role === "child"
-        ? await query<RecordRow>(
-            `SELECT *
-             FROM records
-             WHERE user_id = $1
-             ORDER BY observed_at DESC
-             LIMIT 30`,
-            [authUser.sub]
-          )
-        : await query<RecordRow>(
-            `SELECT r.*
-             FROM records r
-             INNER JOIN user_access ua ON ua.subject_user_id = r.user_id
-             WHERE ua.actor_user_id = $1
-             ORDER BY r.observed_at DESC
-             LIMIT 30`,
-            [authUser.sub]
-          );
+  const result = await query<RecordRow>(
+    `SELECT r.* FROM records r
+     JOIN user_access ua ON ua.subject_user_id=r.user_id
+     WHERE ua.actor_user_id=$1 AND ua.relationship=$2 AND ua.approved_at IS NOT NULL ORDER BY r.observed_at DESC LIMIT 30`,
+    [authUser.sub, authUser.role],
+  );
 
   return NextResponse.json({
     message: "Listado de registros protegido por permisos.",
     total: result.rowCount,
     access,
-    data: result.rows.map(mapRecord)
+    data: result.rows.map(mapRecord),
   });
 }
 
-export async function POST(request: NextRequest) {
-  const authUser = authenticateRequest(request);
+async function handlePOST(request: NextRequest) {
+  const authUser = await authenticateRequest(request);
 
   if (isAuthError(authUser)) {
     return authUser;
   }
 
-  const input = (await request.json()) as CreateRecordInput;
+  if (!canReadSensitive(authUser.role))
+    return NextResponse.json(
+      { message: "Acceso restringido" },
+      { status: 403 },
+    );
+
+  const input = objectInput(await request.json()) as CreateRecordInput;
 
   if (!input.userId || !input.category || !input.title) {
     return NextResponse.json(
       { message: "userId, category y title son obligatorios." },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
+  input.userId = uuidInput(input.userId);
+  input.category = stringInput(input.category, "Categoría", 60);
+  input.title = stringInput(input.title, "Título", 150);
+  if (input.description !== undefined)
+    input.description = stringInput(
+      input.description,
+      "Descripción",
+      5000,
+      false,
+    );
+  if (
+    input.observedAt !== undefined &&
+    (typeof input.observedAt !== "string" ||
+      Number.isNaN(Date.parse(input.observedAt)))
+  )
+    throw new InputValidationError("Fecha inválida.");
   const access = await canAccessSubject(authUser, input.userId);
 
   if (!access.allowed) {
     return NextResponse.json(
       {
         message: "No tienes permisos para crear registros de este usuario.",
-        access
+        access,
       },
-      { status: 403 }
+      { status: 403 },
     );
   }
 
@@ -145,16 +164,19 @@ export async function POST(request: NextRequest) {
       input.category,
       input.title,
       input.description ?? null,
-      input.observedAt ?? null
-    ]
+      input.observedAt ?? null,
+    ],
   );
 
   return NextResponse.json(
     {
       message: "Registro de comportamiento creado con permisos validados.",
       access,
-      data: mapRecord(result.rows[0])
+      data: mapRecord(result.rows[0]),
     },
-    { status: 201 }
+    { status: 201 },
   );
 }
+
+export const GET = withApi(handleGET);
+export const POST = withApi(handlePOST);

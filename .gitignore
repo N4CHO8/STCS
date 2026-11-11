@@ -32,3 +32,4 @@ firmware/**/STCS_NetworkSecrets.h
 .env*
 .codex-work/
 .codex-output/
+supabase/.temp/

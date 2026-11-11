@@ -1,7 +1,7 @@
 import {
   DEVICE_IMAGE_PATHS,
   DEVICE_MAX_PICTOGRAMS,
-  isDeviceCategory
+  isDeviceCategory,
 } from "@/lib/pictogramCatalog";
 
 export class InputValidationError extends Error {
@@ -26,7 +26,7 @@ const EVENT_TYPES = new Set([
   "pictogram_selected",
   "navigation",
   "ui_ready",
-  "sync_completed"
+  "sync_completed",
 ]);
 
 export const PICTOGRAM_COLORS = [
@@ -40,7 +40,7 @@ export const PICTOGRAM_COLORS = [
   "sage",
   "sky",
   "violet",
-  "yellow"
+  "yellow",
 ] as const;
 
 export const PICTOGRAM_ICONS = [
@@ -59,12 +59,14 @@ export const PICTOGRAM_ICONS = [
   "School",
   "Smile",
   "Utensils",
-  "ArrowRight"
+  "ArrowRight",
 ] as const;
 
 const asObject = (value: unknown): Record<string, unknown> => {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
-    throw new InputValidationError("El cuerpo de la solicitud debe ser un objeto JSON.");
+    throw new InputValidationError(
+      "El cuerpo de la solicitud debe ser un objeto JSON.",
+    );
   }
 
   return value as Record<string, unknown>;
@@ -74,7 +76,7 @@ const requiredString = (
   input: Record<string, unknown>,
   key: string,
   label: string,
-  maxLength: number
+  maxLength: number,
 ) => {
   const value = input[key];
 
@@ -85,7 +87,9 @@ const requiredString = (
   const normalized = value.trim();
 
   if (normalized.length > maxLength) {
-    throw new InputValidationError(`${label} no puede superar ${maxLength} caracteres.`);
+    throw new InputValidationError(
+      `${label} no puede superar ${maxLength} caracteres.`,
+    );
   }
 
   return normalized;
@@ -95,7 +99,7 @@ const optionalString = (
   input: Record<string, unknown>,
   key: string,
   label: string,
-  maxLength: number
+  maxLength: number,
 ) => {
   const value = input[key];
 
@@ -110,7 +114,9 @@ const optionalString = (
   const normalized = value.trim();
 
   if (!normalized || normalized.length > maxLength) {
-    throw new InputValidationError(`${label} no puede superar ${maxLength} caracteres.`);
+    throw new InputValidationError(
+      `${label} no puede superar ${maxLength} caracteres.`,
+    );
   }
 
   return normalized;
@@ -121,7 +127,7 @@ const optionalInteger = (
   key: string,
   label: string,
   min: number,
-  max: number
+  max: number,
 ) => {
   const value = input[key];
 
@@ -130,7 +136,9 @@ const optionalInteger = (
   }
 
   if (!Number.isInteger(value) || Number(value) < min || Number(value) > max) {
-    throw new InputValidationError(`${label} debe ser un entero entre ${min} y ${max}.`);
+    throw new InputValidationError(
+      `${label} debe ser un entero entre ${min} y ${max}.`,
+    );
   }
 
   return Number(value);
@@ -151,7 +159,9 @@ export const parsePictogramInput = (value: unknown): PictogramInput => {
   const colorTone = requiredString(input, "colorTone", "El color", 40);
   const iconName = requiredString(input, "iconName", "El icono", 60);
 
-  if (!PICTOGRAM_COLORS.includes(colorTone as (typeof PICTOGRAM_COLORS)[number])) {
+  if (
+    !PICTOGRAM_COLORS.includes(colorTone as (typeof PICTOGRAM_COLORS)[number])
+  ) {
     throw new InputValidationError("El color seleccionado no es valido.");
   }
 
@@ -163,21 +173,37 @@ export const parsePictogramInput = (value: unknown): PictogramInput => {
   const imagePath = requiredString(input, "imagePath", "La imagen CAA", 255);
 
   if (!isDeviceCategory(category)) {
-    throw new InputValidationError("La categoria no es compatible con el dispositivo.");
+    throw new InputValidationError(
+      "La categoria no es compatible con el dispositivo.",
+    );
   }
 
   if (!DEVICE_IMAGE_PATHS.has(imagePath)) {
-    throw new InputValidationError("La imagen seleccionada no esta disponible en el ESP32.");
+    throw new InputValidationError(
+      "La imagen seleccionada no esta disponible en el ESP32.",
+    );
   }
 
+  const label = requiredString(input, "label", "El nombre", 31),
+    message = requiredString(input, "message", "El texto asociado", 95);
+  if (Buffer.byteLength(label) > 31 || Buffer.byteLength(message) > 95)
+    throw new InputValidationError(
+      "El nombre admite 31 bytes y la frase 95 bytes UTF-8 para evitar cortes en el ESP32.",
+    );
   return {
-    label: requiredString(input, "label", "El nombre", 80),
-    message: requiredString(input, "message", "El texto asociado", 200),
+    label,
+    message,
     category,
     colorTone,
     iconName,
     imagePath,
-    position: optionalInteger(input, "position", "La posicion", 1, DEVICE_MAX_PICTOGRAMS)
+    position: optionalInteger(
+      input,
+      "position",
+      "La posicion",
+      1,
+      DEVICE_MAX_PICTOGRAMS,
+    ),
   };
 };
 
@@ -203,7 +229,9 @@ export const parseDeviceEventInput = (value: unknown): DeviceEventInput => {
   const eventType = requiredString(input, "eventType", "eventType", 60);
 
   if (!EVENT_TYPES.has(eventType)) {
-    throw new InputValidationError("eventType no corresponde a un evento soportado.");
+    throw new InputValidationError(
+      "eventType no corresponde a un evento soportado.",
+    );
   }
 
   const occurredAt = optionalString(input, "occurredAt", "occurredAt", 40);
@@ -213,15 +241,23 @@ export const parseDeviceEventInput = (value: unknown): DeviceEventInput => {
   }
 
   const pictogramId = optionalString(input, "pictogramId", "pictogramId", 60);
-  const pictogramLabel = optionalString(input, "pictogramLabel", "pictogramLabel", 80);
+  const pictogramLabel = optionalString(
+    input,
+    "pictogramLabel",
+    "pictogramLabel",
+    80,
+  );
 
-  if (pictogramId && !/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(pictogramId)) {
+  if (
+    pictogramId &&
+    !/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(pictogramId)
+  ) {
     throw new InputValidationError("pictogramId debe ser un UUID valido.");
   }
 
   if (eventType === "pictogram_selected" && !pictogramId && !pictogramLabel) {
     throw new InputValidationError(
-      "pictogramId o pictogramLabel es obligatorio para pictogram_selected."
+      "pictogramId o pictogramLabel es obligatorio para pictogram_selected.",
     );
   }
 
@@ -235,10 +271,26 @@ export const parseDeviceEventInput = (value: unknown): DeviceEventInput => {
     message: optionalString(input, "message", "message", 200),
     emotion: optionalString(input, "emotion", "emotion", 60),
     intensity: optionalInteger(input, "intensity", "intensity", 1, 5),
-    batteryLevel: optionalInteger(input, "batteryLevel", "batteryLevel", 0, 100),
-    firmwareVersion: optionalString(input, "firmwareVersion", "firmwareVersion", 40),
+    batteryLevel: optionalInteger(
+      input,
+      "batteryLevel",
+      "batteryLevel",
+      0,
+      100,
+    ),
+    firmwareVersion: optionalString(
+      input,
+      "firmwareVersion",
+      "firmwareVersion",
+      40,
+    ),
     wifiSsid: optionalString(input, "wifiSsid", "wifiSsid", 120),
     occurredAt,
-    externalEventId: optionalString(input, "externalEventId", "externalEventId", 100)
+    externalEventId: optionalString(
+      input,
+      "externalEventId",
+      "externalEventId",
+      100,
+    ),
   };
 };
