@@ -15,6 +15,13 @@ export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+    const requested = new URLSearchParams(window.location.search)
+      .get("email")
+      ?.slice(0, 120);
+    if (requested) {
+      setEmail(requested);
+      return;
+    }
     if (getAuthSession()) {
       router.replace("/");
     }
@@ -26,7 +33,23 @@ export default function LoginPage() {
     setErrorMessage("");
 
     try {
+      const previous = getAuthSession();
       const session = await authenticateUser(email, password);
+      if (previous) {
+        const closed = await fetch("/api/auth/logout", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${previous.token}` },
+        });
+        if (!closed.ok && closed.status !== 401) {
+          await fetch("/api/auth/logout", {
+            method: "POST",
+            headers: { Authorization: `Bearer ${session.token}` },
+          }).catch(() => undefined);
+          throw new Error(
+            "No se pudo cerrar la sesión anterior. Reintenta el cambio de cuenta.",
+          );
+        }
+      }
       saveAuthSession(session);
       router.push("/");
       router.refresh();
@@ -191,7 +214,7 @@ function LoginForm({
         href="/demo"
         className="mt-5 block rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-center text-sm font-semibold text-emerald-900"
       >
-        Probar cuentas demo sin activación
+        Ver cuentas demo y sus claves
       </Link>
       <Link
         href="/activate"

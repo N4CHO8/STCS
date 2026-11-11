@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   LogOut,
   ShieldCheck,
@@ -16,7 +16,6 @@ import {
 import { clearAuthSession, getAuthSession, type AuthSession } from "@/lib/auth";
 import { ROLE_NAMES, canEditBoard, canReadSensitive } from "@/lib/permissions";
 import { mapPictogram } from "@/lib/stcsUi";
-import type { PortalDemo } from "@/lib/demo";
 import type { PortalData } from "@/types/portal";
 import {
   CommunicatorView,
@@ -52,8 +51,7 @@ const tabs = [
 const panel =
   "rounded-2xl border border-stone-200 bg-white p-5 shadow-sm sm:p-7";
 
-export function Portal({ demo }: { demo?: PortalDemo }) {
-  const apiFetch = demo?.request ?? fetch;
+export function Portal() {
   const router = useRouter();
   const latestRequest = useRef(0);
   const [session, setSession] = useState<AuthSession | null>(null),
@@ -64,23 +62,19 @@ export function Portal({ demo }: { demo?: PortalDemo }) {
     [error, setError] = useState(""),
     [notice, setNotice] = useState("");
   useEffect(() => {
-    if (demo) {
-      setSession(demo.session);
-      return;
-    }
     const stored = getAuthSession();
     if (!stored) {
       router.replace("/login");
       return;
     }
     setSession(stored);
-  }, [router, demo]);
+  }, [router]);
   useEffect(() => {
-    if (!session || demo) return;
+    if (!session) return;
     const leave = () => {
       setData(null);
       setSession(null);
-      clearAuthSession();
+      if (getAuthSession()?.token === session.token) clearAuthSession();
       router.replace("/login");
     };
     const sync = (event: StorageEvent) => {
@@ -104,7 +98,7 @@ export function Portal({ demo }: { demo?: PortalDemo }) {
       window.removeEventListener("storage", sync);
       clearTimeout(timer);
     };
-  }, [session, router, demo]);
+  }, [session, router]);
   const load = useCallback(
     async (signal?: AbortSignal) => {
       if (!session) return;
@@ -115,7 +109,7 @@ export function Portal({ demo }: { demo?: PortalDemo }) {
       setBusy(true);
       setError("");
       try {
-        const response = await apiFetch(
+        const response = await fetch(
           `/api/stcs/portal${selected ? `?profileId=${selected}` : ""}`,
           {
             headers: { Authorization: `Bearer ${session.token}` },
@@ -125,10 +119,6 @@ export function Portal({ demo }: { demo?: PortalDemo }) {
         );
         if (!isCurrent()) return;
         if (response.status === 401) {
-          if (demo) {
-            demo.onExit();
-            return;
-          }
           clearAuthSession();
           router.replace("/login");
           return;
@@ -145,7 +135,7 @@ export function Portal({ demo }: { demo?: PortalDemo }) {
         if (isCurrent()) setBusy(false);
       }
     },
-    [session, selected, router, apiFetch, demo],
+    [session, selected, router],
   );
   useEffect(() => {
     const controller = new AbortController();
@@ -161,7 +151,7 @@ export function Portal({ demo }: { demo?: PortalDemo }) {
       body.action === "user"
         ? { ...body, profileIds: (body.profileIds as string[]).filter(Boolean) }
         : body;
-    const response = await apiFetch("/api/stcs/portal", {
+    const response = await fetch("/api/stcs/portal", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${session?.token}`,
@@ -241,12 +231,8 @@ export function Portal({ demo }: { demo?: PortalDemo }) {
           <button
             aria-label="Cerrar sesión"
             onClick={async () => {
-              if (demo) {
-                demo.onExit();
-                return;
-              }
               try {
-                const response = await apiFetch("/api/auth/logout", {
+                const response = await fetch("/api/auth/logout", {
                   method: "POST",
                   headers: { Authorization: `Bearer ${session?.token}` },
                 });
@@ -355,20 +341,6 @@ export function Portal({ demo }: { demo?: PortalDemo }) {
               ))}
             </section>
           )}
-          {!demo && role === "admin" && (
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm">
-              <p>
-                Explora los otros perfiles con datos ficticios, sin crear
-                correos.
-              </p>
-              <Link
-                href="/demo"
-                className="font-semibold text-emerald-900 underline"
-              >
-                Abrir cuentas demo
-              </Link>
-            </div>
-          )}
           {notice && !busy && (
             <p
               role="status"
@@ -376,6 +348,27 @@ export function Portal({ demo }: { demo?: PortalDemo }) {
             >
               {notice}
             </p>
+          )}
+          {data?.isDemo && (
+            <div
+              role="status"
+              className="sticky top-2 z-30 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950"
+            >
+              <strong>Cuenta demo en la nube.</strong> Los cambios se comparten
+              y persisten en la base de datos. Usa únicamente información
+              ficticia.
+            </div>
+          )}
+          {role === "admin" && (
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-emerald-50 p-4 text-sm">
+              <p>
+                Cuenta real de administrador. Puedes probar los otros perfiles
+                con sus cuentas demo.
+              </p>
+              <Link href="/demo" className="font-semibold underline">
+                Ver accesos demo
+              </Link>
+            </div>
           )}
           {error && (
             <div role="alert" className="rounded-xl bg-red-50 p-4 text-red-800">
@@ -472,10 +465,8 @@ export function Portal({ demo }: { demo?: PortalDemo }) {
                     {active === "board" &&
                       (canEditBoard(role ?? "") ? (
                         <CommunicatorView
-                          demo={!!demo}
                           key={profileId}
                           profileId={profileId}
-                          request={apiFetch}
                           token={session?.token ?? ""}
                           pictograms={detail.pictograms.map(mapPictogram)}
                           onSaved={() => void load()}
@@ -613,7 +604,6 @@ export function Portal({ demo }: { demo?: PortalDemo }) {
                       sensitive &&
                       (detail.overview ? (
                         <DevicesView
-                          demo={!!demo}
                           device={detail.overview.device}
                           hasDeviceData={
                             detail.overview.device.status === "connected"
@@ -638,7 +628,6 @@ export function Portal({ demo }: { demo?: PortalDemo }) {
                       <PaginatedHistory
                         key={profileId}
                         profileId={profileId}
-                        request={apiFetch}
                         token={session?.token ?? ""}
                       />
                     )}

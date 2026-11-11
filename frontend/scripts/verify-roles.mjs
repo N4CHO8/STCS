@@ -1,5 +1,6 @@
 // Integration tests use isolated fictitious rows and delete only those UUIDs afterwards.
 import assert from "node:assert/strict";
+import { verifyCloudDemo } from "./verify-cloud-demo.mjs";
 import { randomUUID, createHmac, createHash } from "node:crypto";
 import path from "node:path";
 import { existsSync, writeFileSync } from "node:fs";
@@ -608,6 +609,14 @@ try {
   });
   await api(2, "/api/stcs/portal", null, 401);
   await api(4, "/api/stcs/portal", null, 401);
+  checks += await verifyCloudDemo({
+    db,
+    base,
+    adminToken: tokens[3],
+    therapistToken: tokens[0],
+    realProfileId: profiles[0],
+    realChildId: ids[4],
+  });
   if (process.env.STCS_TEST_UI === "1") {
     await db.query("UPDATE users SET is_active=TRUE WHERE id=$1", [ids[2]]);
     const release = path.join(root, ".codex-work", "ui-release");

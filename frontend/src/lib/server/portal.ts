@@ -36,21 +36,23 @@ export async function getPortal(user: AuthTokenPayload): Promise<PortalData> {
   const profiles =
     user.role === "admin"
       ? await query(
-          "SELECT id,public_number FROM student_profiles ORDER BY public_number",
+          "SELECT id,public_number,is_demo FROM student_profiles ORDER BY public_number",
         )
       : await query(
-          `SELECT sp.id,sp.public_number,
+          `SELECT sp.id,sp.public_number,sp.is_demo,
         CASE WHEN $2='teacher' THEN split_part(sp.display_name,' ',1) ELSE u.full_name END AS label
         FROM student_profiles sp JOIN users u ON u.id=sp.child_user_id
         JOIN user_access ua ON ua.subject_user_id=sp.child_user_id
-        WHERE ua.actor_user_id=$1 AND ua.relationship=$2 AND ua.approved_at IS NOT NULL ORDER BY sp.public_number`,
-          [user.sub, user.role],
+        WHERE ua.actor_user_id=$1 AND ua.relationship=$2 AND ua.approved_at IS NOT NULL AND sp.is_demo=$3 ORDER BY sp.public_number`,
+          [user.sub, user.role, Boolean(user.isDemo)],
         );
   const result: PortalData = {
     role: user.role,
+    isDemo: Boolean(user.isDemo),
     profiles: profiles.rows.map((p) => ({
       id: p.id,
       number: Number(p.public_number),
+      isDemo: p.is_demo,
       label: user.role === "admin" ? `Usuario ${p.public_number}` : p.label,
     })),
     settings: {
@@ -60,7 +62,7 @@ export async function getPortal(user: AuthTokenPayload): Promise<PortalData> {
   };
   if (user.role === "admin") {
     const adults =
-      await query(`SELECT u.id,u.full_name,u.email,u.role,u.is_active,
+      await query(`SELECT u.id,u.full_name,u.email,u.role,u.is_active,u.is_demo,u.credential_verified_at,
       COALESCE(array_agg(sp.id) FILTER (WHERE sp.id IS NOT NULL),'{}') AS profile_ids, COALESCE(array_agg(sp.id) FILTER (WHERE sp.id IS NOT NULL AND ua.approved_at IS NULL),'{}') AS pending_profile_ids
       FROM users u LEFT JOIN user_access ua ON ua.actor_user_id=u.id AND ua.relationship=u.role
       LEFT JOIN student_profiles sp ON sp.child_user_id=ua.subject_user_id
@@ -72,6 +74,8 @@ export async function getPortal(user: AuthTokenPayload): Promise<PortalData> {
       email: u.email,
       role: u.role,
       active: u.is_active,
+      isDemo: u.is_demo,
+      verified: Boolean(u.credential_verified_at),
       profileIds: u.profile_ids,
       pendingProfileIds: u.pending_profile_ids,
     }));
@@ -81,13 +85,13 @@ export async function getPortal(user: AuthTokenPayload): Promise<PortalData> {
     const pending = await query(
       `SELECT sp.id AS profile_id, sp.public_number, pending.actor_user_id,
       adult.full_name, adult.email, pending.relationship FROM user_access pending
-      JOIN users adult ON adult.id=pending.actor_user_id AND adult.is_active=TRUE AND adult.role=pending.relationship AND adult.credential_verified_at IS NOT NULL
+      JOIN users adult ON adult.id=pending.actor_user_id AND adult.is_active=TRUE AND adult.role=pending.relationship AND (adult.credential_verified_at IS NOT NULL OR adult.is_demo)
       JOIN student_profiles sp ON sp.child_user_id=pending.subject_user_id
       JOIN user_access own ON own.subject_user_id=pending.subject_user_id
       WHERE own.actor_user_id=$1 AND own.relationship=$2 AND own.approved_at IS NOT NULL
       AND pending.approved_at IS NULL AND pending.actor_user_id<>$1
-      AND pending.relationship IN ('guardian','therapist')`,
-      [user.sub, user.role],
+      AND pending.relationship IN ('guardian','therapist') AND sp.is_demo=$3`,
+      [user.sub, user.role, Boolean(user.isDemo)],
     );
     result.pendingApprovals = pending.rows.map((p) => ({
       profileId: p.profile_id,
@@ -166,6 +170,10 @@ export async function mutatePortal(
 ) {
   input = objectInput(input);
   const action = input.action;
+  if (input.isDemo !== undefined || input.is_demo !== undefined)
+    throw new ForbiddenError(
+      "El tipo de cuenta demo no se puede cambiar desde el portal.",
+    );
   if (action === "approval") {
     if (!canReadSensitive(user.role)) throw new ForbiddenError();
     const actorId = uuid(input.actorId),
@@ -182,7 +190,7 @@ export async function mutatePortal(
       if (!scope.rowCount) throw new ForbiddenError();
       if (input.approve) {
         const target = await c.query(
-          "SELECT 1 FROM users WHERE id=$1 AND is_active=TRUE AND credential_verified_at IS NOT NULL AND role IN ('guardian','therapist')",
+          "SELECT 1 FROM users WHERE id=$1 AND is_active=TRUE AND (credential_verified_at IS NOT NULL OR is_demo) AND role IN ('guardian','therapist')",
           [actorId],
         );
         if (!target.rowCount)
@@ -291,17 +299,23 @@ export async function mutatePortal(
     // Serialize account changes so simultaneous edits cannot remove the last administrator.
     await c.query("LOCK TABLE users IN SHARE ROW EXCLUSIVE MODE");
     await c.query("LOCK TABLE user_access IN SHARE ROW EXCLUSIVE MODE");
+    let targetDemo = false;
     const previous = await c.query(
       "SELECT subject_user_id,relationship,approved_at,approved_by FROM user_access WHERE actor_user_id=$1",
       [id],
     );
     if (input.id) {
       const old = await c.query(
-        "SELECT role,email FROM users WHERE id=$1 AND role IN ('admin','guardian','teacher','therapist')",
+        "SELECT role,email,is_demo FROM users WHERE id=$1 AND role IN ('admin','guardian','teacher','therapist')",
         [id],
       );
       if (!old.rowCount)
         throw new InputValidationError("Cuenta no encontrada.");
+      targetDemo = old.rows[0].is_demo;
+      if (targetDemo && role === "admin")
+        throw new ForbiddenError(
+          "Una cuenta demo no puede convertirse en administrador.",
+        );
       if (old.rows[0].email !== email)
         throw new ForbiddenError(
           "El administrador no puede cambiar el correo de una cuenta existente.",
@@ -332,10 +346,14 @@ export async function mutatePortal(
     await c.query("DELETE FROM user_access WHERE actor_user_id=$1", [id]);
     for (const profileId of ids) {
       const p = await c.query(
-        "SELECT child_user_id FROM student_profiles WHERE id=$1",
+        "SELECT child_user_id,is_demo FROM student_profiles WHERE id=$1",
         [profileId],
       );
       if (!p.rowCount) throw new InputValidationError("Perfil no encontrado.");
+      if (p.rows[0].is_demo !== targetDemo)
+        throw new ForbiddenError(
+          "No se pueden mezclar cuentas y niños demo con reales.",
+        );
       const existing = previous.rows.find(
         (a) =>
           a.subject_user_id === p.rows[0].child_user_id &&

@@ -1,12 +1,23 @@
 import pg from "pg";
 import { readFileSync } from "node:fs";
 // Fixed disposable container endpoint. Never load the project's shared .env files here.
-const db = new pg.Client({
-  connectionString:
-    "postgresql://postgres:stcs-isolated-tests@127.0.0.1:55432/postgres",
-  ssl: false,
-});
-await db.connect();
+let db;
+for (let attempt = 0; attempt < 30; attempt++) {
+  const client = new pg.Client({
+    connectionString:
+      "postgresql://postgres:stcs-isolated-tests@127.0.0.1:55432/postgres",
+    ssl: false,
+  });
+  try {
+    await client.connect();
+    db = client;
+    break;
+  } catch (error) {
+    await client.end().catch(() => undefined);
+    if (attempt === 29) throw error;
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  }
+}
 try {
   await db.query(
     "DO $$ BEGIN CREATE ROLE anon; EXCEPTION WHEN duplicate_object THEN NULL; END $$; DO $$ BEGIN CREATE ROLE authenticated; EXCEPTION WHEN duplicate_object THEN NULL; END $$",
@@ -21,6 +32,7 @@ try {
   for (const name of [
     "20261111163114_role_based_portal.sql",
     "20261111185152_audit_hardening.sql",
+    "20261111202504_cloud_demo_accounts.sql",
   ])
     await db.query(
       readFileSync(

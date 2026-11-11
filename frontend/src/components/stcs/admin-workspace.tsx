@@ -17,6 +17,7 @@ export function AdminWorkspace({
   save: SaveAction;
   setSection: (section: "accounts") => void;
 }) {
+  const [linkMessage, setLinkMessage] = useState("");
   const [editing, setEditing] = useState<ManagedUser | "new" | null>(null);
   return (
     <>
@@ -82,6 +83,11 @@ export function AdminWorkspace({
               />
             </section>
           )}
+          {linkMessage && (
+            <p role="status" className="rounded-xl bg-emerald-50 p-4 text-sm">
+              {linkMessage}
+            </p>
+          )}
           <div className={`${panel} overflow-x-auto`}>
             <table className="w-full text-left text-sm">
               <caption className="mb-5 text-left text-lg font-bold">
@@ -104,6 +110,13 @@ export function AdminWorkspace({
                     <td className="px-2 py-4">
                       <p className="font-semibold">{u.fullName}</p>
                       <p className="text-xs text-stone-500">{u.email}</p>
+                      <p className="text-xs text-stone-500">
+                        {u.isDemo
+                          ? "Demo · sin activación"
+                          : u.verified
+                            ? "Correo verificado"
+                            : "Pendiente de activación"}
+                      </p>
                     </td>
                     <td className="px-2">{ROLE_NAMES[u.role]}</td>
                     <td className="px-2">{u.active ? "Activa" : "Inactiva"}</td>
@@ -111,7 +124,7 @@ export function AdminWorkspace({
                       {u.profileIds
                         .map(
                           (id) =>
-                            `${data.profiles.find((p) => p.id === id)?.label ?? "Usuario"}${u.pendingProfileIds?.includes(id) ? " (pendiente de aprobación)" : ""}`,
+                            `${data.profiles.find((p) => p.id === id)?.label ?? "Usuario"}${data.profiles.find((p) => p.id === id)?.isDemo ? " (demo)" : ""}${u.pendingProfileIds?.includes(id) ? " (pendiente de aprobación)" : ""}`,
                         )
                         .filter(Boolean)
                         .join(", ") || "Sin asignación"}
@@ -124,6 +137,31 @@ export function AdminWorkspace({
                         Editar
                         <span className="sr-only"> {u.fullName}</span>
                       </button>
+                      {!u.isDemo && (
+                        <button
+                          className="mt-2 block text-xs text-emerald-800 underline"
+                          onClick={async () => {
+                            const url = new URL(
+                              "/activate",
+                              window.location.origin,
+                            );
+                            url.searchParams.set("email", u.email);
+                            try {
+                              await navigator.clipboard.writeText(url.href);
+                              setLinkMessage(
+                                "Enlace copiado. Envíalo al titular; solo él podrá verificar su correo y establecer la contraseña.",
+                              );
+                            } catch {
+                              setLinkMessage(
+                                "Enlace para enviar al titular: " + url.href,
+                              );
+                            }
+                          }}
+                        >
+                          Copiar enlace de activación
+                          <span className="sr-only"> de {u.fullName}</span>
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}

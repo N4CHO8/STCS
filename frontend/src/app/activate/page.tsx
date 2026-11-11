@@ -1,5 +1,5 @@
 "use client";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { saveAuthSession } from "@/lib/auth";
@@ -9,6 +9,13 @@ export default function ActivatePage() {
   const [sent, setSent] = useState(false),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    setEmail(
+      new URLSearchParams(window.location.search).get("email")?.slice(0, 120) ??
+        "",
+    );
+  }, []);
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (busy) return;
@@ -51,6 +58,8 @@ export default function ActivatePage() {
             Correo electrónico
             <input
               name="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
               type="email"
               required
               maxLength={120}

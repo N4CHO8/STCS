@@ -16,6 +16,14 @@ export const POST = withApi(async (request: NextRequest) => {
     [email],
   );
   const user = accounts.rows[0];
+  if (user?.is_demo)
+    return NextResponse.json(
+      {
+        message:
+          "La cuenta demo usa su contraseña de demostración y no requiere activación.",
+      },
+      { status: 400 },
+    );
   if (input.code === undefined) {
     // Same outward response for unknown/disabled accounts; no public registration.
     if (user && isAdultRole(user.role))

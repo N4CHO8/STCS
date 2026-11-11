@@ -1,6 +1,11 @@
 import type { StcsOverview, PictogramConfig, DeviceEvent } from "./stcs";
 import type { AdultRole } from "@/lib/permissions";
-export type ChildSummary = { id: string; label: string; number: number };
+export type ChildSummary = {
+  id: string;
+  label: string;
+  number: number;
+  isDemo?: boolean;
+};
 export type Report = {
   id: string;
   createdAt: string;
@@ -27,6 +32,8 @@ export type ManagedUser = {
   email: string;
   role: AdultRole;
   active: boolean;
+  isDemo?: boolean;
+  verified?: boolean;
   profileIds: string[];
   pendingProfileIds?: string[];
 };
@@ -40,6 +47,7 @@ export type PortalData = {
     role: string;
   }[];
   role: AdultRole;
+  isDemo?: boolean;
   profiles: ChildSummary[];
   detail?: ChildDetail;
   settings: { appTitle: string; supportEmail: string };

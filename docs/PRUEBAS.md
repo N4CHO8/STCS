@@ -56,6 +56,19 @@ No hay un script de ESLint configurado. Registrar revisión de tipos y formato c
 
 Para mantener los fixtures durante una revisión en navegador, crear antes `.codex-work` en la raíz y ejecutar el runner con STCS_TEST_UI=1. Los correos ficticios se escriben en `.codex-work/ui-fixtures.json`, ignorado por Git. El runner conserva la base durante hasta cinco minutos; crear `.codex-work/ui-release` termina la pausa y ejecuta la limpieza. Retirar el archivo de liberación previo antes de repetir esa revisión. Este modo sigue exigiendo PostgreSQL y servidor aislados.
 
-## Pruebas de demo
+## Pruebas de cuentas demo en la nube
 
-`npm run test:demo` ejecuta cinco casos contra el transporte real de simulación: proyecciones por rol, publicación y edición compartidas, pictogramas con límites, asignaciones/aprobaciones e independencia de red y sesión real. No requiere una base de datos. La revisión en Chrome cubrió los cuatro perfiles, edición de pictograma por docente, informe del especialista compartido como orientación y edición de ficha por apoderado, sin errores de consola. La suite de 107 comprobaciones del servidor sigue pasando con este cambio.
+`npm run test:demo` ejecuta la suite completa aislada. Incluye las cuentas demo en PostgreSQL: login sin activación, sesiones, edición de fichas, informes, pictogramas, persistencia entre sesiones, aprovisionamiento repetido sin reiniciar datos, rutas antiguas y rechazo de cruces demo/real. Comprueba también que el indicador no se confíe al correo ni al JWT, y que las restricciones de base impidan convertir demos en administradores. Último resultado: 159 comprobaciones de integración más dos de base no disponible (161 en total).
+
+## Aprovisionamiento explícito
+
+La autorización de este cambio incluye crear los ejemplos en STCS. Este script es mantenimiento, no una prueba de conectividad ni parte del login. Primero se aplica la migración 20261111202504_cloud_demo_accounts.sql. Desde frontend:
+
+```powershell
+npm run demo:provision
+npm run demo:provision -- --apply --project-ref mvdjzjwidygmhvhfcpgg
+```
+
+Sin --apply solo muestra el plan. La aplicación requiere la confirmación exacta del proyecto y rechaza otros destinos. En localhost exige STCS_TEST_ISOLATED=1. Usa verificación TLS para Supabase y una transacción que se revierte ante conflictos de identidades reservadas. Los nombres, notas, informes, contraseñas, desactivaciones y tableros existentes se conservan; no añade duplicados ni restaura pictogramas retirados. Comprueba que las cuentas y fichas reales previas no cambien. Nunca ejecutarlo automáticamente durante build, arranque o login.
+
+Las credenciales publicadas en /demo son deliberadamente públicas y solo sirven para registros demo. No son secretos de producción ni sustituyen la activación de cuentas reales. No introducir datos personales en esos ejemplos compartidos.

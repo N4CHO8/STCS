@@ -243,6 +243,9 @@ export function AccountForm({
   onClose: () => void;
 }) {
   const [role, setRole] = useState<AdultRole>(user?.role ?? "teacher");
+  const availableProfiles = profiles.filter(
+    (p) => Boolean(p.isDemo) === Boolean(user?.isDemo),
+  );
   return (
     <Form
       label={user ? "Actualizar cuenta" : "Crear cuenta"}
@@ -278,7 +281,7 @@ export function AccountForm({
         label={
           user
             ? "Correo verificado del titular (no se puede cambiar)"
-            : "Correo electrónico"
+            : "Correo real del titular"
         }
         name="email"
         type="email"
@@ -302,9 +305,9 @@ export function AccountForm({
         </select>
       </label>
       <p className="text-sm text-stone-600">
-        El titular activa su cuenta desde «Activar o recuperar cuenta» y
-        verifica su correo. Las nuevas asignaciones de especialistas y
-        apoderados requieren aprobación clínica.
+        {user?.isDemo
+          ? "Esta cuenta demo usa la contraseña de demostración y solo puede acceder a niños demo."
+          : "El titular activa su cuenta desde el enlace de activación y verifica su correo. Las nuevas asignaciones clínicas requieren aprobación independiente."}
       </p>
       <label className="flex items-center gap-2">
         <input
@@ -320,8 +323,8 @@ export function AccountForm({
             Asignaciones {role === "guardian" ? "(máximo un niño)" : ""}
           </legend>
           <div className="grid max-h-52 gap-3 overflow-auto">
-            {profiles.length ? (
-              profiles.map((p) => (
+            {availableProfiles.length ? (
+              availableProfiles.map((p) => (
                 <label className="flex items-center gap-2" key={p.id}>
                   <input
                     type={role === "guardian" ? "radio" : "checkbox"}

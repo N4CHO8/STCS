@@ -52,8 +52,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Historical demo passwords must never grant a session after the privacy rollout.
-    if (!user.credential_verified_at)
+    // Only explicitly provisioned demo identities skip email verification. Domain names and JWT claims never grant this exception.
+    if (!user.credential_verified_at && !user.is_demo)
       return NextResponse.json(
         {
           message: "Activa tu cuenta verificando el correo antes de ingresar.",

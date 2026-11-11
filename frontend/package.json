@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "test:prepare": "node scripts/prepare-isolated-db.mjs",
     "test:isolated": "node scripts/run-isolated.mjs",
-    "test:demo": "node --test scripts/demo.test.mjs"
+    "test:demo": "node scripts/run-isolated.mjs",
+    "demo:provision": "node scripts/provision-cloud-demo.mjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

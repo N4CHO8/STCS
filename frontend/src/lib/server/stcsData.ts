@@ -219,9 +219,14 @@ const getAccessibleProfile = async (
     `SELECT sp.* FROM student_profiles sp
      JOIN user_access ua ON ua.subject_user_id = sp.child_user_id
      WHERE ua.actor_user_id = $1 AND ua.relationship = $2 AND ua.approved_at IS NOT NULL
-       AND ($3::uuid IS NULL OR sp.id = $3)
+       AND sp.is_demo=$4 AND ($3::uuid IS NULL OR sp.id = $3)
      ORDER BY ua.created_at, sp.id LIMIT 1`,
-    [authUser.sub, authUser.role, authUser.profileId ?? null],
+    [
+      authUser.sub,
+      authUser.role,
+      authUser.profileId ?? null,
+      Boolean(authUser.isDemo),
+    ],
   );
   if (!result.rowCount) {
     throw new ForbiddenError("No existe un perfil asignado para este usuario.");
@@ -266,7 +271,7 @@ export const getStcsOverview = async (
       `SELECT *
          FROM device_events
          WHERE student_profile_id = $1
-           AND payload->>'source' = 'esp32-device'
+           AND (payload->>'source' = 'esp32-device' OR (${authUser.isDemo ? "TRUE" : "FALSE"} AND payload->>'source' = 'demo-fixture'))
          ORDER BY occurred_at DESC
          LIMIT 10`,
       [profile.id],
@@ -276,12 +281,12 @@ export const getStcsOverview = async (
            COUNT(*) FILTER (
              WHERE event_type = 'pictogram_selected'
                AND (occurred_at AT TIME ZONE 'UTC' AT TIME ZONE 'America/Santiago')::date = (NOW() AT TIME ZONE 'America/Santiago')::date
-               AND payload->>'source' = 'esp32-device'
+               AND (payload->>'source' = 'esp32-device' OR (${authUser.isDemo ? "TRUE" : "FALSE"} AND payload->>'source' = 'demo-fixture'))
            )::int AS interactions_today,
            COUNT(*) FILTER (
              WHERE (event_type = 'emotion_recorded' OR (event_type='pictogram_selected' AND emotion IS NOT NULL))
                AND (occurred_at AT TIME ZONE 'UTC' AT TIME ZONE 'America/Santiago')::date = (NOW() AT TIME ZONE 'America/Santiago')::date
-               AND payload->>'source' = 'esp32-device'
+               AND (payload->>'source' = 'esp32-device' OR (${authUser.isDemo ? "TRUE" : "FALSE"} AND payload->>'source' = 'demo-fixture'))
            )::int AS emotions_today
          FROM device_events
          WHERE student_profile_id = $1`,
@@ -295,7 +300,7 @@ export const getStcsOverview = async (
          LEFT JOIN device_events de
            ON de.student_profile_id = $1
           AND de.event_type = 'pictogram_selected'
-          AND de.payload->>'source' = 'esp32-device'
+          AND (de.payload->>'source' = 'esp32-device' OR (${authUser.isDemo ? "TRUE" : "FALSE"} AND de.payload->>'source' = 'demo-fixture'))
           AND (de.occurred_at AT TIME ZONE 'UTC' AT TIME ZONE 'America/Santiago')::date = days.day::date
          GROUP BY days.day
          ORDER BY days.day`,
@@ -306,7 +311,7 @@ export const getStcsOverview = async (
          FROM device_events
          WHERE student_profile_id = $1
            AND event_type = 'pictogram_selected'
-           AND payload->>'source' = 'esp32-device'
+           AND (payload->>'source' = 'esp32-device' OR (${authUser.isDemo ? "TRUE" : "FALSE"} AND payload->>'source' = 'demo-fixture'))
          GROUP BY COALESCE(payload->>'category', 'Sistema')
          ORDER BY value DESC`,
       [profile.id],
@@ -320,7 +325,7 @@ export const getStcsOverview = async (
          LEFT JOIN device_events de
            ON de.student_profile_id = $1
           AND (de.event_type = 'emotion_recorded' OR (de.event_type='pictogram_selected' AND de.emotion IS NOT NULL))
-          AND de.payload->>'source' = 'esp32-device'
+          AND (de.payload->>'source' = 'esp32-device' OR (${authUser.isDemo ? "TRUE" : "FALSE"} AND de.payload->>'source' = 'demo-fixture'))
           AND (de.occurred_at AT TIME ZONE 'UTC' AT TIME ZONE 'America/Santiago')::date BETWEEN days.day::date AND (days.day::date + 4)
          GROUP BY days.day
          ORDER BY days.day`,
@@ -577,7 +582,7 @@ export const getDeviceEventHistory = async (
     `SELECT *
      FROM device_events
      WHERE student_profile_id = $1
-       AND payload->>'source' = 'esp32-device'
+       AND (payload->>'source' = 'esp32-device' OR (${authUser.isDemo ? "TRUE" : "FALSE"} AND payload->>'source' = 'demo-fixture'))
        AND ($2::text IS NULL OR context = $2)
        AND ($3::text IS NULL OR event_type = $3)
      ORDER BY occurred_at DESC, created_at DESC, id DESC
@@ -591,7 +596,7 @@ export const getDeviceEventHistory = async (
   );
 
   const count = await query<{ total: number }>(
-    `SELECT COUNT(*)::int AS total FROM device_events WHERE student_profile_id=$1 AND payload->>'source'='esp32-device' AND ($2::text IS NULL OR context=$2) AND ($3::text IS NULL OR event_type=$3)`,
+    `SELECT COUNT(*)::int AS total FROM device_events WHERE student_profile_id=$1 AND (payload->>'source'='esp32-device' OR (${authUser.isDemo ? "TRUE" : "FALSE"} AND payload->>'source'='demo-fixture')) AND ($2::text IS NULL OR context=$2) AND ($3::text IS NULL OR event_type=$3)`,
     [profile.id, filters.context ?? null, filters.eventType ?? null],
   );
   const total = count.rows[0].total,

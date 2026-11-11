@@ -77,6 +77,16 @@ El entorno normal de desarrollo y producción comparten la base existente de STC
 
 La primera incorporación de responsables clínicos en una instalación sin ninguno autorizado exige validar sus identidades fuera del rol administrativo y asignarlas mediante una operación de mantenimiento autorizada. El portal nunca permite al administrador saltarse esa aprobación.
 
-## Perfiles demo
+## Perfiles demo en la nube
 
-En /demo se elige un perfil sin correo ni contraseña y se reutilizan las pantallas con datos sintéticos. Especialista, docente y apoderado pueden recorrer sus funciones; administración sigue viendo números. Los cambios de ficha, informes, pictogramas y cuentas se conservan en este navegador. La simulación no otorga acceso a las API reales, no reemplaza la sesión normal y no envía eventos al ESP. La cuenta real del propietario permanece como admin verificado. El botón «Volver a mi cuenta real» sale de la simulación. «Reiniciar datos demo» descarta únicamente los cambios ficticios. Para usuarios reales se mantiene la activación y aprobación del flujo anterior.
+/demo muestra tres accesos con correos ficticios y contraseña de demostración. Ingresan por /login y usan las mismas sesiones revocables, pantallas y API que las cuentas reales. El único administrador es la cuenta real del propietario. Ya no existe transporte de datos simulado en el navegador.
+
+Las cuentas y niños demo tienen is_demo persistido en PostgreSQL. Solo ese indicador de la base permite omitir la activación, nunca el dominio del correo ni una propiedad del JWT. No puede cambiarse desde el portal ni convertirse una cuenta demo en administradora. Las asignaciones entre demo y real se rechazan en API y mediante restricciones de base. Las rutas antiguas aplican la misma separación.
+
+Se crean dos niños ficticios, tableros, informes y eventos de ejemplo compartidos. Los eventos de muestra llevan source=demo-fixture y solo cuentan en consultas de cuentas demo. Los dispositivos de muestra quedan offline hasta enlazar hardware auténtico; no se simula una conexión. El dispositivo existente conserva su asignación y configuración.
+
+Los cambios persisten en Supabase y el script de aprovisionamiento no restablece usuarios, fichas, informes ni tableros editados. Las cuentas y fichas preexistentes quedan intactas. El inicio de sesión no ejecuta el aprovisionamiento.
+
+## Activación de futuras cuentas reales
+
+El administrador crea una cuenta con el correo real y el rol correspondiente. El botón «Copiar enlace de activación» genera /activate?email=... para compartir con el titular; el enlace no contiene una contraseña ni un secreto y no verifica por sí mismo la identidad. El destinatario solicita y verifica el código enviado a ese correo y elige su contraseña. Funciona para especialistas, docentes, apoderados y futuros administradores. Las cuentas nuevas reales nunca heredan la excepción demo. Las aprobaciones clínicas se mantienen, incluida la validación inicial fuera del rol administrativo cuando aún no existe un responsable autorizado.

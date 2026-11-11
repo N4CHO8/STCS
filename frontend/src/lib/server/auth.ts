@@ -15,6 +15,7 @@ export interface AuthTokenPayload {
   fullName: string;
   profileId?: string;
   sid: string;
+  isDemo?: boolean;
   iat?: number;
   exp?: number;
 }
@@ -26,6 +27,7 @@ export interface UserRow {
   password_hash: string;
   role: UserRole;
   is_active: boolean;
+  is_demo: boolean;
   credential_verified_at: Date | null;
   created_at: Date;
   updated_at: Date;
@@ -36,6 +38,7 @@ export const mapUser = (row: UserRow) => ({
   fullName: row.full_name,
   email: row.email,
   role: row.role,
+  isDemo: row.is_demo,
   createdAt: row.created_at.toISOString(),
   updatedAt: row.updated_at.toISOString(),
 });
@@ -96,7 +99,11 @@ export const authenticateRequest = async (
       [signed.sub, signed.sid],
     );
     const user = result.rows[0];
-    if (!user || !user.credential_verified_at || !isAdultRole(user.role))
+    if (
+      !user ||
+      (!user.credential_verified_at && !user.is_demo) ||
+      !isAdultRole(user.role)
+    )
       return NextResponse.json(
         { message: "Sesión cerrada o cuenta inactiva." },
         { status: 401 },
@@ -110,6 +117,7 @@ export const authenticateRequest = async (
     return {
       ...signed,
       role: user.role,
+      isDemo: user.is_demo,
       fullName: user.full_name,
       email: user.email,
       profileId,

@@ -92,8 +92,9 @@ async function handleGET(request: NextRequest) {
   const result = await query<EmotionRow>(
     `SELECT e.* FROM emotions e
      JOIN user_access ua ON ua.subject_user_id=e.user_id
-     WHERE ua.actor_user_id=$1 AND ua.relationship=$2 AND ua.approved_at IS NOT NULL ORDER BY e.recorded_at DESC LIMIT 30`,
-    [authUser.sub, authUser.role],
+     JOIN users subject ON subject.id=ua.subject_user_id
+     WHERE ua.actor_user_id=$1 AND ua.relationship=$2 AND ua.approved_at IS NOT NULL AND subject.is_demo=$3 ORDER BY e.recorded_at DESC LIMIT 30`,
+    [authUser.sub, authUser.role, Boolean(authUser.isDemo)],
   );
 
   return NextResponse.json({

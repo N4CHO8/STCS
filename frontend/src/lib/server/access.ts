@@ -23,8 +23,8 @@ export const canAccessSubject = async (
       reason: "Perfil sin acceso a niños.",
     };
   const result = await query(
-    `SELECT 1 FROM user_access WHERE actor_user_id=$1 AND subject_user_id=$2 AND relationship=$3 AND approved_at IS NOT NULL`,
-    [user.sub, subjectId, user.role],
+    `SELECT 1 FROM user_access ua JOIN users subject ON subject.id=ua.subject_user_id WHERE ua.actor_user_id=$1 AND ua.subject_user_id=$2 AND ua.relationship=$3 AND ua.approved_at IS NOT NULL AND subject.is_demo=$4`,
+    [user.sub, subjectId, user.role, Boolean(user.isDemo)],
   );
   return {
     allowed: Boolean(result.rowCount),

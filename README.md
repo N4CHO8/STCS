@@ -93,6 +93,10 @@ El firmware actual valida ambiente, memoria, catalogo inicial de pictogramas y e
 - Integrar el envio Wi-Fi del firmware con los endpoints ya implementados.
 - Automatizar pruebas de los flujos principales.
 
-## Probar sin crear correos
+## Cuentas demo con datos en la nube
 
-Abre [las cuentas demo](https://0stcs0.vercel.app/demo) y elige Especialista, Docente, Apoderado o Administrador. No requieren correo ni contraseña. Son datos ficticios guardados solo en el navegador y el dispositivo está simulado. La cuenta real del propietario conserva su acceso normal de administrador. Para personas reales, el portal mantiene activación por correo y aprobación de asignaciones clínicas.
+Abre [los accesos demo](https://0stcs0.vercel.app/demo). Las cuentas de especialista, docente y apoderado usan el login habitual, contraseña de demostración y correos ficticios, sin activación. Guardan sus cambios en Supabase y comparten los datos entre navegadores y dispositivos. Solo acceden a niños identificados como demo. La cuenta real del propietario sigue siendo administradora y conserva su contraseña privada.
+
+Para incorporar personas reales: crea la cuenta con su correo en «Usuarios y asignaciones», pulsa «Copiar enlace de activación» y envíalo al titular. Al abrirlo, solicitará el código por correo y establecerá su contraseña. Las asignaciones clínicas siguen sujetas a aprobación independiente.
+
+Las demos se aprovisionan explícitamente mediante el script documentado en `docs/PRUEBAS.md`. El login nunca crea tablas, usuarios ni ejemplos, y el aprovisionamiento no reinicia las ediciones existentes.

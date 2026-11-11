@@ -65,8 +65,10 @@ Durante la recuperación inicial no se ejecutaron seeds ni migraciones. Vercel C
 - Vercel: dpl_3PYEUmiPddPZP41bJ759WktJ9QE5, producción READY, asociado a ese SHA y al dominio 0stcs0.vercel.app.
 - Dominio: /login y /activate devuelven 200. /api/health devuelve 200 con database connected. Las rutas de portal, eventos, registros, emociones y configuración de dispositivo rechazan solicitudes anónimas con 401.
 - La cuenta administrativa histórica se preparó para el correo real indicado por el propietario. La credencial demo está bloqueada; la contraseña se establece mediante verificación por correo. No se modificaron fichas, informes ni eventos clínicos.
-- Por decisión del propietario, solo el administrador usa correo real en esta etapa. Los otros roles se prueban mediante /demo, sin buzones ni activación. La futura incorporación de personas reales conserva la verificación y aprobación clínica; las pruebas físicas del ESP siguen pendientes.
+- Por decisión del propietario, solo el administrador usa correo real en esta etapa. Los otros roles se prueban con las cuentas demo de /demo, mediante el login habitual y sin activación. La futura incorporación de personas reales conserva la verificación y aprobación clínica; las pruebas físicas del ESP siguen pendientes.
 
-## Demostración sin correos
+## Cuentas demo en Supabase
 
-/demo permite probar especialista, docente, apoderado y administración con datos ficticios. No crea usuarios, sesiones ni datos en Supabase. Sus cambios se conservan solo en el navegador y pueden reiniciarse; no conecta hardware. El transporte de simulación se inyecta explícitamente en las vistas y nunca deriva una solicitud al servidor. La sesión real de administrador se conserva. Las cuentas históricas de la base siguen sin permitir login hasta verificar un correo real.
+Por solicitud del propietario, se sustituyó la demo local por cuentas con login y persistencia reales. Solo el administrador conserva su correo y credencial personal. Las tres cuentas demo se aprovisionan separadas de las cuentas históricas, sin alterar sus fichas ni sus contraseñas. La marca is_demo limita la excepción de activación y el acceso a registros ficticios. /demo muestra los accesos; todos ingresan por /login.
+
+La migración cloud_demo_accounts añade la marca y restricciones de separación, sin habilitar acceso directo anon/authenticated. Las cuentas futuras reales siguen requiriendo correo verificado. El administrador dispone de un enlace de activación para copiar y enviar al titular. No se enviaron invitaciones a terceros durante estas pruebas.
