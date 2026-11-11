@@ -55,3 +55,7 @@ No hay un script de ESLint configurado. Registrar revisión de tipos y formato c
 ## Revisión visual local
 
 Para mantener los fixtures durante una revisión en navegador, crear antes `.codex-work` en la raíz y ejecutar el runner con STCS_TEST_UI=1. Los correos ficticios se escriben en `.codex-work/ui-fixtures.json`, ignorado por Git. El runner conserva la base durante hasta cinco minutos; crear `.codex-work/ui-release` termina la pausa y ejecuta la limpieza. Retirar el archivo de liberación previo antes de repetir esa revisión. Este modo sigue exigiendo PostgreSQL y servidor aislados.
+
+## Pruebas de demo
+
+`npm run test:demo` ejecuta cinco casos contra el transporte real de simulación: proyecciones por rol, publicación y edición compartidas, pictogramas con límites, asignaciones/aprobaciones e independencia de red y sesión real. No requiere una base de datos. La revisión en Chrome cubrió los cuatro perfiles, edición de pictograma por docente, informe del especialista compartido como orientación y edición de ficha por apoderado, sin errores de consola. La suite de 107 comprobaciones del servidor sigue pasando con este cambio.

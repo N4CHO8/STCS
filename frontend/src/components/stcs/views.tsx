@@ -168,12 +168,16 @@ export function CommunicatorView({
   pictograms,
   token,
   profileId,
+  request = fetch,
+  demo = false,
 }: {
   onDeleted: (pictogramId: string) => void;
   onSaved: (pictogram: PictogramConfig) => void;
   pictograms: Pictogram[];
   token: string;
   profileId: string;
+  request?: typeof fetch;
+  demo?: boolean;
 }) {
   const [editing, setEditing] = useState<Pictogram | "new" | null>(null);
   const [selectedCategory, setSelectedCategory] =
@@ -212,7 +216,9 @@ export function CommunicatorView({
             pictograms={categoryPictograms}
           />
           <p className="mt-6 text-center text-sm font-medium text-stone-400">
-            Esta es la misma categoria que recibira el ESP32
+            {demo
+              ? "Vista simulada del tablero de comunicación"
+              : "Esta es la misma categoria que recibira el ESP32"}
           </p>
         </Card>
 
@@ -259,8 +265,9 @@ export function CommunicatorView({
 
           <div className="flex items-center gap-3 border-t border-stone-200 pt-5 text-sm font-semibold text-stone-500">
             <Database className="h-4 w-4 text-[#518b51]" />
-            Cada cambio se guarda inmediatamente en Supabase y queda disponible
-            para el ESP32.
+            {demo
+              ? "Los cambios demo se guardan solo en este navegador y no se envían al ESP32."
+              : "Cada cambio se guarda inmediatamente en Supabase y queda disponible para el ESP32."}
           </div>
         </div>
       </section>
@@ -281,6 +288,7 @@ export function CommunicatorView({
           suggestedPosition={nextPosition}
           token={token}
           profileId={profileId}
+          request={request}
         />
       ) : null}
     </div>
@@ -413,10 +421,12 @@ export function DevicesView({
   device,
   hasDeviceData,
   onEventSaved,
+  demo = false,
 }: {
   device: DeviceInfo;
   hasDeviceData: boolean;
   onEventSaved: () => void;
+  demo?: boolean;
 }) {
   const isConnected =
     hasDeviceData && isDeviceOnline(device.status, device.lastSyncAt);
@@ -465,7 +475,14 @@ export function DevicesView({
           )}
         </Card>
         <Card className="grid min-h-[260px] content-center">
-          <WifiDeviceProvisioner onConfigured={onEventSaved} />
+          {demo ? (
+            <p className="p-5 text-sm text-stone-600">
+              Dispositivo simulado. La demo no conecta hardware ni envía eventos
+              reales.
+            </p>
+          ) : (
+            <WifiDeviceProvisioner onConfigured={onEventSaved} />
+          )}
         </Card>
       </section>
     </div>
@@ -588,6 +605,7 @@ function PictogramEditor({
   suggestedPosition,
   token,
   profileId,
+  request = fetch,
 }: {
   onClose: () => void;
   onDeleted: (pictogramId: string) => void;
@@ -596,6 +614,7 @@ function PictogramEditor({
   suggestedPosition: number;
   token: string;
   profileId: string;
+  request?: typeof fetch;
 }) {
   const [form, setForm] = useState({
     label: pictogram?.label ?? "",
@@ -618,7 +637,7 @@ function PictogramEditor({
     setErrorMessage("");
 
     try {
-      const response = await fetch(
+      const response = await request(
         pictogram
           ? `/api/stcs/pictograms/${pictogram.id}`
           : "/api/stcs/pictograms",
@@ -664,7 +683,7 @@ function PictogramEditor({
     setErrorMessage("");
 
     try {
-      const response = await fetch(`/api/stcs/pictograms/${pictogram.id}`, {
+      const response = await request(`/api/stcs/pictograms/${pictogram.id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

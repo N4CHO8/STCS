@@ -76,3 +76,7 @@ flowchart TD
 El entorno normal de desarrollo y producción comparten la base existente de STCS. La suite aislada usa otro PostgreSQL y rechaza bases remotas o servidores que no confirmen su aislamiento. No ejecutar seeds para validar roles.
 
 La primera incorporación de responsables clínicos en una instalación sin ninguno autorizado exige validar sus identidades fuera del rol administrativo y asignarlas mediante una operación de mantenimiento autorizada. El portal nunca permite al administrador saltarse esa aprobación.
+
+## Perfiles demo
+
+En /demo se elige un perfil sin correo ni contraseña y se reutilizan las pantallas con datos sintéticos. Especialista, docente y apoderado pueden recorrer sus funciones; administración sigue viendo números. Los cambios de ficha, informes, pictogramas y cuentas se conservan en este navegador. La simulación no otorga acceso a las API reales, no reemplaza la sesión normal y no envía eventos al ESP. La cuenta real del propietario permanece como admin verificado. El botón «Volver a mi cuenta real» sale de la simulación. «Reiniciar datos demo» descarta únicamente los cambios ficticios. Para usuarios reales se mantiene la activación y aprobación del flujo anterior.

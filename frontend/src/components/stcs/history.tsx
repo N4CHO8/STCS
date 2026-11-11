@@ -5,9 +5,11 @@ import { HistoryView } from "./views";
 export function PaginatedHistory({
   profileId,
   token,
+  request = fetch,
 }: {
   profileId: string;
   token: string;
+  request?: typeof fetch;
 }) {
   const [offset, setOffset] = useState(0),
     [events, setEvents] = useState<DeviceEvent[]>([]),
@@ -21,7 +23,7 @@ export function PaginatedHistory({
     setBusy(true);
     setError("");
     setEvents([]);
-    void fetch(`/api/stcs/events?profileId=${profileId}&offset=${offset}`, {
+    void request(`/api/stcs/events?profileId=${profileId}&offset=${offset}`, {
       headers: { Authorization: `Bearer ${token}` },
       signal: controller.signal,
     })
@@ -40,7 +42,7 @@ export function PaginatedHistory({
         if (!controller.signal.aborted) setBusy(false);
       });
     return () => controller.abort();
-  }, [profileId, token, offset, version]);
+  }, [profileId, token, offset, version, request]);
   return (
     <section>
       {error && (

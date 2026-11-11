@@ -57,7 +57,7 @@ Durante la recuperación inicial no se ejecutaron seeds ni migraciones. Vercel C
 - Variables SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY y STCS_LEGACY_DEVICE_CODE configuradas en el proyecto frontend de Vercel. Los secretos existentes se conservaron.
 - PostgreSQL usa verificación TLS con la CA pública de Supabase. Suite de escritura solo sobre Docker local; el entorno de desarrollo habitual sigue compartiendo Supabase.
 - Build, tipos y 107 comprobaciones aisladas aprobados. Firmware completo compilado. Detalles y límites: PRUEBAS.md y ARREGLOS_AUDITORIA.md.
-- La entrega real de correo y la activación del propietario requieren completar el flujo desde el dominio publicado; no se consideran verificadas por la configuración SMTP.
+- Activación real del propietario completada: confirmó recepción y entrada al panel. Se verificó en Supabase credential_verified_at, rol admin, cuenta activa y sesión vigente.
 
 ## Publicación verificada
 
@@ -65,4 +65,8 @@ Durante la recuperación inicial no se ejecutaron seeds ni migraciones. Vercel C
 - Vercel: dpl_3PYEUmiPddPZP41bJ759WktJ9QE5, producción READY, asociado a ese SHA y al dominio 0stcs0.vercel.app.
 - Dominio: /login y /activate devuelven 200. /api/health devuelve 200 con database connected. Las rutas de portal, eventos, registros, emociones y configuración de dispositivo rechazan solicitudes anónimas con 401.
 - La cuenta administrativa histórica se preparó para el correo real indicado por el propietario. La credencial demo está bloqueada; la contraseña se establece mediante verificación por correo. No se modificaron fichas, informes ni eventos clínicos.
-- Pendientes de cierre: recepción real del código y activación del propietario, incorporación de correos reales para los otros roles y pruebas físicas del ESP. Las cuentas históricas @stcs.local no pueden recibir correo y no obtienen sesión sin activación.
+- Por decisión del propietario, solo el administrador usa correo real en esta etapa. Los otros roles se prueban mediante /demo, sin buzones ni activación. La futura incorporación de personas reales conserva la verificación y aprobación clínica; las pruebas físicas del ESP siguen pendientes.
+
+## Demostración sin correos
+
+/demo permite probar especialista, docente, apoderado y administración con datos ficticios. No crea usuarios, sesiones ni datos en Supabase. Sus cambios se conservan solo en el navegador y pueden reiniciarse; no conecta hardware. El transporte de simulación se inyecta explícitamente en las vistas y nunca deriva una solicitud al servidor. La sesión real de administrador se conserva. Las cuentas históricas de la base siguen sin permitir login hasta verificar un correo real.

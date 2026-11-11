@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   LogOut,
   ShieldCheck,
@@ -15,6 +16,7 @@ import {
 import { clearAuthSession, getAuthSession, type AuthSession } from "@/lib/auth";
 import { ROLE_NAMES, canEditBoard, canReadSensitive } from "@/lib/permissions";
 import { mapPictogram } from "@/lib/stcsUi";
+import type { PortalDemo } from "@/lib/demo";
 import type { PortalData } from "@/types/portal";
 import {
   CommunicatorView,
@@ -50,7 +52,8 @@ const tabs = [
 const panel =
   "rounded-2xl border border-stone-200 bg-white p-5 shadow-sm sm:p-7";
 
-export function Portal() {
+export function Portal({ demo }: { demo?: PortalDemo }) {
+  const apiFetch = demo?.request ?? fetch;
   const router = useRouter();
   const latestRequest = useRef(0);
   const [session, setSession] = useState<AuthSession | null>(null),
@@ -61,15 +64,19 @@ export function Portal() {
     [error, setError] = useState(""),
     [notice, setNotice] = useState("");
   useEffect(() => {
+    if (demo) {
+      setSession(demo.session);
+      return;
+    }
     const stored = getAuthSession();
     if (!stored) {
       router.replace("/login");
       return;
     }
     setSession(stored);
-  }, [router]);
+  }, [router, demo]);
   useEffect(() => {
-    if (!session) return;
+    if (!session || demo) return;
     const leave = () => {
       setData(null);
       setSession(null);
@@ -97,7 +104,7 @@ export function Portal() {
       window.removeEventListener("storage", sync);
       clearTimeout(timer);
     };
-  }, [session, router]);
+  }, [session, router, demo]);
   const load = useCallback(
     async (signal?: AbortSignal) => {
       if (!session) return;
@@ -108,7 +115,7 @@ export function Portal() {
       setBusy(true);
       setError("");
       try {
-        const response = await fetch(
+        const response = await apiFetch(
           `/api/stcs/portal${selected ? `?profileId=${selected}` : ""}`,
           {
             headers: { Authorization: `Bearer ${session.token}` },
@@ -118,6 +125,10 @@ export function Portal() {
         );
         if (!isCurrent()) return;
         if (response.status === 401) {
+          if (demo) {
+            demo.onExit();
+            return;
+          }
           clearAuthSession();
           router.replace("/login");
           return;
@@ -134,7 +145,7 @@ export function Portal() {
         if (isCurrent()) setBusy(false);
       }
     },
-    [session, selected, router],
+    [session, selected, router, apiFetch, demo],
   );
   useEffect(() => {
     const controller = new AbortController();
@@ -150,7 +161,7 @@ export function Portal() {
       body.action === "user"
         ? { ...body, profileIds: (body.profileIds as string[]).filter(Boolean) }
         : body;
-    const response = await fetch("/api/stcs/portal", {
+    const response = await apiFetch("/api/stcs/portal", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${session?.token}`,
@@ -230,8 +241,12 @@ export function Portal() {
           <button
             aria-label="Cerrar sesión"
             onClick={async () => {
+              if (demo) {
+                demo.onExit();
+                return;
+              }
               try {
-                const response = await fetch("/api/auth/logout", {
+                const response = await apiFetch("/api/auth/logout", {
                   method: "POST",
                   headers: { Authorization: `Bearer ${session?.token}` },
                 });
@@ -340,6 +355,20 @@ export function Portal() {
               ))}
             </section>
           )}
+          {!demo && role === "admin" && (
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm">
+              <p>
+                Explora los otros perfiles con datos ficticios, sin crear
+                correos.
+              </p>
+              <Link
+                href="/demo"
+                className="font-semibold text-emerald-900 underline"
+              >
+                Abrir cuentas demo
+              </Link>
+            </div>
+          )}
           {notice && !busy && (
             <p
               role="status"
@@ -443,8 +472,10 @@ export function Portal() {
                     {active === "board" &&
                       (canEditBoard(role ?? "") ? (
                         <CommunicatorView
+                          demo={!!demo}
                           key={profileId}
                           profileId={profileId}
+                          request={apiFetch}
                           token={session?.token ?? ""}
                           pictograms={detail.pictograms.map(mapPictogram)}
                           onSaved={() => void load()}
@@ -582,6 +613,7 @@ export function Portal() {
                       sensitive &&
                       (detail.overview ? (
                         <DevicesView
+                          demo={!!demo}
                           device={detail.overview.device}
                           hasDeviceData={
                             detail.overview.device.status === "connected"
@@ -606,6 +638,7 @@ export function Portal() {
                       <PaginatedHistory
                         key={profileId}
                         profileId={profileId}
+                        request={apiFetch}
                         token={session?.token ?? ""}
                       />
                     )}

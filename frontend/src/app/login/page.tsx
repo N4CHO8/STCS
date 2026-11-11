@@ -188,6 +188,12 @@ function LoginForm({
         ) : null}
       </form>
       <Link
+        href="/demo"
+        className="mt-5 block rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-center text-sm font-semibold text-emerald-900"
+      >
+        Probar cuentas demo sin activación
+      </Link>
+      <Link
         href="/activate"
         className="mt-5 block text-sm font-semibold text-emerald-800 underline"
       >

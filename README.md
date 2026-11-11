@@ -92,3 +92,7 @@ El firmware actual valida ambiente, memoria, catalogo inicial de pictogramas y e
 - Enviar eventos reales desde ESP32 a la API.
 - Integrar el envio Wi-Fi del firmware con los endpoints ya implementados.
 - Automatizar pruebas de los flujos principales.
+
+## Probar sin crear correos
+
+Abre [las cuentas demo](https://0stcs0.vercel.app/demo) y elige Especialista, Docente, Apoderado o Administrador. No requieren correo ni contraseña. Son datos ficticios guardados solo en el navegador y el dispositivo está simulado. La cuenta real del propietario conserva su acceso normal de administrador. Para personas reales, el portal mantiene activación por correo y aprobación de asignaciones clínicas.
