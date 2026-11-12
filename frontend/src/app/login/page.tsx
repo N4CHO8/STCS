@@ -22,9 +22,15 @@ export default function LoginPage() {
       setEmail(requested);
       return;
     }
-    if (getAuthSession()) {
-      router.replace("/");
-    }
+    let current = true;
+    void getAuthSession()
+      .then((session) => {
+        if (current && session) router.replace("/");
+      })
+      .catch(() => undefined);
+    return () => {
+      current = false;
+    };
   }, [router]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -33,23 +39,7 @@ export default function LoginPage() {
     setErrorMessage("");
 
     try {
-      const previous = getAuthSession();
       const session = await authenticateUser(email, password);
-      if (previous) {
-        const closed = await fetch("/api/auth/logout", {
-          method: "POST",
-          headers: { Authorization: `Bearer ${previous.token}` },
-        });
-        if (!closed.ok && closed.status !== 401) {
-          await fetch("/api/auth/logout", {
-            method: "POST",
-            headers: { Authorization: `Bearer ${session.token}` },
-          }).catch(() => undefined);
-          throw new Error(
-            "No se pudo cerrar la sesión anterior. Reintenta el cambio de cuenta.",
-          );
-        }
-      }
       saveAuthSession(session);
       router.push("/");
       router.refresh();
@@ -98,12 +88,12 @@ async function authenticateUser(
 
   const payload = await parseAuthResponse(response);
 
-  if (!response.ok || !payload.token || !payload.user) {
+  if (!response.ok || !payload.expiresAt || !payload.user) {
     throw new Error(payload.message ?? "Credenciales invalidas.");
   }
 
   return {
-    token: payload.token,
+    expiresAt: payload.expiresAt,
     expiresIn: payload.expiresIn,
     user: payload.user,
   };

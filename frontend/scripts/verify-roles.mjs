@@ -1,5 +1,6 @@
 // Integration tests use isolated fictitious rows and delete only those UUIDs afterwards.
 import assert from "node:assert/strict";
+import { testSession } from "./lib/test-session.mjs";
 import { verifyCloudDemo } from "./verify-cloud-demo.mjs";
 import { randomUUID, createHmac, createHash } from "node:crypto";
 import path from "node:path";
@@ -281,7 +282,7 @@ try {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    const result = await r.json();
+    const result = testSession(r, await r.json());
     assert.equal(r.status, status, JSON.stringify(result));
     checks++;
     return result;
@@ -315,7 +316,7 @@ try {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    const result = await r.json();
+    const result = testSession(r, await r.json());
     assert.equal(r.status, status, JSON.stringify(result));
     checks++;
     return result;

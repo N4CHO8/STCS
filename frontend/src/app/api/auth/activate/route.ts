@@ -3,10 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { objectInput, stringInput, passwordInput } from "@/lib/server/inputs";
 import { emailAuth } from "@/lib/server/emailAuth";
 import { query, transaction } from "@/lib/server/db";
-import { createSession, limitAttempts } from "@/lib/server/sessions";
+import { limitAttempts } from "@/lib/server/sessions";
 import type { UserRow } from "@/lib/server/auth";
 import { isAdultRole } from "@/lib/permissions";
 import { withApi } from "@/lib/server/withApi";
+import { sessionResponse } from "@/lib/server/sessionCookie";
 export const POST = withApi(async (request: NextRequest) => {
   const input = objectInput(await request.json());
   const email = stringInput(input.email, "Correo", 120).toLowerCase();
@@ -63,8 +64,5 @@ export const POST = withApi(async (request: NextRequest) => {
       user.id,
     ]);
   });
-  return NextResponse.json({
-    message: "Cuenta verificada.",
-    ...(await createSession(user)),
-  });
+  return sessionResponse(request, user, "Cuenta verificada.");
 });

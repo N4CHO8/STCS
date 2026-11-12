@@ -22,6 +22,7 @@ export async function createSession(user: UserRow) {
       7200,
     ),
     expiresIn: "2h",
+    expiresAt: new Date(Date.now() + 7200_000).toISOString(),
     user: mapUser(user),
   };
 }

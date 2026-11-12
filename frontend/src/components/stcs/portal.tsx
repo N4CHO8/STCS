@@ -13,7 +13,12 @@ import {
   RefreshCw,
   HeartHandshake,
 } from "lucide-react";
-import { clearAuthSession, getAuthSession, type AuthSession } from "@/lib/auth";
+import {
+  clearAuthSession,
+  getAuthSession,
+  AUTH_EVENT_KEY,
+  type AuthSession,
+} from "@/lib/auth";
 import { ROLE_NAMES, canEditBoard, canReadSensitive } from "@/lib/permissions";
 import { mapPictogram } from "@/lib/stcsUi";
 import type { PortalData } from "@/types/portal";
@@ -42,7 +47,7 @@ const tabs = [
   { id: "board", label: "Comunicación", icon: MessageCircle },
   { id: "profile", label: "Ficha del niño", icon: Users },
   { id: "reports", label: "Informes y orientaciones", icon: ClipboardList },
-  { id: "progress", label: "Progreso", icon: ChartNoAxesCombined },
+  { id: "progress", label: "Uso del comunicador", icon: ChartNoAxesCombined },
   { id: "history", label: "Actividad", icon: ClipboardList },
   { id: "devices", label: "Dispositivo", icon: Settings },
   { id: "accounts", label: "Usuarios y asignaciones", icon: Users },
@@ -62,38 +67,42 @@ export function Portal() {
     [error, setError] = useState(""),
     [notice, setNotice] = useState("");
   useEffect(() => {
-    const stored = getAuthSession();
-    if (!stored) {
-      router.replace("/login");
-      return;
-    }
-    setSession(stored);
+    let current = true;
+    void getAuthSession()
+      .then((stored) => {
+        if (!current) return;
+        if (!stored) {
+          router.replace("/login");
+          return;
+        }
+        setSession(stored);
+      })
+      .catch((e) => {
+        if (current) {
+          setBusy(false);
+          setError(e.message);
+        }
+      });
+    return () => {
+      current = false;
+    };
   }, [router]);
   useEffect(() => {
     if (!session) return;
     const leave = () => {
+      latestRequest.current++;
       setData(null);
       setSession(null);
-      if (getAuthSession()?.token === session.token) clearAuthSession();
       router.replace("/login");
     };
     const sync = (event: StorageEvent) => {
-      if (
-        event.key === "stcs-auth-session" &&
-        event.newValue !== JSON.stringify(session)
-      )
-        leave();
+      if (event.key === AUTH_EVENT_KEY) leave();
     };
     window.addEventListener("storage", sync);
-    let timer: ReturnType<typeof setTimeout>;
-    try {
-      const exp = JSON.parse(
-        atob(session.token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")),
-      ).exp;
-      timer = setTimeout(leave, Math.max(0, exp * 1000 - Date.now()));
-    } catch {
-      leave();
-    }
+    const timer = setTimeout(
+      leave,
+      Math.max(0, Date.parse(session.expiresAt) - Date.now()),
+    );
     return () => {
       window.removeEventListener("storage", sync);
       clearTimeout(timer);
@@ -112,13 +121,14 @@ export function Portal() {
         const response = await fetch(
           `/api/stcs/portal${selected ? `?profileId=${selected}` : ""}`,
           {
-            headers: { Authorization: `Bearer ${session.token}` },
             cache: "no-store",
             signal,
           },
         );
         if (!isCurrent()) return;
         if (response.status === 401) {
+          setData(null);
+          setSession(null);
           clearAuthSession();
           router.replace("/login");
           return;
@@ -154,7 +164,6 @@ export function Portal() {
     const response = await fetch("/api/stcs/portal", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${session?.token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(sanitized),
@@ -234,7 +243,6 @@ export function Portal() {
               try {
                 const response = await fetch("/api/auth/logout", {
                   method: "POST",
-                  headers: { Authorization: `Bearer ${session?.token}` },
                 });
                 if (!response.ok && response.status !== 401)
                   throw new Error(
@@ -373,6 +381,14 @@ export function Portal() {
           {error && (
             <div role="alert" className="rounded-xl bg-red-50 p-4 text-red-800">
               {error}
+              {!session && (
+                <button
+                  className="ml-3 font-semibold underline"
+                  onClick={() => window.location.reload()}
+                >
+                  Reintentar conexión
+                </button>
+              )}
             </div>
           )}
           {busy ? (
@@ -467,7 +483,6 @@ export function Portal() {
                         <CommunicatorView
                           key={profileId}
                           profileId={profileId}
-                          token={session?.token ?? ""}
                           pictograms={detail.pictograms.map(mapPictogram)}
                           onSaved={() => void load()}
                           onDeleted={() => void load()}
@@ -625,11 +640,7 @@ export function Portal() {
                         </p>
                       ))}
                     {active === "history" && sensitive && (
-                      <PaginatedHistory
-                        key={profileId}
-                        profileId={profileId}
-                        token={session?.token ?? ""}
-                      />
+                      <PaginatedHistory key={profileId} profileId={profileId} />
                     )}
                   </>
                 )}

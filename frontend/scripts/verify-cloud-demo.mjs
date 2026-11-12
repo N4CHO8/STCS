@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import { verifyCookieSession } from "./verify-cookie-session.mjs";
+import { testSession } from "./lib/test-session.mjs";
 import { randomUUID, createHmac, createHash } from "node:crypto";
 import bcrypt from "bcryptjs";
 import { provisionCloudDemo } from "./lib/cloud-demo.mjs";
@@ -33,7 +35,7 @@ export async function verifyCloudDemo({
       },
       ...(body ? { body: JSON.stringify(body) } : {}),
     });
-    const result = await r.json();
+    const result = testSession(r, await r.json());
     assert.equal(r.status, expected, `${path}: ${JSON.stringify(result)}`);
     checks++;
     return result;
@@ -41,6 +43,7 @@ export async function verifyCloudDemo({
   const login = async (email) =>
     api("/api/auth/login", undefined, { email, password: CLOUD_DEMO_PASSWORD });
   try {
+    checks += await verifyCookieSession(base);
     await api(
       "/api/auth/login",
       undefined,

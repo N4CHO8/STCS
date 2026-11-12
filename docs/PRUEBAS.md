@@ -62,6 +62,13 @@ Para mantener los fixtures durante una revisión en navegador, crear antes `.cod
 
 ## Aprovisionamiento explícito
 
+Actualización 12 de noviembre: sesiones del navegador en cookie HttpOnly, control
+de origen, sustitución/revocación de sesión y ausencia de token en JSON. La suite
+incluye nueve peticiones adicionales de cookies/CSRF: 168 comprobaciones de
+integración más dos de base caída, 170 en total. Los helpers de prueba inspeccionan
+Set-Cookie para probar también el contrato Bearer de herramientas existentes;
+el frontend no recibe ese token. Workflow reproducible: `.github/workflows/verify.yml`.
+
 La autorización de este cambio incluye crear los ejemplos en STCS. Este script es mantenimiento, no una prueba de conectividad ni parte del login. Primero se aplica la migración 20261111202504_cloud_demo_accounts.sql. Desde frontend:
 
 ```powershell

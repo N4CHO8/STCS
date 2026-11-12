@@ -4,11 +4,21 @@
 
 El dispositivo Waveshare ESP32-S3-Touch-LCD-1.46 funcionara como un comunicador CAA portatil. Su objetivo es permitir que el nino seleccione pictogramas frecuentes desde una pantalla redonda tactil, sin depender de un celular o computador.
 
-El proyecto PlatformIO activo esta en:
+El firmware con pantalla, touch, audio y red integrado en este repositorio está en:
 
 ```text
-firmware/stcs-esp32
+firmware/STCS_UI_Arduino
 ```
+
+`firmware/stcs-esp32` es un esqueleto inicial de PlatformIO y no reemplaza la
+interfaz completa. Seguir el README del sketch Arduino para compilar.
+
+Al revisar el equipo conectado el 12 de noviembre de 2026 se identificó
+`v0.6.7-touch`, distinta del código de red versionado (`v0.5.0-private`).
+No se recuperó el fuente de esa versión instalada: no sobrescribirla ni
+atribuirle cambios de este repositorio sin verificar el firmware que se carga.
+Pantalla, tacto y reproducción de «Agua» fueron confirmados por el propietario;
+la sincronización completa permanece pendiente. Consultar `docs/VALIDACION_ZOOM.md`.
 
 ## Responsabilidades esperadas
 

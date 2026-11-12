@@ -29,8 +29,13 @@ export const GET = withApi(async (request: NextRequest) => {
     );
   }
 
-  return NextResponse.json({
-    message: "Usuario autenticado obtenido correctamente.",
-    user: mapUser(result.rows[0]),
-  });
+  return NextResponse.json(
+    {
+      message: "Usuario autenticado obtenido correctamente.",
+      user: mapUser(result.rows[0]),
+      expiresIn: "2h",
+      expiresAt: new Date(authUser.exp! * 1000).toISOString(),
+    },
+    { headers: { "Cache-Control": "no-store" } },
+  );
 });

@@ -11,7 +11,7 @@ export interface AuthUser {
 }
 
 export interface AuthSession {
-  token: string;
+  expiresAt: string;
   user: AuthUser;
   expiresIn: string;
 }
@@ -26,56 +26,36 @@ export interface PortalResponse<T = unknown> {
   };
 }
 
-const STORAGE_KEY = "stcs-auth-session";
-
-const isBrowser = (): boolean => typeof window !== "undefined";
-
-export const saveAuthSession = (session: AuthSession): void => {
-  if (!isBrowser()) {
-    return;
-  }
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
-};
-
-export const getAuthSession = (): AuthSession | null => {
-  if (!isBrowser()) {
-    return null;
-  }
-
-  const rawValue = localStorage.getItem(STORAGE_KEY);
-
-  if (!rawValue) {
-    return null;
-  }
-
+// No identity or credential is stored in browser storage. The nonce only notifies other tabs.
+const LEGACY_KEY = "stcs-auth-session";
+export const AUTH_EVENT_KEY = "stcs-auth-event";
+export const saveAuthSession = (_session: AuthSession): void => {
   try {
-    const session = JSON.parse(rawValue) as AuthSession;
-    const parts = session.token.split(".");
-    const payload = JSON.parse(
-      atob(parts[1].replace(/-/g, "+").replace(/_/g, "/")),
-    );
-    if (
-      parts.length !== 3 ||
-      typeof payload.exp !== "number" ||
-      payload.exp * 1000 <= Date.now()
-    ) {
-      localStorage.removeItem(STORAGE_KEY);
-      return null;
-    }
-    return session;
+    localStorage.removeItem(LEGACY_KEY);
+    localStorage.setItem(AUTH_EVENT_KEY, crypto.randomUUID());
   } catch {
-    localStorage.removeItem(STORAGE_KEY);
-    return null;
+    /* Storage may be disabled; authentication still uses the cookie. */
   }
 };
-
-export const clearAuthSession = (): void => {
-  if (!isBrowser()) {
-    return;
+export const getAuthSession = async (): Promise<AuthSession | null> => {
+  try {
+    localStorage.removeItem(LEGACY_KEY);
+  } catch {
+    /* No storage dependency. */
   }
-
-  localStorage.removeItem(STORAGE_KEY);
+  const response = await fetch("/api/auth/me", { cache: "no-store" });
+  if (response.status === 401) return null;
+  if (!response.ok)
+    throw new Error("No se pudo verificar la sesión. Reintenta.");
+  return response.json();
+};
+export const clearAuthSession = (): void => {
+  try {
+    localStorage.removeItem(LEGACY_KEY);
+    localStorage.setItem(AUTH_EVENT_KEY, crypto.randomUUID());
+  } catch {
+    /* The server has already revoked the session. */
+  }
 };
 
 export const getRoleLabel = (role: UserRole): string => {

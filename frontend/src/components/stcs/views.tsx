@@ -166,13 +166,11 @@ export function CommunicatorView({
   onDeleted,
   onSaved,
   pictograms,
-  token,
   profileId,
 }: {
   onDeleted: (pictogramId: string) => void;
   onSaved: (pictogram: PictogramConfig) => void;
   pictograms: Pictogram[];
-  token: string;
   profileId: string;
 }) {
   const [editing, setEditing] = useState<Pictogram | "new" | null>(null);
@@ -279,7 +277,6 @@ export function CommunicatorView({
           }}
           pictogram={editing === "new" ? null : editing}
           suggestedPosition={nextPosition}
-          token={token}
           profileId={profileId}
         />
       ) : null}
@@ -386,7 +383,12 @@ export function HistoryView({
 export function ProgressView({ data }: { data: StcsOverview }) {
   return (
     <div className="grid gap-6">
-      <PageHeader title="Progreso" />
+      <PageHeader title="Uso del comunicador" />
+      <p className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950">
+        Estos registros describen el uso del comunicador y las selecciones de
+        pictogramas. No constituyen un diagnóstico ni una medida de progreso
+        clínico o eficacia terapéutica.
+      </p>
       <section className="grid gap-6 xl:grid-cols-2">
         <Card className="min-h-[380px]">
           <SectionTitle>Uso por categoria</SectionTitle>
@@ -586,7 +588,6 @@ function PictogramEditor({
   onSaved,
   pictogram,
   suggestedPosition,
-  token,
   profileId,
 }: {
   onClose: () => void;
@@ -594,7 +595,6 @@ function PictogramEditor({
   onSaved: (pictogram: PictogramConfig) => void;
   pictogram: Pictogram | null;
   suggestedPosition: number;
-  token: string;
   profileId: string;
 }) {
   const [form, setForm] = useState({
@@ -625,7 +625,6 @@ function PictogramEditor({
         {
           method: pictogram ? "PUT" : "POST",
           headers: {
-            Authorization: `Bearer ${token}`,
             "x-stcs-profile-id": profileId,
             "Content-Type": "application/json",
           },
@@ -667,7 +666,6 @@ function PictogramEditor({
       const response = await fetch(`/api/stcs/pictograms/${pictogram.id}`, {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${token}`,
           "x-stcs-profile-id": profileId,
         },
       });

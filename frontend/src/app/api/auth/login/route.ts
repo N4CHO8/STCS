@@ -4,9 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { UserRow } from "@/lib/server/auth";
 import { query } from "@/lib/server/db";
-import { createSession, limitAttempts } from "@/lib/server/sessions";
+import { limitAttempts } from "@/lib/server/sessions";
 import { objectInput, stringInput } from "@/lib/server/inputs";
 import { errorResponse } from "@/lib/server/apiResponse";
+
+import { sessionResponse } from "@/lib/server/sessionCookie";
 
 export const dynamic = "force-dynamic";
 
@@ -60,10 +62,7 @@ export async function POST(request: NextRequest) {
         },
         { status: 403 },
       );
-    return NextResponse.json({
-      message: "Inicio de sesión exitoso.",
-      ...(await createSession(user)),
-    });
+    return sessionResponse(request, user, "Inicio de sesión exitoso.");
   } catch (error) {
     return errorResponse(
       error,

@@ -71,7 +71,9 @@ export const getJwtSecret = (): string => {
 export const authenticateRequest = async (
   request: NextRequest,
 ): Promise<AuthTokenPayload | NextResponse> => {
-  const token = extractBearerToken(request.headers.get("authorization"));
+  const token =
+    extractBearerToken(request.headers.get("authorization")) ??
+    request.cookies.get("stcs-session")?.value;
 
   if (!token) {
     return NextResponse.json(

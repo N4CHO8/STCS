@@ -2,13 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { DeviceEvent } from "@/types/stcs";
 import { HistoryView } from "./views";
-export function PaginatedHistory({
-  profileId,
-  token,
-}: {
-  profileId: string;
-  token: string;
-}) {
+export function PaginatedHistory({ profileId }: { profileId: string }) {
   const [offset, setOffset] = useState(0),
     [events, setEvents] = useState<DeviceEvent[]>([]),
     [busy, setBusy] = useState(true),
@@ -22,7 +16,6 @@ export function PaginatedHistory({
     setError("");
     setEvents([]);
     void fetch(`/api/stcs/events?profileId=${profileId}&offset=${offset}`, {
-      headers: { Authorization: `Bearer ${token}` },
       signal: controller.signal,
     })
       .then(async (response) => {
@@ -40,7 +33,7 @@ export function PaginatedHistory({
         if (!controller.signal.aborted) setBusy(false);
       });
     return () => controller.abort();
-  }, [profileId, token, offset, version]);
+  }, [profileId, offset, version]);
   return (
     <section>
       {error && (

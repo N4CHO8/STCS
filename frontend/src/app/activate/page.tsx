@@ -30,7 +30,7 @@ export default function ActivatePage() {
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.message);
-      if (result.token) {
+      if (result.user && result.expiresAt) {
         saveAuthSession(result);
         router.replace("/");
       } else {
