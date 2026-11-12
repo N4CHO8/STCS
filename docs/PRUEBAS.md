@@ -72,7 +72,7 @@ perfiles/dos dispositivos para el especialista, con apoderado/docente limitados
 a sus asignaciones. Es simulación de hardware API en la base descartable, no
 una afirmación de haber conectado un segundo ESP físico.
 
-El contrato del firmware instalado exige `accepted: true` y la confirmación
+El contrato del firmware instalado exige `ack.accepted: true` y la confirmación
 del identificador externo después de persistir un evento. Se comprueba que
 un reintento devuelve el mismo registro y se confirma sin duplicarlo, mientras
 que un evento inválido devuelve 400 sin confirmación positiva. La inspección
