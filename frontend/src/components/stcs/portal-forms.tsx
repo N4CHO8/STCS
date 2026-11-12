@@ -244,7 +244,9 @@ export function AccountForm({
 }) {
   const [role, setRole] = useState<AdultRole>(user?.role ?? "teacher");
   const availableProfiles = profiles.filter(
-    (p) => Boolean(p.isDemo) === Boolean(user?.isDemo),
+    (p) =>
+      Boolean(p.isDemo) === Boolean(user?.isDemo) &&
+      Boolean(p.isPrivateTest) === Boolean(user?.isPrivateTest),
   );
   return (
     <Form
@@ -305,9 +307,11 @@ export function AccountForm({
         </select>
       </label>
       <p className="text-sm text-stone-600">
-        {user?.isDemo
-          ? "Esta cuenta demo usa la contraseña de demostración y solo puede acceder a niños demo."
-          : "El titular activa su cuenta desde el enlace de activación y verifica su correo. Las nuevas asignaciones clínicas requieren aprobación independiente."}
+        {user?.isPrivateTest
+          ? "Esta cuenta usa una credencial privada y solo puede acceder a perfiles de prueba privados asignados. No comparte los accesos demo públicos."
+          : user?.isDemo
+            ? "Esta cuenta demo usa la contraseña de demostración y solo puede acceder a niños demo."
+            : "El titular activa su cuenta desde el enlace de activación y verifica su correo. Las nuevas asignaciones clínicas requieren aprobación independiente."}
       </p>
       <label className="flex items-center gap-2">
         <input

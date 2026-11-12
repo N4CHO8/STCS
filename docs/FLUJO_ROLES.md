@@ -90,3 +90,17 @@ Los cambios persisten en Supabase y el script de aprovisionamiento no restablece
 ## Activación de futuras cuentas reales
 
 El administrador crea una cuenta con el correo real y el rol correspondiente. El botón «Copiar enlace de activación» genera /activate?email=... para compartir con el titular; el enlace no contiene una contraseña ni un secreto y no verifica por sí mismo la identidad. El destinatario solicita y verifica el código enviado a ese correo y elige su contraseña. Funciona para especialistas, docentes, apoderados y futuros administradores. Las cuentas nuevas reales nunca heredan la excepción demo. Las aprobaciones clínicas se mantienen, incluida la validación inicial fuera del rol administrativo cuando aún no existe un responsable autorizado.
+
+## Perfiles privados con hardware
+
+Luis usa un perfil interno child con is_demo=false e is_private_test=true. Sus
+adultos tienen credenciales privadas distintas y la misma marca de entorno; no
+se declara falsamente verificado un correo ficticio. La excepción de activación
+se limita a ese entorno y no concede acceso a perfiles reales ni demos públicas.
+Las marcas se comprueban desde la base y son inmutables para el portal.
+
+Los adultos asignados pueden consultar disponibilidad técnica de sus ESP desde
+la nube. El docente recibe código/estado/última sincronización/alimentación y
+firmware, sin SSID de la red, historial, métricas, diagnóstico ni ficha clínica.
+El administrador sigue sin recibir dispositivos ni identidades infantiles.
+Detalles de acceso remoto y preservación de historial: LUIS_Y_DISPOSITIVOS.md.

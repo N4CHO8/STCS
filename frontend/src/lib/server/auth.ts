@@ -16,6 +16,7 @@ export interface AuthTokenPayload {
   profileId?: string;
   sid: string;
   isDemo?: boolean;
+  isPrivateTest?: boolean;
   iat?: number;
   exp?: number;
 }
@@ -28,6 +29,7 @@ export interface UserRow {
   role: UserRole;
   is_active: boolean;
   is_demo: boolean;
+  is_private_test: boolean;
   credential_verified_at: Date | null;
   created_at: Date;
   updated_at: Date;
@@ -39,6 +41,7 @@ export const mapUser = (row: UserRow) => ({
   email: row.email,
   role: row.role,
   isDemo: row.is_demo,
+  isPrivateTest: row.is_private_test,
   createdAt: row.created_at.toISOString(),
   updatedAt: row.updated_at.toISOString(),
 });
@@ -103,7 +106,9 @@ export const authenticateRequest = async (
     const user = result.rows[0];
     if (
       !user ||
-      (!user.credential_verified_at && !user.is_demo) ||
+      (!user.credential_verified_at &&
+        !user.is_demo &&
+        !user.is_private_test) ||
       !isAdultRole(user.role)
     )
       return NextResponse.json(
@@ -120,6 +125,7 @@ export const authenticateRequest = async (
       ...signed,
       role: user.role,
       isDemo: user.is_demo,
+      isPrivateTest: user.is_private_test,
       fullName: user.full_name,
       email: user.email,
       profileId,

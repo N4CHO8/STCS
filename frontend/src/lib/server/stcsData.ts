@@ -40,6 +40,7 @@ export interface DeviceInfo {
   name: string;
   status: string;
   batteryLevel: number;
+  powerSource?: "usb" | "battery" | "unknown";
   wifiSsid: string | null;
   firmwareVersion: string;
   lastSyncAt: string | null;
@@ -111,6 +112,7 @@ interface DeviceRow extends QueryResultRow {
   name: string;
   status: string;
   battery_level: number;
+  power_source: "usb" | "battery" | "unknown";
   wifi_ssid: string | null;
   firmware_version: string;
   last_sync_at: Date | null;
@@ -155,6 +157,7 @@ const mapDevice = (row: DeviceRow): DeviceInfo => ({
   name: row.name,
   status: row.status,
   batteryLevel: row.battery_level,
+  powerSource: row.power_source,
   wifiSsid: row.wifi_ssid,
   firmwareVersion: row.firmware_version,
   lastSyncAt: row.last_sync_at ? row.last_sync_at.toISOString() : null,
@@ -219,13 +222,14 @@ const getAccessibleProfile = async (
     `SELECT sp.* FROM student_profiles sp
      JOIN user_access ua ON ua.subject_user_id = sp.child_user_id
      WHERE ua.actor_user_id = $1 AND ua.relationship = $2 AND ua.approved_at IS NOT NULL
-       AND sp.is_demo=$4 AND ($3::uuid IS NULL OR sp.id = $3)
+       AND sp.is_demo=$4 AND sp.is_private_test=$5 AND ($3::uuid IS NULL OR sp.id = $3)
      ORDER BY ua.created_at, sp.id LIMIT 1`,
     [
       authUser.sub,
       authUser.role,
       authUser.profileId ?? null,
       Boolean(authUser.isDemo),
+      Boolean(authUser.isPrivateTest),
     ],
   );
   if (!result.rowCount) {

@@ -109,13 +109,13 @@ export function Portal() {
     };
   }, [session, router]);
   const load = useCallback(
-    async (signal?: AbortSignal) => {
+    async (signal?: AbortSignal, background = false) => {
       if (!session) return;
       // Ignore slower responses from a previously selected child or manual refresh.
       const requestId = ++latestRequest.current;
       const isCurrent = () =>
         !signal?.aborted && requestId === latestRequest.current;
-      setBusy(true);
+      if (!background) setBusy(true);
       setError("");
       try {
         const response = await fetch(
@@ -155,6 +155,19 @@ export function Portal() {
       latestRequest.current++;
     };
   }, [load]);
+  // Poll only viewing screens, never an editing form. Abort on child/role/navigation changes.
+  useEffect(() => {
+    if (!session || !["home", "devices"].includes(section)) return;
+    const controller = new AbortController();
+    const timer = setInterval(() => {
+      if (document.visibilityState === "visible")
+        void load(controller.signal, true);
+    }, 15000);
+    return () => {
+      clearInterval(timer);
+      controller.abort();
+    };
+  }, [load, section, session]);
   const save: SaveAction = async (body) => {
     setNotice("");
     const sanitized =
@@ -182,7 +195,8 @@ export function Portal() {
           "home",
           "board",
           "reports",
-          ...(sensitive ? ["profile", "progress", "history", "devices"] : []),
+          "devices",
+          ...(sensitive ? ["profile", "progress", "history"] : []),
         ].includes(t.id),
   );
   const active = visible.some((t) => t.id === section) ? section : "home";
@@ -355,6 +369,16 @@ export function Portal() {
               className="rounded-xl bg-emerald-50 p-4 text-emerald-900"
             >
               {notice}
+            </p>
+          )}
+          {data?.isPrivateTest && (
+            <p
+              role="status"
+              className="rounded-xl border border-sky-200 bg-sky-50 p-4 text-sm"
+            >
+              Entorno privado de prueba con dispositivo físico. Los accesos
+              públicos de demostración no pueden consultar estos perfiles.
+              Utiliza únicamente información ficticia.
             </p>
           )}
           {data?.isDemo && (
@@ -615,21 +639,9 @@ export function Portal() {
                         </section>
                       </>
                     )}
-                    {active === "devices" &&
-                      sensitive &&
-                      (detail.overview ? (
-                        <DevicesView
-                          device={detail.overview.device}
-                          hasDeviceData={
-                            detail.overview.device.status === "connected"
-                          }
-                          onEventSaved={() => void load()}
-                        />
-                      ) : (
-                        <p className={panel}>
-                          Todavía no hay un dispositivo asociado.
-                        </p>
-                      ))}
+                    {active === "devices" && (
+                      <DevicesView devices={detail.devices ?? []} />
+                    )}
                     {active === "progress" &&
                       sensitive &&
                       (detail.overview ? (

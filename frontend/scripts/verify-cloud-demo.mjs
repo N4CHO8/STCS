@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { verifyCookieSession } from "./verify-cookie-session.mjs";
+import { verifyPrivateProfiles } from "./verify-private-profile.mjs";
 import { testSession } from "./lib/test-session.mjs";
 import { randomUUID, createHmac, createHash } from "node:crypto";
 import bcrypt from "bcryptjs";
@@ -343,6 +344,15 @@ export async function verifyCloudDemo({
     await api("/api/auth/logout", again.token, {});
     await api("/api/auth/me", again.token, undefined, 401);
     assert.equal((await api("/api/auth/me", adminToken)).user.isDemo, false);
+    checks += await verifyPrivateProfiles({
+      db,
+      base,
+      adminToken,
+      realToken: therapistToken,
+      realProfileId,
+      realChildId,
+      publicToken: sessions.teacher.token,
+    });
     return checks;
   } finally {
     await db.query("BEGIN");

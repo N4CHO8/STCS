@@ -1,4 +1,9 @@
-export type TabId = "dashboard" | "communicator" | "history" | "progress" | "devices";
+export type TabId =
+  | "dashboard"
+  | "communicator"
+  | "history"
+  | "progress"
+  | "devices";
 
 export type StudentProfile = {
   id: string;
@@ -15,6 +20,7 @@ export type DeviceInfo = {
   name: string;
   status: string;
   batteryLevel: number;
+  powerSource?: "usb" | "battery" | "unknown";
   wifiSsid: string | null;
   firmwareVersion: string;
   lastSyncAt: string | null;

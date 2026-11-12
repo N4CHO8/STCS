@@ -5,6 +5,7 @@ export type ChildSummary = {
   label: string;
   number: number;
   isDemo?: boolean;
+  isPrivateTest?: boolean;
 };
 export type Report = {
   id: string;
@@ -13,7 +14,16 @@ export type Report = {
   diagnosis?: string;
   guidance: string;
 };
+export type DeviceSummary = {
+  firmwareVersion?: string;
+  code: string;
+  status: string;
+  lastSyncAt: string | null;
+  powerSource: "usb" | "battery" | "unknown";
+  batteryLevel: number | null;
+};
 export type ChildDetail = {
+  devices?: DeviceSummary[];
   profile: ChildSummary & {
     fullName?: string;
     age?: number;
@@ -33,6 +43,7 @@ export type ManagedUser = {
   role: AdultRole;
   active: boolean;
   isDemo?: boolean;
+  isPrivateTest?: boolean;
   verified?: boolean;
   profileIds: string[];
   pendingProfileIds?: string[];
@@ -48,6 +59,7 @@ export type PortalData = {
   }[];
   role: AdultRole;
   isDemo?: boolean;
+  isPrivateTest?: boolean;
   profiles: ChildSummary[];
   detail?: ChildDetail;
   settings: { appTitle: string; supportEmail: string };

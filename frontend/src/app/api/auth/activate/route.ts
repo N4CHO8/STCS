@@ -17,11 +17,11 @@ export const POST = withApi(async (request: NextRequest) => {
     [email],
   );
   const user = accounts.rows[0];
-  if (user?.is_demo)
+  if (user?.is_demo || user?.is_private_test)
     return NextResponse.json(
       {
         message:
-          "La cuenta demo usa su contraseña de demostración y no requiere activación.",
+          "La cuenta de prueba usa su credencial asignada y no requiere activación.",
       },
       { status: 400 },
     );

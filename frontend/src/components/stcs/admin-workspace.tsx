@@ -111,11 +111,13 @@ export function AdminWorkspace({
                       <p className="font-semibold">{u.fullName}</p>
                       <p className="text-xs text-stone-500">{u.email}</p>
                       <p className="text-xs text-stone-500">
-                        {u.isDemo
-                          ? "Demo · sin activación"
-                          : u.verified
-                            ? "Correo verificado"
-                            : "Pendiente de activación"}
+                        {u.isPrivateTest
+                          ? "Prueba privada · credencial individual"
+                          : u.isDemo
+                            ? "Demo · sin activación"
+                            : u.verified
+                              ? "Correo verificado"
+                              : "Pendiente de activación"}
                       </p>
                     </td>
                     <td className="px-2">{ROLE_NAMES[u.role]}</td>
@@ -137,7 +139,7 @@ export function AdminWorkspace({
                         Editar
                         <span className="sr-only"> {u.fullName}</span>
                       </button>
-                      {!u.isDemo && (
+                      {!u.isDemo && !u.isPrivateTest && (
                         <button
                           className="mt-2 block text-xs text-emerald-800 underline"
                           onClick={async () => {

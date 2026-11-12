@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Only explicitly provisioned demo identities skip email verification. Domain names and JWT claims never grant this exception.
-    if (!user.credential_verified_at && !user.is_demo)
+    if (!user.credential_verified_at && !user.is_demo && !user.is_private_test)
       return NextResponse.json(
         {
           message: "Activa tu cuenta verificando el correo antes de ingresar.",
