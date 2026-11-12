@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { randomUUID, createHash } from "node:crypto";
 import { provisionPrivateProfile } from "./lib/private-profile.mjs";
 import { testSession } from "./lib/test-session.mjs";
+import { HARDWARE_DEMO_ACCOUNTS } from "../src/lib/hardware-demo-accounts.ts";
 
 export async function verifyPrivateProfiles({
   db,
@@ -25,7 +26,7 @@ export async function verifyPrivateProfiles({
       role,
       fullName: `Adulto privado ${role}`,
       email: `private-${marker}-${role}@test.invalid`,
-      password: `Private-${randomUUID()}`,
+      password: HARDWARE_DEMO_ACCOUNTS.find((a) => a.role === role).password,
     })),
   };
   let fixture,

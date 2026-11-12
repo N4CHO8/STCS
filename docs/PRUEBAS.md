@@ -63,8 +63,8 @@ Para mantener los fixtures durante una revisión en navegador, crear antes `.cod
 ## Aprovisionamiento explícito
 
 Pruebas de Luis y dispositivos privados: `verify-private-profile.mjs` amplía la
-suite a 206 peticiones/comprobaciones de integración y dos de caída de base
-(208 en total). Comprueba credenciales privadas sin activación, niño bloqueado,
+suite a 208 peticiones/comprobaciones de integración y dos de caída de base
+(210 en total). Comprueba credenciales privadas sin activación, niño bloqueado,
 administrador numerado, proyección técnica del dispositivo para docentes sin
 datos clínicos, alimentación USB sin batería ficticia, rechazos entre los tres
 entornos, restricciones de base e idempotencia del evento. También simula dos
@@ -85,13 +85,6 @@ integración más dos de base caída, 170 en total. Los helpers de prueba inspec
 Set-Cookie para probar también el contrato Bearer de herramientas existentes;
 el frontend no recibe ese token. Workflow reproducible: `.github/workflows/verify.yml`.
 
-La autorización de este cambio incluye crear los ejemplos en STCS. Este script es mantenimiento, no una prueba de conectividad ni parte del login. Primero se aplica la migración 20261111202504_cloud_demo_accounts.sql. Desde frontend:
+Las fixtures históricas Alex/Luna solo se aprovisionan durante la suite aislada. El helper exige STCS_TEST_ISOLATED=1 y PostgreSQL en localhost; se comprueba que rechace una conexión remota antes de consultar. El comando demo:provision está retirado y rechaza --apply. No crea ni restaura demos en Supabase.
 
-```powershell
-npm run demo:provision
-npm run demo:provision -- --apply --project-ref mvdjzjwidygmhvhfcpgg
-```
-
-Sin --apply solo muestra el plan. La aplicación requiere la confirmación exacta del proyecto y rechaza otros destinos. En localhost exige STCS_TEST_ISOLATED=1. Usa verificación TLS para Supabase y una transacción que se revierte ante conflictos de identidades reservadas. Los nombres, notas, informes, contraseñas, desactivaciones y tableros existentes se conservan; no añade duplicados ni restaura pictogramas retirados. Comprueba que las cuentas y fichas reales previas no cambien. Nunca ejecutarlo automáticamente durante build, arranque o login.
-
-Las credenciales publicadas en /demo son deliberadamente públicas y solo sirven para registros demo. No son secretos de producción ni sustituyen la activación de cuentas reales. No introducir datos personales en esos ejemplos compartidos.
+La suite comprueba que /demo muestre exclusivamente los tres accesos actuales de Luis, sin credenciales antiguas, y usa sus contraseñas actuales en las fixtures locales para probar el login. Las credenciales publicadas son deliberadamente públicas y solo sirven para demostración; las futuras cuentas reales requieren activación y contraseñas elegidas por sus titulares.

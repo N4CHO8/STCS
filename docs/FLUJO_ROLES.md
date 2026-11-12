@@ -79,13 +79,13 @@ La primera incorporación de responsables clínicos en una instalación sin ning
 
 ## Perfiles demo en la nube
 
-/demo muestra tres accesos con correos ficticios y contraseña de demostración. Ingresan por /login y usan las mismas sesiones revocables, pantallas y API que las cuentas reales. El único administrador es la cuenta real del propietario. Ya no existe transporte de datos simulado en el navegador.
+/demo muestra únicamente los tres accesos actuales de especialista, docente y apoderado de Luis, cada uno con contraseña sencilla distinta. Son accesos públicos de demostración con correos ficticios; usan /login, sesiones revocables, Supabase y el ESP físico. El administrador conserva su correo y contraseña personales.
 
-Las cuentas y niños demo tienen is_demo persistido en PostgreSQL. Solo ese indicador de la base permite omitir la activación, nunca el dominio del correo ni una propiedad del JWT. No puede cambiarse desde el portal ni convertirse una cuenta demo en administradora. Las asignaciones entre demo y real se rechazan en API y mediante restricciones de base. Las rutas antiguas aplican la misma separación.
+La demo actual conserva la marca técnica is_private_test de su aprovisionamiento inicial. No se cambian identidades ni asignaciones para renombrar el entorno en la interfaz. Esa marca persistida permite omitir activación, nunca el dominio del correo ni una propiedad del JWT; el portal no puede modificarla ni convertir una cuenta de prueba en administradora. Las asignaciones entre demostración y datos reales se rechazan en API y base, incluidas rutas antiguas.
 
-Se crean dos niños ficticios, tableros, informes y eventos de ejemplo compartidos. Los eventos de muestra llevan source=demo-fixture y solo cuentan en consultas de cuentas demo. Los dispositivos de muestra quedan offline hasta enlazar hardware auténtico; no se simula una conexión. El dispositivo existente conserva su asignación y configuración.
+Las demos antiguas de Alex y Luna, sus cinco cuentas y sus registros sintéticos se retiraron de producción. No se crean informes, diagnósticos ni eventos de ejemplo para Luis. Su actividad procede del ESP. Las fixtures antiguas is_demo solo permanecen en pruebas descartables locales para verificar separación y regresiones; el aprovisionamiento antiguo está bloqueado en bases remotas.
 
-Los cambios persisten en Supabase y el script de aprovisionamiento no restablece usuarios, fichas, informes ni tableros editados. Las cuentas y fichas preexistentes quedan intactas. El inicio de sesión no ejecuta el aprovisionamiento.
+Los cambios persisten en Supabase. El inicio de sesión no aprovisiona, restablece ni repuebla datos. Las contraseñas simples de demostración no se usan como valores iniciales de cuentas reales. Al incorporarse una persona real, se crea su cuenta con correo verdadero y activa su propia contraseña mediante verificación; sus asignaciones necesitan aprobación.
 
 ## Activación de futuras cuentas reales
 
@@ -94,9 +94,10 @@ El administrador crea una cuenta con el correo real y el rol correspondiente. El
 ## Perfiles privados con hardware
 
 Luis usa un perfil interno child con is_demo=false e is_private_test=true. Sus
-adultos tienen credenciales privadas distintas y la misma marca de entorno; no
+adultos tienen credenciales demo distintas y la misma marca de entorno; no
 se declara falsamente verificado un correo ficticio. La excepción de activación
-se limita a ese entorno y no concede acceso a perfiles reales ni demos públicas.
+se limita a ese entorno y no concede acceso a perfiles reales. Por decisión del
+propietario, sus accesos ahora se muestran como demostración pública en /demo.
 Las marcas se comprueban desde la base y son inmutables para el portal.
 
 Los adultos asignados pueden consultar disponibilidad técnica de sus ESP desde

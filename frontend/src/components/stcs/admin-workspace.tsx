@@ -112,7 +112,7 @@ export function AdminWorkspace({
                       <p className="text-xs text-stone-500">{u.email}</p>
                       <p className="text-xs text-stone-500">
                         {u.isPrivateTest
-                          ? "Prueba privada · credencial individual"
+                          ? "Demo con dispositivo · sin activación"
                           : u.isDemo
                             ? "Demo · sin activación"
                             : u.verified

@@ -376,9 +376,9 @@ export function Portal() {
               role="status"
               className="rounded-xl border border-sky-200 bg-sky-50 p-4 text-sm"
             >
-              Entorno privado de prueba con dispositivo físico. Los accesos
-              públicos de demostración no pueden consultar estos perfiles.
-              Utiliza únicamente información ficticia.
+              Demostración con dispositivo físico. Los cambios se guardan en la
+              nube y se comparten entre los responsables asignados. Los accesos
+              demo son públicos: utiliza únicamente información ficticia.
             </p>
           )}
           {data?.isDemo && (

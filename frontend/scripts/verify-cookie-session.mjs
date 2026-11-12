@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import {
   CLOUD_DEMO_ACCOUNTS,
   CLOUD_DEMO_PASSWORD,
-} from "../src/lib/cloud-demo-accounts.ts";
+} from "./fixtures/legacy-demo-accounts.ts";
 
 // Called only after the outer suite confirms localhost and its disposable DB.
 export async function verifyCookieSession(base) {

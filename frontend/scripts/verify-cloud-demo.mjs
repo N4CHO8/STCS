@@ -4,11 +4,12 @@ import { verifyPrivateProfiles } from "./verify-private-profile.mjs";
 import { testSession } from "./lib/test-session.mjs";
 import { randomUUID, createHmac, createHash } from "node:crypto";
 import bcrypt from "bcryptjs";
+import { HARDWARE_DEMO_ACCOUNTS } from "../src/lib/hardware-demo-accounts.ts";
 import { provisionCloudDemo } from "./lib/cloud-demo.mjs";
 import {
   CLOUD_DEMO_PASSWORD,
   CLOUD_DEMO_ACCOUNTS,
-} from "../src/lib/cloud-demo-accounts.ts";
+} from "./fixtures/legacy-demo-accounts.ts";
 
 export async function verifyCloudDemo({
   db,
@@ -21,6 +22,23 @@ export async function verifyCloudDemo({
   const fixture = await provisionCloudDemo(db),
     extraId = randomUUID();
   let checks = 0;
+  const demoPage = await fetch(base + "/demo");
+  assert.equal(demoPage.status, 200);
+  const demoHtml = await demoPage.text();
+  for (const a of HARDWARE_DEMO_ACCOUNTS) {
+    assert.ok(demoHtml.includes(a.email));
+    assert.ok(demoHtml.includes(a.password));
+  }
+  for (const a of CLOUD_DEMO_ACCOUNTS) assert.ok(!demoHtml.includes(a.email));
+  assert.ok(!demoHtml.includes(CLOUD_DEMO_PASSWORD));
+  checks++;
+  await assert.rejects(
+    provisionCloudDemo({
+      connectionParameters: { host: "db.example.invalid" },
+    }),
+    /restricted to disposable local tests/,
+  );
+  checks++;
   async function api(
     path,
     token,

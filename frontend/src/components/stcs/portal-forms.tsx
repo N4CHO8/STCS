@@ -308,7 +308,7 @@ export function AccountForm({
       </label>
       <p className="text-sm text-stone-600">
         {user?.isPrivateTest
-          ? "Esta cuenta usa una credencial privada y solo puede acceder a perfiles de prueba privados asignados. No comparte los accesos demo públicos."
+          ? "Esta cuenta demo con dispositivo solo accede a perfiles de demostración asignados y no requiere activación. Las cuentas reales nuevas verifican su correo."
           : user?.isDemo
             ? "Esta cuenta demo usa la contraseña de demostración y solo puede acceder a niños demo."
             : "El titular activa su cuenta desde el enlace de activación y verifica su correo. Las nuevas asignaciones clínicas requieren aprobación independiente."}
