@@ -33,6 +33,7 @@ try {
     "20261111163114_role_based_portal.sql",
     "20261111185152_audit_hardening.sql",
     "20261111202504_cloud_demo_accounts.sql",
+    "20261112164531_private_device_profiles.sql",
   ])
     await db.query(
       readFileSync(

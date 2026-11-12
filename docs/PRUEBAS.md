@@ -62,6 +62,16 @@ Para mantener los fixtures durante una revisión en navegador, crear antes `.cod
 
 ## Aprovisionamiento explícito
 
+Pruebas de Luis y dispositivos privados: `verify-private-profile.mjs` amplía la
+suite a 205 peticiones/comprobaciones de integración y dos de caída de base
+(207 en total). Comprueba credenciales privadas sin activación, niño bloqueado,
+administrador numerado, proyección técnica del dispositivo para docentes sin
+datos clínicos, alimentación USB sin batería ficticia, rechazos entre los tres
+entornos, restricciones de base e idempotencia del evento. También simula dos
+perfiles/dos dispositivos para el especialista, con apoderado/docente limitados
+a sus asignaciones. Es simulación de hardware API en la base descartable, no
+una afirmación de haber conectado un segundo ESP físico.
+
 Actualización 12 de noviembre: sesiones del navegador en cookie HttpOnly, control
 de origen, sustitución/revocación de sesión y ausencia de token en JSON. La suite
 incluye nueve peticiones adicionales de cookies/CSRF: 168 comprobaciones de

@@ -55,7 +55,7 @@ import type {
   StcsOverview,
   TabId,
 } from "@/types/stcs";
-import { WifiDeviceProvisioner } from "./wifi-device-provisioner";
+import type { DeviceSummary } from "@/types/portal";
 
 import {
   ActivityItem,
@@ -99,7 +99,11 @@ export function DashboardView({
               {isConnected ? "ESP32 conectado" : "ESP32 pendiente"}
               <span className="mx-1 h-4 w-px bg-stone-200" />
               <Battery className="h-4 w-4" />
-              {isConnected ? `${data.device.batteryLevel}%` : "Sin datos"}
+              {data.device.powerSource === "usb"
+                ? "USB · sin batería"
+                : isConnected && data.device.powerSource === "battery"
+                  ? `${data.device.batteryLevel}%`
+                  : "Sin datos de batería"}
             </StatusPill>
           }
           title={`Hola, ${name}`}
@@ -411,65 +415,78 @@ export function ProgressView({ data }: { data: StcsOverview }) {
   );
 }
 
-export function DevicesView({
-  device,
-  hasDeviceData,
-  onEventSaved,
-}: {
-  device: DeviceInfo;
-  hasDeviceData: boolean;
-  onEventSaved: () => void;
-}) {
-  const isConnected =
-    hasDeviceData && isDeviceOnline(device.status, device.lastSyncAt);
-
+export function DevicesView({ devices }: { devices: DeviceSummary[] }) {
   return (
     <div className="grid gap-6">
-      <PageHeader title="Gestion de Dispositivos" />
-      <section className="grid gap-6 lg:grid-cols-[1fr_360px]">
-        <Card>
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-sm font-semibold text-stone-500">
-                Dispositivo actual
+      <PageHeader title="Dispositivos asignados" />
+      <p className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm">
+        La conexión es ESP → Wi-Fi → nube. Puedes consultar este perfil desde
+        cualquier computador con tu cuenta, sin conectar el ESP a ese computador
+        por USB.
+      </p>
+      {devices.length ? (
+        devices.map((device) => {
+          const connected = isDeviceOnline(device.status, device.lastSyncAt);
+          return (
+            <Card key={device.code}>
+              <h2 className="text-xl font-bold">{device.code}</h2>
+              <p
+                className={
+                  connected ? "mt-2 text-emerald-800" : "mt-2 text-amber-800"
+                }
+              >
+                {connected
+                  ? "En línea por Wi-Fi"
+                  : device.lastSyncAt
+                    ? "Sin señal reciente"
+                    : "Aún sin sincronización"}
               </p>
-              <h2 className="mt-2 font-display text-2xl font-black text-stone-600">
-                {isConnected ? device.code : "Sin dispositivo sincronizado"}
-              </h2>
-            </div>
-            <Watch className="h-14 w-14 text-stone-100" />
-          </div>
-          {isConnected ? (
-            <div className="mt-6 grid gap-3 md:grid-cols-2">
-              <DeviceDetail
-                icon={Battery}
-                label="Bateria"
-                value={`${device.batteryLevel}%`}
-              />
-              <DeviceDetail
-                icon={Wifi}
-                label="Red Wi-Fi"
-                value={device.wifiSsid ?? "Sin datos"}
-              />
-              <DeviceDetail
-                icon={Cpu}
-                label="Firmware"
-                value={device.firmwareVersion}
-              />
-              <DeviceDetail
-                icon={Clock}
-                label="Ultima conexion"
-                value={formatDateTime(device.lastSyncAt)}
-              />
-            </div>
-          ) : (
-            <EmptyState icon={Watch} text="Pendiente de vinculacion" />
-          )}
-        </Card>
-        <Card className="grid min-h-[260px] content-center">
-          <WifiDeviceProvisioner onConfigured={onEventSaved} />
-        </Card>
-      </section>
+              <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                <DeviceDetail
+                  icon={Clock}
+                  label="Última comunicación con la nube"
+                  value={formatDateTime(device.lastSyncAt)}
+                />
+                <DeviceDetail
+                  icon={Battery}
+                  label="Alimentación"
+                  value={
+                    device.powerSource === "usb"
+                      ? "USB · sin batería instalada"
+                      : device.powerSource === "battery" &&
+                          device.batteryLevel !== null
+                        ? `Batería: ${device.batteryLevel}%`
+                        : "Sin información"
+                  }
+                />
+                <DeviceDetail
+                  icon={Cpu}
+                  label="Firmware informado"
+                  value={device.firmwareVersion ?? "Sin información"}
+                />
+              </div>
+            </Card>
+          );
+        })
+      ) : (
+        <EmptyState
+          icon={Watch}
+          text="Todavía no hay un ESP asociado a este perfil."
+        />
+      )}
+      <Card>
+        <h2 className="font-bold">Cambiar la red Wi-Fi desde el celular</h2>
+        <p className="mt-2 text-sm">
+          Abre la configuración Wi-Fi en el ESP y sigue las instrucciones de su
+          pantalla desde el celular. La contraseña de tu red se introduce allí;
+          no hace falta enviarla a esta web ni mantener el USB conectado al
+          computador.
+        </p>
+        <p className="mt-2 text-sm">
+          Si el ESP no tiene batería, debe seguir recibiendo alimentación USB
+          para permanecer encendido.
+        </p>
+      </Card>
     </div>
   );
 }

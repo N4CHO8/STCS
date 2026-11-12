@@ -6,6 +6,7 @@ export interface AuthUser {
   email: string;
   role: UserRole;
   isDemo?: boolean;
+  isPrivateTest?: boolean;
   createdAt: string;
   updatedAt: string;
 }
