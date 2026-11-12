@@ -72,3 +72,20 @@ Durante la recuperación inicial no se ejecutaron seeds ni migraciones. Vercel C
 Por solicitud del propietario, se sustituyó la demo local por cuentas con login y persistencia reales. Solo el administrador conserva su correo y credencial personal. Las tres cuentas demo se aprovisionan separadas de las cuentas históricas, sin alterar sus fichas ni sus contraseñas. La marca is_demo limita la excepción de activación y el acceso a registros ficticios. /demo muestra los accesos; todos ingresan por /login.
 
 La migración cloud_demo_accounts añade la marca y restricciones de separación, sin habilitar acceso directo anon/authenticated. Las cuentas futuras reales siguen requiriendo correo verificado. El administrador dispone de un enlace de activación para copiar y enviar al titular. No se enviaron invitaciones a terceros durante estas pruebas.
+
+## Revisión previa a Zoom — 12 de noviembre de 2026
+
+Publicado a3062b1 con sesiones HttpOnly/SameSite Strict (Secure en HTTPS), control
+de origen y retirada del token del JSON/localStorage. La primera entrada tras
+esta actualización requiere iniciar sesión de nuevo. Las credenciales y datos
+demo se conservan. Vercel READY dpl_2c8XDugzLp2BpiT3xmXFYq3JJf5J; 19 peticiones
+HTTP de producción aprobadas, sin modificar fichas clínicas. GitHub Actions
+Verify STCS aprobó build, tipos, auditoría y 170 comprobaciones aisladas en
+[la ejecución 43256826607](https://github.com/N4CHO8/STCS/actions/runs/43256826607).
+
+El ESP conectado informa v0.6.7-touch, distinta del fuente versionado. El
+propietario confirmó pantalla, tacto y audio; la sincronización en vivo sigue
+pendiente por HTTP 503 observado en serie y fuente/configuración no recuperados.
+El ensayo antiguo independiente respondió health 500: no se considera operativo
+ni se asume que sea el destino del equipo. No se cambió su base ni se cargó
+firmware en el dispositivo. Detalles y acciones: REVISION_PREVIA_ZOOM_2026-11-12.md.

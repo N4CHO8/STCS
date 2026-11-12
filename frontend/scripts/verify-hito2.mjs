@@ -25,8 +25,21 @@ const env = {
   ...process.env,
 };
 
+let sessionCookie;
 const request = async (path, options = {}) => {
-  const response = await fetch(`${baseUrl}${path}`, options);
+  const response = await fetch(`${baseUrl}${path}`, {
+    ...options,
+    headers: {
+      Origin: baseUrl,
+      ...(sessionCookie ? { Cookie: sessionCookie } : {}),
+      ...options.headers,
+    },
+  });
+  if (path === "/api/auth/login" && response.ok) {
+    sessionCookie = response.headers.get("set-cookie")?.split(";")[0];
+    if (!sessionCookie)
+      throw new Error("El login no devolvió la cookie de sesión.");
+  }
   const payload = await response.json();
 
   if (!response.ok) {
@@ -42,7 +55,7 @@ if (!env.STCS_VERIFY_EMAIL || !env.STCS_VERIFY_PASSWORD)
   throw new Error(
     "Configura STCS_VERIFY_EMAIL y STCS_VERIFY_PASSWORD; no se utilizan credenciales demo.",
   );
-const login = await request("/api/auth/login", {
+await request("/api/auth/login", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -50,36 +63,48 @@ const login = await request("/api/auth/login", {
     password: env.STCS_VERIFY_PASSWORD,
   }),
 });
-const authHeaders = { Authorization: `Bearer ${login.token}` };
-const overview = await request("/api/stcs/overview", { headers: authHeaders });
-const pictograms = overview.data.pictograms;
-const expectedCategories = ["Necesidades", "Emociones", "Acciones", "Lugares"];
+try {
+  const overview = await request("/api/stcs/overview");
+  const pictograms = overview.data.pictograms;
+  const expectedCategories = [
+    "Necesidades",
+    "Emociones",
+    "Acciones",
+    "Lugares",
+  ];
 
-for (const category of expectedCategories) {
-  const categoryItems = pictograms.filter((item) => item.category === category);
-  if (categoryItems.length > 8) {
-    throw new Error(`${category} debe contener como máximo ocho pictogramas.`);
+  for (const category of expectedCategories) {
+    const categoryItems = pictograms.filter(
+      (item) => item.category === category,
+    );
+    if (categoryItems.length > 8) {
+      throw new Error(
+        `${category} debe contener como máximo ocho pictogramas.`,
+      );
+    }
   }
-}
 
-if (pictograms.some((item) => !item.imagePath?.startsWith("/pictograms/"))) {
-  throw new Error(
-    "Todos los pictogramas deben tener una imagen compatible con el ESP32.",
+  if (pictograms.some((item) => !item.imagePath?.startsWith("/pictograms/"))) {
+    throw new Error(
+      "Todos los pictogramas deben tener una imagen compatible con el ESP32.",
+    );
+  }
+
+  const deviceConfig = await request(
+    `/api/stcs/devices/${overview.data.device.code}/config`,
+    { headers: { "x-stcs-device-key": env.STCS_DEVICE_API_KEY } },
   );
-}
 
-const deviceConfig = await request(
-  `/api/stcs/devices/${overview.data.device.code}/config`,
-  { headers: { "x-stcs-device-key": env.STCS_DEVICE_API_KEY } },
-);
+  if (deviceConfig.data.pictograms.length !== pictograms.length) {
+    throw new Error(
+      "La API del ESP32 no entrega el mismo catalogo que la plataforma web.",
+    );
+  }
 
-if (deviceConfig.data.pictograms.length !== pictograms.length) {
-  throw new Error(
-    "La API del ESP32 no entrega el mismo catalogo que la plataforma web.",
+  console.log("Hito 2 verificado correctamente sin crear datos de prueba.");
+  console.log(
+    `Catalogo web y ESP32: ${pictograms.length} pictogramas paginados correctamente.`,
   );
+} finally {
+  if (sessionCookie) await request("/api/auth/logout", { method: "POST" });
 }
-
-console.log("Hito 2 verificado correctamente sin crear datos de prueba.");
-console.log(
-  `Catalogo web y ESP32: ${pictograms.length} pictogramas paginados correctamente.`,
-);
