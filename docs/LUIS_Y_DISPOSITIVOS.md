@@ -60,6 +60,34 @@ El estado en vivo solo se acepta después de recibir un evento auténtico y
 comprobarlo desde otra sesión; no se sustituye esa prueba por un evento
 fabricado desde un script.
 
+### Inspección del firmware recuperado — 12 de noviembre de 2026
+
+Se leyó la memoria completa de 16 MiB usando esptool 5.6.0 y se conservó fuera
+del repositorio, en `%LOCALAPPDATA%/STCS-private/esp-backup-luis-20261112.bin`.
+El respaldo contiene secretos de red y hardware: no se publica ni se adjunta
+a incidencias. SHA-256 del archivo:
+`c0e8e3811a7399d2f731ecce74c4c5cacbc632eb90351aee9e017afbab26f73a`.
+
+La imagen instalada v0.6.7-touch apunta a
+`https://stcs-hito3-ensayo.vercel.app`. Una consulta autenticada de configuración
+respondió 503 allí; la misma credencial fue rechazada con 401 en producción.
+Por tanto, hay que corregir tanto el destino como la credencial del equipo.
+La lectura no recupera el código fuente ni convierte el firmware en una
+compilación reproducible.
+
+El sistema LittleFS del respaldo contiene 19 eventos pendientes de la prueba
+anterior. No deben atribuirse a Luis. Se preparó, solo sobre una copia local,
+su conservación en `queue-before-luis` y la separación del tablero anterior,
+dejando vacía la cola nueva. La configuración Wi-Fi está en otra partición y
+no se modifica en esa preparación.
+
+También se preparó una imagen del programa con el destino actual y una clave
+individual nueva. esptool validó su checksum y SHA-256; se mantuvieron los
+segmentos de instrucciones y el resto del programa. Es una reparación de una
+imagen recuperada, no una reconstrucción desde fuente. La carga y la
+sincronización física siguen pendientes de autorización y comprobación; no se
+ha escrito esta preparación en el ESP ni activado su nueva clave en la base.
+
 Para incorporar otro ESP se requiere código y credencial propios, otro perfil
 privado y asignaciones explícitas de sus responsables. No se deben compartir
 claves de hardware ni trasladar historiales entre niños. La suite local prueba
