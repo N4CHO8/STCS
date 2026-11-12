@@ -219,6 +219,7 @@ export async function verifyPrivateProfiles({
       context: "Prueba privada",
       firmwareVersion: "isolated-test",
     };
+    let persistedEventId;
     for (const expected of [201, 200]) {
       const r = await fetch(
         base + `/api/stcs/devices/${config.deviceCode}/events`,
@@ -232,8 +233,28 @@ export async function verifyPrivateProfiles({
         },
       );
       assert.equal(r.status, expected);
+      const acknowledgement = await r.json();
+      assert.equal(acknowledgement.accepted, true);
+      assert.equal(acknowledgement.externalEventId, event.externalEventId);
+      if (persistedEventId)
+        assert.equal(acknowledgement.data.id, persistedEventId);
+      persistedEventId = acknowledgement.data.id;
       checks++;
     }
+    const rejected = await fetch(
+      base + `/api/stcs/devices/${config.deviceCode}/events`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-stcs-device-key": deviceKey,
+        },
+        body: JSON.stringify({ ...event, eventType: "invalid-event" }),
+      },
+    );
+    assert.equal(rejected.status, 400);
+    assert.notEqual((await rejected.json()).accepted, true);
+    checks++;
     const history = await api(
       "/api/stcs/events?profileId=" + fixture.profileId,
       t,

@@ -29,6 +29,10 @@ export async function POST(
 
     return NextResponse.json(
       {
+        // Installed communicators dequeue only after this explicit acknowledgement.
+        // A duplicate is also acknowledged: its event is already persisted.
+        accepted: true,
+        externalEventId: input.externalEventId ?? null,
         message: result.created
           ? "Evento del dispositivo guardado correctamente."
           : "El evento ya estaba registrado; no se creo un duplicado.",
