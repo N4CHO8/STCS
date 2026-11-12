@@ -71,7 +71,8 @@ a incidencias. SHA-256 del archivo:
 La imagen instalada v0.6.7-touch apunta a
 `https://stcs-hito3-ensayo.vercel.app`. Una consulta autenticada de configuración
 respondió 503 allí; la misma credencial fue rechazada con 401 en producción.
-Por tanto, hay que corregir tanto el destino como la credencial del equipo.
+También usaba el código `STCS-ENSAYO-S3-01`, diferente del vínculo actual.
+Por tanto, había que corregir destino, credencial y código del equipo.
 La lectura no recupera el código fuente ni convierte el firmware en una
 compilación reproducible.
 
@@ -81,12 +82,28 @@ su conservación en `queue-before-luis` y la separación del tablero anterior,
 dejando vacía la cola nueva. La configuración Wi-Fi está en otra partición y
 no se modifica en esa preparación.
 
-También se preparó una imagen del programa con el destino actual y una clave
-individual nueva. esptool validó su checksum y SHA-256; se mantuvieron los
-segmentos de instrucciones y el resto del programa. Es una reparación de una
-imagen recuperada, no una reconstrucción desde fuente. La carga y la
-sincronización física siguen pendientes de autorización y comprobación; no se
-ha escrito esta preparación en el ESP ni activado su nueva clave en la base.
+Con autorización del propietario se cargó una imagen del programa con el
+destino actual, código `STCS-ESP32-001` y clave individual nueva. esptool validó
+checksum, SHA-256 y las escrituras; se mantuvieron las instrucciones y los
+literales compartidos que no pertenecen a estos ajustes. Es una reparación de
+una imagen recuperada, no una reconstrucción desde fuente. La nueva clave se
+registra únicamente como hash en la base. No se cambió la partición NVS de
+Wi-Fi, el cargador ni la tabla de particiones.
+
+El propietario confirmó que pantalla, tacto y reproducción de Agua siguen
+funcionando. Se recibió un `board_synced` auténtico en Luis, con firmware
+v0.6.7-touch y origen `esp32-device`. Durante la primera comprobación también se
+resguardaron nueve eventos previos a la alineación del código, separados de los
+19 históricos. Ninguno se reasignó a Luis.
+
+La inspección posterior detectó una incompatibilidad del contrato de respuesta:
+el firmware consulta el booleano `accepted` antes de retirar un evento de su
+cola. La API debe confirmarlo solo después de guardar o recuperar un duplicado
+ya persistido, conservando el identificador externo. Sin esa confirmación,
+reintentaba el primer evento e impedía enviar las selecciones siguientes. La
+suite aislada comprueba esa confirmación tanto en altas como en duplicados y
+que una petición inválida no se confirme. La selección real de Agua debe
+comprobarse en la nube después de publicar esta corrección.
 
 Para incorporar otro ESP se requiere código y credencial propios, otro perfil
 privado y asignaciones explícitas de sus responsables. No se deben compartir
