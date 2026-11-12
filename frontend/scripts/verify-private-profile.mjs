@@ -234,8 +234,8 @@ export async function verifyPrivateProfiles({
       );
       assert.equal(r.status, expected);
       const acknowledgement = await r.json();
-      assert.equal(acknowledgement.accepted, true);
-      assert.equal(acknowledgement.externalEventId, event.externalEventId);
+      assert.equal(acknowledgement.ack.accepted, true);
+      assert.equal(acknowledgement.ack.externalEventId, event.externalEventId);
       if (persistedEventId)
         assert.equal(acknowledgement.data.id, persistedEventId);
       persistedEventId = acknowledgement.data.id;
@@ -253,7 +253,7 @@ export async function verifyPrivateProfiles({
       },
     );
     assert.equal(rejected.status, 400);
-    assert.notEqual((await rejected.json()).accepted, true);
+    assert.notEqual((await rejected.json()).ack?.accepted, true);
     checks++;
     const history = await api(
       "/api/stcs/events?profileId=" + fixture.profileId,

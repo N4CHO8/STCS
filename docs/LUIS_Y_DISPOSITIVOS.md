@@ -97,7 +97,8 @@ resguardaron nueve eventos previos a la alineación del código, separados de lo
 19 históricos. Ninguno se reasignó a Luis.
 
 La inspección posterior detectó una incompatibilidad del contrato de respuesta:
-el firmware consulta el booleano `accepted` antes de retirar un evento de su
+el firmware consulta el booleano `ack.accepted` y compara
+`ack.externalEventId` con el evento enviado antes de retirarlo de su
 cola. La API debe confirmarlo solo después de guardar o recuperar un duplicado
 ya persistido, conservando el identificador externo. Sin esa confirmación,
 reintentaba el primer evento e impedía enviar las selecciones siguientes. La
