@@ -1,5 +1,22 @@
 # Conexiones recuperadas — 2026-11-11
 
+## Demo vigente — 12 de noviembre de 2026
+
+La única demostración publicada en /demo es Luis y su ESP físico, con las tres
+cuentas `*.prueba01@stcs.test` y contraseñas simples distintas. Se retiraron de
+Supabase las cinco cuentas antiguas Alex/Luna y sus dos perfiles, dos
+dispositivos simulados y seis eventos sintéticos, con respaldo previo fuera de
+Git en `%LOCALAPPDATA%/STCS-private/retired-demo-*.json`. Luis conserva su
+historial, asignaciones y credencial de hardware; el administrador mantiene su
+correo y contraseña personal. Se revocaron las sesiones anteriores de las tres
+cuentas cuya contraseña cambió y se actualizó la copia local de sus accesos.
+
+La marca técnica is_private_test se conserva para separar la demostración de
+las cuentas reales. Las cuentas reales nuevas verifican correo y eligen su
+contraseña. El aprovisionamiento antiguo está retirado; sus fixtures is_demo
+solo se pueden crear en PostgreSQL local descartable para la suite de pruebas.
+Las secciones de recuperación y publicaciones siguientes son históricas.
+
 | Servicio | Recurso | Verificación |
 | --- | --- | --- |
 | GitHub | https://github.com/N4CHO8/STCS | main sigue a origin/main; GitHub CLI autenticado como N4CHO8 |

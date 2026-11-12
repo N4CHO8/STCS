@@ -3,11 +3,16 @@ import bcrypt from "bcryptjs";
 import {
   CLOUD_DEMO_ACCOUNTS,
   CLOUD_DEMO_PASSWORD,
-} from "../../src/lib/cloud-demo-accounts.ts";
+} from "../fixtures/legacy-demo-accounts.ts";
 import { DEVICE_PICTOGRAM_ASSETS } from "../../src/lib/pictogramCatalog.ts";
 
 /** Explicit provisioning only. Existing demo changes are preserved; login never calls this code. */
 export async function provisionCloudDemo(db) {
+  if (
+    process.env.STCS_TEST_ISOLATED !== "1" ||
+    !["localhost", "127.0.0.1", "::1"].includes(db.connectionParameters?.host)
+  )
+    throw new Error("Legacy demos are restricted to disposable local tests.");
   await db.query("BEGIN");
   try {
     await db.query(

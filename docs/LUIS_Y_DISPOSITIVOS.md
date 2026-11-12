@@ -1,8 +1,9 @@
 # Luis y acceso remoto al comunicador
 
-Luis es un perfil privado de prueba con un ESP físico. No es una persona real,
-no usa las credenciales públicas de demostración y su actividad empieza vacía:
-no se generaron eventos ni diagnósticos simulados.
+Luis es el perfil de demostración actual con un ESP físico. No es una persona
+real. Sus tres accesos demo se muestran en /demo con contraseñas simples
+distintas. La actividad procede del equipo; no se generan diagnósticos ni
+eventos simulados.
 
 ## Relación entre niño, dispositivo y adultos
 
@@ -13,21 +14,23 @@ el docente accede a sus asignados sin ficha clínica ni métricas. El niño no
 inicia sesión en el portal adulto. El administrador ve Usuario N, sin identidad
 infantil, informes ni eventos.
 
-Los tres adultos de esta prueba usan correos ficticios y contraseñas privadas
-distintas, guardadas exclusivamente para el propietario fuera de Git:
-`%LOCALAPPDATA%/STCS-private/accesos-prueba01.json`. No se incluyen contraseñas
-en esta documentación ni en `/demo`.
+Los tres adultos usan correos ficticios y contraseñas públicas de demostración
+distintas, visibles en /demo. La copia del propietario en
+`%LOCALAPPDATA%/STCS-private/accesos-prueba01.json` se actualiza con estas claves.
+Los secretos del hardware y los accesos personales del administrador siguen
+siendo privados.
 
-Las cuentas no necesitan activación porque están marcadas en la base como
-prueba privada. Esa excepción no depende del correo, de un dato enviado por el
+Las cuentas no necesitan activación porque conservan en la base la marca
+is_private_test de su creación, presentada ahora como demo con ESP. Esa
+excepción no depende del correo, de un dato enviado por el
 cliente ni de una propiedad del JWT. Las cuentas reales siguen verificando su
 correo y las nuevas asignaciones clínicas conservan aprobación independiente.
 
 El servidor y restricciones de base separan tres entornos: datos reales,
 demos públicas y pruebas privadas. Ninguna cuenta puede cambiar su entorno
 desde la app ni convertirse desde una prueba en administrador. Tener un ID o
-URL de otro perfil no concede acceso. Las cuentas públicas no pueden consultar
-a Luis.
+URL de otro perfil no concede acceso. Las cuentas antiguas de Alex y Luna se
+retiraron de producción; sus fixtures solo se conservan en pruebas locales.
 
 ## Consulta desde otro computador
 
@@ -35,8 +38,7 @@ a Luis.
 2. Conectar el ESP a Internet mediante Wi-Fi. La configuración desde el celular
    utiliza su portal local `192.168.4.1`; esa IP no es el servidor de STCS.
 3. Abrir https://0stcs0.vercel.app desde cualquier computador e ingresar con una
-   de las cuentas privadas asignadas, usando la credencial conservada por el
-   propietario.
+   de las cuentas de demostración asignadas, disponibles en /demo.
 4. Abrir Dispositivo. La app consulta la nube y actualiza la disponibilidad cada
    15 segundos mientras la pantalla esté visible. No requiere USB, Web Serial,
    estar en la misma red local ni dejar encendido el computador original.
@@ -50,8 +52,9 @@ Solo muestra estado reciente cuando la nube ha recibido comunicación del ESP.
 
 Se vinculó `STCS-ESP32-001` al perfil privado Luis y se declaró alimentación
 USB. Los eventos anteriores conservan el perfil histórico al que pertenecían;
-no se trasladaron a Luis. Los accesos demo públicos y las cuentas existentes no
-se reemplazaron. El administrador real se conserva.
+no se trasladaron a Luis. La demo antigua de Alex y Luna se retiró tras
+respaldar sus datos sintéticos. Luis conserva su historial y su dispositivo.
+El administrador real se conserva.
 
 La conexión física depende además de alinear el servidor y credencial del
 firmware instalado v0.6.7-touch, cuyo fuente no está en el repositorio. Cambiar
