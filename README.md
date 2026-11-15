@@ -53,18 +53,35 @@ La activación y recuperación requieren un correo real y SMTP configurado en Su
 
 Las pruebas se ejecutan contra PostgreSQL descartable en localhost, separado de Supabase. Consulta [las instrucciones y límites de verificación](./docs/PRUEBAS.md) y [las correcciones de auditoría](./docs/ARREGLOS_AUDITORIA.md). No ejecutes seeds en la base compartida.
 
-## Ejecutar el firmware
+## Firmware activo
 
-1. Instalar Visual Studio Code.
-2. Instalar la extension PlatformIO IDE.
-3. Abrir el proyecto `firmware/stcs-esp32`.
-4. Ejecutar `Build`.
+La implementación reproducible está en `firmware/STCS_UI_Arduino` para Waveshare
+ESP32-S3-Touch-LCD-1.46. Compilar con `scripts/verify-firmware.ps1`; la copia de
+comprobación usa credenciales ficticias y no debe cargarse como versión operativa.
+PlatformIO conserva un prototipo antiguo, no la interfaz instalada actual.
 
-La interfaz táctil y WiFi activa está en `firmware/STCS_UI_Arduino`; su README documenta versiones y compilación. El proyecto PlatformIO conserva únicamente el prototipo de contratos inicial.
-5. Cuando la placa este disponible, conectar por USB-C y ejecutar `Upload`.
-6. Abrir `Serial Monitor` a `115200`.
+## Evaluación y Hito 3
 
-El firmware actual valida ambiente, memoria, catalogo inicial de pictogramas y escaneo Wi-Fi. La integracion real de pantalla/touch se hara con los ejemplos oficiales de Waveshare.
+Entrar por `/login`. La rama local retira `/demo` y todos sus enlaces; no crea
+cuentas al iniciar sesión. Estas tres cuentas son **públicas, sintéticas y sin
+información real**, destinadas exclusivamente a evaluación:
+
+| Perfil | Correo ficticio | Contraseña demo pública |
+| --- | --- | --- |
+| Especialista | especialista.prueba01@stcs.test | Especialista123! |
+| Docente | docente.prueba01@stcs.test | Docente1234! |
+| Apoderado | apoderado.prueba01@stcs.test | Apoderado123! |
+
+El administrador real usa su correo y contraseña propios; no se publican aquí.
+Las cuentas reales nuevas requieren activación por correo. Las cuentas de
+prueba conservan las mismas restricciones de asignación y rol.
+
+El nuevo editor permite subir imágenes y preparar voz española para la frase
+escrita. La implementación y evidencia de este encargo están **solo en local**;
+la web publicada conserva su versión previa hasta un despliegue autorizado.
+Consulta [arquitectura, configuración, pruebas y guion del Hito 3](docs/HITO3_MEDIOS_Y_VOZ.md).
+El laboratorio aislado usa los mismos accesos sintéticos en localhost:3100.
+No ejecutar sus fixtures contra Supabase.
 
 ## Documentacion util
 
@@ -75,28 +92,11 @@ El firmware actual valida ambiente, memoria, catalogo inicial de pictogramas y e
 - [Esquema Supabase](./supabase/schema.sql)
 - [Firmware ESP32](./firmware/stcs-esp32/README.md)
 
-## Estado actual
+## Estado técnico
 
-- Web redisenada para adultos responsables del nino.
-- Login con perfiles demo.
-- Dashboard protegido con datos desde Supabase.
-- Configuracion de pictogramas con alta, edicion y persistencia en Supabase.
-- Endpoint validado e idempotente para eventos reales del ESP32.
-- Historial con fecha, accion, contexto, actor y filtros.
-- Proyecto PlatformIO creado y compilando correctamente.
-
-## Pendientes principales
-
-- Integrar drivers oficiales de pantalla/touch Waveshare.
-- Mostrar pictogramas reales en la pantalla redonda.
-- Enviar eventos reales desde ESP32 a la API.
-- Integrar el envio Wi-Fi del firmware con los endpoints ya implementados.
-- Automatizar pruebas de los flujos principales.
-
-## Cuentas demo con datos en la nube
-
-Abre [los accesos demo](https://0stcs0.vercel.app/demo). Las cuentas de especialista, docente y apoderado usan el login habitual, contraseña de demostración y correos ficticios, sin activación. Guardan sus cambios en Supabase y comparten los datos entre navegadores y dispositivos. Solo acceden a niños identificados como demo. La cuenta real del propietario sigue siendo administradora y conserva su contraseña privada.
-
-Para incorporar personas reales: crea la cuenta con su correo en «Usuarios y asignaciones», pulsa «Copiar enlace de activación» y envíalo al titular. Al abrirlo, solicitará el código por correo y establecerá su contraseña. Las asignaciones clínicas siguen sujetas a aprobación independiente.
-
-Las demos se aprovisionan explícitamente mediante el script documentado en `docs/PRUEBAS.md`. El login nunca crea tablas, usuarios ni ejemplos, y el aprovisionamiento no reinicia las ediciones existentes.
+Los cuatro roles adultos, sus asignaciones y las rutas de dispositivo se
+validan en servidor. La pantalla, tacto y audio físicos ya se probaron; no son
+pendientes de integración de drivers. El trabajo de imágenes y voz del Hito 3
+se verifica localmente y tiene publicación pendiente. Los documentos antiguos
+de hitos conservan decisiones históricas; prevalecen CONEXIONES, FLUJO_ROLES y
+HITO3_MEDIOS_Y_VOZ para interpretar el estado vigente.

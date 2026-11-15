@@ -3,6 +3,7 @@ import {
   DEVICE_MAX_PICTOGRAMS,
   isDeviceCategory,
 } from "@/lib/pictogramCatalog";
+import { uploadedImageId } from "@/lib/media-contract";
 
 export class InputValidationError extends Error {
   constructor(message: string) {
@@ -178,9 +179,9 @@ export const parsePictogramInput = (value: unknown): PictogramInput => {
     );
   }
 
-  if (!DEVICE_IMAGE_PATHS.has(imagePath)) {
+  if (!DEVICE_IMAGE_PATHS.has(imagePath) && !uploadedImageId(imagePath)) {
     throw new InputValidationError(
-      "La imagen seleccionada no esta disponible en el ESP32.",
+      "Selecciona una imagen del catálogo o sube una imagen válida.",
     );
   }
 

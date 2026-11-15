@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-13",
+  "environment": "PostgreSQL y archivos locales aislados; sin pacientes reales",
+  "cacheBudgetBytes": 524288,
+  "cacheMaximumObservedBytes": 522810,
+  "cacheSamples": 26,
+  "evictionObserved": true,
+  "allObservedSamplesWithinBudget": true,
+  "validChunkedDownloadsObserved": 23,
+  "boardSyncObserved": [
+    [
+      "v0.7.0-media",
+      "5"
+    ],
+    [
+      "v0.7.0-media",
+      "32"
+    ]
+  ],
+  "physicalUserConfirmed": [
+    "Imagen nueva Vaso azul y frase Quiero tomar agua",
+    "Misma imagen y nueva frase Necesito beber agua, por favor",
+    "Reproducción de imagen y nueva frase guardadas con servidor inalcanzable desde el ESP"
+  ],
+  "productionDeploymentOrSchemaChanged": false,
+  "finalFirmwareProgramBytes": 1968133,
+  "finalFirmwareGlobalBytes": 139336,
+  "integrationChecksPassed": 248,
+  "databaseOutageChecksPassed": 2,
+  "workerReconnectCheckPassed": true,
+  "restoredFirmware": "v0.6.7-touch",
+  "restorationVerifiedByFlashAndSerial": true,
+  "cloudReconnectConfirmedBySupabase": true,
+  "physicalFinalImageAndVoiceConfirmedAfterStress": true,
+  "temporaryStressPictogramsRetired": 27,
+  "audioExample": {
+    "file": "voz-frase-editada.wav",
+    "bytes": 59488,
+    "sampleRate": 16000,
+    "channels": 1,
+    "bitsPerSample": 16,
+    "sha256": "c455b5ae03b87d8a83a98fc51c9f56022b8433e762d8c8a224f29d61c526c804"
+  },
+  "typescriptPassed": true,
+  "nextBuildPassed": true,
+  "changedTypeScriptAndScriptsPrettierCheckPassed": true,
+  "eslintConfigured": false
+}

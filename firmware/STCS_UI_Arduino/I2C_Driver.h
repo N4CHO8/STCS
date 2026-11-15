@@ -1,5 +1,9 @@
 #pragma once
 #include <Wire.h>
+#include <freertos/semphr.h>
+void STCS_I2C_Lock();
+void STCS_I2C_Unlock();
+struct STCS_I2C_Guard { STCS_I2C_Guard(){STCS_I2C_Lock();} ~STCS_I2C_Guard(){STCS_I2C_Unlock();} };
 
 #define I2C_MASTER_FREQ_HZ              (400000)                     /*!< I2C master clock frequency */
 #define I2C_SCL_PIN       10

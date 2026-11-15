@@ -1,6 +1,14 @@
 # Conexiones recuperadas — 2026-11-11
 
-## Demo vigente — 12 de noviembre de 2026
+## Hito 3 local — 13 de noviembre de 2026
+
+La rama `codex/hito3-medios-voz` retira `/demo`; los accesos sintéticos se
+documentan en README. Sus imágenes y voz se probaron en un laboratorio local
+con PostgreSQL descartable. No se publicaron estos cambios ni se ejecutó la
+nueva migración en Supabase. La descripción siguiente corresponde a la
+versión previamente publicada.
+
+## Demo publicada — 12 de noviembre de 2026
 
 La única demostración publicada en /demo es Luis y su ESP físico, con las tres
 cuentas `*.prueba01@stcs.test` y contraseñas simples distintas. Se retiraron de

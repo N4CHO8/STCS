@@ -5,6 +5,9 @@ import { canAccessSubject, ForbiddenError } from "./access";
 import { canReadSensitive, canEditBoard } from "@/lib/permissions";
 import type { AuthTokenPayload } from "./auth";
 import { query, transaction } from "./db";
+import { phraseKey, withAudioState, deviceMediaConfig } from "./media";
+import { MEDIA_VOICE, uploadedImageId } from "@/lib/media-contract";
+import type { PoolClient } from "pg";
 import type { DeviceEventInput, PictogramInput } from "./validation";
 import {
   DEVICE_MAX_ITEMS_PER_CATEGORY,
@@ -47,6 +50,15 @@ export interface DeviceInfo {
 }
 
 export interface PictogramConfig {
+  audioStatus?: import("@/lib/media-contract").AudioStatus;
+  audioError?: string | null;
+  audioKey?: string;
+  audioUrl?: string;
+  imageSha256?: string;
+  imageBytes?: number;
+  imageUrl?: string;
+  audioSha256?: string;
+  audioBytes?: number;
   id: string;
   label: string;
   message: string;
@@ -351,7 +363,7 @@ export const getStcsOverview = async (
     },
     profile,
     device: mapDevice(device),
-    pictograms: pictogramsResult.rows.map(mapPictogram),
+    pictograms: await withAudioState(pictogramsResult.rows.map(mapPictogram)),
     metrics: {
       interactionsToday: metricsResult.rows[0]?.interactions_today ?? 0,
       emotionsToday: metricsResult.rows[0]?.emotions_today ?? 0,
@@ -385,9 +397,36 @@ export const getDeviceBoardConfig = async (
   return {
     device: mapDevice(device),
     profile,
-    pictograms: pictogramsResult.rows.map(mapPictogram),
+    pictograms: await deviceMediaConfig(
+      deviceCode,
+      await withAudioState(pictogramsResult.rows.map(mapPictogram)),
+    ),
   };
 };
+
+async function preparePictogramMedia(
+  client: PoolClient,
+  profileId: string,
+  input: PictogramInput,
+) {
+  const id = uploadedImageId(input.imagePath ?? "");
+  if (id) {
+    const image = await client.query(
+      "SELECT 1 FROM pictogram_images WHERE id=$1 AND student_profile_id=$2",
+      [id, profileId],
+    );
+    if (!image.rowCount)
+      throw new ForbiddenError(
+        "La imagen no pertenece al perfil seleccionado.",
+      );
+  }
+  const key = phraseKey(input.message);
+  await client.query(
+    "INSERT INTO phrase_audio(cache_key,phrase,voice) VALUES($1,$2,$3) ON CONFLICT DO NOTHING",
+    [key, input.message.normalize("NFC").trim(), MEDIA_VOICE],
+  );
+  return key;
+}
 
 export const createPictogram = async (
   authUser: AuthTokenPayload,
@@ -421,19 +460,20 @@ export const createPictogram = async (
     }
 
     const positionResult = await client.query<{ next_position: number }>(
-      `SELECT COALESCE(MAX(position), 0)::int + 1 AS next_position
-     FROM pictograms
-     WHERE student_profile_id = $1 AND is_active = TRUE`,
-      [profile.id],
+      `SELECT slot AS next_position FROM generate_series(1,$2::int) slot
+       WHERE NOT EXISTS(SELECT 1 FROM pictograms p WHERE p.student_profile_id=$1 AND p.is_active=TRUE AND p.position=slot)
+       ORDER BY slot LIMIT 1`,
+      [profile.id, DEVICE_MAX_ITEMS_PER_CATEGORY * 4],
     );
 
+    const audioKey = await preparePictogramMedia(client, profile.id, input);
     try {
       const result = await client.query<PictogramRow>(
         `INSERT INTO pictograms (
          id, student_profile_id, label, message, category, color_tone,
-         icon_name, image_path, position, is_active
+         icon_name, image_path, position, is_active, audio_key
        )
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, TRUE)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, TRUE, $10)
        RETURNING *`,
         [
           randomUUID(),
@@ -445,6 +485,7 @@ export const createPictogram = async (
           input.iconName,
           input.imagePath ?? null,
           input.position ?? positionResult.rows[0]?.next_position ?? 1,
+          audioKey,
         ],
       );
 
@@ -496,6 +537,7 @@ export const updatePictogram = async (
       );
     }
 
+    const audioKey = await preparePictogramMedia(client, profile.id, input);
     try {
       const result = await client.query<PictogramRow>(
         `UPDATE pictograms
@@ -506,6 +548,7 @@ export const updatePictogram = async (
            icon_name = $7,
            image_path = $8,
            position = COALESCE($9, position),
+           audio_key = $10,
            updated_at = NOW()
        WHERE id = $1 AND student_profile_id = $2 AND is_active = TRUE
        RETURNING *`,
@@ -519,6 +562,7 @@ export const updatePictogram = async (
           input.iconName,
           input.imagePath ?? null,
           input.position ?? null,
+          audioKey,
         ],
       );
 

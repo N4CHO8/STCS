@@ -19,6 +19,10 @@ void Play_Music_test();
 void Audio_Loop();
 
 void Audio_Init();
+bool STCS_AudioPlay(const char *path);
+void STCS_AudioStop();
+bool STCS_AudioRunning();
+bool STCS_AudioFailed();
 void Volume_adjustment(uint8_t Volume);
 void Play_Music(const char* directory, const char* fileName);
 void Music_pause();

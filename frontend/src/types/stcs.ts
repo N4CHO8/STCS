@@ -27,6 +27,15 @@ export type DeviceInfo = {
 };
 
 export type PictogramConfig = {
+  audioStatus?: import("@/lib/media-contract").AudioStatus;
+  audioError?: string | null;
+  audioKey?: string;
+  audioUrl?: string;
+  imageSha256?: string;
+  imageBytes?: number;
+  imageUrl?: string;
+  audioSha256?: string;
+  audioBytes?: number;
   id: string;
   label: string;
   message: string;

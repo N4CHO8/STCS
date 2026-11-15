@@ -95,7 +95,7 @@ class handler(BaseHTTPRequestHandler):
             if body.get("voice") != VOICE or not isinstance(text, str) or not text.strip() or len(text.encode("utf-8")) > 95:
                 raise ValueError("Invalid phrase")
             data = synthesize(text)
-        except ValueError:
+        except (ValueError, KeyError, TypeError):
             return self.reply(422, b'{"error":"Invalid phrase or audio"}')
         except Exception:
             return self.reply(503, b'{"error":"Voice preparation unavailable"}')

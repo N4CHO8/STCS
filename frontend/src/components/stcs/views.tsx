@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { PictogramVoice } from "./pictogram-voice";
 import {
   BarChart3,
   Battery,
@@ -187,10 +188,11 @@ export function CommunicatorView({
     1,
     Math.ceil(categoryPictograms.length / DEVICE_ITEMS_PER_PAGE),
   );
-  const nextPosition = Math.min(
-    DEVICE_MAX_PICTOGRAMS,
-    Math.max(0, ...pictograms.map((item) => item.position)) + 1,
-  );
+  const occupiedPositions = new Set(pictograms.map((item) => item.position));
+  const nextPosition =
+    Array.from({ length: DEVICE_MAX_PICTOGRAMS }, (_, i) => i + 1).find(
+      (position) => !occupiedPositions.has(position),
+    ) ?? DEVICE_MAX_PICTOGRAMS;
 
   return (
     <div className="grid gap-6">
@@ -261,8 +263,8 @@ export function CommunicatorView({
 
           <div className="flex items-center gap-3 border-t border-stone-200 pt-5 text-sm font-semibold text-stone-500">
             <Database className="h-4 w-4 text-[#518b51]" />
-            Cada cambio se guarda inmediatamente en Supabase y queda disponible
-            para el ESP32.
+            Los cambios se guardan en el tablero. El comunicador los sincroniza
+            al conectarse y descarga las voces preparadas cuando se necesitan.
           </div>
         </div>
       </section>
@@ -625,12 +627,77 @@ function PictogramEditor({
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [localPreview, setLocalPreview] = useState("");
+  const uploadAbort = useRef<AbortController | null>(null);
+  useEffect(() => () => uploadAbort.current?.abort(), []);
+  useEffect(
+    () => () => {
+      if (localPreview) URL.revokeObjectURL(localPreview);
+    },
+    [localPreview],
+  );
+  async function upload(file: File | undefined) {
+    if (!file) return;
+    if (
+      !["image/png", "image/jpeg", "image/webp"].includes(file.type) ||
+      file.size > 2 * 1024 * 1024
+    ) {
+      setErrorMessage("Usa una imagen PNG, JPEG o WebP de hasta 2 MB.");
+      return;
+    }
+    setErrorMessage("");
+    setIsUploading(true);
+    setLocalPreview(URL.createObjectURL(file));
+    const abort = new AbortController();
+    uploadAbort.current = abort;
+    try {
+      const body = new FormData();
+      body.set("image", file);
+      const r = await fetch("/api/stcs/images", {
+        method: "POST",
+        headers: { "x-stcs-profile-id": profileId },
+        body,
+        signal: abort.signal,
+      });
+      const payload = await r.json();
+      if (!r.ok) throw new Error(payload.message);
+      setForm((previous) => ({
+        ...previous,
+        imagePath: payload.data.imagePath,
+      }));
+      setLocalPreview("");
+    } catch (e) {
+      if (!abort.signal.aborted) {
+        setErrorMessage(
+          e instanceof Error ? e.message : "No se pudo subir la imagen.",
+        );
+        setLocalPreview("");
+      }
+    } finally {
+      if (!abort.signal.aborted) setIsUploading(false);
+    }
+  }
   const imageOptions = DEVICE_PICTOGRAM_ASSETS.filter(
     (item) => item.category === form.category,
   );
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (isSaving || isUploading) return;
+    if (!form.imagePath) {
+      setErrorMessage("Sube una imagen o selecciona una del catálogo.");
+      return;
+    }
+    if (
+      new TextEncoder().encode(form.label).length > 31 ||
+      new TextEncoder().encode(form.message).length > 95
+    ) {
+      setErrorMessage(
+        "El nombre admite 31 bytes y la frase 95 bytes UTF-8. Acorta el texto para evitar cortes en el dispositivo.",
+      );
+      return;
+    }
     setIsSaving(true);
     setErrorMessage("");
 
@@ -723,7 +790,8 @@ function PictogramEditor({
               {pictogram ? "Editar pictograma" : "Agregar pictograma"}
             </h2>
             <p className="mt-1 text-sm text-stone-400">
-              Configuracion asociada al perfil del nino
+              Configura el tablero. Las selecciones se registran al usar el
+              comunicador.
             </p>
           </div>
           <button
@@ -750,14 +818,9 @@ function PictogramEditor({
                 className="mt-2 h-11 w-full rounded-lg border border-stone-200 bg-white px-3 font-normal"
                 onChange={(event) => {
                   const category = event.target.value as DeviceCategory;
-                  const firstAsset = DEVICE_PICTOGRAM_ASSETS.find(
-                    (item) => item.category === category,
-                  );
                   setForm({
                     ...form,
                     category,
-                    imagePath: firstAsset?.imagePath ?? "",
-                    iconName: firstAsset?.iconName ?? "MessageCircle",
                   });
                 }}
                 value={form.category}
@@ -779,6 +842,31 @@ function PictogramEditor({
             <legend className="text-sm font-semibold text-stone-600">
               Imagen CAA
             </legend>
+            <label className="mt-3 grid gap-2 rounded-xl border p-4 text-sm font-semibold">
+              Subir imagen desde mi equipo (PNG, JPEG o WebP · máximo 2 MB)
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+                disabled={isUploading || isSaving}
+                onChange={(e) => void upload(e.target.files?.[0])}
+              />
+            </label>
+            {(localPreview || form.imagePath) && (
+              <img
+                alt="Vista previa del pictograma"
+                className="mt-3 h-32 w-32 rounded-lg border object-contain"
+                src={localPreview || form.imagePath}
+              />
+            )}
+            {isUploading && (
+              <p role="status" className="mt-2 text-sm">
+                Subiendo y preparando imagen…
+              </p>
+            )}
+            <p className="mt-3 text-xs text-stone-500">
+              También puedes reutilizar una imagen del catálogo. La voz se
+              prepara a partir de la frase escrita.
+            </p>
             <div className="mt-2 grid grid-cols-5 gap-2">
               {imageOptions.map((option) => (
                 <button
@@ -872,7 +960,7 @@ function PictogramEditor({
             <SmallButton muted onClick={onClose}>
               Cancelar
             </SmallButton>
-            <SmallButton disabled={isSaving} type="submit">
+            <SmallButton disabled={isSaving || isUploading} type="submit">
               <span className="inline-flex items-center gap-2">
                 <Save className="h-4 w-4" />
                 {isSaving ? "Guardando..." : "Guardar"}
@@ -1081,6 +1169,8 @@ function PictogramCard({
           {pictogram.category}
         </span>
       </div>
+      <p className="mt-2 text-sm text-stone-600">{pictogram.message}</p>
+      <PictogramVoice id={pictogram.id} message={pictogram.message} />
     </article>
   );
 }

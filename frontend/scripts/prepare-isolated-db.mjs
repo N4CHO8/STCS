@@ -1,11 +1,14 @@
+import assert from "node:assert/strict";
 import pg from "pg";
 import { readFileSync } from "node:fs";
 // Fixed disposable container endpoint. Never load the project's shared .env files here.
+const testDb = process.env.STCS_TEST_DB ?? "postgres";
+assert.ok(["postgres", "stcs_release_tests"].includes(testDb));
+if (testDb !== "postgres") assert.equal(process.env.STCS_TEST_ISOLATED, "1");
 let db;
 for (let attempt = 0; attempt < 30; attempt++) {
   const client = new pg.Client({
-    connectionString:
-      "postgresql://postgres:stcs-isolated-tests@127.0.0.1:55432/postgres",
+    connectionString: `postgresql://postgres:stcs-isolated-tests@127.0.0.1:55432/${testDb}`,
     ssl: false,
   });
   try {
@@ -34,6 +37,7 @@ try {
     "20261111185152_audit_hardening.sql",
     "20261111202504_cloud_demo_accounts.sql",
     "20261112164531_private_device_profiles.sql",
+    "20261113215338_pictogram_media_audio.sql",
   ])
     await db.query(
       readFileSync(

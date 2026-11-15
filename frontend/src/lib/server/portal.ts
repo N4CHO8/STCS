@@ -6,6 +6,7 @@ import type { AuthTokenPayload } from "./auth";
 import { ForbiddenError } from "./access";
 import { query, transaction } from "./db";
 import { getStcsOverview } from "./stcsData";
+import { withAudioState } from "./media";
 import { InputValidationError } from "./validation";
 import { objectInput } from "./inputs";
 
@@ -171,16 +172,18 @@ export async function getPortal(user: AuthTokenPayload): Promise<PortalData> {
     `SELECT id,label,message,category,color_tone,icon_name,image_path,position FROM pictograms WHERE student_profile_id=$1 AND is_active=TRUE ORDER BY position,label`,
     [selected],
   );
-  detail.pictograms = board.rows.map((p) => ({
-    id: p.id,
-    label: p.label,
-    message: p.message,
-    category: p.category,
-    colorTone: p.color_tone,
-    iconName: p.icon_name,
-    imagePath: p.image_path,
-    position: p.position,
-  }));
+  detail.pictograms = await withAudioState(
+    board.rows.map((p) => ({
+      id: p.id,
+      label: p.label,
+      message: p.message,
+      category: p.category,
+      colorTone: p.color_tone,
+      iconName: p.icon_name,
+      imagePath: p.image_path,
+      position: p.position,
+    })),
+  );
   result.detail = detail;
   return result;
 }

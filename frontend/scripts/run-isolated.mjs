@@ -3,18 +3,30 @@ import { spawn } from "node:child_process";
 import { createServer } from "node:http";
 import assert from "node:assert/strict";
 import { randomBytes, randomUUID, createHmac } from "node:crypto";
+import { mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
+const testPort = Number(process.env.STCS_TEST_PORT ?? 3100);
+assert.ok(Number.isInteger(testPort) && testPort >= 1024 && testPort <= 65000);
+const testDb = process.env.STCS_TEST_DB ?? "postgres";
+assert.ok(["postgres", "stcs_release_tests"].includes(testDb));
+const mediaDir = await mkdtemp(join(tmpdir(), "stcs-isolated-media-"));
 const env = {
   ...process.env,
-  DATABASE_URL:
-    "postgresql://postgres:stcs-isolated-tests@127.0.0.1:55432/postgres",
+  DATABASE_URL: `postgresql://postgres:stcs-isolated-tests@127.0.0.1:55432/${testDb}`,
   DATABASE_SSL: "false",
+  STCS_MEDIA_STORAGE: "local",
+  STCS_VOICE_URL: "",
+  VERCEL_URL: "",
   JWT_ACCESS_SECRET: randomBytes(32).toString("hex"),
   STCS_DEVICE_API_KEY: "isolated-device-test",
   STCS_LEGACY_DEVICE_CODE: "STCS-ESP32-001",
-  SUPABASE_URL: "http://127.0.0.1:3101",
+  SUPABASE_URL: `http://127.0.0.1:${testPort + 1}`,
   SUPABASE_PUBLISHABLE_KEY: "isolated-provider",
-  STCS_TEST_URL: "http://127.0.0.1:3100",
+  STCS_TEST_URL: `http://127.0.0.1:${testPort}`,
   STCS_TEST_ISOLATED: "1",
+  STCS_MEDIA_DIR: mediaDir,
+  STCS_MEDIA_WORKER_KEY: "isolated-worker-key-never-used-in-cloud-123456",
 };
 // A local fake transport verifies error handling without sending email or creating Auth users.
 const email = createServer(async (req, res) => {
@@ -40,7 +52,9 @@ const email = createServer(async (req, res) => {
   res.statusCode = 400;
   res.end("{}");
 });
-await new Promise((resolve) => email.listen(3101, "127.0.0.1", resolve));
+await new Promise((resolve) =>
+  email.listen(testPort + 1, "127.0.0.1", resolve),
+);
 const server = spawn(
   process.execPath,
   [
@@ -49,7 +63,7 @@ const server = spawn(
     "--hostname",
     "127.0.0.1",
     "--port",
-    "3100",
+    String(testPort),
   ],
   { env, stdio: "inherit" },
 );
@@ -83,7 +97,7 @@ try {
         "--hostname",
         "127.0.0.1",
         "--port",
-        "3102",
+        String(testPort + 2),
       ],
       {
         env: {
@@ -96,7 +110,7 @@ try {
     try {
       for (let i = 0; i < 60; i++) {
         try {
-          await fetch("http://127.0.0.1:3102/login");
+          await fetch(`http://127.0.0.1:${testPort + 2}/login`);
           break;
         } catch {}
         await new Promise((resolve) => setTimeout(resolve, 250));
@@ -113,7 +127,7 @@ try {
       ).toString("base64url");
       const token = `${header}.${body}.${createHmac("sha256", env.JWT_ACCESS_SECRET).update(`${header}.${body}`).digest("base64url")}`;
       for (const url of ["/api/health", "/api/auth/me"]) {
-        const response = await fetch("http://127.0.0.1:3102" + url, {
+        const response = await fetch(`http://127.0.0.1:${testPort + 2}` + url, {
           headers: { Authorization: `Bearer ${token}` },
         });
         assert.equal(response.status, 503);
@@ -125,8 +139,26 @@ try {
     } finally {
       offline.kill();
     }
+    const workerCheck = await new Promise((resolve, reject) => {
+      const test = spawn(
+        process.execPath,
+        ["scripts/verify-media-worker.mjs"],
+        { env, stdio: "inherit", windowsHide: true },
+      );
+      test.once("error", reject);
+      test.once("exit", resolve);
+    });
+    assert.equal(workerCheck, 0, "Voice worker reconnection test failed");
   }
 } finally {
   server.kill();
   email.close();
+  if (
+    !resolve(mediaDir).startsWith(
+      resolve(tmpdir()) + "\\stcs-isolated-media-",
+    ) &&
+    !resolve(mediaDir).startsWith(resolve(tmpdir()) + "/stcs-isolated-media-")
+  )
+    throw new Error("Unexpected cleanup path");
+  await rm(mediaDir, { recursive: true, force: true });
 }
