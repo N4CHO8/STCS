@@ -1,4 +1,4 @@
-# STCS UI — firmware v0.8.1-cloud
+# STCS UI — firmware v0.8.2-cloud
 
 Controles esenciales superiores, flechas laterales y frase inferior de lectura.
 Volver — Hablar — Borrar en categorías. Capacidad coordinada: **180 activos,

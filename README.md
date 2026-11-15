@@ -1,7 +1,8 @@
 # STCS
 
-La publicación de medios privados, voz alojada y nueva interfaz del ESP está
-en cierre técnico. Consultar [estado, capacidad y evidencia del 15/11](docs/CIERRE_STCS_20261115.md)
+La web, los medios privados y la voz alojada están publicados. El tablero
+inicial tiene 96 pictogramas (24 por categoría); el máximo operativo probado
+es 180 (45 por categoría). Consultar [estado, capacidad y evidencia del 15/11](docs/CIERRE_STCS_20261115.md)
 antes de usar los procedimientos históricos de laboratorio.
 
 STCS es un proyecto de comunicacion aumentativa y alternativa para ninos con TEA. La version final se organiza en tres piezas principales:
