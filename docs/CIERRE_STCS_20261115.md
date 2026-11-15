@@ -6,6 +6,11 @@ entrega: `dpl_A3bMCL7MnHkAMWDteHMTQgd57FN8`, commit
 `c1fdbf88b041f7b1c34c9706a8ef11d74d9c42d6`, en https://0stcs0.vercel.app.
 El propietario confirmó seis páginas por categoría, imágenes de última página
 y «Vaso nube» con imagen propia y «Quiero tomar agua» desde la nube.
+Después se editó solo su frase a «Necesito beber agua, por favor» en la web
+pública: Vercel preparó un WAV de 59.116 bytes, el ESP verificó descarga y hash,
+y el propietario confirmó misma imagen y frase nueva. También confirmó desde
+celular u otro computador 24 por categoría, seis páginas y límite 45/180.
+Los servidores locales de Next.js/Piper estaban detenidos durante estas pruebas.
 
 ## Interfaz del ESP
 
@@ -189,6 +194,12 @@ modificaron SDK, raíces de confianza ni verificación de certificados.
 Se comprobaron nuevas descargas HTTPS completas con hash/tamaño válidos y la
 nube recibió el estado v0.8.2. Con el tablero se observaron 6.290.688 bytes
 de PSRAM libre, bloque mayor 5.505.012 y heap libre 85.720 bytes.
+La actualización de frase copió las 96 imágenes desde RAM en 340 ms, con
+mínimo de 3.660.880 bytes de PSRAM durante construcción. Después de audio se
+observaron 5.635.320 bytes libres y bloque mayor de 3.604.468 bytes.
+La carga inicial de 96 superó la ventana de captura inicial de diez minutos;
+no se midió su duración total. La recuperación en frío puede tardar varios
+minutos; no prometer sincronización instantánea tras vaciar caché o reiniciar.
 Firmware v0.8.2 compilado: 1.956.637 bytes de programa, 146.512 globales.
 Imagen operativa privada SHA-256:
 `e9debee220fece73eb288fe0aefe734509cb9cb9779b292662f7202c8dd21a0e`.
