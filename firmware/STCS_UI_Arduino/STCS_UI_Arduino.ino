@@ -56,13 +56,14 @@ void setup() {
 void loop() {
   Lvgl_Loop();
   STCS_Audio_Loop();
+  STCS_UI_RefreshImages();
   STCS_Network_Loop();
 
   static StcsBoardConfig *board_config =
       static_cast<StcsBoardConfig *>(heap_caps_calloc(
           1, sizeof(StcsBoardConfig), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
-  if (board_config && STCS_UI_CanApplyBoard() &&
-      STCS_Network_TakeBoardConfig(board_config)) {
+  if (board_config &&
+      STCS_Network_TakeBoardConfig(board_config, STCS_UI_CanApplyBoard())) {
     STCS_UI_ApplyBoardConfig(board_config);
   }
   vTaskDelay(pdMS_TO_TICKS(5));

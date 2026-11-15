@@ -1,0 +1,21 @@
+STCS_CACHE|bytes=468989|files=17|budget=524288|free=299008
+STCS_ATLAS|state=open|images=95|bytes=174077
+STCS_SYNC|state=ready|firmware=v0.8.4-fast-start|pictograms=96|images=96|ram_copied=0|duration_ms=408|min_psram=6198388
+STCS_BOOT|firmware=v0.8.4-fast-start|psram_free=6384440
+STCS_BOARD|pictograms=96|images=96|needs=24|emotions=24|actions=24|places=24
+STCS_HEALTH|firmware=v0.8.4-fast-start|heap=85728|psram=6290664|largest=6160372
+STCS_SYNC|state=ready|firmware=v0.8.4-fast-start|pictograms=96|images=96|ram_copied=96|duration_ms=381|min_psram=4316216
+STCS_HEALTH|firmware=v0.8.4-fast-start|heap=85728|psram=6290664|largest=6160372
+STCS_HEALTH|firmware=v0.8.4-fast-start|heap=85728|psram=6290664|largest=6160372
+STCS_HEALTH|firmware=v0.8.4-fast-start|heap=85728|psram=6290664|largest=6160372
+STCS_CACHE|bytes=468989|files=17|budget=524288|free=299008
+STCS_HEALTH|firmware=v0.8.4-fast-start|heap=85600|psram=6290664|largest=6160372
+STCS_HEALTH|firmware=v0.8.4-fast-start|heap=84984|psram=6290664|largest=6160372
+STCS_HEALTH|firmware=v0.8.4-fast-start|heap=85600|psram=6290664|largest=6160372
+STCS_HEALTH|firmware=v0.8.4-fast-start|heap=85600|psram=6290664|largest=6160372
+STCS_CACHE|bytes=468989|files=17|budget=524288|free=299008
+STCS_HEALTH|firmware=v0.8.4-fast-start|heap=85600|psram=6290664|largest=6160372
+STCS_HEALTH|firmware=v0.8.4-fast-start|heap=85556|psram=6290664|largest=6160372
+STCS_HEALTH|firmware=v0.8.4-fast-start|heap=85600|psram=6290664|largest=6160372
+STCS_HEALTH|firmware=v0.8.4-fast-start|heap=85600|psram=6290664|largest=6160372
+{"panicObserved": false, "technicalLines": 20}

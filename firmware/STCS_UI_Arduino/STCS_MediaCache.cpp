@@ -94,7 +94,10 @@ bool STCS_CacheRoom(size_t incoming, const char *keep) {
       if (path == keep || path == pinned)
         continue;
       uint32_t use = touched(path.c_str());
-      if (oldest == "" || use < oldest_time) {
+      // Prefer evicting individual files before the compact boot snapshot.
+      // It remains evictable as a last resort; audio must not be blocked by it.
+      if (oldest == "" || (path != STCS_ATLAS_PATH &&
+          (oldest == STCS_ATLAS_PATH || use < oldest_time))) {
         oldest = path;
         oldest_time = use;
       }

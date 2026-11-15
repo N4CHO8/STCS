@@ -1,4 +1,12 @@
-# STCS UI — firmware v0.8.2-cloud
+# STCS UI — firmware v0.8.4-fast-start
+
+El arranque conserva todas las tarjetas y páginas del tablero guardado aunque
+no estén todas sus imágenes en caché. Las imágenes verificadas aparecen
+progresivamente sin cambiar de página ni borrar la frase. Detalles y prueba
+de reinicio: [ARREGLO_REINICIO_ESP_20261115.md](../../docs/ARREGLO_REINICIO_ESP_20261115.md).
+La copia compacta de imágenes ocupa hasta 192 KiB dentro de la caché total;
+el tablero actual de 96 recuperó todas sus imágenes desde flash en 408 ms.
+Condiciones, medida y límites: [ARRANQUE_RAPIDO_ESP_20261115.md](../../docs/ARRANQUE_RAPIDO_ESP_20261115.md).
 
 Controles esenciales superiores, flechas laterales y frase inferior de lectura.
 Volver — Hablar — Borrar en categorías. Capacidad coordinada: **180 activos,

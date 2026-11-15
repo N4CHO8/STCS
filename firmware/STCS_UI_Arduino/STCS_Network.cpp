@@ -1,5 +1,6 @@
 #include "STCS_Network.h"
 #include "STCS_AudioStorage.h"
+#include "STCS_ImageAtlas.h"
 #include "STCS_NetworkSecrets.h"
 #include "STCS_TrustRoots.h"
 #include "STCS_UI.h"
@@ -22,7 +23,7 @@
 #endif
 
 namespace {
-constexpr char VERSION[] = "v0.8.2-cloud";
+constexpr char VERSION[] = "v0.8.4-fast-start";
 constexpr uint32_t IMAGE_BYTES = 96 * 96 * 2, AUDIO_MAX_BYTES = 320044;
 constexpr size_t QUEUE_LIMIT = 64;
 // The parsed board can exceed internal Wi-Fi RAM as capacity grows.
@@ -259,7 +260,7 @@ void free_images(StcsBoardConfig &board) {
 bool apply_document(JsonDocument &document, bool online) {
   const uint32_t started = millis();
   uint32_t minimum_psram = ESP.getFreePsram();
-  uint16_t ram_copies = 0;
+  uint16_t ram_copies = 0, missing_images = 0;
   JsonArray items = document["data"]["pictograms"].as<JsonArray>();
   if (items.isNull() || items.size() > STCS_MAX_PICTOGRAMS)
     return false;
@@ -327,7 +328,9 @@ bool apply_document(JsonDocument &document, bool online) {
     bool image_ok = STCS_UI_CopyImage(p.image_hash, p.image_data);
     if (image_ok)
       ram_copies++;
-    else {
+    else if (STCS_AtlasRead(p.image_hash, p.image_data)) {
+      image_ok = true;
+    } else {
       image_ok = online ? fetch_media(p.id, "image", p.image_hash, IMAGE_BYTES)
                         : cached(path, IMAGE_BYTES);
       if (image_ok) {
@@ -339,14 +342,17 @@ bool apply_document(JsonDocument &document, bool online) {
         image.close();
       }
     }
-    if (!image_ok) {
+    if (image_ok)
+      STCS_UI_OfferImage(p.image_hash, p.image_data);
+    else {
       incomplete = true;
+      missing_images++;
       free(p.image_data);
       p.image_data = nullptr;
-      if (online) {
-        valid = false;
-        break;
-      }
+      // Metadata defines membership, not the evictable file cache. Keep a
+      // partial generation so a failed image does not discard every successful
+      // download. The next poll copies those pixels from RAM and retries only
+      // missing files; the UI keeps all labels, positions and page counts.
     }
     p.audio_ready = strcmp(item["audioStatus"] | "", "ready") == 0 &&
                     hex_hash(p.audio_hash);
@@ -356,6 +362,8 @@ bool apply_document(JsonDocument &document, bool online) {
       strlcpy(p.audio_path, audio_path.c_str(), sizeof(p.audio_path));
     }
   }
+  if (valid && online && !incomplete)
+    STCS_AtlasSave(configuration_binding, *board);
   if (valid && xSemaphoreTake(config_mutex, pdMS_TO_TICKS(100)) == pdTRUE) {
     if (!has_pending) {
       *pending = *board;
@@ -370,9 +378,10 @@ bool apply_document(JsonDocument &document, bool online) {
   free_images(*board);
   free(board);
   if (valid)
-    printf("STCS_SYNC|state=ready|firmware=%s|pictograms=%u|ram_copied=%u|"
+    printf("STCS_SYNC|state=%s|firmware=%s|pictograms=%u|images=%u|ram_copied=%u|"
            "duration_ms=%u|min_psram=%u\r\n",
-           VERSION, (unsigned)items.size(), ram_copies,
+           incomplete ? "partial" : "ready", VERSION, (unsigned)items.size(),
+           (unsigned)items.size() - missing_images, ram_copies,
            (unsigned)(millis() - started), (unsigned)minimum_psram);
   return valid;
 }
@@ -487,8 +496,7 @@ bool download_board() {
       } else
         LittleFS.remove("/v7/board.tmp");
     }
-    STCS_Network_QueueEvent("board_synced", nullptr, nullptr, "Sistema",
-                            nullptr);
+    // The UI acknowledges a fully applied board once, after ownership transfer.
   }
   return true;
 }
@@ -690,7 +698,11 @@ void STCS_Network_Init() {
     JsonDocument doc(&board_allocator);
     if (!deserializeJson(doc, saved)) {
       if (strcmp(doc["binding"] | "", configuration_binding) == 0)
+      {
+        STCS_AtlasOpen(configuration_binding);
         apply_document(doc, false);
+        STCS_AtlasClose();
+      }
       else
         printf("STCS_BOOT|state=cache_scope_mismatch\r\n");
     }
@@ -712,11 +724,14 @@ void STCS_Network_Loop() {
   }
 }
 bool STCS_Network_Online() { return WiFi.status() == WL_CONNECTED; }
-bool STCS_Network_TakeBoardConfig(StcsBoardConfig *out) {
+bool STCS_Network_TakeBoardConfig(StcsBoardConfig *out, bool allow_metadata_change) {
   if (!pending || !out ||
       xSemaphoreTake(config_mutex, pdMS_TO_TICKS(10)) != pdTRUE)
     return false;
-  bool ready = has_pending;
+  // Pixels may finish loading while a phrase is selected. Consume that update
+  // without blocking later retries; actual phrase/board edits still wait.
+  bool ready = has_pending &&
+      (allow_metadata_change || STCS_UI_HasBoardMetadata(pending));
   if (ready) {
     *out = *pending;
     memset(pending, 0, sizeof(*pending));

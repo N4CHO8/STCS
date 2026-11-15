@@ -11,7 +11,7 @@ parser.add_argument("--seconds", type=int, default=60)
 parser.add_argument("--log", required=True)
 args = parser.parse_args()
 assert 1 <= args.seconds <= 600
-prefixes = ("STCS_HEALTH|", "STCS_SYNC|", "STCS_CACHE|", "STCS_PAGE|", "STCS_MEDIA|", "STCS_BOOT|")
+prefixes = ("STCS_HEALTH|", "STCS_SYNC|", "STCS_CACHE|", "STCS_PAGE|", "STCS_MEDIA|", "STCS_BOOT|", "STCS_BOARD|", "STCS_ATLAS|")
 panic = False
 count = 0
 with serial.Serial(args.port, 115200, timeout=0.2) as connection, Path(args.log).open("a", encoding="utf-8") as log:
