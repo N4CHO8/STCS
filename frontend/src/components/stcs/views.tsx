@@ -10,7 +10,6 @@ import {
   ChevronRight,
   Clock,
   Cpu,
-  Database,
   LineChart as LineChartIcon,
   MapPin,
   MessageCircle,
@@ -215,14 +214,11 @@ export function CommunicatorView({
 
       <section className="grid gap-7 lg:grid-cols-[340px_1fr]">
         <Card className="flex min-h-[520px] flex-col items-center">
-          <SectionTitle>Vista previa en dispositivo</SectionTitle>
+          <SectionTitle>Vista previa</SectionTitle>
           <RoundDevice
             category={selectedCategory}
             pictograms={categoryPictograms}
           />
-          <p className="mt-6 text-center text-sm font-medium text-stone-400">
-            Esta es la misma categoria que recibira el ESP32
-          </p>
         </Card>
 
         <div className="grid content-start gap-6">
@@ -274,12 +270,6 @@ export function CommunicatorView({
               ))}
             </div>
           </Card>
-
-          <div className="flex items-center gap-3 border-t border-stone-200 pt-5 text-sm font-semibold text-stone-500">
-            <Database className="h-4 w-4 text-[#518b51]" />
-            Los cambios se guardan en el tablero. El comunicador los sincroniza
-            al conectarse y descarga las voces preparadas cuando se necesitan.
-          </div>
         </div>
       </section>
 

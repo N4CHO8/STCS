@@ -1,4 +1,12 @@
-# STCS UI — firmware v0.8.4-fast-start
+# STCS UI — firmware v0.8.6-wifi-status
+
+Inicio: Hablar y Wi-Fi en la parte superior. Wi-Fi abre la configuración del
+adulto, con Volver — Activar — Ver clave arriba. Conectar el celular a
+STCS-Config y abrir 192.168.4.1; usuario stcs y clave local mostrada solo al
+solicitarla. Los controles de las categorías y la caché rápida se conservan.
+Inicio, categorías y configuración indican Wi-Fi conectado/desconectado;
+es asociación al router, no una garantía de acceso a Internet o a la API.
+Detalles: [WEB_Y_WIFI_20261115.md](../../docs/WEB_Y_WIFI_20261115.md).
 
 El arranque conserva todas las tarjetas y páginas del tablero guardado aunque
 no estén todas sus imágenes en caché. Las imágenes verificadas aparecen

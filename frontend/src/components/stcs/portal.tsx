@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   LogOut,
-  ShieldCheck,
   Users,
   MessageCircle,
   ClipboardList,
@@ -371,35 +370,6 @@ export function Portal() {
               {notice}
             </p>
           )}
-          {data?.isPrivateTest && (
-            <p
-              role="status"
-              className="rounded-xl border border-sky-200 bg-sky-50 p-4 text-sm"
-            >
-              Demostración con dispositivo físico. Los cambios se guardan en la
-              plataforma y se comparten entre los responsables asignados. Los
-              accesos demo son públicos: utiliza únicamente información
-              ficticia.
-            </p>
-          )}
-          {data?.isDemo && (
-            <div
-              role="status"
-              className="sticky top-2 z-30 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950"
-            >
-              <strong>Cuenta demo en la nube.</strong> Los cambios se comparten
-              y persisten en la base de datos. Usa únicamente información
-              ficticia.
-            </div>
-          )}
-          {role === "admin" && (
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-emerald-50 p-4 text-sm">
-              <p>
-                Sesión de administrador. Puedes probar los otros perfiles con
-                sus cuentas demo.
-              </p>
-            </div>
-          )}
           {error && (
             <div role="alert" className="rounded-xl bg-red-50 p-4 text-red-800">
               {error}
@@ -420,14 +390,6 @@ export function Portal() {
           ) : (
             data && (
               <>
-                <div className="flex items-start gap-3 rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
-                  <ShieldCheck size={19} className="shrink-0" />
-                  {role === "admin"
-                    ? "Administración sin acceso a nombres ni información sensible de los niños."
-                    : role === "teacher"
-                      ? "Tu espacio se centra en apoyar la comunicación. Aquí solo verás orientaciones compartidas por el especialista."
-                      : "Espacio privado. Solo puedes consultar los niños que tienes asignados."}
-                </div>
                 {role === "admin" ? (
                   <AdminWorkspace
                     data={data}
