@@ -1,7 +1,8 @@
 # Cierre técnico del 15 de noviembre de 2026
 
 Última actualización de interfaz: [WEB_Y_WIFI_20261115.md](WEB_Y_WIFI_20261115.md),
-retiro de avisos de cliente y acceso Wi-Fi superior en firmware v0.8.5.
+retiro de avisos de cliente, acceso Wi-Fi superior e indicador de conexión en
+firmware v0.8.6.
 
 Actualización posterior: se corrigió la desaparición de registros por caché y
 se añadió arranque rápido v0.8.4. Resultados nuevos en

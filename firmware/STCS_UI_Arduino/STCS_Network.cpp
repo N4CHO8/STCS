@@ -23,7 +23,7 @@
 #endif
 
 namespace {
-constexpr char VERSION[] = "v0.8.5-wifi-menu";
+constexpr char VERSION[] = "v0.8.6-wifi-status";
 constexpr uint32_t IMAGE_BYTES = 96 * 96 * 2, AUDIO_MAX_BYTES = 320044;
 constexpr size_t QUEUE_LIMIT = 64;
 // The parsed board can exceed internal Wi-Fi RAM as capacity grows.

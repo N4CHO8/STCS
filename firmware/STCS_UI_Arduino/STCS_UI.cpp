@@ -79,6 +79,8 @@ bool images_changed = false; // Protected by board_images_mutex.
 bool board_reported_complete = false;
 bool wifi_screen = false, wifi_password_visible = false;
 lv_obj_t *wifi_status_label = nullptr;
+lv_obj_t *wifi_connection_label = nullptr;
+bool wifi_connection_online = false;
 uint32_t waiting_audio_since = 0;
 
 bool playback_active = false;
@@ -126,6 +128,7 @@ uint32_t pictogram_color(const char *tone) {
 void swipe_event(lv_event_t *event);
 
 void configure_screen() {
+  wifi_connection_label = nullptr;
   lv_obj_t *screen = lv_scr_act();
   lv_obj_clean(screen);
   lv_obj_remove_event_cb(screen, swipe_event);
@@ -143,6 +146,17 @@ lv_obj_t *create_label(lv_obj_t *parent, const char *text,
   lv_obj_set_style_text_font(label, font, LV_PART_MAIN);
   lv_obj_set_style_text_color(label, color(COLOR_INK), LV_PART_MAIN);
   return label;
+}
+
+void create_wifi_connection(lv_coord_t x, lv_coord_t y, lv_coord_t width) {
+  wifi_connection_online = STCS_Network_Online();
+  wifi_connection_label = create_label(lv_scr_act(), wifi_connection_online ?
+      "Wi-Fi conectado" : "Wi-Fi desconectado", &font12);
+  lv_obj_set_width(wifi_connection_label, width);
+  lv_obj_set_style_text_align(wifi_connection_label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
+  lv_obj_set_style_text_color(wifi_connection_label,
+      color(wifi_connection_online ? 0x347C58 : 0x9C5C1D), LV_PART_MAIN);
+  lv_obj_set_pos(wifi_connection_label, x, y);
 }
 
 lv_obj_t *create_button(lv_obj_t *parent, const char *text, lv_coord_t x,
@@ -553,9 +567,7 @@ void show_home() {
                 COLOR_SPEAK, play_event, nullptr);
   create_button(lv_scr_act(), LV_SYMBOL_WIFI " Wi-Fi", 254, 54, 82, 40,
                 0xE2ECE8, wifi_event, nullptr);
-  lv_obj_t *subtitle =
-      create_label(lv_scr_act(), "Elige una categoría", &font12);
-  lv_obj_align(subtitle, LV_ALIGN_TOP_MID, 0, 100);
+  create_wifi_connection(81, 100, 250);
   const lv_coord_t positions[4][2] = {
       {70, 120}, {216, 120}, {70, 214}, {216, 214}};
   for (uint8_t i = 0; i < CATEGORY_COUNT; i++)
@@ -587,11 +599,12 @@ void show_wifi() {
   create_button(lv_scr_act(), wifi_password_visible ? "Ocultar" : "Ver clave",
                 252, 48, 96, 46, 0xE2ECE8, wifi_password_event, nullptr);
   wifi_text("Configurar Wi-Fi", 108, 250, &font16);
+  create_wifi_connection(71, 132, 270);
   wifi_status_label = create_label(lv_scr_act(),
       STCS_Network_WifiSetupActive() ? "STCS-Config activa" : "Red de configuración inactiva", &font14);
   lv_obj_set_width(wifi_status_label, 280);
   lv_obj_set_style_text_align(wifi_status_label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
-  lv_obj_align(wifi_status_label, LV_ALIGN_TOP_MID, 0, 142);
+  lv_obj_align(wifi_status_label, LV_ALIGN_TOP_MID, 0, 153);
   wifi_text("1. Conecta tu celular a", 178, 270, &font14);
   wifi_text("STCS-Config", 204, 250, &font16);
   wifi_text("2. Abre 192.168.4.1", 238, 270, &font14);
@@ -624,7 +637,9 @@ void show_category(Category *category) {
   snprintf(title, sizeof(title), "%s · %u/%u", category->name, current_page + 1,
            pages);
   lv_obj_t *heading = create_label(lv_scr_act(), title, &font12);
-  lv_obj_align(heading, LV_ALIGN_TOP_MID, 0, 100);
+  lv_obj_set_width(heading, 150);
+  lv_obj_set_pos(heading, 70, 100);
+  create_wifi_connection(232, 100, 120);
   const lv_coord_t positions[4][2] = {
       {70, 120}, {216, 120}, {70, 214}, {216, 214}};
   uint16_t first = current_page * STCS_ITEMS_PER_PAGE;
@@ -883,10 +898,17 @@ void STCS_UI_OfferImage(const char *hash, const uint8_t *pixels) {
 void STCS_UI_RefreshImages() {
   // Configuration is a separate screen: media refresh must never send an adult
   // back to the communicator or reveal the setup password in logs/web data.
-  if (wifi_screen && wifi_status_label) {
-    static uint32_t last_wifi_status = 0;
-    if (millis() - last_wifi_status > 1000) {
-      last_wifi_status = millis();
+  static uint32_t last_wifi_status = 0;
+  if (millis() - last_wifi_status > 1000) {
+    last_wifi_status = millis();
+    bool connected = STCS_Network_Online();
+    if (wifi_connection_label && connected != wifi_connection_online) {
+      wifi_connection_online = connected;
+      lv_label_set_text(wifi_connection_label, connected ? "Wi-Fi conectado" : "Wi-Fi desconectado");
+      lv_obj_set_style_text_color(wifi_connection_label,
+          color(connected ? 0x347C58 : 0x9C5C1D), LV_PART_MAIN);
+    }
+    if (wifi_screen && wifi_status_label) {
       lv_label_set_text(wifi_status_label, STCS_Network_WifiSetupActive() ?
           "STCS-Config activa" : "Red de configuración inactiva");
     }
