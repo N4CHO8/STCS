@@ -1,7 +1,7 @@
 # Arranque rápido de imágenes — v0.8.4
 
-Estado: v0.8.4 instalado; recuperación técnica medida, confirmación visual y
-reinicio con cargador en curso. Complementa la
+Estado: v0.8.4 instalado; recuperación técnica medida y confirmación física
+completada por el propietario, incluido reinicio con cargador. Complementa la
 [corrección de categorías y refresco progresivo](ARREGLO_REINICIO_ESP_20261115.md).
 
 ## Medición y decisión
@@ -77,5 +77,10 @@ Esptool verificó escritura de app0; no se modificaron NVS ni particiones.
 Respaldo previo completo: `%LOCALAPPDATA%/STCS-private/esp-before-fast-cache.bin`,
 16.777.216 bytes, SHA-256
 `675f11ff97402bf86e29ed24d3c78588b416d5962d52a107ce7e876dcce1cf59`.
-La confirmación visual y el nuevo encendido con cargador están pendientes;
-no se afirman todavía. No se probó corte eléctrico durante escritura.
+El 15/11/2026 el propietario confirmó que al reiniciar aparecieron directamente
+las seis páginas de cada categoría con sus dibujos y que Hablar funcionó.
+Después desconectó el USB del computador y repitió el encendido alimentado
+solo por un cargador USB de 5 V: confirmó nuevamente todas las páginas con
+imágenes. Es evidencia física asistida por el usuario, adicional a la captura
+serie y a la validación de hashes. La prueba que había fallado con v0.8.2 queda
+confirmada con v0.8.4. No se probó corte eléctrico durante escritura.
