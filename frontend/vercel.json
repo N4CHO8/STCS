@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/voice.py": {
+      "maxDuration": 90,
+      "excludeFiles": "{node_modules/**,.next/**,public/**,scripts/**,src/**,**/__pycache__/**}"
+    }
+  }
+}
