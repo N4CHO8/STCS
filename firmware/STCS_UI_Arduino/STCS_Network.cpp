@@ -22,7 +22,7 @@
 #endif
 
 namespace {
-constexpr char VERSION[] = "v0.8.1-cloud";
+constexpr char VERSION[] = "v0.8.2-cloud";
 constexpr uint32_t IMAGE_BYTES = 96 * 96 * 2, AUDIO_MAX_BYTES = 320044;
 constexpr size_t QUEUE_LIMIT = 64;
 // The parsed board can exceed internal Wi-Fi RAM as capacity grows.
@@ -38,6 +38,34 @@ public:
 };
 BoardAllocator board_allocator;
 constexpr size_t BOARD_HTTP_LIMIT = 256 * 1024, BOARD_SAVED_LIMIT = 128 * 1024;
+// ESP32 core 3.0.2 NetworkClient::readBytes stops on a temporary -1 from TLS.
+// HTTPClient then advances by the requested count and loses chunk framing.
+// Wait for available decrypted bytes and account only bytes actually received;
+// keep the SDK unchanged and retain its chunk decoding and hash verification.
+class StcsSecureClient : public WiFiClientSecure {
+public:
+  using WiFiClientSecure::readBytes;
+  size_t readBytes(char *buffer, size_t length) override {
+    size_t received = 0;
+    uint32_t last_progress = millis();
+    while (received < length) {
+      int ready = available();
+      if (ready > 0) {
+        int count = read(reinterpret_cast<uint8_t *>(buffer) + received,
+                         min(length - received, static_cast<size_t>(ready)));
+        if (count > 0) {
+          received += count;
+          last_progress = millis();
+          continue;
+        }
+      }
+      if (!connected() || millis() - last_progress >= getTimeout())
+        break;
+      vTaskDelay(pdMS_TO_TICKS(1));
+    }
+    return received;
+  }
+};
 void service_audio();
 WebServer portal(80);
 Preferences preferences;
@@ -173,7 +201,7 @@ bool fetch_media(const char *id, const char *kind, const char *hash,
   if (WiFi.status() != WL_CONNECTED || !STCS_CacheRoom(bytes, path.c_str()))
     return false;
   // Clients must outlive HTTPClient: its destructor may still stop its client.
-  WiFiClientSecure secure;
+  StcsSecureClient secure;
   WiFiClient plain;
   HTTPClient http;
   if (!begin_request(http, secure, plain, media_uri(id, kind, hash)))
@@ -352,7 +380,7 @@ bool download_board() {
   if (has_pending)
     return true;
   // Clients must outlive HTTPClient: its destructor may still stop its client.
-  WiFiClientSecure secure;
+  StcsSecureClient secure;
   WiFiClient plain;
   HTTPClient http;
   if (!begin_request(http, secure, plain,
@@ -412,7 +440,8 @@ bool download_board() {
   http.end();
   if (result < 0 || !sink.valid || !sink.bytes) {
     LittleFS.remove("/v7/incoming.json");
-    printf("STCS_SYNC|state=body_error\r\n");
+    printf("STCS_SYNC|state=body_error|result=%d|bytes=%u|declared=%d|valid=%d\r\n",
+           result, (unsigned)sink.bytes, declared_size, (int)sink.valid);
     return false;
   }
   JsonDocument doc(&board_allocator);
@@ -506,7 +535,7 @@ void send_pending() {
   if (deserializeJson(sent, body))
     return;
   // Clients must outlive HTTPClient: its destructor may still stop its client.
-  WiFiClientSecure secure;
+  StcsSecureClient secure;
   WiFiClient plain;
   HTTPClient http;
   if (!begin_request(http, secure, plain,

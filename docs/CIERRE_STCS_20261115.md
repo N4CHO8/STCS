@@ -1,9 +1,16 @@
 # Cierre técnico del 15 de noviembre de 2026
 
-Estado: candidato de nube verificado; promoción e instalación final en curso. La rama de trabajo es
-`codex/hito3-medios-voz`; no confundir una URL de ensayo de Vercel con la
-promoción de `main` al dominio público. Las comprobaciones finales y la carga
-HTTPS del ESP siguen pendientes mientras se completa el ensayo de capacidad.
+Estado: web de producción publicada desde `main` y firmware v0.8.2-cloud
+instalado, con conexión confirmada en Supabase. Primer despliegue de esta
+entrega: `dpl_A3bMCL7MnHkAMWDteHMTQgd57FN8`, commit
+`c1fdbf88b041f7b1c34c9706a8ef11d74d9c42d6`, en https://0stcs0.vercel.app.
+El propietario confirmó seis páginas por categoría, imágenes de última página
+y «Vaso nube» con imagen propia y «Quiero tomar agua» desde la nube.
+Después se editó solo su frase a «Necesito beber agua, por favor» en la web
+pública: Vercel preparó un WAV de 59.116 bytes, el ESP verificó descarga y hash,
+y el propietario confirmó misma imagen y frase nueva. También confirmó desde
+celular u otro computador 24 por categoría, seis páginas y límite 45/180.
+Los servidores locales de Next.js/Piper estaban detenidos durante estas pruebas.
 
 ## Interfaz del ESP
 
@@ -163,8 +170,11 @@ identidad infantil. Se descargaron 16 archivos de primera/última página de las
 cuatro categorías, verificando tamaño y SHA-256. Medios sin clave: 401.
 GitHub Actions del PR #5 aprobó en la ejecución 43744315681. Las evidencias
 están en `docs/evidencias/publicacion-20261115`; el JSON de nube identifica el
-origen verificado, sin credenciales. La comprobación del dominio público y la
-confirmación física HTTPS se añadirán después de la promoción.
+origen verificado, sin credenciales. El dominio público volvió a pasar la misma
+comprobación de 96 activos y 16 archivos tras la promoción. Inicio/cierre de
+sesión de especialista, docente y apoderado se comprobaron contra producción:
+cada uno recibe su único perfil y 96 pictogramas. Docente sin diagnóstico,
+ficha privada ni overview; los tres rechazados por las rutas internas.
 
 ## Verificación automatizada del candidato
 
@@ -174,5 +184,24 @@ En PostgreSQL descartable `stcs_release_tests`, servidor localhost:3200:
 291 comprobaciones de roles/privacidad/medios/concurrencia aprobadas, dos de
 caída de base aprobadas y reconexión del trabajador real ante 503 aprobada.
 Las rutas internas de mantenimiento rechazan anónimo, docente y administrador.
-Firmware v0.8.1 compilado con 1.956.209 bytes de programa y 146.512 bytes de
-variables globales. Compilar no acredita carga ni conexión física HTTPS.
+El primer ensayo HTTPS v0.8.1 detectó una lectura incompleta, con -10 y
+4.090/8.806 bytes recibidos. Se identificó en el core ESP32 3.0.2:
+NetworkClient::readBytes retorna al recibir un -1 temporal de TLS y HTTPClient
+avanza por el tamaño solicitado, perdiendo la delimitación de chunks.
+v0.8.2 usa un adaptador local que espera bytes descifrados disponibles, cuenta
+los realmente recibidos y conserva timeout, validación TLS y hash. No se
+modificaron SDK, raíces de confianza ni verificación de certificados.
+Se comprobaron nuevas descargas HTTPS completas con hash/tamaño válidos y la
+nube recibió el estado v0.8.2. Con el tablero se observaron 6.290.688 bytes
+de PSRAM libre, bloque mayor 5.505.012 y heap libre 85.720 bytes.
+La actualización de frase copió las 96 imágenes desde RAM en 340 ms, con
+mínimo de 3.660.880 bytes de PSRAM durante construcción. Después de audio se
+observaron 5.635.320 bytes libres y bloque mayor de 3.604.468 bytes.
+La carga inicial de 96 superó la ventana de captura inicial de diez minutos;
+no se midió su duración total. La recuperación en frío puede tardar varios
+minutos; no prometer sincronización instantánea tras vaciar caché o reiniciar.
+Firmware v0.8.2 compilado: 1.956.637 bytes de programa, 146.512 globales.
+Imagen operativa privada SHA-256:
+`e9debee220fece73eb288fe0aefe734509cb9cb9779b292662f7202c8dd21a0e`.
+La escritura en app0 pasó la verificación de esptool; no se cambió NVS ni
+particiones. Binario, credenciales y respaldos permanecen fuera de Git.
