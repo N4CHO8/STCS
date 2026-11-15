@@ -18,10 +18,12 @@ export async function GET(request: NextRequest, { params }: Params) {
   try {
     const p = await pictogramForUser(user, (await params).pictogramId);
     if (request.nextUrl.searchParams.has("status")) {
-      scheduleVoicePreparation();
-      return NextResponse.json({
-        data: (await withAudioState([{ id: p.id, message: p.message }]))[0],
-      });
+      const data = (
+        await withAudioState([{ id: p.id, message: p.message }])
+      )[0];
+      if (["pending", "processing"].includes(data.audioStatus))
+        scheduleVoicePreparation();
+      return NextResponse.json({ data });
     }
     const expected = request.nextUrl.searchParams.get("v");
     if (expected && expected !== phraseKey(p.message))

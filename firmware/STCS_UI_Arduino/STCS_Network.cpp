@@ -22,7 +22,7 @@
 #endif
 
 namespace {
-constexpr char VERSION[] = "v0.8.0-top-controls";
+constexpr char VERSION[] = "v0.8.1-cloud";
 constexpr uint32_t IMAGE_BYTES = 96 * 96 * 2, AUDIO_MAX_BYTES = 320044;
 constexpr size_t QUEUE_LIMIT = 64;
 // The parsed board can exceed internal Wi-Fi RAM as capacity grows.
@@ -48,6 +48,26 @@ bool has_pending = false, ap_started = false, board_incomplete = false;
 uint32_t board_hash = 0, boot_id = 0, event_sequence = 0;
 uint64_t next_order = 1;
 char wifi_ssid[33] = "", wifi_password[65] = "";
+char configuration_binding[65] = "";
+String queue_folder;
+// A lab or reassigned device must never replay another configuration's events
+// or render its saved board. Rotate the individual key when reassigning hardware.
+void bind_configuration() {
+  String scope = String(STCS_API_BASE_URL) + "|" + STCS_DEVICE_CODE + "|" +
+                 STCS_DEVICE_API_KEY;
+  uint8_t digest[32];
+  mbedtls_sha256_context hash;
+  mbedtls_sha256_init(&hash);
+  mbedtls_sha256_starts(&hash, 0);
+  mbedtls_sha256_update(&hash,
+      reinterpret_cast<const uint8_t *>(scope.c_str()), scope.length());
+  mbedtls_sha256_finish(&hash, digest);
+  mbedtls_sha256_free(&hash);
+  for (size_t i = 0; i < sizeof(digest); i++)
+    snprintf(configuration_binding + i * 2, 3, "%02x", digest[i]);
+  queue_folder = String("/v8q-") + String(configuration_binding).substring(0, 16);
+  LittleFS.mkdir(queue_folder);
+}
 struct AudioRequest {
   char id[37];
   char hash[65];
@@ -210,6 +230,7 @@ void free_images(StcsBoardConfig &board) {
 }
 bool apply_document(JsonDocument &document, bool online) {
   const uint32_t started = millis();
+  uint32_t minimum_psram = ESP.getFreePsram();
   uint16_t ram_copies = 0;
   JsonArray items = document["data"]["pictograms"].as<JsonArray>();
   if (items.isNull() || items.size() > STCS_MAX_PICTOGRAMS)
@@ -274,6 +295,7 @@ bool apply_document(JsonDocument &document, bool online) {
              board->count - 1);
       break;
     }
+    minimum_psram = min(minimum_psram, ESP.getFreePsram());
     bool image_ok = STCS_UI_CopyImage(p.image_hash, p.image_data);
     if (image_ok)
       ram_copies++;
@@ -321,9 +343,9 @@ bool apply_document(JsonDocument &document, bool online) {
   free(board);
   if (valid)
     printf("STCS_SYNC|state=ready|firmware=%s|pictograms=%u|ram_copied=%u|"
-           "duration_ms=%u\r\n",
+           "duration_ms=%u|min_psram=%u\r\n",
            VERSION, (unsigned)items.size(), ram_copies,
-           (unsigned)(millis() - started));
+           (unsigned)(millis() - started), (unsigned)minimum_psram);
   return valid;
 }
 bool download_board() {
@@ -411,6 +433,7 @@ bool download_board() {
     // projections. This leaves room for the bounded queue and an atomic
     // metadata replacement.
     JsonDocument compact(&board_allocator);
+    compact["binding"] = configuration_binding;
     JsonArray compact_items = compact["data"]["pictograms"].to<JsonArray>();
     for (JsonObject item : doc["data"]["pictograms"].as<JsonArray>()) {
       JsonObject out = compact_items.add<JsonObject>();
@@ -442,10 +465,10 @@ bool download_board() {
 }
 String queue_name(File &file) {
   String name = file.name();
-  return name.startsWith("/") ? name : String("/v7queue/") + name;
+  return name.startsWith("/") ? name : queue_folder + "/" + name;
 }
 void inspect_queue() {
-  File dir = LittleFS.open("/v7queue");
+  File dir = LittleFS.open(queue_folder);
   for (File f = dir.openNextFile(); f; f = dir.openNextFile()) {
     String name = queue_name(f);
     if (name.endsWith(".tmp")) {
@@ -463,7 +486,7 @@ void send_pending() {
   String first = "", body = "";
   if (xSemaphoreTake(queue_mutex, pdMS_TO_TICKS(100)) != pdTRUE)
     return;
-  File dir = LittleFS.open("/v7queue");
+  File dir = LittleFS.open(queue_folder);
   for (File f = dir.openNextFile(); f; f = dir.openNextFile()) {
     String path = queue_name(f);
     if (path.endsWith(".json") && (first == "" || path < first))
@@ -617,6 +640,7 @@ void STCS_Network_Init() {
   queue_mutex = xSemaphoreCreateMutex();
   config_mutex = xSemaphoreCreateMutex();
   audio_mutex = xSemaphoreCreateMutex();
+  bind_configuration();
   inspect_queue();
   preferences.begin("stcs-wifi", true);
   String ssid = preferences.getString("ssid", ""),
@@ -635,8 +659,12 @@ void STCS_Network_Init() {
   File saved = LittleFS.open("/v7/board.json", FILE_READ);
   if (saved && saved.size() <= BOARD_SAVED_LIMIT) {
     JsonDocument doc(&board_allocator);
-    if (!deserializeJson(doc, saved))
-      apply_document(doc, false);
+    if (!deserializeJson(doc, saved)) {
+      if (strcmp(doc["binding"] | "", configuration_binding) == 0)
+        apply_document(doc, false);
+      else
+        printf("STCS_BOOT|state=cache_scope_mismatch\r\n");
+    }
   }
   saved.close();
   xTaskCreatePinnedToCore(network_task, "STCS Network", 24576, nullptr, 1,
@@ -691,7 +719,7 @@ bool STCS_Network_QueueEvent(const char *type, const char *id,
   if (!queue_mutex || xSemaphoreTake(queue_mutex, pdMS_TO_TICKS(100)) != pdTRUE)
     return false;
   size_t count = 0;
-  File dir = LittleFS.open("/v7queue");
+  File dir = LittleFS.open(queue_folder);
   for (File f = dir.openNextFile(); f; f = dir.openNextFile())
     if (!f.isDirectory())
       count++;
@@ -725,7 +753,7 @@ bool STCS_Network_QueueEvent(const char *type, const char *id,
     event["occurredAt"] = stamp;
   }
   char path[80];
-  snprintf(path, sizeof(path), "/v7queue/%020llu.json",
+  snprintf(path, sizeof(path), "%s/%020llu.json", queue_folder.c_str(),
            static_cast<unsigned long long>(next_order++));
   String temp = String(path) + ".tmp";
   File file = LittleFS.open(temp, FILE_WRITE);

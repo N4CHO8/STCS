@@ -1,5 +1,17 @@
 # Conexiones recuperadas — 2026-11-11
 
+## Preparación de publicación — 15 de noviembre de 2026
+
+Se verificaron accesos a GitHub, Supabase STCS y Vercel. La migración aditiva
+de medios se aplicó tras respaldo y restauración local comprobada; bucket
+`stcs-media` privado y síntesis Piper en función Python Vercel comprobados.
+La nueva credencial de Storage fue configurada y rotada por el propietario.
+No leerla ni copiarla a documentación. La promoción final de main y el ESP
+HTTPS se registran en [el cierre técnico](CIERRE_STCS_20261115.md).
+Las secciones siguientes describen publicaciones anteriores, no el estado
+actual de la rama. El desarrollo habitual sigue compartiendo producción;
+solo los runners aislados son aptos para pruebas de escritura masiva.
+
 ## Hito 3 local — 13 de noviembre de 2026
 
 La rama `codex/hito3-medios-voz` retira `/demo`; los accesos sintéticos se

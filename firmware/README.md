@@ -1,5 +1,12 @@
 # Firmware ESP32-S3
 
+El sketch reproducible actual está en `STCS_UI_Arduino`; la versión de cierre
+es v0.8.1-cloud (compilada; carga y publicación final en comprobación).
+La capacidad operativa es 180 activos, 45 por categoría, con caché acotada.
+Consultar su README y `docs/CIERRE_STCS_20261115.md`. Las referencias a v0.6.7
+posteriores son antecedentes, no una instrucción de restaurar el firmware
+antiguo después de la publicación final.
+
 ## Objetivo del dispositivo
 
 El dispositivo Waveshare ESP32-S3-Touch-LCD-1.46 funcionara como un comunicador CAA portatil. Su objetivo es permitir que el nino seleccione pictogramas frecuentes desde una pantalla redonda tactil, sin depender de un celular o computador.

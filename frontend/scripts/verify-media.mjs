@@ -68,6 +68,13 @@ export async function verifyMedia({
     .png()
     .toBuffer();
   try {
+    // Cloud maintenance endpoints never inherit adult portal permissions.
+    for (const path of [
+      "/api/internal/media-run",
+      "/api/internal/media-storage",
+    ])
+      for (const token of [undefined, admin, teacher])
+        await call(path, token, {}, 403);
     // A valid PNG header does not mean the compressed pixel payload is decodable.
     await call(
       "/api/stcs/images?profileId=" + profileId,

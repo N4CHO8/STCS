@@ -1,5 +1,13 @@
 # Hito 3: imágenes y frases propias
 
+**Actualización 15/11:** la preparación de nube y capacidad ampliada se documenta
+en [CIERRE_STCS_20261115.md](CIERRE_STCS_20261115.md). El límite coordinado
+ahora es 180 activos, 45 por categoría; la última página de doce tiene uno.
+El propietario confirmó imágenes, navegación y muestras de voces distintas
+de primera/última página en las cuatro categorías. No implica escuchar 180 WAV
+en hardware ni conservarlos todos offline. El detalle de 32 y el estado local
+siguientes son evidencia histórica del 13/11, no la configuración vigente.
+
 Estado: implementación en la rama local `codex/hito3-medios-voz`. No publicada,
 sin migraciones ni archivos nuevos en Supabase o Vercel. Las pruebas usan
 PostgreSQL descartable y almacenamiento local independiente de producción.

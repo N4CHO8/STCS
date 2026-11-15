@@ -145,7 +145,7 @@ export async function uploadImage(user: AuthTokenPayload, file: File) {
     );
     if (count.rows[0].n >= DEVICE_MAX_PICTOGRAMS * 2)
       throw new InputValidationError(
-        "El perfil alcanzó el límite de 64 imágenes. Reutiliza una imagen o solicita limpieza de archivos sin usar.",
+        `El perfil alcanzó el límite de ${DEVICE_MAX_PICTOGRAMS * 2} imágenes. Reutiliza una imagen o solicita limpieza de archivos sin usar.`,
       );
     const prefix = `images/${profile.id}/${id}`;
     await putMedia(prefix + ".png", image.png, "image/png");
@@ -234,7 +234,7 @@ export async function claimAudioJob() {
 export async function withAudioState<T extends { id: string; message: string }>(
   items: T[],
 ) {
-  if (!items.length) return items;
+  if (!items.length) return [];
   const r = await query(
     "SELECT cache_key,status,error,sha256,byte_size FROM phrase_audio WHERE cache_key=ANY($1::text[])",
     [items.map((p) => phraseKey(p.message))],

@@ -1,5 +1,9 @@
 # STCS
 
+La publicación de medios privados, voz alojada y nueva interfaz del ESP está
+en cierre técnico. Consultar [estado, capacidad y evidencia del 15/11](docs/CIERRE_STCS_20261115.md)
+antes de usar los procedimientos históricos de laboratorio.
+
 STCS es un proyecto de comunicacion aumentativa y alternativa para ninos con TEA. La version final se organiza en tres piezas principales:
 
 - Plataforma web para cuidadores, docentes, especialistas y administradores.
@@ -13,7 +17,7 @@ El nino interactua con el dispositivo ESP32. La web se usa para configurar picto
 - Web: `Next.js 16.4.6`, `React`, `TypeScript`, `Tailwind CSS`.
 - API: `Next.js API Routes` dentro de `frontend/src/app/api`.
 - Base de datos: `Supabase PostgreSQL`.
-- Firmware: `PlatformIO + Arduino framework`.
+- Firmware activo: `Arduino CLI + Arduino framework`; PlatformIO es un esqueleto histórico.
 - Dispositivo objetivo: `Waveshare ESP32-S3-Touch-LCD-1.46`.
 - Despliegue web: `Vercel`.
 - Versionamiento: `Git + GitHub`.

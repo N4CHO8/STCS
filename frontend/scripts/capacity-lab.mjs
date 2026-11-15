@@ -156,6 +156,39 @@ try {
       }
     }
   }
+  if (process.argv.includes("--unique-phrases")) {
+    // Only our numbered, isolated fixtures. Real messages and the five manual
+    // baseline pictograms remain untouched; every generated phrase has its own job.
+    const owned = await db.query(
+      "SELECT id,label FROM pictograms WHERE id=ANY($1::uuid[]) AND student_profile_id=$2 AND is_active=TRUE",
+      [state.ids, config.profileId],
+    );
+    await db.query("BEGIN");
+    try {
+      for (const item of owned.rows) {
+        assert.match(item.label, /^Ensayo \d+$/);
+        const phrase =
+          "Este es el mensaje de ensayo número " +
+          Number(item.label.split(" ")[1]) +
+          ".";
+        const key = createHash("sha256")
+          .update(JSON.stringify([MEDIA_VOICE, phrase]))
+          .digest("hex");
+        await db.query(
+          "INSERT INTO phrase_audio(cache_key,phrase,voice) VALUES($1,$2,$3) ON CONFLICT DO NOTHING",
+          [key, phrase, MEDIA_VOICE],
+        );
+        await db.query(
+          "UPDATE pictograms SET message=$2,audio_key=$3 WHERE id=$1",
+          [item.id, phrase, key],
+        );
+      }
+      await db.query("COMMIT");
+    } catch (error) {
+      await db.query("ROLLBACK");
+      throw error;
+    }
+  }
   writeFileSync(statePath, JSON.stringify(state, null, 2));
   const board = await fetch(
     base + "/api/stcs/devices/" + config.deviceCode + "/config",

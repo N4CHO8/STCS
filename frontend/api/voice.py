@@ -24,6 +24,8 @@ def get_voice():
     global voice
     if voice is not None:
         return voice
+    if voice is not None:
+        return voice
     from piper import PiperVoice
     # /tmp is only an expendable model cache. Generated audio persists through the Node storage adapter.
     folder = Path(os.environ.get("STCS_TTS_CACHE_DIR", "/tmp/stcs-piper"))

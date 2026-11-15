@@ -491,6 +491,8 @@ void page_event(lv_event_t *event) {
   lv_async_call(show_category_async, active_category);
 }
 void swipe_event(lv_event_t *event) {
+  if (!active_category)
+    return;
   lv_dir_t direction = lv_indev_get_gesture_dir(lv_indev_get_act());
   if (direction != LV_DIR_LEFT && direction != LV_DIR_RIGHT)
     return;
@@ -499,14 +501,16 @@ void swipe_event(lv_event_t *event) {
   int next =
       static_cast<int>(current_page) + (direction == LV_DIR_LEFT ? 1 : -1);
   if (next >= 0 && next < pages) {
+    lv_indev_wait_release(lv_indev_get_act());
     current_page = next;
     lv_async_call(show_category_async, active_category);
   }
 }
 void create_status(const char *text) {
   status_label = create_label(lv_scr_act(), text, &font12);
-  lv_obj_set_width(status_label, 220);
-  lv_obj_set_pos(status_label, 96, 380);
+  lv_obj_set_width(status_label, 160);
+  lv_label_set_long_mode(status_label, LV_LABEL_LONG_DOT);
+  lv_obj_set_pos(status_label, 126, 380);
   lv_obj_set_style_text_align(status_label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
 }
 void show_home() {

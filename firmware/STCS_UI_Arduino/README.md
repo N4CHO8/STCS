@@ -1,4 +1,11 @@
-# STCS UI — firmware v0.7.0-media
+# STCS UI — firmware v0.8.1-cloud
+
+Controles esenciales superiores, flechas laterales y frase inferior de lectura.
+Volver — Hablar — Borrar en categorías. Capacidad coordinada: **180 activos,
+45 por categoría, 12 páginas de cuatro (última con uno)**. Comprobación física
+por etapas 64/128/160/180; con 180 se probaron muestras de frases distintas.
+No es el límite físico absoluto ni 180 voces offline.
+La zona táctil inferior defectuosa sigue siendo una limitación del hardware.
 
 Implementación reproducible para Waveshare ESP32-S3-Touch-LCD-1.46:
 pantalla/táctil SPD2010, DAC PCM5101 I2S, 16 MiB flash y 8 MiB OPI PSRAM.
@@ -30,8 +37,8 @@ para LAN aislada; HTTPS valida certificados por defecto.
 - STCS_Network.cpp: configuración asignada, HTTP con soporte chunked,
   SHA-256 y tamaño verificados, Wi-Fi móvil, cola durable/ACK y heartbeat.
 - STCS_MediaCache.cpp: LittleFS sin autoformato; caché LRU de 512 KiB/48
-  archivos, reserva de 128 KiB y audio activo protegido durante reproducción.
-- STCS_UI.cpp: cuatro categorías, hasta ocho elementos por categoría; imágenes
+  archivos, reserva de 256 KiB y audio activo protegido durante reproducción.
+- STCS_UI.cpp: cuatro categorías, hasta 45 elementos por categoría; imágenes
   RGB565 de 96×96 en PSRAM. El tablero se aplica al limpiar la frase y terminar
   reproducción, para no invalidar punteros de selecciones activas.
 - Audio_PCM5101.cpp: tarea dedicada con pila 16 KiB y cola de comandos;
@@ -47,10 +54,13 @@ las cuatro categorías se usan como recursos de navegación embebidos.
 
 El ESP conserva metadatos y una caché limitada de archivos asignados. Descarga
 voz bajo demanda. Sin servidor reproduce los archivos conservados, no aquellos
-nunca descargados o expulsados. El límite de 32 imágenes puede superar la
+nunca descargados o expulsados. El límite de 180 imágenes puede superar la
 caché persistente: no se promete que todas sobrevivan a un arranque offline.
 La recuperación de imágenes faltantes se reintenta al volver a conectar.
 
 Consultar [arquitectura, configuración y evidencia Hito 3](../../docs/HITO3_MEDIOS_Y_VOZ.md).
-Las pruebas físicas del nuevo firmware son de laboratorio; su publicación y
-uso contra la nube requieren configuración/migración separadas autorizadas.
+El tablero persistente y la cola se vinculan a URL, código y clave individual;
+una configuración de laboratorio nunca se importa como actividad de producción.
+La primera carga tras cambiar ese ámbito requiere red. Rotar clave al reasignar.
+La preparación de nube, mediciones, recuperación y estado real de instalación
+están en [el cierre técnico](../../docs/CIERRE_STCS_20261115.md).

@@ -45,8 +45,10 @@ import {
 import {
   DEVICE_CATEGORIES,
   DEVICE_ITEMS_PER_PAGE,
+  DEVICE_MAX_ITEMS_PER_CATEGORY,
+  DEVICE_MAX_PAGES_PER_CATEGORY,
   DEVICE_MAX_PICTOGRAMS,
-  DEVICE_PICTOGRAM_ASSETS,
+  ALL_PICTOGRAM_ASSETS,
   type DeviceCategory,
 } from "@/lib/pictogramCatalog";
 import type {
@@ -198,7 +200,10 @@ export function CommunicatorView({
     <div className="grid gap-6">
       <PageHeader
         action={
-          <SmallButton onClick={() => setEditing("new")}>
+          <SmallButton
+            disabled={pictograms.length >= DEVICE_MAX_PICTOGRAMS}
+            onClick={() => setEditing("new")}
+          >
             <span className="inline-flex items-center gap-2">
               <Plus className="h-4 w-4" />
               Agregar
@@ -245,8 +250,17 @@ export function CommunicatorView({
                   {categoryPictograms.length} pictogramas en {pageCount}{" "}
                   {pageCount === 1 ? "pagina" : "paginas"}
                 </p>
+                <p className="mt-2 text-sm font-semibold text-stone-600">
+                  Límite: {DEVICE_MAX_ITEMS_PER_CATEGORY} por categoría, hasta{" "}
+                  {DEVICE_MAX_PAGES_PER_CATEGORY} páginas (la última con un
+                  pictograma). {pictograms.length}/{DEVICE_MAX_PICTOGRAMS}{" "}
+                  activos en total.
+                </p>
               </div>
-              <SmallButton onClick={() => setEditing("new")}>
+              <SmallButton
+                disabled={pictograms.length >= DEVICE_MAX_PICTOGRAMS}
+                onClick={() => setEditing("new")}
+              >
                 Agregar
               </SmallButton>
             </div>
@@ -284,6 +298,8 @@ export function CommunicatorView({
           pictogram={editing === "new" ? null : editing}
           suggestedPosition={nextPosition}
           profileId={profileId}
+          pictograms={pictograms}
+          initialCategory={selectedCategory}
         />
       ) : null}
     </div>
@@ -608,6 +624,8 @@ function PictogramEditor({
   pictogram,
   suggestedPosition,
   profileId,
+  pictograms,
+  initialCategory,
 }: {
   onClose: () => void;
   onDeleted: (pictogramId: string) => void;
@@ -615,11 +633,13 @@ function PictogramEditor({
   pictogram: Pictogram | null;
   suggestedPosition: number;
   profileId: string;
+  pictograms: Pictogram[];
+  initialCategory: DeviceCategory;
 }) {
   const [form, setForm] = useState({
     label: pictogram?.label ?? "",
     message: pictogram?.message ?? "",
-    category: pictogram?.category ?? "Necesidades",
+    category: pictogram?.category ?? initialCategory,
     colorTone: pictogram?.colorTone ?? "sky",
     iconName: pictogram?.iconName ?? "MessageCircle",
     imagePath: pictogram?.imagePath ?? "",
@@ -678,13 +698,23 @@ function PictogramEditor({
       if (!abort.signal.aborted) setIsUploading(false);
     }
   }
-  const imageOptions = DEVICE_PICTOGRAM_ASSETS.filter(
+  const imageOptions = ALL_PICTOGRAM_ASSETS.filter(
     (item) => item.category === form.category,
   );
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (isSaving || isUploading) return;
+    if (
+      pictograms.filter(
+        (item) => item.category === form.category && item.id !== pictogram?.id,
+      ).length >= DEVICE_MAX_ITEMS_PER_CATEGORY
+    ) {
+      setErrorMessage(
+        `La categoría ya tiene ${DEVICE_MAX_ITEMS_PER_CATEGORY} pictogramas. Retira uno o elige otra categoría.`,
+      );
+      return;
+    }
     if (!form.imagePath) {
       setErrorMessage("Sube una imagen o selecciona una del catálogo.");
       return;

@@ -4,9 +4,11 @@
 
 constexpr uint8_t STCS_CATEGORY_COUNT = 4;
 constexpr uint8_t STCS_ITEMS_PER_PAGE = 4;
-constexpr uint8_t STCS_MAX_PAGES_PER_CATEGORY = 14;
-constexpr uint8_t STCS_ITEMS_PER_CATEGORY =
-    STCS_ITEMS_PER_PAGE * STCS_MAX_PAGES_PER_CATEGORY;
+// Keep aligned with frontend/src/lib/pictogramCatalog.ts. Twelve pages does
+// not mean 48 items: the tested operational limit is 45 per category.
+constexpr uint8_t STCS_ITEMS_PER_CATEGORY = 45;
+constexpr uint8_t STCS_MAX_PAGES_PER_CATEGORY =
+    (STCS_ITEMS_PER_CATEGORY + STCS_ITEMS_PER_PAGE - 1) / STCS_ITEMS_PER_PAGE;
 constexpr uint8_t STCS_MAX_PICTOGRAMS = STCS_CATEGORY_COUNT * STCS_ITEMS_PER_CATEGORY;
 
 struct StcsPictogramConfig {

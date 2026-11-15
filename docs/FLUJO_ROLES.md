@@ -38,6 +38,11 @@ flowchart TD
 
 ## Evaluación local del Hito 3
 
+Actualización 15/11: los mismos permisos protegen medios privados en Supabase
+Storage y voz alojada en Vercel. El alcance y las pruebas de la publicación
+están en [CIERRE_STCS_20261115.md](CIERRE_STCS_20261115.md); lo siguiente
+conserva el contexto del ensayo local inicial.
+
 La rama local elimina `/demo` y sus enlaces. Los accesos sintéticos públicos
 se documentan únicamente en README; el login y los permisos no cambian.
 Imágenes y WAV nuevos se sirven solo por rutas autenticadas de usuarios

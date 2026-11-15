@@ -31,7 +31,6 @@ bool STCS_AudioStorage_Init() {
     return false;
   }
   LittleFS.mkdir("/v7cache");
-  LittleFS.mkdir("/v7queue");
   File dir = LittleFS.open("/v7cache");
   for (File f = dir.openNextFile(); f; f = dir.openNextFile()) {
     String path = full_name(f);

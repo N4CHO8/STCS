@@ -1,3 +1,5 @@
+import additions from "./additionalPictograms.json" with { type: "json" };
+
 export const DEVICE_CATEGORIES = [
   "Necesidades",
   "Emociones",
@@ -8,9 +10,11 @@ export const DEVICE_CATEGORIES = [
 export type DeviceCategory = (typeof DEVICE_CATEGORIES)[number];
 
 export const DEVICE_ITEMS_PER_PAGE = 4;
-export const DEVICE_MAX_PAGES_PER_CATEGORY = 14;
-export const DEVICE_MAX_ITEMS_PER_CATEGORY =
-  DEVICE_ITEMS_PER_PAGE * DEVICE_MAX_PAGES_PER_CATEGORY;
+// Operational limit verified on the 8 MiB PSRAM device; last page has one item.
+export const DEVICE_MAX_ITEMS_PER_CATEGORY = 45;
+export const DEVICE_MAX_PAGES_PER_CATEGORY = Math.ceil(
+  DEVICE_MAX_ITEMS_PER_CATEGORY / DEVICE_ITEMS_PER_PAGE,
+);
 export const DEVICE_MAX_PICTOGRAMS =
   DEVICE_CATEGORIES.length * DEVICE_MAX_ITEMS_PER_CATEGORY;
 
@@ -229,12 +233,39 @@ export const DEVICE_PICTOGRAM_ASSETS: DevicePictogramAsset[] = [
   },
 ];
 
+// Additional public communication symbols (Lucide, ISC), not patient uploads.
+// Existing defaults retain their IDs and positions; this is a catalog, not a seed.
+export const ADDITIONAL_PICTOGRAM_ASSETS: DevicePictogramAsset[] =
+  Object.entries(additions).flatMap(([category, rows], categoryIndex) =>
+    rows.map(([label, message], index) => {
+      const number =
+        21 +
+        Object.values(additions)
+          .slice(0, categoryIndex)
+          .reduce((n, group) => n + group.length, 0) +
+        index;
+      return {
+        id: `caa00000-0000-4000-8000-${String(number).padStart(12, "0")}`,
+        label,
+        message,
+        category: category as DeviceCategory,
+        colorTone: ["sky", "yellow", "sage", "blue"][categoryIndex],
+        iconName: "MessageCircle",
+        imagePath: `/pictograms/extra-${number}.png`,
+        position: number,
+      };
+    }),
+  );
+export const ALL_PICTOGRAM_ASSETS = [
+  ...DEVICE_PICTOGRAM_ASSETS,
+  ...ADDITIONAL_PICTOGRAM_ASSETS,
+];
 export const DEVICE_IMAGE_PATHS = new Set(
-  DEVICE_PICTOGRAM_ASSETS.map((item) => item.imagePath),
+  ALL_PICTOGRAM_ASSETS.map((item) => item.imagePath),
 );
 
 export const isDeviceCategory = (value: string): value is DeviceCategory =>
   DEVICE_CATEGORIES.includes(value as DeviceCategory);
 
 export const getCatalogAsset = (imagePath: string) =>
-  DEVICE_PICTOGRAM_ASSETS.find((item) => item.imagePath === imagePath);
+  ALL_PICTOGRAM_ASSETS.find((item) => item.imagePath === imagePath);
