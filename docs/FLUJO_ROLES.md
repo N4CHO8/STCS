@@ -36,6 +36,18 @@ flowchart TD
   admin --> config[Configurar nombre de app y soporte]
 ```
 
+## Evaluación local del Hito 3
+
+Actualización 15/11: los mismos permisos protegen medios privados en Supabase
+Storage y voz alojada en Vercel. El alcance y las pruebas de la publicación
+están en [CIERRE_STCS_20261115.md](CIERRE_STCS_20261115.md); lo siguiente
+conserva el contexto del ensayo local inicial.
+
+La rama local elimina `/demo` y sus enlaces. Los accesos sintéticos públicos
+se documentan únicamente en README; el login y los permisos no cambian.
+Imágenes y WAV nuevos se sirven solo por rutas autenticadas de usuarios
+asignados o del dispositivo individual. Admin y adultos ajenos son rechazados.
+
 ## Decisiones de privacidad
 
 - Un docente no recibe diagnóstico, notas privadas, edad, contexto, métricas ni
@@ -79,7 +91,7 @@ La primera incorporación de responsables clínicos en una instalación sin ning
 
 ## Perfiles demo en la nube
 
-/demo muestra únicamente los tres accesos actuales de especialista, docente y apoderado de Luis, cada uno con contraseña sencilla distinta. Son accesos públicos de demostración con correos ficticios; usan /login, sesiones revocables, Supabase y el ESP físico. El administrador conserva su correo y contraseña personales.
+En la versión publicada previa, /demo muestra únicamente los tres accesos actuales de especialista, docente y apoderado de Luis, cada uno con contraseña sencilla distinta. Son accesos públicos de demostración con correos ficticios; usan /login, sesiones revocables, Supabase y el ESP físico. El administrador conserva su correo y contraseña personales.
 
 La demo actual conserva la marca técnica is_private_test de su aprovisionamiento inicial. No se cambian identidades ni asignaciones para renombrar el entorno en la interfaz. Esa marca persistida permite omitir activación, nunca el dominio del correo ni una propiedad del JWT; el portal no puede modificarla ni convertir una cuenta de prueba en administradora. Las asignaciones entre demostración y datos reales se rechazan en API y base, incluidas rutas antiguas.
 

@@ -7,6 +7,8 @@ uint8_t Touch_interrupts=0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool I2C_Read_Touch(uint8_t Driver_addr, uint16_t Reg_addr, uint8_t *Reg_data, uint32_t Length)
 {
+  STCS_I2C_Guard guard;
+  memset(Reg_data,0,Length);
   Wire.beginTransmission(Driver_addr);
   Wire.write((uint8_t)(Reg_addr >> 8));
   Wire.write((uint8_t)Reg_addr);
@@ -14,7 +16,7 @@ bool I2C_Read_Touch(uint8_t Driver_addr, uint16_t Reg_addr, uint8_t *Reg_data, u
     printf("The I2C transmission fails. - I2C Read Touch\r\n");
     return false;
   }
-  Wire.requestFrom(Driver_addr, Length);
+  if(Wire.requestFrom(Driver_addr, Length)!=Length)return false;
   while (Wire.available()) {
     *Reg_data++ =Wire.read();
   }
@@ -22,6 +24,7 @@ bool I2C_Read_Touch(uint8_t Driver_addr, uint16_t Reg_addr, uint8_t *Reg_data, u
 }
 bool I2C_Write_Touch(uint8_t Driver_addr, uint16_t Reg_addr, const uint8_t *Reg_data, uint32_t Length)
 {
+ STCS_I2C_Guard guard;
  Wire.beginTransmission(Driver_addr);
  Wire.write((uint8_t)(Reg_addr >> 8));
  Wire.write((uint8_t)Reg_addr);

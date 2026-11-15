@@ -1,6 +1,26 @@
 # Conexiones recuperadas — 2026-11-11
 
-## Demo vigente — 12 de noviembre de 2026
+## Preparación de publicación — 15 de noviembre de 2026
+
+Se verificaron accesos a GitHub, Supabase STCS y Vercel. La migración aditiva
+de medios se aplicó tras respaldo y restauración local comprobada; bucket
+`stcs-media` privado y síntesis Piper en función Python Vercel comprobados.
+La nueva credencial de Storage fue configurada y rotada por el propietario.
+No leerla ni copiarla a documentación. La promoción final de main y el ESP
+HTTPS se registran en [el cierre técnico](CIERRE_STCS_20261115.md).
+Las secciones siguientes describen publicaciones anteriores, no el estado
+actual de la rama. El desarrollo habitual sigue compartiendo producción;
+solo los runners aislados son aptos para pruebas de escritura masiva.
+
+## Hito 3 local — 13 de noviembre de 2026
+
+La rama `codex/hito3-medios-voz` retira `/demo`; los accesos sintéticos se
+documentan en README. Sus imágenes y voz se probaron en un laboratorio local
+con PostgreSQL descartable. No se publicaron estos cambios ni se ejecutó la
+nueva migración en Supabase. La descripción siguiente corresponde a la
+versión previamente publicada.
+
+## Demo publicada — 12 de noviembre de 2026
 
 La única demostración publicada en /demo es Luis y su ESP físico, con las tres
 cuentas `*.prueba01@stcs.test` y contraseñas simples distintas. Se retiraron de

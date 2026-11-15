@@ -88,3 +88,19 @@ el frontend no recibe ese token. Workflow reproducible: `.github/workflows/verif
 Las fixtures históricas Alex/Luna solo se aprovisionan durante la suite aislada. El helper exige STCS_TEST_ISOLATED=1 y PostgreSQL en localhost; se comprueba que rechace una conexión remota antes de consultar. El comando demo:provision está retirado y rechaza --apply. No crea ni restaura demos en Supabase.
 
 La suite comprueba que /demo muestre exclusivamente los tres accesos actuales de Luis, sin credenciales antiguas, y usa sus contraseñas actuales en las fixtures locales para probar el login. Las credenciales publicadas son deliberadamente públicas y solo sirven para demostración; las futuras cuentas reales requieren activación y contraseñas elegidas por sus titulares.
+
+## Hito 3 — resultado vigente del 13 de noviembre
+
+La suite actual pasa **248 comprobaciones de integración + 2 de caída de base**.
+Incluye carga normalizada de imágenes propias, archivos dañados/forjados/grandes,
+permisos de medios, asociación imagen/frase, concesiones de voz, WAV inválido,
+reutilización, frase editada, preview obsoleto, estado de error y reintento,
+posición libre con huecos y ausencia de eventos inventados por configurar.
+Además ejecuta `verify-media-worker.mjs`: el proceso real sobrevive a un 503 y
+reconecta contra un transporte loopback descartable. No inicia Piper ni crea
+registros durante esa comprobación de reconexión.
+
+Los archivos de prueba se guardan en un directorio temporal distinto por
+corrida y se eliminan al terminar. La migración de medios se aplica solamente
+al preparar PostgreSQL descartable. Las pruebas físicas y su diferencia con
+las automatizadas se documentan en [HITO3_MEDIOS_Y_VOZ.md](HITO3_MEDIOS_Y_VOZ.md).

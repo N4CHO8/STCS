@@ -1,5 +1,6 @@
 // Integration tests use isolated fictitious rows and delete only those UUIDs afterwards.
 import assert from "node:assert/strict";
+import { DEVICE_MAX_ITEMS_PER_CATEGORY } from "../src/lib/pictogramCatalog.ts";
 import { testSession } from "./lib/test-session.mjs";
 import { verifyCloudDemo } from "./verify-cloud-demo.mjs";
 import { randomUUID, createHmac, createHash } from "node:crypto";
@@ -564,7 +565,7 @@ try {
   );
   // Count and INSERT share a transaction lock; only eight concurrent creations fit a category.
   const concurrent = await Promise.all(
-    Array.from({ length: 12 }, (_, i) =>
+    Array.from({ length: DEVICE_MAX_ITEMS_PER_CATEGORY + 4 }, (_, i) =>
       fetch(base + `/api/stcs/pictograms?profileId=${profiles[0]}`, {
         method: "POST",
         headers: {
@@ -579,9 +580,12 @@ try {
       }),
     ),
   );
-  assert.equal(concurrent.filter((r) => r.status === 201).length, 8);
+  assert.equal(
+    concurrent.filter((r) => r.status === 201).length,
+    DEVICE_MAX_ITEMS_PER_CATEGORY,
+  );
   assert.equal(concurrent.filter((r) => r.status === 409).length, 4);
-  checks += 12;
+  checks += DEVICE_MAX_ITEMS_PER_CATEGORY + 4;
   await api(6, "/api/auth/logout", {}, 200);
   await api(6, "/api/auth/me", null, 401);
 

@@ -4,7 +4,7 @@ import { verifyPrivateProfiles } from "./verify-private-profile.mjs";
 import { testSession } from "./lib/test-session.mjs";
 import { randomUUID, createHmac, createHash } from "node:crypto";
 import bcrypt from "bcryptjs";
-import { HARDWARE_DEMO_ACCOUNTS } from "../src/lib/hardware-demo-accounts.ts";
+import { HARDWARE_DEMO_ACCOUNTS } from "./fixtures/hardware-demo-accounts.ts";
 import { provisionCloudDemo } from "./lib/cloud-demo.mjs";
 import {
   CLOUD_DEMO_PASSWORD,
@@ -23,14 +23,12 @@ export async function verifyCloudDemo({
     extraId = randomUUID();
   let checks = 0;
   const demoPage = await fetch(base + "/demo");
-  assert.equal(demoPage.status, 200);
-  const demoHtml = await demoPage.text();
-  for (const a of HARDWARE_DEMO_ACCOUNTS) {
-    assert.ok(demoHtml.includes(a.email));
-    assert.ok(demoHtml.includes(a.password));
+  assert.equal(demoPage.status, 404);
+  const loginPage = await (await fetch(base + "/login")).text();
+  assert.ok(!loginPage.includes('href="/demo"'));
+  for (const account of HARDWARE_DEMO_ACCOUNTS) {
+    assert.ok(!loginPage.includes(account.password));
   }
-  for (const a of CLOUD_DEMO_ACCOUNTS) assert.ok(!demoHtml.includes(a.email));
-  assert.ok(!demoHtml.includes(CLOUD_DEMO_PASSWORD));
   checks++;
   await assert.rejects(
     provisionCloudDemo({

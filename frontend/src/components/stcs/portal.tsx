@@ -377,8 +377,9 @@ export function Portal() {
               className="rounded-xl border border-sky-200 bg-sky-50 p-4 text-sm"
             >
               Demostración con dispositivo físico. Los cambios se guardan en la
-              nube y se comparten entre los responsables asignados. Los accesos
-              demo son públicos: utiliza únicamente información ficticia.
+              plataforma y se comparten entre los responsables asignados. Los
+              accesos demo son públicos: utiliza únicamente información
+              ficticia.
             </p>
           )}
           {data?.isDemo && (
@@ -394,12 +395,9 @@ export function Portal() {
           {role === "admin" && (
             <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-emerald-50 p-4 text-sm">
               <p>
-                Cuenta real de administrador. Puedes probar los otros perfiles
-                con sus cuentas demo.
+                Sesión de administrador. Puedes probar los otros perfiles con
+                sus cuentas demo.
               </p>
-              <Link href="/demo" className="font-semibold underline">
-                Ver accesos demo
-              </Link>
             </div>
           )}
           {error && (

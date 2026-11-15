@@ -1,3 +1,4 @@
+import { scheduleVoicePreparation } from "@/lib/server/cloud-voice";
 import { NextRequest, NextResponse } from "next/server";
 
 import { errorResponse } from "@/lib/server/apiResponse";
@@ -20,6 +21,7 @@ export async function POST(request: NextRequest) {
       parsePictogramInput(await request.json()),
     );
 
+    scheduleVoicePreparation();
     return NextResponse.json(
       {
         message: "Pictograma agregado y guardado en el tablero.",
