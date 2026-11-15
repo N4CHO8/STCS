@@ -10,3 +10,7 @@ bool STCS_Network_QueueEvent(const char* event_type, const char* pictogram_id,
                              const char* message);
 bool STCS_Network_RequestAudio(const char *id,const char *hash,uint32_t bytes);
 bool STCS_Network_Online();
+void STCS_Network_RequestWifiSetup();
+bool STCS_Network_WifiSetupActive();
+// Local adult configuration page only; never serialize or log this value.
+const char *STCS_Network_WifiSetupPassword();

@@ -23,7 +23,7 @@
 #endif
 
 namespace {
-constexpr char VERSION[] = "v0.8.4-fast-start";
+constexpr char VERSION[] = "v0.8.5-wifi-menu";
 constexpr uint32_t IMAGE_BYTES = 96 * 96 * 2, AUDIO_MAX_BYTES = 320044;
 constexpr size_t QUEUE_LIMIT = 64;
 // The parsed board can exceed internal Wi-Fi RAM as capacity grows.
@@ -68,12 +68,14 @@ public:
   }
 };
 void service_audio();
+void service_wifi_setup();
 WebServer portal(80);
 Preferences preferences;
 SemaphoreHandle_t queue_mutex = nullptr, config_mutex = nullptr,
                   audio_mutex = nullptr;
 StcsBoardConfig *pending = nullptr;
 bool has_pending = false, ap_started = false, board_incomplete = false;
+bool wifi_setup_requested = false; // Protected by config_mutex.
 uint32_t board_hash = 0, boot_id = 0, event_sequence = 0;
 uint64_t next_order = 1;
 char wifi_ssid[33] = "", wifi_password[65] = "";
@@ -298,6 +300,7 @@ bool apply_document(JsonDocument &document, bool online) {
   for (JsonObject item : items) {
     if (online) {
       service_audio();
+      service_wifi_setup();
       portal.handleClient();
       vTaskDelay(pdMS_TO_TICKS(1));
     }
@@ -570,8 +573,22 @@ void start_ap() {
   if (ap_started)
     return;
   WiFi.mode(WIFI_AP_STA);
-  ap_started = WiFi.softAP("STCS-Config", STCS_WIFI_SETUP_PASSWORD);
-  printf("STCS_WIFI|state=setup_available\r\n");
+  bool started = WiFi.softAP("STCS-Config", STCS_WIFI_SETUP_PASSWORD);
+  xSemaphoreTake(config_mutex, portMAX_DELAY);
+  ap_started = started;
+  xSemaphoreGive(config_mutex);
+  printf("STCS_WIFI|state=%s\r\n", started ? "setup_available" : "setup_error");
+}
+void service_wifi_setup() {
+  if (xSemaphoreTake(config_mutex, 0) != pdTRUE)
+    return;
+  bool requested = wifi_setup_requested;
+  wifi_setup_requested = false;
+  xSemaphoreGive(config_mutex);
+  // Wi-Fi changes run on the network task, never inside an LVGL callback.
+  // AP+STA preserves the existing connection while the adult opens setup.
+  if (requested)
+    start_ap();
 }
 void service_audio() {
   AudioRequest request = {};
@@ -592,6 +609,7 @@ void service_audio() {
 void network_task(void *) {
   uint32_t poll = 0, heartbeat = 0;
   while (true) {
+    service_wifi_setup();
     portal.handleClient();
     if (WiFi.status() != WL_CONNECTED) {
       if (millis() > 10000)
@@ -724,6 +742,20 @@ void STCS_Network_Loop() {
   }
 }
 bool STCS_Network_Online() { return WiFi.status() == WL_CONNECTED; }
+void STCS_Network_RequestWifiSetup() {
+  if (!config_mutex) return;
+  xSemaphoreTake(config_mutex, portMAX_DELAY);
+  wifi_setup_requested = true;
+  xSemaphoreGive(config_mutex);
+}
+bool STCS_Network_WifiSetupActive() {
+  if (!config_mutex || xSemaphoreTake(config_mutex, pdMS_TO_TICKS(10)) != pdTRUE)
+    return false;
+  bool active = ap_started;
+  xSemaphoreGive(config_mutex);
+  return active;
+}
+const char *STCS_Network_WifiSetupPassword() { return STCS_WIFI_SETUP_PASSWORD; }
 bool STCS_Network_TakeBoardConfig(StcsBoardConfig *out, bool allow_metadata_change) {
   if (!pending || !out ||
       xSemaphoreTake(config_mutex, pdMS_TO_TICKS(10)) != pdTRUE)

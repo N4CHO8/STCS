@@ -81,19 +81,14 @@ export function PictogramVoice({
               : "Voz sin preparar"}
       </p>
       {status === "ready" && (
-        <>
-          <audio
-            key={message}
-            aria-label={`Escuchar frase: ${message}`}
-            className="w-full"
-            controls
-            preload="none"
-            src={`/api/stcs/pictograms/${id}/audio?v=${audioKey}`}
-          />
-          <span className="text-stone-500">
-            Vista previa web del audio preparado para el dispositivo.
-          </span>
-        </>
+        <audio
+          key={message}
+          aria-label={`Escuchar frase: ${message}`}
+          className="w-full"
+          controls
+          preload="none"
+          src={`/api/stcs/pictograms/${id}/audio?v=${audioKey}`}
+        />
       )}
       {error && (
         <p role="alert" className="text-rose-700">
