@@ -1,6 +1,6 @@
 # Cierre técnico del 15 de noviembre de 2026
 
-Estado: publicación en preparación. La rama de trabajo es
+Estado: candidato de nube verificado; promoción e instalación final en curso. La rama de trabajo es
 `codex/hito3-medios-voz`; no confundir una URL de ensayo de Vercel con la
 promoción de `main` al dominio público. Las comprobaciones finales y la carga
 HTTPS del ESP siguen pendientes mientras se completa el ensayo de capacidad.
@@ -49,7 +49,7 @@ retiraron únicamente las cuatro filas de carga añadidas en el laboratorio.
 El límite final coordinado en web/API/firmware es **180, 45 por categoría**.
 Doce páginas no habilitan 48 elementos por categoría.
 
-Por solicitud posterior, el tablero de nube inicial se prepara con **96 activos,
+Por solicitud posterior, el tablero de nube inicial se preparó con **96 activos,
 24 por categoría, seis páginas**. Se preservan los 22 existentes y se añaden 74
 del catálogo. Sus imágenes públicas usan símbolos Lucide bajo ISC, con licencia
 incluida; no son fotos privadas ni un vocabulario clínicamente validado.
@@ -156,6 +156,15 @@ Grabar pantalla y dispositivo con audio, usando exclusivamente datos ficticios.
 Pendientes de validación externa: revisión del profesional por Zoom, uso con
 niños, segunda unidad física, duración prolongada y cortes durante escritura.
 Las pruebas técnicas no acreditan eficacia clínica ni seguridad eléctrica.
+
+En el candidato `23de5e7` se verificaron 96 activos, 24 por categoría y 96 voces
+listas en Supabase. El API real de dispositivo entregó el tablero completo sin
+identidad infantil. Se descargaron 16 archivos de primera/última página de las
+cuatro categorías, verificando tamaño y SHA-256. Medios sin clave: 401.
+GitHub Actions del PR #5 aprobó en la ejecución 43744315681. Las evidencias
+están en `docs/evidencias/publicacion-20261115`; el JSON de nube identifica el
+origen verificado, sin credenciales. La comprobación del dominio público y la
+confirmación física HTTPS se añadirán después de la promoción.
 
 ## Verificación automatizada del candidato
 
