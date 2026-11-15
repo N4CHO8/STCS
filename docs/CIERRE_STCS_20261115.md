@@ -1,5 +1,12 @@
 # Cierre técnico del 15 de noviembre de 2026
 
+Actualización posterior: se corrigió la desaparición de registros por caché y
+se añadió arranque rápido v0.8.4. Resultados nuevos en
+[ARREGLO_REINICIO_ESP_20261115.md](ARREGLO_REINICIO_ESP_20261115.md) y
+[ARRANQUE_RAPIDO_ESP_20261115.md](ARRANQUE_RAPIDO_ESP_20261115.md).
+La evidencia v0.8.2 siguiente se conserva como etapa previa, no como la versión
+instalada actual. Se mantienen 96 activos y el límite operativo de 180.
+
 Estado: web de producción publicada desde `main` y firmware v0.8.2-cloud
 instalado, con conexión confirmada en Supabase. Primer despliegue de esta
 entrega: `dpl_A3bMCL7MnHkAMWDteHMTQgd57FN8`, commit

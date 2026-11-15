@@ -74,6 +74,9 @@ StcsBoardConfig *active_board_config = nullptr;
 SemaphoreHandle_t board_images_mutex = nullptr;
 lv_img_dsc_t downloaded_images[STCS_MAX_PICTOGRAMS] = {};
 bool board_ready = false;
+uint8_t missing_images = 0;
+bool images_changed = false; // Protected by board_images_mutex.
+bool board_reported_complete = false;
 uint32_t waiting_audio_since = 0;
 
 bool playback_active = false;
@@ -191,16 +194,23 @@ lv_obj_t *create_symbol_button(lv_obj_t *parent, const char *text,
   lv_obj_set_style_outline_color(button, color(accent), LV_STATE_PRESSED);
   lv_obj_set_style_outline_pad(button, 1, LV_STATE_PRESSED);
 
-  lv_obj_t *image = lv_img_create(button);
-  lv_img_set_src(image, image_source);
-  // Zoom around the upper-left pivot: LVGL keeps the original object
-  // dimensions. Explicit pixel coordinates avoid clipping/overlap when a 96px
-  // asset is scaled.
-  uint16_t zoom = min((width - 12) * 256 / image_source->header.w,
-                      (height - 30) * 256 / image_source->header.h);
-  lv_img_set_pivot(image, 0, 0);
-  lv_img_set_zoom(image, zoom);
-  lv_obj_set_pos(image, (width - image_source->header.w * zoom / 256) / 2, 4);
+  if (image_source) {
+    lv_obj_t *image = lv_img_create(button);
+    lv_img_set_src(image, image_source);
+    // LVGL keeps the original object dimensions when zooming. Pivot at the
+    // upper-left and position explicitly to avoid clipping and label overlap.
+    uint16_t zoom = min((width - 12) * 256 / image_source->header.w,
+                        (height - 30) * 256 / image_source->header.h);
+    lv_img_set_pivot(image, 0, 0);
+    lv_img_set_zoom(image, zoom);
+    lv_obj_set_pos(image, (width - image_source->header.w * zoom / 256) / 2, 4);
+  } else {
+    // A missing cached image must not remove the communication item or borrow
+    // an unrelated image. Keep its label and mark that image as still loading.
+    lv_obj_t *loading = create_label(button, LV_SYMBOL_DOWNLOAD, &font16);
+    lv_obj_align(loading, LV_ALIGN_TOP_MID, 0, 20);
+    lv_obj_set_style_text_color(loading, color(COLOR_MUTED), LV_PART_MAIN);
+  }
 
   lv_obj_t *label = lv_label_create(button);
   lv_label_set_text(label, text);
@@ -242,6 +252,11 @@ void update_phrase_label() {
     const lv_coord_t start_x = (PHRASE_PANEL_WIDTH - total_width) / 2;
 
     for (uint8_t index = 0; index < phrase_item_count; index++) {
+      if (!phrase_items[index]->phrase_image) {
+        lv_obj_t *loading = create_label(phrase_panel, LV_SYMBOL_DOWNLOAD, &font12);
+        lv_obj_set_pos(loading, start_x + index * (image_size + gap), 5);
+        continue;
+      }
       lv_obj_t *image = lv_img_create(phrase_panel);
       lv_img_set_src(image, phrase_items[index]->phrase_image);
       lv_img_set_pivot(image, 0, 0);
@@ -531,7 +546,12 @@ void show_home() {
                          positions[i][0], positions[i][1], 126, 90,
                          categories[i].color, category_event, &categories[i]);
   create_phrase_panel(310);
-  create_status(board_ready ? "" : "Sincronizando tablero...");
+  char progress[40];
+  snprintf(progress, sizeof(progress), "Imágenes %u/%u",
+           board_ready ? active_board_config->count - missing_images : 0,
+           board_ready ? active_board_config->count : 0);
+  create_status(!board_ready ? "Sincronizando tablero..." :
+                missing_images ? progress : "");
 }
 void show_category(Category *category) {
   configure_screen();
@@ -573,7 +593,7 @@ void show_category(Category *category) {
                   page_event, reinterpret_cast<void *>(1));
   lv_obj_add_event_cb(lv_scr_act(), swipe_event, LV_EVENT_GESTURE, nullptr);
   create_phrase_panel(310);
-  create_status("Toca un pictograma");
+  create_status(missing_images ? "Cargando imágenes..." : "Toca un pictograma");
   printf("STCS_PAGE|page=%u|pages=%u|items=%u|heap=%u|psram=%u\r\n",
          current_page + 1, pages, category->count, (unsigned)ESP.getFreeHeap(),
          (unsigned)ESP.getFreePsram());
@@ -604,6 +624,29 @@ void STCS_UI_ApplyBoardConfig(const StcsBoardConfig *config) {
     return;
   }
 
+  if (STCS_UI_HasBoardMetadata(config)) {
+    // Media-only update: records/phrase pointers stay stable, including during
+    // playback. Adopt only missing buffers; free duplicate incoming ownership.
+    xSemaphoreTake(board_images_mutex, portMAX_DELAY);
+    bool complete = true;
+    for (size_t i = 0; i < config->count; i++) {
+      auto &active = active_board_config->pictograms[i];
+      if (!active.image_data && config->pictograms[i].image_data) {
+        active.image_data = config->pictograms[i].image_data;
+        images_changed = true;
+      } else
+        free(config->pictograms[i].image_data);
+      complete = complete && active.image_data;
+    }
+    bool report = complete && !board_reported_complete;
+    if (report)
+      board_reported_complete = true;
+    xSemaphoreGive(board_images_mutex);
+    if (report)
+      STCS_Network_QueueEvent("board_synced", nullptr, nullptr, "Sistema", nullptr);
+    return;
+  }
+
   stop_playback();
   lv_obj_clean(lv_scr_act());
   status_label = nullptr;
@@ -615,22 +658,27 @@ void STCS_UI_ApplyBoardConfig(const StcsBoardConfig *config) {
   phrase[0] = '\0';
   phrase_item_count = 0;
   *active_board_config = *config;
-  xSemaphoreGive(board_images_mutex);
+  images_changed = false;
 
   for (uint8_t category_index = 0; category_index < CATEGORY_COUNT;
        category_index++) {
     categories[category_index].count = 0;
   }
+  missing_images = 0;
+  board_reported_complete = false;
 
   for (uint8_t index = 0; index < active_board_config->count; index++) {
     StcsPictogramConfig &source = active_board_config->pictograms[index];
     Category *category = find_category(source.category);
-    if (category == nullptr || !source.image_data ||
+    if (category == nullptr ||
         category->count >= STCS_ITEMS_PER_CATEGORY) {
       continue;
     }
 
     Pictogram &target = category->pictograms[category->count++];
+    target = {}; // Clear descriptors that belonged to the freed generation.
+    if (!source.image_data)
+      missing_images++;
     target.id = source.id;
     target.name = source.label;
     target.message = source.message;
@@ -651,10 +699,21 @@ void STCS_UI_ApplyBoardConfig(const StcsBoardConfig *config) {
     }
   }
 
+  board_reported_complete = missing_images == 0;
+  xSemaphoreGive(board_images_mutex);
   board_ready = true;
-  show_home();
-  printf("DEVICE_EVENT|type=board_synced|pictograms=%u\r\n", config->count);
-  STCS_Network_QueueEvent("board_synced", nullptr, nullptr, "Sistema", nullptr);
+  // A completed download is not a navigation request. Category objects and
+  // current_page remain stable; show_category clamps only if the board shrank.
+  if (active_category)
+    show_category(active_category);
+  else
+    show_home();
+  printf("STCS_BOARD|pictograms=%u|images=%u|needs=%u|emotions=%u|actions=%u|places=%u\r\n",
+         config->count, config->count - missing_images, categories[0].count,
+         categories[1].count, categories[2].count, categories[3].count);
+  printf("DEVICE_EVENT|type=board_applied|pictograms=%u\r\n", config->count);
+  if (!missing_images)
+    STCS_Network_QueueEvent("board_synced", nullptr, nullptr, "Sistema", nullptr);
 }
 
 void STCS_Audio_Loop(void) {
@@ -721,4 +780,102 @@ bool STCS_UI_CopyImage(const char *hash, uint8_t *target) {
   }
   xSemaphoreGive(board_images_mutex);
   return copied;
+}
+
+bool STCS_UI_HasBoardMetadata(const StcsBoardConfig *config) {
+  if (!board_ready || !config || !active_board_config ||
+      xSemaphoreTake(board_images_mutex, pdMS_TO_TICKS(100)) != pdTRUE)
+    return false;
+  bool same = active_board_config->count == config->count;
+  for (size_t i = 0; same && i < config->count; i++) {
+    const auto &a = active_board_config->pictograms[i];
+    const auto &b = config->pictograms[i];
+    same = strcmp(a.id, b.id) == 0 && strcmp(a.label, b.label) == 0 &&
+           strcmp(a.message, b.message) == 0 && strcmp(a.category, b.category) == 0 &&
+           strcmp(a.color_tone, b.color_tone) == 0 &&
+           strcmp(a.image_hash, b.image_hash) == 0 &&
+           strcmp(a.audio_hash, b.audio_hash) == 0 &&
+           a.audio_ready == b.audio_ready && a.audio_bytes == b.audio_bytes &&
+           a.position == b.position;
+  }
+  xSemaphoreGive(board_images_mutex);
+  return same;
+}
+
+// The active and incoming generations own separate allocations. Filling a
+// previously empty image does not move records or invalidate selected phrases.
+// No LVGL calls are allowed from this network-task entry point.
+void STCS_UI_OfferImage(const char *hash, const uint8_t *pixels) {
+  if (!pixels || !board_images_mutex || !active_board_config ||
+      xSemaphoreTake(board_images_mutex, pdMS_TO_TICKS(100)) != pdTRUE)
+    return;
+  for (size_t i = 0; i < active_board_config->count; i++) {
+    auto &p = active_board_config->pictograms[i];
+    if (!p.image_data && strcmp(p.image_hash, hash) == 0) {
+      auto *copy = static_cast<uint8_t *>(heap_caps_malloc(
+          96 * 96 * 2, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
+      if (copy) {
+        memcpy(copy, pixels, 96 * 96 * 2);
+        p.image_data = copy;
+        images_changed = true;
+      }
+      break;
+    }
+  }
+  xSemaphoreGive(board_images_mutex);
+}
+
+// Runs only from loop(), after LVGL callbacks return. Preserve the category,
+// page and phrase, and defer redraw while touching the screen or speaking.
+void STCS_UI_RefreshImages() {
+  lv_indev_t *input = lv_indev_get_next(nullptr);
+  // LVGL 8.3.10 exposes state in proc; the get_state accessor is a v9 API.
+  if (playback_active || (input && input->proc.state == LV_INDEV_STATE_PRESSED) ||
+      !board_images_mutex || !active_board_config ||
+      xSemaphoreTake(board_images_mutex, pdMS_TO_TICKS(1)) != pdTRUE)
+    return;
+  if (!images_changed) {
+    xSemaphoreGive(board_images_mutex);
+    return;
+  }
+  const uint8_t previous_missing = missing_images;
+  bool redraw = active_category == nullptr;
+  missing_images = 0;
+  for (size_t i = 0; i < active_board_config->count; i++) {
+    auto &source = active_board_config->pictograms[i];
+    if (!source.image_data) {
+      missing_images++;
+      continue;
+    }
+    Category *category = find_category(source.category);
+    if (!category)
+      continue;
+    for (size_t j = 0; j < category->count; j++) {
+      auto &target = category->pictograms[j];
+      if (!target.image && strcmp(target.id, source.id) == 0) {
+        auto &image = downloaded_images[i];
+        image = {};
+        image.header.cf = LV_IMG_CF_TRUE_COLOR;
+        image.header.w = image.header.h = 96;
+        image.data_size = 96 * 96 * 2;
+        image.data = source.image_data;
+        target.image = target.phrase_image = &image;
+        redraw = redraw || category == active_category;
+        for (size_t selected = 0; selected < phrase_item_count; selected++)
+          redraw = redraw || phrase_items[selected] == &target;
+        break;
+      }
+    }
+  }
+  images_changed = false;
+  const unsigned total = active_board_config->count;
+  xSemaphoreGive(board_images_mutex);
+  if (redraw || (previous_missing && !missing_images)) {
+    if (active_category)
+      show_category(active_category);
+    else
+      show_home();
+  }
+  printf("STCS_BOARD|state=images_updated|pictograms=%u|images=%u\r\n",
+         total, total - missing_images);
 }

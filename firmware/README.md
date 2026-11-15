@@ -1,7 +1,7 @@
 # Firmware ESP32-S3
 
 El sketch reproducible actual está en `STCS_UI_Arduino`; la versión de cierre
-es v0.8.2-cloud (instalada y conexión confirmada en Supabase).
+es v0.8.4-fast-start (instalada y conexión confirmada en Supabase).
 La capacidad operativa es 180 activos, 45 por categoría, con caché acotada.
 Consultar su README y `docs/CIERRE_STCS_20261115.md`. Las referencias a v0.6.7
 posteriores son antecedentes, no una instrucción de restaurar el firmware

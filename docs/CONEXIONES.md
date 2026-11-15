@@ -7,9 +7,11 @@ de medios se aplicó tras respaldo y restauración local comprobada; bucket
 `stcs-media` privado y síntesis Piper en función Python Vercel comprobados.
 La nueva credencial de Storage fue configurada y rotada por el propietario.
 No leerla ni copiarla a documentación. Main fue promovido al dominio público
-y el ESP informa v0.8.2-cloud conectado. Hay 96 activos y 96 voces listas,
+y el ESP informa v0.8.4-fast-start conectado. Hay 96 activos y 96 voces listas,
 con servidor y trabajador locales detenidos. Versiones, confirmaciones físicas
 y limitaciones están en [el cierre técnico](CIERRE_STCS_20261115.md).
+La caché compacta recuperó las 96 imágenes guardadas en 408 ms en hardware;
+medida, condiciones y estado de prueba física en [ARRANQUE_RAPIDO_ESP_20261115.md](ARRANQUE_RAPIDO_ESP_20261115.md).
 Las secciones siguientes describen publicaciones anteriores, no el estado
 actual de la rama. El desarrollo habitual sigue compartiendo producción;
 solo los runners aislados son aptos para pruebas de escritura masiva.
