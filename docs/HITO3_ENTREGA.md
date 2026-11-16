@@ -24,7 +24,7 @@ Preparación del 16 de noviembre de 2026 para la presentación del **27 de novie
 | A8 Repo, despliegue y tablero | [repositorio](REPOSITORIO_HITO3.md), README, CHANGELOG | Main protegida, CI y PR; tag final todavía no existe |
 | A9 Riesgos y deuda | [riesgos.md](riesgos.md) | Incluye riesgos materializados, límites y plan priorizado |
 
-La revisión del Word de Hito 2 confirma 71,25/100. Su criterio de implementación figura **Suficiente, 7,5/15**; el correo resumido decía Insuficiente. Conservar ambos originales y pedir aclaración al profesor si importa para el acta; no alterar la evaluación recibida.
+La revisión de la retroalimentación de Hito 2 orienta el foco hacia arquitectura, modelo de datos, pruebas reproducibles y trazabilidad. Los documentos originales de evaluación se conservan fuera del repositorio público; este índice no publica la calificación ni sustituye esa evaluación.
 
 ## Bloqueantes para afirmar cumplimiento completo
 
