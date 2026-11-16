@@ -13,7 +13,8 @@
     "test:prepare": "node scripts/prepare-isolated-db.mjs",
     "test:isolated": "node scripts/run-isolated.mjs",
     "test:demo": "node scripts/run-isolated.mjs",
-    "demo:provision": "node scripts/provision-cloud-demo.mjs"
+    "demo:provision": "node scripts/provision-cloud-demo.mjs",
+    "test:unit": "node --import ./scripts/test-typescript.mjs --experimental-test-coverage --test-coverage-include=src/lib/server/validation.ts --test-coverage-include=src/lib/permissions.ts --test-coverage-include=src/lib/media-contract.ts --test tests/validation.test.mjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

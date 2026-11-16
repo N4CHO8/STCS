@@ -3,7 +3,7 @@ import { spawn, execFileSync } from "node:child_process";
 import { randomBytes } from "node:crypto";
 import { writeFile } from "node:fs/promises";
 import { performance } from "node:perf_hooks";
-import { hostname, cpus, totalmem } from "node:os";
+import { cpus, totalmem } from "node:os";
 import pg from "pg";
 
 assert.equal(
