@@ -160,17 +160,8 @@ nueva versión. Las migraciones son aditivas y no deben borrarse para revertir
 solo la aplicación. Las credenciales SQL, Storage y trabajador permanecen en
 servidor. El ESP recibe únicamente su credencial individual.
 
-## Guion Hito 3 y límites
+## Límites de la validación técnica
 
-1. Explicar los cuatro roles y entrar como especialista de prueba.
-2. Crear un pictograma con imagen, nombre y frase diferentes; recargar.
-3. Esperar voz lista, sincronizar ESP, seleccionar y reproducir.
-4. Editar solo la frase, volver a sincronizar y comprobar nueva voz/imagen igual.
-5. Mostrar nombres/orientaciones del docente y la ausencia de clínica;
-   contrastar con apoderado y administrador numerado.
-6. Explicar capacidad operativa, caché acotada y conexión por Wi-Fi sin USB de datos.
-
-Grabar pantalla y dispositivo con audio, usando exclusivamente datos ficticios.
 Pendientes de validación externa: revisión del profesional por Zoom, uso con
 niños, segunda unidad física, duración prolongada y cortes durante escritura.
 Las pruebas técnicas no acreditan eficacia clínica ni seguridad eléctrica.

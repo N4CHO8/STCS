@@ -2,8 +2,35 @@ import { NextRequest, NextResponse } from "next/server";
 
 /** Cookies authenticate browsers; reject cross-origin writes before touching data. */
 export function proxy(request: NextRequest) {
-  if (["GET", "HEAD", "OPTIONS"].includes(request.method))
-    return NextResponse.next();
+  // Next reads the request CSP while rendering and applies this fresh nonce to
+  // its hydration scripts. Never reuse a nonce from static HTML or a client.
+  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+  const policy = [
+    "default-src 'self'",
+    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}`,
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: blob:",
+    "font-src 'self' data:",
+    "media-src 'self' blob:",
+    "connect-src 'self'",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'none'",
+  ].join("; ");
+  const headers = new Headers(request.headers);
+  headers.set("x-nonce", nonce);
+  headers.set("Content-Security-Policy", policy);
+  const next = () => {
+    const response = NextResponse.next({ request: { headers } });
+    response.headers.set("Content-Security-Policy", policy);
+    return response;
+  };
+  if (
+    !request.nextUrl.pathname.startsWith("/api/") ||
+    ["GET", "HEAD", "OPTIONS"].includes(request.method)
+  )
+    return next();
   const origin = request.headers.get("origin");
   const site = request.headers.get("sec-fetch-site");
   const cookieSession = request.cookies.has("stcs-session");
@@ -25,6 +52,8 @@ export function proxy(request: NextRequest) {
       { status: 403 },
     );
   }
-  return NextResponse.next();
+  return next();
 }
-export const config = { matcher: "/api/:path*" };
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|pictograms/).*)"],
+};

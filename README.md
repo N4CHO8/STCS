@@ -1,12 +1,12 @@
 # STCS
 
-**Entrega del Hito 3:** [índice A1–A9, evidencia y pendientes](docs/HITO3_ENTREGA.md).
-Presentación: 27/11/2026, 10 minutos de explicación y 5 de demo.
+**Entrega técnica del Hito 3:** [índice A1–A9, evidencia y pendientes](docs/HITO3_ENTREGA.md).
 
 La web, los medios privados y la voz alojada están publicados. El tablero
 inicial tiene 96 pictogramas (24 por categoría); el máximo operativo probado
 es 180 (45 por categoría). Consultar [estado, capacidad y evidencia del 15/11](docs/CIERRE_STCS_20261115.md)
-antes de usar los procedimientos históricos de laboratorio.
+antes de usar los procedimientos históricos de laboratorio. Las pruebas
+automatizadas más recientes están en [CIERRE_20261116](docs/pruebas/CIERRE_20261116.md).
 
 STCS es un proyecto de comunicacion aumentativa y alternativa para ninos con TEA. La version final se organiza en tres piezas principales:
 

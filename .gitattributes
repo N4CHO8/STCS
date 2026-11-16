@@ -1,0 +1,2 @@
+# Preserve generated text reports, whose aligned tables contain trailing spaces.
+docs/pruebas/reportes/*.txt whitespace=-blank-at-eol

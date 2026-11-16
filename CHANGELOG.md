@@ -27,3 +27,11 @@
   esta correspondencia es retrospectiva y no reescribe la autoría.
 
 Referencias: https://github.com/N4CHO8/STCS/pulls.
+
+## Cierre de pruebas y alcance — 16 de noviembre de 2026
+
+- TCS-74/TCS-76: alcance final aceptado por propietario: cola 64 y AP sin timeout; historias finalizadas funcionalmente, sin modificar firmware.
+- TCS-88/TCS-85: diez E2E Chromium sobre PostgreSQL descartable; cobertura de servidor, API y proxy 88,89% de líneas.
+- TCS-59: cabeceras, CSP de scripts con nonce y DAST Baseline; aviso medio de estilos inline justificado, sin alertas altas en ese recorrido.
+- Material personal de exposición retirado del árbol actual; se conserva fuera de Git.
+- Aceptación profesional y ensayos físicos no realizados continúan pendientes.

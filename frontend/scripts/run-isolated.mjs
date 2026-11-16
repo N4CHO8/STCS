@@ -3,7 +3,7 @@ import { spawn } from "node:child_process";
 import { createServer } from "node:http";
 import assert from "node:assert/strict";
 import { randomBytes, randomUUID, createHmac } from "node:crypto";
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, rm, mkdir } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 const testPort = Number(process.env.STCS_TEST_PORT ?? 3100);
@@ -11,6 +11,15 @@ assert.ok(Number.isInteger(testPort) && testPort >= 1024 && testPort <= 65000);
 const testDb = process.env.STCS_TEST_DB ?? "postgres";
 assert.ok(["postgres", "stcs_release_tests"].includes(testDb));
 const mediaDir = await mkdtemp(join(tmpdir(), "stcs-isolated-media-"));
+const coverageDir = process.env.STCS_COVERAGE_DIR;
+if (coverageDir) {
+  assert.ok(
+    resolve(coverageDir).startsWith(
+      resolve("../.codex-work") + (process.platform === "win32" ? "\\" : "/"),
+    ),
+  );
+  await mkdir(coverageDir, { recursive: true });
+}
 const env = {
   ...process.env,
   DATABASE_URL: `postgresql://postgres:stcs-isolated-tests@127.0.0.1:55432/${testDb}`,
@@ -27,6 +36,7 @@ const env = {
   STCS_TEST_ISOLATED: "1",
   STCS_MEDIA_DIR: mediaDir,
   STCS_MEDIA_WORKER_KEY: "isolated-worker-key-never-used-in-cloud-123456",
+  ...(coverageDir ? { NODE_V8_COVERAGE: resolve(coverageDir) } : {}),
 };
 // A local fake transport verifies error handling without sending email or creating Auth users.
 const email = createServer(async (req, res) => {
@@ -58,6 +68,7 @@ await new Promise((resolve) =>
 const server = spawn(
   process.execPath,
   [
+    ...(coverageDir ? ["--require", "./scripts/coverage-preload.cjs"] : []),
     "node_modules/next/dist/bin/next",
     "start",
     "--hostname",
@@ -65,7 +76,7 @@ const server = spawn(
     "--port",
     String(testPort),
   ],
-  { env, stdio: "inherit" },
+  { env, stdio: ["inherit", "inherit", "inherit", "ipc"] },
 );
 try {
   let ready = false;
@@ -151,6 +162,16 @@ try {
     assert.equal(workerCheck, 0, "Voice worker reconnection test failed");
   }
 } finally {
+  if (coverageDir && server.connected) {
+    await new Promise((done) => {
+      const timer = setTimeout(done, 2000);
+      server.once("message", () => {
+        clearTimeout(timer);
+        done();
+      });
+      server.send("stcs-flush-coverage");
+    });
+  }
   server.kill();
   email.close();
   if (

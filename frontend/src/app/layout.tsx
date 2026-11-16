@@ -3,32 +3,33 @@ import { Inter, Outfit } from "next/font/google";
 
 import "./globals.css";
 
+// Per-request CSP nonces require fresh HTML; static assets remain cacheable.
+export const dynamic = "force-dynamic";
+
 const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-display"
+  variable: "--font-display",
 });
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-body"
+  variable: "--font-body",
 });
 
 export const metadata: Metadata = {
   title: "STCS",
   description:
-    "Plataforma STCS para configurar comunicacion CAA y seguimiento con dispositivo ESP32-S3."
+    "Plataforma STCS para configurar comunicacion CAA y seguimiento con dispositivo ESP32-S3.",
 };
 
 export default function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="es">
-      <body className={`${outfit.variable} ${inter.variable}`}>
-        {children}
-      </body>
+      <body className={`${outfit.variable} ${inter.variable}`}>{children}</body>
     </html>
   );
 }

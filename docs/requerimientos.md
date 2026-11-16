@@ -24,9 +24,9 @@ Incluido: MPV técnico y revisión adulta con datos ficticios. Excluido de la de
 
 | ID / atributo | Fuente y estímulo | Entorno / respuesta | Medida y estado |
 | --- | --- | --- | --- |
-| H3-RNF01 Seguridad / Must | Adulto autenticado intenta acceder a perfil/medios ajenos o rol prohibido | API rechaza y no entrega datos privados, incluidas rutas antiguas | 100% de negativos seleccionados; 0 dependencias altas/críticas sin tratar. Suite y npm audit aprobados; DAST pendiente |
+| H3-RNF01 Seguridad / Must | Adulto autenticado intenta acceder a perfil/medios ajenos o rol prohibido | API rechaza y no entrega datos privados, incluidas rutas antiguas | 100% de negativos seleccionados; 0 dependencias altas/críticas sin tratar. Suite y npm audit aprobados; DAST Baseline ejecutado, con alcance y aviso residual en A6 |
 | H3-RNF02 Eficiencia / Must | 5 y 10 clientes consultan el portal con sesión | Build Next y PostgreSQL descartable en localhost; respuesta JSON correcta | p95 ≤2000 ms y errores <1%, 15 s/etapa. Umbral técnico definido en plan, no acordado con stakeholder; no extrapolar a Vercel |
-| H3-RNF03 Mantenibilidad / Should | Se cambia un validador o contrato | CI ejecuta unitarias, integración, tipos y build | Todos los checks aprobados; cobertura ≥70% en tres módulos medidos. Cobertura total de negocio pendiente |
-| H3-RNF04 Recuperación / Should | Reinicio o pérdida de servidor del ESP | Conserva metadatos, recursos disponibles y eventos hasta ACK | 96 tarjetas tras reinicio confirmadas; límite real de cola 64. Requisito Jira de 256 y ensayo completo de cortes pendientes |
+| H3-RNF03 Mantenibilidad / Should | Se cambia un validador o contrato | CI ejecuta unitarias, integración, tipos y build | Todos los checks aprobados; cobertura ≥70% del servidor, rutas API y proxy definidos en A6. Cobertura ampliada de servidor documentada en pruebas/CIERRE_20261116.md |
+| H3-RNF04 Recuperación / Should | Reinicio o pérdida de servidor del ESP | Conserva metadatos, recursos disponibles y eventos hasta ACK | 96 tarjetas tras reinicio confirmadas; límite real de cola 64. 64 aceptados como alcance final; ensayo completo de cortes pendiente |
 
 Seguridad, eficiencia y mantenibilidad se expresan como escenarios medibles de calidad. No se declara certificación ISO/IEC 25010. La carga de 10 clientes es un ensayo acotado del escenario definido, no diez niños/ESP probados.

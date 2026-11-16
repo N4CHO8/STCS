@@ -1,24 +1,50 @@
-# A6 Seguridad y eficiencia medidas
+# A6 Seguridad eficiencia y cobertura
 
-## Seguridad CP-RNF01-S01
+Corte de pruebas del 16/11/2026. [Proveniencia por SHA y herramienta](../pruebas/reportes/cierre-20261116.json). Los ensayos escriben únicamente en PostgreSQL descartable y archivos temporales; no prueban sobre producción.
 
-Auditoría npm de dependencias de producción ejecutada el 16/11/2026: **0 críticas, 0 altas, 0 moderadas, 0 bajas conocidas** en el reporte [npm-audit.json](npm-audit.json). Comando: npm audit --omit=dev --json desde frontend. Significa que el registro no informó vulnerabilidades de esas dependencias al consultar; no es escáner dinámico de la aplicación ni certificación.
+## Seguridad dinámica
 
-La suite CI b972cca contiene 291 comprobaciones de integración con roles, cuentas ajenas, rutas antiguas, sesiones, medios y límites. No contar sus aserciones como igual número de pruebas unitarias ni como porcentaje de líneas.
+ZAP 2.17.0 Baseline mediante imagen Docker por digest, araña y análisis pasivo sobre app local ficticia. Reportes de herramienta: [antes](dast/antes.json), [después JSON](dast/zap.json), [después HTML](dast/zap.html). No hay sesión autenticada en el escáner y no es pentest exhaustivo.
 
-Pendientes: DAST en entorno aislado autorizado y revisión de todos los hallazgos de aplicación; no ejecutar escaneo agresivo de producción ni afirmar 0 fallos de seguridad por npm audit.
+El primer recorrido produjo ocho grupos de avisos (dos medios y seis bajos), sin altos. Se añadieron CSP con nonce por respuesta para scripts, protección anti-frame, nosniff, políticas de origen/referrer/permisos y se retiró X-Powered-By. Se conserva verificación CSRF existente. Los HTML son dinámicos porque un nonce no puede reutilizarse en HTML estático; los recursos estáticos siguen siendo cacheables. No se activó facturación ni se cambió la infraestructura.
 
-## Eficiencia CP-RNF02-L01 y L02
+Resultado posterior: **0 grupos altos, 1 medio y 0 bajos**, además de 3 informativos. El medio restante es **CSP: style-src unsafe-inline**. Es una excepción de compatibilidad para estilos generados por React/gráficos, no para scripts: script-src exige nonce y strict-dynamic en producción. La app no acepta CSS/HTML arbitrario en esos campos; mantiene validación y escape de texto. El riesgo residual de estilos inline se reconoce y se revisará si cambia esa superficie. No se justifica como inexistente ni como garantía contra XSS.
 
-Reporte [carga-local.json](carga-local.json), generado por scripts/measure-quality.mjs. Portal autenticado con datos ficticios existentes, Next build de producción y PostgreSQL en loopback. El script exige STCS_TEST_ISOLATED=1, valida la base exacta y no crea fixtures ni lee .env de producción como destino.
+La auditoría completa npm después de incorporar las herramientas informa **cero vulnerabilidades conocidas**: [reporte](npm-audit-completo.json). Este resultado de dependencias no sustituye DAST ni revisión de autorización. La suite API y el navegador comprueban roles y acceso a otros perfiles.
 
-| Clientes | Duración prevista | Consultas | p95 | Errores | Umbral técnico |
-| --- | --- | --- | --- | --- | --- |
-| 5 | 15 s | 661 | 69,96 ms | 0 | ≤2000 ms y <1% |
-| 10 | 15 s | 1244 | 82,50 ms | 0 | ≤2000 ms y <1% |
+Referencias técnicas: [CSP en Next.js](https://nextjs.org/docs/app/guides/content-security-policy), [ZAP Baseline](https://www.zaproxy.org/docs/docker/baseline-scan/).
 
-El generador, servidor y DB comparten computador. Hay pausa de 50 ms por cliente y calentamiento previo; no son llegadas abiertas ni usuarios humanos. No se midieron primera descarga, TTS, varias placas ni capacidad/cuotas de Vercel. El objetivo técnico se propuso antes del ensayo, todavía no fue ratificado por stakeholder. Si se cambia código/build o condiciones, conservar este reporte como histórico y repetir con nueva identificación.
+## Eficiencia local
 
-## Mantenibilidad H3-RNF03
+[Reporte generado](carga-local.json). Portal autenticado, 15 s por etapa, pausa de 50 ms por cliente, Next build de producción y PostgreSQL en la misma máquina. Umbral técnico previsto: p95 ≤2000 ms y errores <1%; no ratificado como indicador de valor por stakeholder.
 
-Siete pruebas unitarias, JUnit y cobertura del 100% de líneas en permissions.ts, media-contract.ts y server/validation.ts. Los tres son parte del negocio y contrato, pero no todo el negocio. Portal, persistencia, autorización DB y procesos de voz requieren ampliar cobertura antes de afirmar ≥70% global. CI ejecuta la nueva suite. Ver [resultados](../pruebas/RESULTADOS_HITO3.md).
+| Clientes | Consultas | p95 | Errores | Resultado |
+| --- | --- | --- | --- | --- |
+| 5 | 731 | 63.48 ms | 0 | Aprobado |
+| 10 | 1331 | 69.42 ms | 0 | Aprobado |
+
+No extrapolar a Vercel, subidas, síntesis en frío, flota ESP o usuarios humanos. La sesión de carga se revoca al terminar y el servidor local se detiene.
+
+## Cobertura de servidor
+
+**88.89% de líneas**, 74.4% de ramas y 97.39% de funciones. Incluye todos los TS de src/lib/server, rutas src/app/api, proxy.ts, permissions.ts y media-contract.ts, contando archivos sin ejecución. Excluye UI, C++, firmware y función Python. No es 100% del proyecto ni demuestra todos los escenarios.
+
+[Resumen de herramienta](../pruebas/reportes/cobertura-negocio/coverage-summary.json), [detalle](../pruebas/reportes/cobertura-negocio/coverage-final.json), [metadatos](../pruebas/reportes/cobertura-negocio/metadatos.json). c8 usa V8 sobre build webpack sin minificar. El normalizador convierte URLs virtuales propias a rutas de archivo; no cambia rangos, contadores ni fuentes. Se rechaza una conversión que pierda las funciones de portal.ts. El build normal Turbopack tiene sus propios E2E.
+
+## Comandos reproducibles
+
+Con Docker local documentado, desde frontend:
+
+```powershell
+$env:STCS_TEST_ISOLATED='1'
+$env:STCS_TEST_DB='stcs_release_tests'
+npm run test:prepare
+npm run test:coverage
+npm run build
+node node_modules/playwright/cli.js install chromium
+npm run test:e2e
+# DAST solo en este servidor ficticio y aislado:
+node scripts/run-web-quality.mjs --dast
+```
+
+No introducir URLs de producción ni credenciales reales. La sonda fija localhost, comprueba la base exacta y exige que esté vacía antes de crear fixtures; elimina únicamente sus IDs al terminar. CI ejecuta cobertura, API y E2E; ZAP es una comprobación explícita separada por duración y alcance.

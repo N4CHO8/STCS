@@ -5,6 +5,26 @@ import { readFileSync } from "node:fs";
 const testDb = process.env.STCS_TEST_DB ?? "postgres";
 assert.ok(["postgres", "stcs_release_tests"].includes(testDb));
 if (testDb !== "postgres") assert.equal(process.env.STCS_TEST_ISOLATED, "1");
+if (testDb === "stcs_release_tests") {
+  const admin = new pg.Client({
+    connectionString:
+      "postgresql://postgres:stcs-isolated-tests@127.0.0.1:55432/postgres",
+    ssl: false,
+  });
+  await admin.connect();
+  try {
+    if (
+      !(
+        await admin.query(
+          "SELECT 1 FROM pg_database WHERE datname='stcs_release_tests'",
+        )
+      ).rowCount
+    )
+      await admin.query("CREATE DATABASE stcs_release_tests");
+  } finally {
+    await admin.end();
+  }
+}
 let db;
 for (let attempt = 0; attempt < 30; attempt++) {
   const client = new pg.Client({
