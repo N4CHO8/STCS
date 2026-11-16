@@ -1,6 +1,6 @@
 # Informe técnico del Hito 3 de STCS
 
-Ignacio Benegas · Proyecto de Título · INSW422  
+Ignacio Benegas · Proyecto de Título · INSW422
 Profesor Matías Vargas Marín · Corte documental 16 de noviembre de 2026
 
 STCS integra una plataforma web y un comunicador táctil ESP32-S3 para preparar pictogramas personalizados, reproducir frases y consultar actividad con permisos diferenciados. El incremento técnico está publicado y dispone de pruebas automatizadas reproducibles. Las pruebas físicas del 15/11 se registran como resultados informados por su ejecutor, con anexos pendientes. La revisión profesional no se ha realizado; este informe no acredita eficacia clínica ni autorización de un piloto con menores.
