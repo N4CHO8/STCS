@@ -27,17 +27,6 @@ La solucion conserva la arquitectura definida en el Hito 1:
 - La fecha `occurredAt` debe usar formato ISO 8601. Si no se envia, el servidor registra la hora de recepcion.
 - Las tablas publicas tienen Row Level Security habilitado. La aplicacion accede desde el servidor y no expone credenciales en el navegador.
 
-## Demostracion recomendada
-
-1. Iniciar la plataforma con `npm run dev` dentro de `frontend`.
-2. Abrir `http://localhost:3000` e ingresar con `cuidadora@stcs.local` y `Demo1234!`.
-3. Entrar a Comunicador y editar un pictograma.
-4. Cambiar la frase o el color, guardar y recargar la pagina para demostrar persistencia.
-5. Agregar un pictograma y mostrar que aparece en la vista previa y en la configuracion del dispositivo.
-6. Ejecutar `npm run verify:hito2` en otra terminal para registrar un evento de prueba autenticado.
-7. Abrir Historial, pulsar Actualizar y mostrar fecha, contexto, actor y accion.
-8. Explicar que `externalEventId` evita duplicar el mismo evento cuando la red Wi-Fi obliga al ESP32 a reintentar.
-
 ## Verificacion automatizada
 
 Con la plataforma ejecutandose:

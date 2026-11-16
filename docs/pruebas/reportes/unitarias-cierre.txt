@@ -1,0 +1,33 @@
+(node:5164) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/nacho/OneDrive/Documentos/ChatGPT/STCS/frontend/src/lib/server/validation.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ CP-RF03-U01: the spoken phrase is independent from the label and image (0.9136ms)
+✔ CP-RF03-U02: UTF-8 limits prevent truncation on the ESP (0.7084ms)
+✔ CP-RF03-U03: empty, malformed and missing input is rejected (0.2728ms)
+✔ CP-RF03-U04: catalog, uploads, category and positions enforce the contract (0.3024ms)
+✔ CP-RNF01-U01: adult permissions deny child and unknown roles (0.6327ms)
+✔ CP-RF05-U01: events preserve identifiers, capture time and valid edge values (0.2621ms)
+✔ CP-RF05-U02: invalid selections, event types and numeric ranges fail (0.3681ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 160.5775
+ℹ start of coverage report
+ℹ ---------------------------------------------------------------------
+ℹ file                 | line % | branch % | funcs % | uncovered lines
+ℹ ---------------------------------------------------------------------
+ℹ src                  |        |          |         | 
+ℹ  lib                 |        |          |         | 
+ℹ   media-contract.ts  | 100.00 |   100.00 |  100.00 | 
+ℹ   permissions.ts     | 100.00 |   100.00 |  100.00 | 
+ℹ   server             |        |          |         | 
+ℹ    validation.ts     | 100.00 |   100.00 |  100.00 | 
+ℹ ---------------------------------------------------------------------
+ℹ all files            | 100.00 |   100.00 |  100.00 | 
+ℹ ---------------------------------------------------------------------
+ℹ end of coverage report

@@ -9,15 +9,15 @@ Firmware v0.8.6; CI histórico identificado por SHA en cada evidencia. Ya se rec
 | OE2 | H3-RF03 | UC3, SEQ1 | TCS-48 / TCS-49 / TCS-60 | CP-RF03-U01–04 / M01 | JUnit, regresión, evidencias imagen/edición/voz | Manual confirmado por autor; aceptación externa pendiente | #5, #6 |
 | OE1 | H3-RF04 | UC4, ACT1 | TCS-43–47 / TCS-85 | CP-RF04-M01 | CIERRE y WEB_Y_WIFI, confirmación física | Técnica manual comprobada; sobrecarga visual no validada | #5, #7, #9 |
 | OE4 | H3-RF05 | UC5, CL1 | TCS-51 / TCS-52 / TCS-83 | CP-RF05-U01–02 / I01 | JUnit, verify-roles/CI | Validación y API comprobadas; cortes/ACK completos pendientes | #2, #3, #5 |
-| OE1/OE4 | H3-RF06 | UC6 | TCS-74 | CP-RF06-M01 | WEB_Y_WIFI, v0.8.6 | Parcial: portal probado; timeout/AP individual y matriz móvil pendientes | #9 |
+| OE1/OE4 | H3-RF06 | UC6 | TCS-74 | CP-RF06-M01 | WEB_Y_WIFI, v0.8.6 | Implementación final aceptada sin timeout; matriz física móvil pendiente | #9 |
 | OE3 | H3-RF07 | UC2, CL1 | TCS-84 | CP-RNF01-I01 | verify-roles/CI | Casos API aprobados; validación del contenido clínico pendiente | Histórico + #5 |
-| OE4 | H3-RF08 | ACT1, CL1 | TCS-76 | CP-RNF04-M01 | ARRANQUE_RAPIDO y reinicio | Parcial: atlas 96 y reinicio sí; cola 64 vs 256 y cortes pendientes | #7, #8 |
+| OE4 | H3-RF08 | ACT1, CL1 | TCS-76 | CP-RNF04-M01 | ARRANQUE_RAPIDO y reinicio | Parcial: atlas 96 y reinicio sí; cola 64 aceptada, cortes pendientes | #7, #8 |
 | OE3 | H3-RF09 | UC1, CL1 | TCS-53 / TCS-84 | CP-RNF01-I01 | verify-roles/CI | Parcial: permisos/aprobaciones técnicas sí; ciclo completo dispositivo pendiente | #1 + histórico |
 | OE4 | H3-RF10 | UC5 | TCS-83 | CP-RF10-I01 | verify-roles/CI y alcance de Jira | Parcial: filtros/paginación con pruebas; completar criterios actuales de exportación | Histórico + #5 |
 | OE2 | H3-RF11 | SEQ1 | TCS-60 | CP-RF03-U04 / M02 | capacidad-180-telemetria.txt, confirmaciones 180/rechazo184 | 180 operativos ensayados; no físico absoluto ni todos offline | #5 |
-| OE3 | H3-RNF01 | SEQ2 | TCS-59 | CP-RNF01-S01 / I01 | npm-audit.json + CI | Dependencias y API comprobadas; DAST pendiente | #5 y esta entrega |
+| OE3 | H3-RNF01 | SEQ2 | TCS-59 | CP-RNF01-S01 / I01 | npm-audit.json + CI | Dependencias/API y ZAP Baseline ejecutados; alcance en calidad/README.md | #5 y esta entrega |
 | OE4 | H3-RNF02 | SEQ1 | TCS-60 / TCS-88 | CP-RNF02-L01/L02 | carga-local.json | Local aprobada; no capacidad de producción | Esta entrega TCS-88 |
-| OE4 | H3-RNF03 | SEQ1/SEQ2 | TCS-88 | CP-RF03-U02 / CI | JUnit, regresion.json y workflow | Tres módulos cubiertos; global negocio y E2E pendientes | Esta entrega TCS-60/88 |
+| OE4 | H3-RNF03 | SEQ1/SEQ2 | TCS-88 | CP-RF03-U02 / CI | JUnit, regresion.json y workflow | Cobertura de servidor y E2E Chromium ejecutados; límites en pruebas/CIERRE_20261116.md | Esta entrega TCS-60/88 |
 | OE4 | H3-RNF04 | ACT1 | TCS-76 | CP-RNF04-M01 | ARRANQUE_RAPIDO | Parcial; rechazo de exceso y reinicio no sustituyen prueba de cola llena | #7 |
 | Visión futura | FUT01 | Fuera del MPV implementado | TCS-68–73 | No ejecutado | Solo análisis en Jira | No hecho: predicción implementada no acreditada | Sin PR de implementación |
 | OE3/OE4 | FUT02 | CL1/SEQ2 | TCS-53 | No ejecutado en dos ESP | Un dispositivo disponible | No hecho en hardware; no extrapolar suite API a flota | Pendiente |

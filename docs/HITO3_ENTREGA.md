@@ -19,7 +19,7 @@ Corte documental del 16/11/2026. Índice de los nueve artefactos de entrega: esp
 | A3 HU Dado/Cuando/Entonces y aprobación | [historias.md](historias.md), Jira | Escenarios de cierre; aprobación externa no acreditada |
 | A4 Trazabilidad completa | [trazabilidad.md](trazabilidad.md) | Matriz con aprobado técnico/parcial/pendiente y brechas históricas |
 | A5 Plan, casos, resultados, defectos y cobertura | [pruebas/PLAN_HITO3.md](pruebas/PLAN_HITO3.md), [resultados](pruebas/RESULTADOS_HITO3.md) | Evidencia ejecutada diferenciada de aceptación pendiente |
-| A6 Seguridad y eficiencia | [calidad/README.md](calidad/README.md) | Auditoría de dependencias y carga local; DAST y carga en nube pendientes |
+| A6 Seguridad y eficiencia | [calidad/README.md](calidad/README.md) | Dependencias, carga local y ZAP Baseline ejecutados; límites explícitos |
 | A7 Modelo y decisiones | [arquitectura/README.md](arquitectura/README.md) | Camino UML, modelos y tres ADR retrospectivos; revisión humana pendiente |
 | A8 Repo, despliegue y tablero | [repositorio](REPOSITORIO_HITO3.md), README, CHANGELOG | Main protegida, CI y PR; tag final todavía no existe |
 | A9 Riesgos y deuda | [riesgos.md](riesgos.md) | Incluye riesgos materializados, límites y plan priorizado |
@@ -27,9 +27,8 @@ Corte documental del 16/11/2026. Índice de los nueve artefactos de entrega: esp
 ## Bloqueantes para afirmar cumplimiento completo
 
 1. Los objetivos/requerimientos de Hito 1/2 ya se recuperaron de los cuatro archivos originales. [Comparación y equivalencias](ANTECEDENTES_HITOS_1_2.md). Falta ratificar indicadores y resultados con stakeholder; disponer del texto no acredita esa aprobación.
-2. Agendar revisión Zoom esta semana. Acordar con profesor si el profesional puede ser sustituto representativo para indicadores de usabilidad. No atribuir eficacia ni comprensión a niños que no participaron.
+2. Ejecutar aceptación externa del prototipo. Acordar con profesor si el profesional puede ser sustituto representativo para indicadores de usabilidad. No atribuir eficacia ni comprensión a niños que no participaron.
 3. Registrar nombre/rol/fecha y aprobación real de cada HU e indicador en Jira. Estado Finalizada o confirmación del estudiante no basta. Historias consolidadas no cuentan como funcionalidad adicional.
-4. Completar cobertura del backend de negocio, E2E automatizados y escáner dinámico, o declarar brechas. El 100% medido corresponde solo a tres módulos, no a toda la app.
+4. Las nuevas mediciones de servidor, E2E Chromium y ZAP están en [el cierre de pruebas](pruebas/CIERRE_20261116.md). Persisten límites de escenarios, dispositivos físicos y DAST autenticado; no se declara cobertura total de toda la app.
 5. El propietario aceptó como alcance final del ESP la cola de 64 eventos y STCS-Config sin timeout; TCS-74/TCS-76 quedan finalizadas funcionalmente. Persisten como cobertura de pruebas la matriz móvil, pérdida de ACK, cola llena y múltiples placas, sin exigir cambios de firmware en este cierre.
 6. Verificar enlaces con la cuenta del profesor y congelar el tag hito3 **después** de incorporar toda la evidencia. No crear ahora un tag definitivo ni moverlo luego.
-

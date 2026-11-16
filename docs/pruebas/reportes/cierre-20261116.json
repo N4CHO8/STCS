@@ -1,0 +1,91 @@
+{
+  "generatedAt": "2026-11-16T05:16:34.998858+00:00",
+  "unit": {
+    "sourceCommit": "7236a691a8b17b6249fda1b32ff958f5780389a0",
+    "passed": 7,
+    "scope": "permissions, media-contract, validation"
+  },
+  "integrationAndCoverage": {
+    "sourceCommit": "a023ddceef0190a48f5b5593b85cc0a6ff6c6d43",
+    "checks": 291,
+    "databaseOutageChecks": 2,
+    "workerReconnectPassed": true,
+    "lineCoverage": {
+      "total": 4052,
+      "covered": 3602,
+      "skipped": 0,
+      "pct": 88.89
+    },
+    "branchCoverage": {
+      "total": 797,
+      "covered": 593,
+      "skipped": 0,
+      "pct": 74.4
+    },
+    "functionCoverage": {
+      "total": 115,
+      "covered": 112,
+      "skipped": 0,
+      "pct": 97.39
+    },
+    "scope": "All server modules, API route handlers, proxy.ts, permissions.ts and media-contract.ts",
+    "build": "webpack with server source maps and no server minification; measurement only"
+  },
+  "e2e": {
+    "sourceCommit": "2e9d7814b242d296909c0608912bcc50e6ce14f0",
+    "stats": {
+      "startTime": "2026-11-16T05:08:37.343Z",
+      "duration": 10578.16,
+      "expected": 10,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tool": "Playwright 1.65.1",
+    "build": "Next production Turbopack",
+    "environment": "localhost:3400, disposable PostgreSQL stcs_release_tests",
+    "physicalESP": false,
+    "qualification": "401 browser recovery uses a removed cookie; actual JWT expiry is checked in API integration"
+  },
+  "dast": {
+    "sourceCommit": "7236a691a8b17b6249fda1b32ff958f5780389a0",
+    "tool": "ZAP 2.17.0",
+    "mode": "Baseline spider + passive scan, unauthenticated",
+    "riskGroups": {
+      "0": 3,
+      "1": 0,
+      "2": 1,
+      "3": 0
+    },
+    "remainingMedium": "CSP style-src unsafe-inline; documented compatibility exception, not an observed exploit",
+    "productionTargeted": false,
+    "runnerCleanup": "Image fixture cleanup initially failed after scan; corrected and production-build E2E rerun completed with owned fixtures removed"
+  },
+  "load": {
+    "sourceCommit": "2e9d7814b242d296909c0608912bcc50e6ce14f0",
+    "stages": [
+      {
+        "concurrency": 5,
+        "plannedDurationSeconds": 15,
+        "elapsedSeconds": 15.0580137,
+        "requests": 731,
+        "errors": 0,
+        "errorRate": 0,
+        "p95Milliseconds": 63.48019999999997,
+        "passed": true
+      },
+      {
+        "concurrency": 10,
+        "plannedDurationSeconds": 15,
+        "elapsedSeconds": 15.0113842,
+        "requests": 1331,
+        "errors": 0,
+        "errorRate": 0,
+        "p95Milliseconds": 69.41930000000139,
+        "passed": true
+      }
+    ],
+    "productionCapacityClaim": false
+  },
+  "sourceHistory": "Reports refer to the actual executed source revisions; the final candidate also requires its own CI."
+}

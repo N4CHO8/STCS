@@ -1,5 +1,8 @@
 # Verificación aislada de STCS
 
+Resultado vigente: [CIERRE_20261116](pruebas/CIERRE_20261116.md). Los conteos
+menores posteriores en este documento describen ejecuciones históricas.
+
 No ejecutar pruebas de escritura sobre Supabase, sobre datos reales ni sobre el servidor local habitual: este último usa la misma base que producción.
 
 ## Suite reproducible

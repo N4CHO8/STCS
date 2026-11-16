@@ -5,6 +5,13 @@ import { resolve } from "node:path";
 const fixture = JSON.parse(
   readFileSync(process.env.STCS_E2E_FIXTURE_FILE, "utf8"),
 );
+test.beforeAll(async ({ request }) => {
+  const response = await request.get("/api/health");
+  expect(response.ok()).toBe(true);
+  expect((await response.json()).testDatabase).toBe(
+    "127.0.0.1:55432/stcs_release_tests",
+  );
+});
 test.beforeEach(async ({ page }) => {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));

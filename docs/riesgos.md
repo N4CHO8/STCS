@@ -10,8 +10,8 @@ Actualización 16/11/2026. Escala probabilidad e impacto 1–3; nivel = producto
 | R04 H3-RNF01 fuga por rol/asignación | 2 | 3 | 6 alto | Controles e integración aprobados; revisión ampliada pendiente | Proyección y autorización en servidor, Storage privado | Revocar acceso y revisar incidente sin copiar clínica a logs |
 | R05 OE1 validación profesional no realizada | 3 | 3 | 9 alto | Abierto, Zoom no agendado | Coordinar esta semana; acordar sustitutos con profesor | Declarar brecha y solicitar alternativa al docente |
 | R06 A4/A8 evidencia inaccesible o sin tag | 2 | 3 | 6 alto | Abierto | Índice, reportes, enlaces, prueba con cuenta docente | Copia navegable autorizada; congelar después del cierre |
-| R07 H3-RF08 cola llena/corte de energía | 2 | 3 | 6 alto | Abierto: 64 implementados, 256 en Jira | Límite explícito; ensayo de ACK, cortes y llenado pendiente | No prometer ausencia de pérdida a cualquier tasa; resolver o acordar requisito |
-| R08 H3-RF06 AP compartido y sin timeout | 2 | 2 | 4 medio | Brecha confirmada respecto de TCS-74 | Activación deliberada y clave mostrada en pantalla | Cerrar por reinicio; rediseñar AP temporal antes de uso real |
+| R07 H3-RF08 cola llena/corte de energía | 2 | 3 | 6 alto | Alcance de 64 aceptado por propietario; prueba de estrés pendiente | Límite explícito; ensayo de ACK, cortes y llenado pendiente | No prometer ausencia de pérdida a cualquier tasa; resolver o acordar requisito |
+| R08 H3-RF06 AP compartido y sin timeout | 2 | 2 | 4 medio | AP persistente aceptado por propietario; riesgo residual de acceso cercano | Activación deliberada y clave mostrada en pantalla | Cerrar por reinicio; revisar el entorno de uso antes de incorporar datos reales |
 | R09 OE4 proveedor/cuotas/Internet | 2 | 2 | 4 medio | Riesgo vigente | Medios persistentes, caché, reintento y demo ensayada | Hotspot probado y vídeo fechado, sin simular conexión |
 | R10 H3-RF02/FUT02 solo un ESP | 3 | 2 | 6 alto | Limitación vigente | Suite API con usuarios ajenos | Segundo ESP y perfiles aislados antes de afirmar flota real |
 | R11 A1 ausencia de objetivos originales | 1 | 3 | 3 medio | Materializado y resuelto documentalmente el 16/11: archivos recibidos | Conservar textos y equivalencia H1/H2/H3 | Aprobaciones y métricas siguen pendientes; no inventarlas |
@@ -23,9 +23,9 @@ Actualización 16/11/2026. Escala probabilidad e impacto 1–3; nivel = producto
 | --- | --- | --- |
 | P0 académica | A1/A3: objetivos y validación externa / TCS-77 | Originales ya recuperados; ratificar método, mediciones y aprobaciones auténticas por HU/indicador |
 | P0 académica | A4/A8: trazabilidad y evidencia final / TCS-60 | Acceso de profesor, reconciliación de matriz y tag hito3 final |
-| P1 técnica | Cobertura de negocio fuera de tres módulos, E2E automatizado y DAST / TCS-85,59,88 | Reportes con alcance y negativos; corregir hallazgos o declarar plan |
-| P1 técnica | Cola 256, ACK perdido, cortes y llenado / TCS-76 | Implementación/ensayo completo o modificación de alcance aprobada, no unilateral |
-| P1 técnica | AP individual/timeout, cambio de red fallido, Android/iPhone / TCS-74 | Pruebas físicas y cierre temporal verificables |
+| P1 técnica | Ampliar escenarios aún no cubiertos de navegador y DAST autenticado / TCS-85,59,88 | Reportes con alcance y negativos; corregir hallazgos o declarar plan |
+| P1 técnica | Pruebas de cola 64, ACK perdido, cortes y llenado / TCS-76 | Alcance de 64 ya aceptado; falta ensayo físico de bordes, no ampliar a 256 |
+| P1 técnica | Pruebas Wi-Fi: cambio fallido, Android/iPhone / TCS-74 | Pruebas físicas; AP sin timeout es el alcance aceptado |
 | P1 técnica | Varios dispositivos, reasignación y rotación / TCS-53 | Dos ESP/perfiles y controles de cambio probados |
 | P2 | Historial/exportación y escenarios de error/móvil / TCS-83,85 | Matriz completa ejecutada, no solo build |
 | P2 | Ramas/PR antiguos sin ticket y sprint desactualizado / TCS-88 | Correspondencia histórica declarada, convención futura y fechas reales |

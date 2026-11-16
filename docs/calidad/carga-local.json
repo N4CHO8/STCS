@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-16T03:58:14.838Z",
-  "codeCommit": "45ed7a7beddd1edf6c2b5768f7dfb4be482b6524",
+  "generatedAt": "2026-11-16T05:09:19.631Z",
+  "codeCommit": "2e9d7814b242d296909c0608912bcc50e6ce14f0",
   "node": "v24.22.1",
   "environment": "Loopback Next.js production build and disposable PostgreSQL; existing synthetic data; not a Vercel capacity test",
   "machine": {
@@ -17,21 +17,21 @@
     {
       "concurrency": 5,
       "plannedDurationSeconds": 15,
-      "elapsedSeconds": 15.0763644,
-      "requests": 661,
+      "elapsedSeconds": 15.0580137,
+      "requests": 731,
       "errors": 0,
       "errorRate": 0,
-      "p95Milliseconds": 69.95830000000024,
+      "p95Milliseconds": 63.48019999999997,
       "passed": true
     },
     {
       "concurrency": 10,
       "plannedDurationSeconds": 15,
-      "elapsedSeconds": 15.142737700000001,
-      "requests": 1244,
+      "elapsedSeconds": 15.0113842,
+      "requests": 1331,
       "errors": 0,
       "errorRate": 0,
-      "p95Milliseconds": 82.50180000000182,
+      "p95Milliseconds": 69.41930000000139,
       "passed": true
     }
   ],

@@ -1,5 +1,7 @@
 # A5 Resultados e interpretación
 
+**Actualización posterior:** [cierre automatizado del 16/11](CIERRE_20261116.md), con cobertura ampliada, E2E y DAST. La sección siguiente conserva la ejecución inicial y sus límites de aquel momento.
+
 Fecha de cierre parcial: 16/11/2026. El plan nuevo se escribió antes de unitarias/carga; no se hace pasar por plan previo a las pruebas históricas.
 
 | Nivel | Esperado | Obtenido / evidencia | Interpretación y límite |

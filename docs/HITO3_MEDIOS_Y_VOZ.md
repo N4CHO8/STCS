@@ -223,14 +223,4 @@ El propietario confirmó físicamente que el ESP mostró Vaso azul y pronunció
 agua, por favor». Es evidencia física asistida por el usuario, distinta del
 reproductor web y de pruebas HTTP automatizadas.
 
-Guion de demostración (5–7 minutos): login normal; abrir Comunicación;
-crear con imagen propia y frase corta; recargar; esperar voz lista; en ESP
-Limpiar y esperar sincronización; elegir y Hablar; editar solo frase y repetir;
-mostrar permisos de docente/apoderado/admin; explicar caché y pendientes.
-Grabar pantalla y ESP juntos, con audio, usando datos sintéticos. El código
-por sí solo no acredita calidad clínica, comprensión, usabilidad con niños,
-seguridad eléctrica ni funcionamiento con un segundo dispositivo físico.
-
-Estructura sugerida de presentación: problema y roles; arquitectura; recorrido
-web→ESP con evidencia; privacidad y pruebas; caché/costos; límites y revisión
-profesional por Zoom sin niños ni datos reales.
+Las pruebas técnicas anteriores no acreditan eficacia clínica, comprensión o usabilidad con niños, seguridad eléctrica ni funcionamiento con un segundo dispositivo físico.

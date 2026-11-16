@@ -15,3 +15,5 @@ Alternativas: API integrada Next.js en Vercel; frontend más backend separado en
 Se elige Next.js: las rutas adultas y del ESP viven junto a la web, comparten validación y simplifican la operación del MPV. Evidencia: frontend/src/app/api y frontend/src/lib/server; PR #5, CI y dominio publicado. Render no es un servicio activo requerido.
 
 Consecuencia: los límites de ejecución y el arranque en frío importan. La voz se ejecuta en función Python alojada y persiste resultados; no depende del PC. La carga local no demuestra latencia ni cuotas de Vercel. Un backend separado conserva sentido si aumenta el trabajo asíncrono, pero hoy añadiría otro despliegue y secretos.
+
+Endurecimiento del 16/11: CSP de scripts con nonce por solicitud exige HTML dinámico; se mantienen cacheables los recursos estáticos. Se acepta el trabajo adicional de renderizado para evitar reutilizar nonces en HTML estático. Los estilos inline necesarios para React/gráficos conservan una excepción explícita y un aviso medio analizado en calidad/README.md.
