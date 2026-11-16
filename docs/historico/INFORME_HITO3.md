@@ -1,3 +1,5 @@
+> Registro histórico de su fecha. Para estado, límites y operación actuales consultar [Defensa de STCS](../DEFENSA.md). Los contratos y procedimientos antiguos no son instrucciones vigentes.
+
 # Informe técnico del Hito 3 de STCS
 
 Ignacio Benegas · Proyecto de Título · INSW422

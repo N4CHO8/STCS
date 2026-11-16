@@ -1,22 +1,24 @@
+> Registro histórico de su fecha. Para estado, límites y operación actuales consultar [Defensa de STCS](../../DEFENSA.md). Los contratos y procedimientos antiguos no son instrucciones vigentes.
+
 # A5 Resultados e interpretación
 
-**Actualización física posterior:** [PF-01–07](FISICAS_20261115.md) informados conformes por Ignacio, pruebas del 15/11; anexos pendientes. PF-08 con varios ESP no ejecutada. L-01 registra ausencia de voz sin Wi-Fi, aceptada sin modificar firmware.
+**Actualización física posterior:** [PF-01–07](../../pruebas/FISICAS_20261115.md) informados conformes por Ignacio, pruebas del 15/11; anexos pendientes. PF-08 con varios ESP no ejecutada. L-01 registra ausencia de voz sin Wi-Fi, aceptada sin modificar firmware.
 
-**Actualización posterior:** [cierre automatizado del 16/11](CIERRE_20261116.md), con cobertura ampliada, E2E y DAST. La sección siguiente conserva la ejecución inicial y sus límites de aquel momento.
+**Actualización posterior:** [cierre automatizado del 16/11](../../pruebas/RESULTADOS.md), con cobertura ampliada, E2E y DAST. La sección siguiente conserva la ejecución inicial y sus límites de aquel momento.
 
 Fecha de cierre parcial: 16/11/2026. El plan nuevo se escribió antes de unitarias/carga; no se hace pasar por plan previo a las pruebas históricas.
 
 | Nivel | Esperado | Obtenido / evidencia | Interpretación y límite |
 | --- | --- | --- | --- |
-| Unitaria | 7 casos positivos, negativos y bordes de H3-RF03/H3-RF05/H3-RNF01 aprobados | [JUnit](reportes/unitarias.xml), [salida y cobertura](reportes/unitarias.txt) | 7/7 aprobados, 100% en tres módulos seleccionados; no cobertura total del backend |
-| Regresión deliberada | Fallar al retirar protección UTF-8 | [regresion.json](reportes/regresion.json), salida 1 detectada en copia temporal | CP-RF03-U02 detecta el defecto; código real y producción intactos |
-| Integración | Roles y asignaciones, sesiones, informes, tablero, medios, errores y límites | CI [43795321079](https://github.com/N4CHO8/STCS/actions/runs/43795321079), commit b972cca; [extracto](reportes/ci-b972cca.txt) | 291 comprobaciones aprobadas; se ejecutan contra PG descartable |
+| Unitaria | 7 casos positivos, negativos y bordes de H3-RF03/H3-RF05/H3-RNF01 aprobados | [JUnit](../../pruebas/reportes/unitarias.xml), [salida y cobertura](../../pruebas/reportes/unitarias.txt) | 7/7 aprobados, 100% en tres módulos seleccionados; no cobertura total del backend |
+| Regresión deliberada | Fallar al retirar protección UTF-8 | [regresion.json](../../pruebas/reportes/regresion.json), salida 1 detectada en copia temporal | CP-RF03-U02 detecta el defecto; código real y producción intactos |
+| Integración | Roles y asignaciones, sesiones, informes, tablero, medios, errores y límites | CI [43795321079](https://github.com/N4CHO8/STCS/actions/runs/43795321079), commit b972cca; [extracto](../../pruebas/reportes/ci-b972cca.txt) | 291 comprobaciones aprobadas; se ejecutan contra PG descartable |
 | Resiliencia | Error JSON 503 ante caída DB; trabajador sobrevive y reconecta | Mismo CI, 2 checks y reconexión | Valida manejo técnico acotado; no todos los cortes posibles del ESP |
 | E2E físico/manual | Imagen/frase/edición exacta y reinicio estable | [publicación](../CIERRE_STCS_20261115.md), [Wi-Fi](../WEB_Y_WIFI_20261115.md), evidencias del 15/11 | Confirmado por autor en ESP; no automatizado ni aceptación externa |
-| Carga | H3-RNF02 p95 ≤2 s, errores <1%, 5/10 clientes locales | [A6](../calidad/README.md) | Dos etapas aprobadas; no medir flota o nube por extrapolación |
+| Carga | H3-RNF02 p95 ≤2 s, errores <1%, 5/10 clientes locales | [A6](../../calidad/README.md) | Dos etapas aprobadas; no medir flota o nube por extrapolación |
 | Aceptación | Tareas y resultados aprobados por stakeholder | No realizada: reunión aún no agendada | 0 aprobaciones externas acreditadas en este expediente; no inventar resultado |
 
-[Metadatos de herramientas y SHA](reportes/ejecuciones.json). Los reportes son evidencia histórica de los SHA indicados; la nueva entrega debe tener además CI aprobado para su propio commit. El extracto CI conserva timestamps y comandos de la herramienta; no es una captura de “todo pasó”.
+[Metadatos de herramientas y SHA](../../pruebas/reportes/ejecuciones.json). Los reportes son evidencia histórica de los SHA indicados; la nueva entrega debe tener además CI aprobado para su propio commit. El extracto CI conserva timestamps y comandos de la herramienta; no es una captura de “todo pasó”.
 
 ## Cobertura y cumplimiento del plan
 

@@ -6,15 +6,15 @@ STCS-Config y abrir 192.168.4.1; usuario stcs y clave local mostrada solo al
 solicitarla. Los controles de las categorías y la caché rápida se conservan.
 Inicio, categorías y configuración indican Wi-Fi conectado/desconectado;
 es asociación al router, no una garantía de acceso a Internet o a la API.
-Detalles: [WEB_Y_WIFI_20261115.md](../../docs/WEB_Y_WIFI_20261115.md).
+Detalles: [WEB_Y_WIFI_20261115.md](../../docs/historico/WEB_Y_WIFI_20261115.md).
 
 El arranque conserva todas las tarjetas y páginas del tablero guardado aunque
 no estén todas sus imágenes en caché. Las imágenes verificadas aparecen
 progresivamente sin cambiar de página ni borrar la frase. Detalles y prueba
-de reinicio: [ARREGLO_REINICIO_ESP_20261115.md](../../docs/ARREGLO_REINICIO_ESP_20261115.md).
+de reinicio: [ARREGLO_REINICIO_ESP_20261115.md](../../docs/historico/ARREGLO_REINICIO_ESP_20261115.md).
 La copia compacta de imágenes ocupa hasta 192 KiB dentro de la caché total;
 el tablero actual de 96 recuperó todas sus imágenes desde flash en 408 ms.
-Condiciones, medida y límites: [ARRANQUE_RAPIDO_ESP_20261115.md](../../docs/ARRANQUE_RAPIDO_ESP_20261115.md).
+Condiciones, medida y límites: [ARRANQUE_RAPIDO_ESP_20261115.md](../../docs/historico/ARRANQUE_RAPIDO_ESP_20261115.md).
 
 Controles esenciales superiores, flechas laterales y frase inferior de lectura.
 Volver — Hablar — Borrar en categorías. Capacidad coordinada: **180 activos,
@@ -45,7 +45,7 @@ app1 0x610000, SPIFFS 0xc10000 y stcsdata 0xf00000 (960 KiB). El ensayo escribe
 solo app0; no formatea flash ni cambia NVS o particiones. Respaldar antes.
 La conexión móvil sigue disponible en STCS-Config/192.168.4.1 (usuario stcs,
 contraseña privada de configuración); no requiere un computador como servidor
-cuando la API se despliegue. HTTP sin TLS solo se permite con bandera explícita
+con la API HTTPS publicada. HTTP sin TLS solo se permite con bandera explícita
 para LAN aislada; HTTPS valida certificados por defecto.
 
 ## Código y operación
@@ -74,9 +74,9 @@ nunca descargados o expulsados. El límite de 180 imágenes puede superar la
 caché persistente: no se promete que todas sobrevivan a un arranque offline.
 La recuperación de imágenes faltantes se reintenta al volver a conectar.
 
-Consultar [arquitectura, configuración y evidencia Hito 3](../../docs/HITO3_MEDIOS_Y_VOZ.md).
+Consultar [contrato vigente](../../docs/CONTRATO_MEDIOS_ESP.md) y [resultados](../../docs/pruebas/RESULTADOS.md).
 El tablero persistente y la cola se vinculan a URL, código y clave individual;
 una configuración de laboratorio nunca se importa como actividad de producción.
 La primera carga tras cambiar ese ámbito requiere red. Rotar clave al reasignar.
 La preparación de nube, mediciones, recuperación y estado real de instalación
-están en [el cierre técnico](../../docs/CIERRE_STCS_20261115.md).
+están en [el cierre técnico](../../docs/historico/CIERRE_STCS_20261115.md).

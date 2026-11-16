@@ -1,3 +1,5 @@
+> Registro histórico de su fecha. Para estado, límites y operación actuales consultar [Defensa de STCS](../DEFENSA.md). Los contratos y procedimientos antiguos no son instrucciones vigentes.
+
 # Luis y acceso remoto al comunicador
 
 Luis es el perfil de demostración actual con un ESP físico. No es una persona

@@ -1,0 +1,491 @@
+{
+  "date": "2026-11-16",
+  "source": "Atlassian connectors, project TCS, board 133; descriptions read back after cleanup",
+  "issues": [
+    {
+      "key": "TCS-25",
+      "summary": "Configuración del ambiente de desarrollo ESP32",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        202
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-25"
+    },
+    {
+      "key": "TCS-26",
+      "summary": "Prueba inicial de pantalla redonda",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        320
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-26"
+    },
+    {
+      "key": "TCS-27",
+      "summary": "Prueba inicial de interacción táctil",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        320
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-27"
+    },
+    {
+      "key": "TCS-28",
+      "summary": "Definición del flujo inicial de comunicación",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        202
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-28"
+    },
+    {
+      "key": "TCS-29",
+      "summary": "Preparación técnica del prototipo ESP32",
+      "status": "Finalizada",
+      "type": "Epic",
+      "sprints": [],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-29"
+    },
+    {
+      "key": "TCS-30",
+      "summary": "Selección de pictogramas iniciales",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        202
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-30"
+    },
+    {
+      "key": "TCS-31",
+      "summary": "Diseño visual inicial del tablero en pantalla redonda",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        202
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-31"
+    },
+    {
+      "key": "TCS-32",
+      "summary": "Definición de integración con plataforma web",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        202
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-32"
+    },
+    {
+      "key": "TCS-36",
+      "summary": "Análisis de factibilidad del dispositivo ESP32",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        202
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-36"
+    },
+    {
+      "key": "TCS-37",
+      "summary": "Definición del alcance funcional del dispositivo",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        202
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-37"
+    },
+    {
+      "key": "TCS-40",
+      "summary": "Diseño de arquitectura ESP32-Web",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        202
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-40"
+    },
+    {
+      "key": "TCS-41",
+      "summary": "Definición de datos mínimos del dispositivo",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        202
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-41"
+    },
+    {
+      "key": "TCS-42",
+      "summary": "Identificación de riesgos del prototipo físico",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        202
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-42"
+    },
+    {
+      "key": "TCS-43",
+      "summary": "Implementación de interfaz base del dispositivo ESP32",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        320
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-43"
+    },
+    {
+      "key": "TCS-44",
+      "summary": "Implementación de navegación entre categorías",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        320
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-44"
+    },
+    {
+      "key": "TCS-45",
+      "summary": "Implementación de selección táctil de pictogramas",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        320
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-45"
+    },
+    {
+      "key": "TCS-46",
+      "summary": "Visualización del mensaje seleccionado",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        320
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-46"
+    },
+    {
+      "key": "TCS-47",
+      "summary": "Implementación de botón volver y limpiar",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        320
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-47"
+    },
+    {
+      "key": "TCS-48",
+      "summary": "Configuración del tablero desde la plataforma web",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        320
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-48"
+    },
+    {
+      "key": "TCS-49",
+      "summary": "Persistencia de pictogramas en base de datos",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        320
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-49"
+    },
+    {
+      "key": "TCS-51",
+      "summary": "Creación de endpoint para recepción de eventos del dispositivo",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        320
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-51"
+    },
+    {
+      "key": "TCS-52",
+      "summary": "Visualización de eventos en historial",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        320
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-52"
+    },
+    {
+      "key": "TCS-53",
+      "summary": "Perfiles y dispositivos autorizados",
+      "status": "En curso",
+      "type": "Historia",
+      "sprints": [
+        321
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-53"
+    },
+    {
+      "key": "TCS-59",
+      "summary": "Seguridad y aislamiento de datos",
+      "status": "En curso",
+      "type": "Historia",
+      "sprints": [
+        321
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-59"
+    },
+    {
+      "key": "TCS-60",
+      "summary": "Aceptación integrada y evidencia de defensa",
+      "status": "Tareas por hacer",
+      "type": "Historia",
+      "sprints": [
+        321
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-60"
+    },
+    {
+      "key": "TCS-61",
+      "summary": "[Consolidada en TCS-77] Revisión experta de accesibilidad y vocabulario CAA",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-61"
+    },
+    {
+      "key": "TCS-63",
+      "summary": "Comunicación aumentativa mediante pictogramas",
+      "status": "En curso",
+      "type": "Epic",
+      "sprints": [],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-63"
+    },
+    {
+      "key": "TCS-64",
+      "summary": "Plataforma web de configuración y gestión",
+      "status": "En curso",
+      "type": "Epic",
+      "sprints": [],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-64"
+    },
+    {
+      "key": "TCS-65",
+      "summary": "Integración ESP32, API y base de datos",
+      "status": "En curso",
+      "type": "Epic",
+      "sprints": [],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-65"
+    },
+    {
+      "key": "TCS-66",
+      "summary": "Seguimiento, historial y análisis del progreso",
+      "status": "En curso",
+      "type": "Epic",
+      "sprints": [],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-66"
+    },
+    {
+      "key": "TCS-67",
+      "summary": "Validación y pruebas",
+      "status": "Tareas por hacer",
+      "type": "Epic",
+      "sprints": [],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-67"
+    },
+    {
+      "key": "TCS-68",
+      "summary": "Análisis de factibilidad del sistema de predicción de pictogramas",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        202
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-68"
+    },
+    {
+      "key": "TCS-69",
+      "summary": "Definición de datos necesarios para predecir pictogramas",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        202
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-69"
+    },
+    {
+      "key": "TCS-70",
+      "summary": "Definición de reglas iniciales de predicción",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        202
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-70"
+    },
+    {
+      "key": "TCS-71",
+      "summary": "Evaluación de riesgos del sistema de predicción",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        202
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-71"
+    },
+    {
+      "key": "TCS-72",
+      "summary": "Diseño del flujo de sugerencias en el tablero del ESP32",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        320
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-72"
+    },
+    {
+      "key": "TCS-73",
+      "summary": "Diseño de integración del sistema predictivo con la plataforma web",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        320
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-73"
+    },
+    {
+      "key": "TCS-74",
+      "summary": "Configuración Wi-Fi móvil del ESP",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        321
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-74"
+    },
+    {
+      "key": "TCS-75",
+      "summary": "[Consolidada en TCS-53] Vinculación y reasignación segura de dispositivos",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-75"
+    },
+    {
+      "key": "TCS-76",
+      "summary": "Cola de 64 eventos y caché del ESP",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [
+        321
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-76"
+    },
+    {
+      "key": "TCS-77",
+      "summary": "Revisión profesional del prototipo",
+      "status": "Tareas por hacer",
+      "type": "Historia",
+      "sprints": [
+        321
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-77"
+    },
+    {
+      "key": "TCS-79",
+      "summary": "[Consolidada en TCS-84] Inicio y cierre de sesión privada y revocable",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-79"
+    },
+    {
+      "key": "TCS-81",
+      "summary": "[Consolidada en TCS-53] Ciclo de vida de credenciales individuales del ESP",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-81"
+    },
+    {
+      "key": "TCS-82",
+      "summary": "[Consolidada en TCS-85] Estados de la web y recuperación ante errores",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-82"
+    },
+    {
+      "key": "TCS-83",
+      "summary": "Historial y exportación autorizada",
+      "status": "En curso",
+      "type": "Historia",
+      "sprints": [
+        321
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-83"
+    },
+    {
+      "key": "TCS-84",
+      "summary": "Sesiones y cuentas por rol",
+      "status": "En curso",
+      "type": "Historia",
+      "sprints": [
+        321
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-84"
+    },
+    {
+      "key": "TCS-85",
+      "summary": "Uso accesible y recuperación de errores web",
+      "status": "En curso",
+      "type": "Historia",
+      "sprints": [
+        321
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-85"
+    },
+    {
+      "key": "TCS-86",
+      "summary": "[Consolidada en TCS-88] Dependencias reproducibles y verificaciones continuas de la web",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-86"
+    },
+    {
+      "key": "TCS-87",
+      "summary": "[Consolidada en TCS-77] Gobernanza de datos sensibles y derechos del participante",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprints": [],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-87"
+    },
+    {
+      "key": "TCS-88",
+      "summary": "CI despliegue y recuperación reproducibles",
+      "status": "En curso",
+      "type": "Historia",
+      "sprints": [
+        321
+      ],
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-88"
+    }
+  ],
+  "limits": "No states changed. External acceptance pending; consolidated histories are not additional accepted functionality.",
+  "sprint3": {
+    "id": 321,
+    "state": "future",
+    "name": "Sprint 3 - Verificación y revisión profesional",
+    "plannedEndDate": "2026-11-24T02:59:00.000Z",
+    "plannedEndLocal": "2026-11-23 23:59 America/Santiago",
+    "actualStart": "Pending owner confirmation after Sprint 2 delay",
+    "presentationDate": "2026-11-27",
+    "source": "Owner confirmed planned completion on 2026-11-16; end date updated and read back through Atlassian connector; no sprint closure performed"
+  }
+}

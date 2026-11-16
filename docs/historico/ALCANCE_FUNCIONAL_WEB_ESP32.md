@@ -1,3 +1,5 @@
+> Registro histórico de su fecha. Para estado, límites y operación actuales consultar [Defensa de STCS](../DEFENSA.md). Los contratos y procedimientos antiguos no son instrucciones vigentes.
+
 # Alcance funcional de la plataforma web STCS
 
 La plataforma web STCS esta orientada a cuidadores, docentes, especialistas y administradores. El nino no interactua directamente con la web: la comunicacion principal ocurre mediante el dispositivo fisico Waveshare ESP32-S3-Touch-LCD-1.46 con pantalla redonda tactil.

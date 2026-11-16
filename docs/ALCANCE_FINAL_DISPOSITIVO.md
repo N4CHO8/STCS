@@ -23,4 +23,4 @@ No se carga firmware nuevo en este encargo.
 - STCS-Config no se cierra automáticamente y la instalación actual no acredita
   una política de claves individuales para una flota.
 - [PF-03–05](pruebas/FISICAS_20261115.md): cola, corte y confirmación interrumpida informados conformes por el propietario; faltan anexos, conteos y trazas. No se acredita corte en el instante de escritura/ACK. Matriz móvil y varias placas físicas siguen pendientes.
-- TCS-77 y la aceptación clínica no se cierran por esta decisión técnica.
+- TCS-77 y la aceptación profesional no se cierran por esta decisión técnica.

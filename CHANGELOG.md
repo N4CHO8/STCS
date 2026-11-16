@@ -1,5 +1,13 @@
 # Cambios de STCS
 
+## Organización de la entrega para defensa — 16 de noviembre de 2026
+
+- TCS-60/TCS-88: entrada única DEFENSA y artefactos A1–A9; registros de etapas anteriores separados en docs/historico sin alterar reportes originales.
+- Descripciones de los 50 IDs de Jira depuradas; criterios Dado/Cuando/Entonces, evidencia y pendientes concretos. Estados e historial conservados.
+- Objetivo de Sprint 2 recuperado y registrado; nombre/objetivo de Sprint 3 coherentes con revisión adulta del prototipo, sin cambiar fechas de ejecución.
+- Corregidas instrucciones de PlatformIO, demo, permisos docentes, conexión USB y límites antiguos; contrato actual incluye ACK y capacidad 180/45 y cola 64.
+- Modelos de uso/actividad visuales, trazabilidad con pertenencia real a sprints y guía de pruebas con aislamiento explícito. Sin cambios de aplicación, firmware operativo ni datos de producción.
+
 ## Registro físico e informe del Hito 3 — 16 de noviembre de 2026
 
 - TCS-60/TCS-74/TCS-76: pruebas del 15/11 informadas por el propietario con un ESP, sin inventar conteos, duración o anexos; varios ESP no ejecutado.
