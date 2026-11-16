@@ -231,10 +231,39 @@ test("CP-RF01-E02: missing server credential clears the portal and redirects to 
   context,
 }) => {
   await login(page);
-  await context.clearCookies();
-  await page
-    .getByRole("button", { name: "Actualizar datos", exact: true })
-    .click();
+  const refresh = page.getByRole("button", {
+    name: "Actualizar datos",
+    exact: true,
+  });
+  await expect(refresh).toBeEnabled();
+  await expect(
+    page.getByRole("heading", { name: "Mi espacio", exact: true }),
+  ).toBeVisible();
+
+  // A pending load or background poll can redirect before Playwright finishes
+  // clicking. Hold portal requests until the click completes, then let the real
+  // server reject the missing cookie. Never mock the 401 or retry a failed test.
+  let release;
+  const gate = new Promise((resolve) => {
+    release = resolve;
+  });
+  const portalRoute = "**/api/stcs/portal*";
+  await page.route(portalRoute, async (route) => {
+    await gate;
+    await route.continue();
+  });
+  try {
+    await context.clearCookies();
+    const denied = page.waitForResponse(
+      (response) =>
+        new URL(response.url()).pathname === "/api/stcs/portal" &&
+        response.status() === 401,
+    );
+    await Promise.all([denied, refresh.click().then(() => release())]);
+  } finally {
+    release();
+    await page.unrouteAll({ behavior: "wait" });
+  }
   await expect(page).toHaveURL(/\/login$/);
   await expect(
     page.getByRole("button", { name: "Cerrar sesión", exact: true }),
