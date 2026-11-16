@@ -1,5 +1,12 @@
 # Cambios de STCS
 
+## Registro físico e informe del Hito 3 — 16 de noviembre de 2026
+
+- TCS-60/TCS-74/TCS-76: pruebas del 15/11 informadas por el propietario con un ESP, sin inventar conteos, duración o anexos; varios ESP no ejecutado.
+- TCS-60/TCS-77: informe técnico A1–A9 y trazabilidad actualizada; correo al profesional enviado, sin aprobación externa todavía.
+- L-01: ausencia de voz sin Wi-Fi observada y aceptada sin modificar firmware; caché limitada no garantiza voz offline.
+- Corrección documental de criterio histórico de 256: límite aceptado de 64 en TCS-76. Sin cambios de código, firmware o datos de producción.
+
 ## Preparación del Hito 3 — 16 de noviembre de 2026
 
 - TCS-60/TCS-88: índice A1–A9, trazabilidad, escenarios, modelos, tres ADR
