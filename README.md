@@ -2,6 +2,8 @@
 
 **Entrega técnica del Hito 3:** [índice A1–A9, evidencia y pendientes](docs/HITO3_ENTREGA.md).
 
+[Informe técnico integrado](docs/INFORME_HITO3.md) y [registro físico del 15/11](docs/pruebas/FISICAS_20261115.md): resultados informados por el propietario, anexos pendientes. Sin Wi-Fi no hubo voz en el ensayo; no se garantiza voz offline. Varios ESP y revisión profesional aún no acreditados.
+
 La web, los medios privados y la voz alojada están publicados. El tablero
 inicial tiene 96 pictogramas (24 por categoría); el máximo operativo probado
 es 180 (45 por categoría). Consultar [estado, capacidad y evidencia del 15/11](docs/CIERRE_STCS_20261115.md)

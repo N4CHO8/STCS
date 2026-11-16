@@ -19,9 +19,8 @@ No se carga firmware nuevo en este encargo.
 - Los 64 son registros pendientes, no pictogramas ni exactamente 64 acciones.
   Si la cola se llena, nuevas acciones pueden no quedar registradas. No se
   promete una desconexión ilimitada sin pérdida de registros.
-- La caché es limitada: no se garantiza conservar todos los WAV offline.
+- La caché es limitada: no se garantiza conservar todos los WAV offline. En el ensayo informado no hubo voz sin Wi-Fi; el propietario acepta mantenerlo (L-01).
 - STCS-Config no se cierra automáticamente y la instalación actual no acredita
   una política de claves individuales para una flota.
-- Cola llena, cortes durante escritura, pérdida de ACK, matriz de móviles y
-  varias placas físicas siguen siendo cobertura pendiente en TCS-60/TCS-85.
+- [PF-03–05](pruebas/FISICAS_20261115.md): cola, corte y confirmación interrumpida informados conformes por el propietario; faltan anexos, conteos y trazas. No se acredita corte en el instante de escritura/ACK. Matriz móvil y varias placas físicas siguen pendientes.
 - TCS-77 y la aceptación clínica no se cierran por esta decisión técnica.

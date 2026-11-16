@@ -1,5 +1,7 @@
 # A5 Resultados e interpretación
 
+**Actualización física posterior:** [PF-01–07](FISICAS_20261115.md) informados conformes por Ignacio, pruebas del 15/11; anexos pendientes. PF-08 con varios ESP no ejecutada. L-01 registra ausencia de voz sin Wi-Fi, aceptada sin modificar firmware.
+
 **Actualización posterior:** [cierre automatizado del 16/11](CIERRE_20261116.md), con cobertura ampliada, E2E y DAST. La sección siguiente conserva la ejecución inicial y sus límites de aquel momento.
 
 Fecha de cierre parcial: 16/11/2026. El plan nuevo se escribió antes de unitarias/carga; no se hace pasar por plan previo a las pruebas históricas.

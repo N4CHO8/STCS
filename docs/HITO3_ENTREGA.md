@@ -2,6 +2,8 @@
 
 Corte documental del 16/11/2026. Índice de los nueve artefactos de entrega: especificación, trazabilidad, pruebas, calidad, arquitectura, repositorio y riesgos. Los resultados pendientes permanecen identificados. El material personal de exposición se conserva fuera del repositorio.
 
+[Informe técnico integrado A1–A9](INFORME_HITO3.md) y [pruebas físicas comunicadas por el propietario](pruebas/FISICAS_20261115.md), con espacios de evidencia sin rellenar. Correo al profesional enviado; reunión y aprobación pendientes.
+
 ## Accesos para el profesor
 
 - [GitHub público](https://github.com/N4CHO8/STCS): no necesita invitación para leer.
@@ -30,5 +32,5 @@ Corte documental del 16/11/2026. Índice de los nueve artefactos de entrega: esp
 2. Ejecutar aceptación externa del prototipo. Acordar con profesor si el profesional puede ser sustituto representativo para indicadores de usabilidad. No atribuir eficacia ni comprensión a niños que no participaron.
 3. Registrar nombre/rol/fecha y aprobación real de cada HU e indicador en Jira. Estado Finalizada o confirmación del estudiante no basta. Historias consolidadas no cuentan como funcionalidad adicional.
 4. Las nuevas mediciones de servidor, E2E Chromium y ZAP están en [el cierre de pruebas](pruebas/CIERRE_20261116.md). Persisten límites de escenarios, dispositivos físicos y DAST autenticado; no se declara cobertura total de toda la app.
-5. El propietario aceptó como alcance final del ESP la cola de 64 eventos y STCS-Config sin timeout; TCS-74/TCS-76 quedan finalizadas funcionalmente. Persisten como cobertura de pruebas la matriz móvil, pérdida de ACK, cola llena y múltiples placas, sin exigir cambios de firmware en este cierre.
+5. Cola de 64 y STCS-Config sin timeout aceptados; TCS-74/TCS-76 finalizadas. PF-01–07 informados conformes por el propietario, sin anexos aún; voz sin Wi-Fi no disponible en su ensayo (L-01). Matriz de móviles completa, telemetría de bordes y múltiples placas no acreditadas. No se modifica firmware.
 6. Verificar enlaces con la cuenta del profesor y congelar el tag hito3 **después** de incorporar toda la evidencia. No crear ahora un tag definitivo ni moverlo luego.
