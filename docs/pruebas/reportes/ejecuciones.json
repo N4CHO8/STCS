@@ -1,0 +1,44 @@
+{
+  "preparedOn": "2026-11-16",
+  "unit": {
+    "codeCommit": "7eb055f385b96e4d9e73ce2929e6f0baa5924e5a",
+    "generatedAt": "2026-11-16T04:11:03.878490+00:00",
+    "command": "node --import ./scripts/test-typescript.mjs --experimental-test-coverage --test-coverage-include=src/lib/server/validation.ts --test-coverage-include=src/lib/permissions.ts --test-coverage-include=src/lib/media-contract.ts --test --test-reporter=spec --test-reporter-destination=../docs/pruebas/reportes/unitarias.txt --test-reporter=junit --test-reporter-destination=../docs/pruebas/reportes/unitarias.xml tests/validation.test.mjs",
+    "tests": 7,
+    "passed": 7,
+    "coverageScope": [
+      "frontend/src/lib/permissions.ts",
+      "frontend/src/lib/media-contract.ts",
+      "frontend/src/lib/server/validation.ts"
+    ],
+    "linesPercent": 100,
+    "globalBusinessCoverage": "not measured"
+  },
+  "integration": {
+    "codeCommit": "b972cca829c9a2a5529859f1247ff33b425f93b7",
+    "url": "https://github.com/N4CHO8/STCS/actions/runs/43795321079",
+    "checks": 291,
+    "databaseOutageChecks": 2,
+    "workerReconnectPassed": true,
+    "reportFormat": "Extract from GitHub Actions tool log; timestamps and commands preserved; not whole log"
+  },
+  "load": "45ed7a7beddd1edf6c2b5768f7dfb4be482b6524",
+  "security": {
+    "codeCommit": "b972cca829c9a2a5529859f1247ff33b425f93b7",
+    "generatedAt": "2026-11-16T03:53:43.405799+00:00",
+    "command": "npm audit --omit=dev --json",
+    "scope": "Production dependency advisories, not DAST"
+  },
+  "originalSourceFiles": [
+    {
+      "filename": "Hito 3 — Qué debes entregar, cómo se ve correcto y rúbrica (Proyecto de Título, (1).pdf",
+      "sha256": "8ee5d9811bdca2c907b7ad6f9bded08db6855f3e9dce96a1978c9a8b4c22b596",
+      "redistributed": false
+    },
+    {
+      "filename": "Retroalimentacion_Hito2_Ignacio_Benegas_1_fix.docx",
+      "sha256": "23c93af47e8d4d45d338fc474de46f8947cc5e0b22068c775df8d1c71b840163",
+      "redistributed": false
+    }
+  ]
+}

@@ -8,7 +8,11 @@ de primera/última página en las cuatro categorías. No implica escuchar 180 WA
 en hardware ni conservarlos todos offline. El detalle de 32 y el estado local
 siguientes son evidencia histórica del 13/11, no la configuración vigente.
 
-Estado: implementación en la rama local `codex/hito3-medios-voz`. No publicada,
+## Antecedente histórico del laboratorio del 13 de noviembre
+
+La publicación y el estado de entrega vigentes están en [HITO3_ENTREGA.md](HITO3_ENTREGA.md). El contenido siguiente documenta las condiciones anteriores, no pendientes actuales de nube.
+
+Estado histórico: implementación en la rama local `codex/hito3-medios-voz`. No publicada,
 sin migraciones ni archivos nuevos en Supabase o Vercel. Las pruebas usan
 PostgreSQL descartable y almacenamiento local independiente de producción.
 

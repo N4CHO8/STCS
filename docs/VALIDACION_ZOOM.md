@@ -14,7 +14,7 @@ niños, seguridad física del dispositivo o eficacia clínica.
 ## Antes de la reunión
 
 - Ignacio confirma profesional, experiencia pertinente CAA/TEA, fecha y duración.
-- Enviar el resumen que aparece abajo y el enlace a `/demo`, sin datos de pacientes.
+- Enviar el resumen que aparece abajo y el enlace a `/login` y los accesos sintéticos de README, sin datos de pacientes.
 - Acordar con el profesor si esta revisión experta satisface la instancia académica solicitada y cómo debe denominarse en el informe.
 - Ensayar el guion, el audio compartido y una cámara que muestre pantalla y manos sobre el ESP; verificar que las imágenes sean legibles y el audio del dispositivo audible.
 - Cerrar correo y paneles privados antes de compartir pantalla. Mostrar solo cuentas demo y desactivar notificaciones visibles.

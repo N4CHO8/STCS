@@ -1,44 +1,20 @@
-# Arquitectura final de STCS
+# Arquitectura publicada de STCS
 
-## Definicion
+Actualización 16/11/2026. Web React/Next.js y API Node en Vercel; PostgreSQL y
+Storage privado en Supabase; Piper en una función Python de Vercel; firmware
+Arduino reproducible en Waveshare ESP32-S3. PlatformIO conserva un prototipo
+histórico, no la interfaz activa. No existe dependencia operativa de Render.
 
-STCS usa una arquitectura web + dispositivo IoT. La plataforma web administra configuracion, perfiles, historial y progreso. El dispositivo ESP32-S3 ejecuta la comunicacion directa mediante pictogramas.
+El navegador y el ESP son clientes separados de la API HTTPS. El navegador
+usa sesión HttpOnly, rol y asignación; el ESP una clave individual. No hay
+conexión directa frontend–Arduino ni uso de USB como transporte cotidiano.
 
-## Componentes
+Los responsables autorizados configuran imagen/frase. La API valida y persiste,
+prepara voz y sirve medios privados. El ESP consulta su tablero, verifica
+archivos y reproduce la frase vigente; envía eventos persistentes con ACK.
+PostgreSQL mantiene entidades/relaciones y Storage PNG, RGB565 y WAV.
 
-- `Frontend Next.js`: interfaz para adultos responsables.
-- `API Routes Next.js`: autenticacion, lectura de datos, registro de eventos y consultas para dashboard.
-- `Supabase PostgreSQL`: almacenamiento de usuarios, perfiles, pictogramas, dispositivos y eventos.
-- `Supabase Storage`: almacenamiento futuro de recursos visuales.
-- `ESP32-S3`: comunicador fisico tactil para el nino.
-- `PlatformIO`: ambiente de desarrollo y compilacion del firmware.
-- `Vercel`: despliegue de la plataforma web y sus API routes.
-
-## Flujo principal
-
-1. El cuidador o especialista configura pictogramas desde la web.
-2. La configuracion queda guardada en Supabase.
-3. El dispositivo ESP32 obtiene o recibe una configuracion reducida.
-4. El nino selecciona pictogramas desde la pantalla tactil.
-5. El ESP32 registra eventos y los envia por Wi-Fi a la API.
-6. La API guarda eventos en Supabase.
-7. La web muestra historial, metricas y progreso.
-
-## Endpoints del dispositivo
-
-El ESP32 usara una API key privada mediante el header `x-stcs-device-key`.
-
-```text
-GET /api/stcs/devices/{deviceCode}/config
-POST /api/stcs/devices/{deviceCode}/events
-```
-
-El primer endpoint entrega la configuracion activa del tablero. El segundo registra eventos reales del dispositivo, como seleccion de pictogramas, sincronizacion, estado de bateria o errores tecnicos.
-
-## Decisiones
-
-- La web no esta disenada para uso directo del nino.
-- La interaccion del nino ocurre en el dispositivo fisico.
-- La API principal vive en Next.js para simplificar el despliegue en Vercel.
-- Supabase es la base de datos principal del sistema.
-- El firmware debe desarrollarse con PlatformIO para mantener configuracion reproducible.
+El modelo, datos, secuencias y decisiones vigentes están en
+[arquitectura/README.md](arquitectura/README.md). La matriz de roles está en
+[FLUJO_ROLES.md](FLUJO_ROLES.md); el alcance de evidencia y limitaciones en
+[HITO3_ENTREGA.md](HITO3_ENTREGA.md). No se exponen claves SQL/Storage al ESP.
