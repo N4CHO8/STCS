@@ -1,5 +1,8 @@
 # STCS
 
+**Entrega del Hito 3:** [índice A1–A9, evidencia y pendientes](docs/HITO3_ENTREGA.md).
+Presentación: 27/11/2026, 10 minutos de explicación y 5 de demo.
+
 La web, los medios privados y la voz alojada están publicados. El tablero
 inicial tiene 96 pictogramas (24 por categoría); el máximo operativo probado
 es 180 (45 por categoría). Consultar [estado, capacidad y evidencia del 15/11](docs/CIERRE_STCS_20261115.md)
@@ -67,7 +70,7 @@ PlatformIO conserva un prototipo antiguo, no la interfaz instalada actual.
 
 ## Evaluación y Hito 3
 
-Entrar por `/login`. La rama local retira `/demo` y todos sus enlaces; no crea
+Entrar por `/login`. La versión publicada retiró `/demo` y todos sus enlaces; no crea
 cuentas al iniciar sesión. Estas tres cuentas son **públicas, sintéticas y sin
 información real**, destinadas exclusivamente a evaluación:
 
@@ -82,8 +85,8 @@ Las cuentas reales nuevas requieren activación por correo. Las cuentas de
 prueba conservan las mismas restricciones de asignación y rol.
 
 El nuevo editor permite subir imágenes y preparar voz española para la frase
-escrita. La implementación y evidencia de este encargo están **solo en local**;
-la web publicada conserva su versión previa hasta un despliegue autorizado.
+escrita. Los medios privados están en Supabase Storage y Piper funciona en
+Vercel; no necesita un trabajador encendido en el PC del propietario.
 Consulta [arquitectura, configuración, pruebas y guion del Hito 3](docs/HITO3_MEDIOS_Y_VOZ.md).
 El laboratorio aislado usa los mismos accesos sintéticos en localhost:3100.
 No ejecutar sus fixtures contra Supabase.
@@ -95,13 +98,13 @@ No ejecutar sus fixtures contra Supabase.
 - [Integracion ESP32-Web](./docs/INTEGRACION_ESP32_WEB.md)
 - [Implementacion y demo del Hito 2](./docs/HITO2_IMPLEMENTACION.md)
 - [Esquema Supabase](./supabase/schema.sql)
-- [Firmware ESP32](./firmware/stcs-esp32/README.md)
+- [Firmware ESP32 activo](./firmware/STCS_UI_Arduino/README.md)
 
 ## Estado técnico
 
 Los cuatro roles adultos, sus asignaciones y las rutas de dispositivo se
 validan en servidor. La pantalla, tacto y audio físicos ya se probaron; no son
 pendientes de integración de drivers. El trabajo de imágenes y voz del Hito 3
-se verifica localmente y tiene publicación pendiente. Los documentos antiguos
+está publicado y tiene comprobaciones físicas documentadas. Los documentos antiguos
 de hitos conservan decisiones históricas; prevalecen CONEXIONES, FLUJO_ROLES y
 HITO3_MEDIOS_Y_VOZ para interpretar el estado vigente.

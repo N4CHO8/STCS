@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testcase name="CP-RF03-U01: the spoken phrase is independent from the label and image" time="0.003762" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\validation.test.mjs"/>
+	<testcase name="CP-RF03-U02: UTF-8 limits prevent truncation on the ESP" time="0.003123" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\validation.test.mjs"/>
+	<testcase name="CP-RF03-U03: empty, malformed and missing input is rejected" time="0.002321" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\validation.test.mjs"/>
+	<testcase name="CP-RF03-U04: catalog, uploads, category and positions enforce the contract" time="0.001618" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\validation.test.mjs"/>
+	<testcase name="CP-RNF01-U01: adult permissions deny child and unknown roles" time="0.002482" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\validation.test.mjs"/>
+	<testcase name="CP-RF05-U01: events preserve identifiers, capture time and valid edge values" time="0.001177" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\validation.test.mjs"/>
+	<testcase name="CP-RF05-U02: invalid selections, event types and numeric ranges fail" time="0.001870" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\validation.test.mjs"/>
+	<!-- tests 7 -->
+	<!-- suites 0 -->
+	<!-- pass 7 -->
+	<!-- fail 0 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 566.1042 -->
+</testsuites>

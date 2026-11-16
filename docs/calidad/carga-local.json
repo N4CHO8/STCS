@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-11-16T03:58:14.838Z",
+  "codeCommit": "45ed7a7beddd1edf6c2b5768f7dfb4be482b6524",
+  "node": "v24.22.1",
+  "environment": "Loopback Next.js production build and disposable PostgreSQL; existing synthetic data; not a Vercel capacity test",
+  "machine": {
+    "cpuModel": "12th Gen Intel(R) Core(TM) i5-12450HX",
+    "logicalCpus": 12,
+    "totalMemoryBytes": 16873545728
+  },
+  "endpoint": "/api/stcs/portal",
+  "thresholds": {
+    "p95Milliseconds": 2000,
+    "maximumErrorRateExclusive": 0.01
+  },
+  "stages": [
+    {
+      "concurrency": 5,
+      "plannedDurationSeconds": 15,
+      "elapsedSeconds": 15.0763644,
+      "requests": 661,
+      "errors": 0,
+      "errorRate": 0,
+      "p95Milliseconds": 69.95830000000024,
+      "passed": true
+    },
+    {
+      "concurrency": 10,
+      "plannedDurationSeconds": 15,
+      "elapsedSeconds": 15.142737700000001,
+      "requests": 1244,
+      "errors": 0,
+      "errorRate": 0,
+      "p95Milliseconds": 82.50180000000182,
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "One machine hosts load generator, server and database",
+    "Warm authenticated read only; no uploads, synthesis or device fleet",
+    "No production traffic or writes beyond isolated login/logout",
+    "Threshold is a proposed engineering target, not stakeholder-approved"
+  ]
+}

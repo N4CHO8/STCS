@@ -1,0 +1,77 @@
+verify	Run npm ci	2026-11-16T02:58:57.2085717Z found 0 vulnerabilities
+verify	Run npm audit --omit=dev --audit-level=high	﻿2026-11-16T02:58:57.3110036Z ##[group]Run npm audit --omit=dev --audit-level=high
+verify	Run npm audit --omit=dev --audit-level=high	2026-11-16T02:58:57.3110783Z ^[[36;1mnpm audit --omit=dev --audit-level=high^[[0m
+verify	Run npm audit --omit=dev --audit-level=high	2026-11-16T02:58:57.3176445Z shell: /usr/bin/bash -e {0}
+verify	Run npm audit --omit=dev --audit-level=high	2026-11-16T02:58:57.3176932Z ##[endgroup]
+verify	Run npm audit --omit=dev --audit-level=high	2026-11-16T02:58:57.7707930Z found 0 vulnerabilities
+verify	Run npm run build	﻿2026-11-16T02:58:58.0820246Z ##[group]Run npm run build
+verify	Run npm run build	2026-11-16T02:58:58.0820802Z ^[[36;1mnpm run build^[[0m
+verify	Run npm run build	2026-11-16T02:58:58.0886026Z shell: /usr/bin/bash -e {0}
+verify	Run npm run build	2026-11-16T02:58:58.0886753Z ##[endgroup]
+verify	Run npm run build	2026-11-16T02:58:58.2034204Z npm notice run stcs-frontend@1.0.0 build
+verify	Run npm run build	2026-11-16T02:58:58.2062726Z npm notice run next build
+verify	Run npm run build	2026-11-16T02:58:58.6060869Z ▲ Next.js 16.4.6 (Turbopack)
+verify	Run npm run build	2026-11-16T02:58:58.6232152Z ✓ Running next.config.mjs took 16ms
+verify	Run npm run build	2026-11-16T02:58:58.6243233Z ⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+verify	Run npm run build	2026-11-16T02:58:58.6340408Z Attention: Next.js now collects completely anonymous telemetry regarding usage.
+verify	Run npm run build	2026-11-16T02:58:58.6342322Z This information is used to shape Next.js' roadmap and prioritize features.
+verify	Run npm run build	2026-11-16T02:58:58.6344380Z You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+verify	Run npm run build	2026-11-16T02:58:58.6346092Z https://nextjs.org/telemetry
+verify	Run npm run build	2026-11-16T02:58:58.6346761Z 
+verify	Run npm run build	2026-11-16T02:58:58.6692139Z 
+verify	Run npm run build	2026-11-16T02:58:58.7107611Z   Creating an optimized production build ...
+verify	Run npm run build	2026-11-16T02:59:05.7979112Z ✓ Compiled successfully in 7.1s
+verify	Run npm run build	2026-11-16T02:59:05.8025843Z   Running TypeScript ...
+verify	Run npm run build	2026-11-16T02:59:10.1504634Z   Finished TypeScript in 4.3s ...
+verify	Run npm run build	2026-11-16T02:59:10.1526817Z   Collecting page data using 3 workers ...
+verify	Run npm run build	2026-11-16T02:59:10.9479415Z   Generating static pages using 3 workers (0/8) ...
+verify	Run npm run build	2026-11-16T02:59:10.9774038Z   Generating static pages using 3 workers (2/8) 
+verify	Run npm run build	2026-11-16T02:59:11.1740196Z   Generating static pages using 3 workers (4/8) 
+verify	Run npm run build	2026-11-16T02:59:11.1765374Z   Generating static pages using 3 workers (6/8) 
+verify	Run npm run build	2026-11-16T02:59:11.1770754Z ✓ Generating static pages using 3 workers (8/8) in 229ms
+verify	Run npm run build	2026-11-16T02:59:11.1814027Z   Finalizing page optimization ...
+verify	Run npm run build	2026-11-16T02:59:11.1902634Z 
+verify	Run npm run build	2026-11-16T02:59:11.1908733Z Route (app)
+verify	Run npm run build	2026-11-16T02:59:11.1909615Z ┌ ○ /
+verify	Run npm run build	2026-11-16T02:59:11.1910304Z ├ ○ /_not-found
+verify	Run npm run build	2026-11-16T02:59:11.1911014Z ├ ○ /activate
+verify	Run npm run build	2026-11-16T02:59:11.1911962Z ├ ƒ /api/auth/activate
+verify	Run npm run build	2026-11-16T02:59:11.1912830Z ├ ƒ /api/auth/login
+verify	Run npm run build	2026-11-16T02:59:11.1913564Z ├ ƒ /api/auth/logout
+verify	Run npm run build	2026-11-16T02:59:11.1914179Z ├ ƒ /api/auth/me
+verify	Run npm run build	2026-11-16T02:59:11.1914899Z ├ ƒ /api/emotions
+verify	Run npm run build	2026-11-16T02:59:11.1915495Z ├ ƒ /api/health
+verify	Run npm run build	2026-11-16T02:59:11.1916161Z ├ ƒ /api/internal/media-jobs
+verify	Run npm run build	2026-11-16T02:59:11.1916996Z ├ ƒ /api/internal/media-jobs/[key]
+verify	Run npm run build	2026-11-16T02:59:11.1917821Z ├ ƒ /api/internal/media-run
+verify	Run npm run build	2026-11-16T02:59:11.1918671Z ├ ƒ /api/internal/media-storage
+verify	Run npm run build	2026-11-16T02:59:11.1919554Z ├ ƒ /api/records
+verify	Run npm run build	2026-11-16T02:59:11.1920297Z ├ ƒ /api/stcs/device-events
+verify	Run npm run build	2026-11-16T02:59:11.1921251Z ├ ƒ /api/stcs/devices/[deviceCode]/config
+verify	Run npm run build	2026-11-16T02:59:11.1925414Z ├ ƒ /api/stcs/devices/[deviceCode]/events
+verify	Run npm run build	2026-11-16T02:59:11.1926683Z ├ ƒ /api/stcs/devices/[deviceCode]/media/[pictogramId]/[kind]
+verify	Run npm run build	2026-11-16T02:59:11.1927757Z ├ ƒ /api/stcs/events
+verify	Run npm run build	2026-11-16T02:59:11.1928521Z ├ ƒ /api/stcs/images
+verify	Run npm run build	2026-11-16T02:59:11.1929349Z ├ ƒ /api/stcs/images/[imageId]
+verify	Run npm run build	2026-11-16T02:59:11.1930235Z ├ ƒ /api/stcs/overview
+verify	Run npm run build	2026-11-16T02:59:11.1931009Z ├ ƒ /api/stcs/pictograms
+verify	Run npm run build	2026-11-16T02:59:11.1932177Z ├ ƒ /api/stcs/pictograms/[pictogramId]
+verify	Run npm run build	2026-11-16T02:59:11.1933194Z ├ ƒ /api/stcs/pictograms/[pictogramId]/audio
+verify	Run npm run build	2026-11-16T02:59:11.1934053Z ├ ƒ /api/stcs/portal
+verify	Run npm run build	2026-11-16T02:59:11.1934726Z └ ○ /login
+verify	Run npm run build	2026-11-16T02:59:11.1935124Z 
+verify	Run npm run build	2026-11-16T02:59:11.1935306Z 
+verify	Run npm run build	2026-11-16T02:59:11.1935748Z ƒ Proxy (Middleware)
+verify	Run npm run build	2026-11-16T02:59:11.1936243Z 
+verify	Run npm run build	2026-11-16T02:59:11.1936812Z ○  (Static)   prerendered as static content
+verify	Run npm run build	2026-11-16T02:59:11.1937773Z ƒ  (Dynamic)  server-rendered on demand
+verify	Run npm run build	2026-11-16T02:59:11.1938339Z 
+verify	Run npm run typecheck	﻿2026-11-16T02:59:11.7271356Z ##[group]Run npm run typecheck
+verify	Run npm run typecheck	2026-11-16T02:59:11.7272125Z ^[[36;1mnpm run typecheck^[[0m
+verify	Run npm run typecheck	2026-11-16T02:59:11.7333801Z shell: /usr/bin/bash -e {0}
+verify	Run npm run typecheck	2026-11-16T02:59:11.7334088Z ##[endgroup]
+verify	Run npm run typecheck	2026-11-16T02:59:11.8367219Z npm notice run stcs-frontend@1.0.0 typecheck
+verify	Run npm run typecheck	2026-11-16T02:59:11.8369397Z npm notice run tsc --noEmit
+verify	Run npm run test:isolated	2026-11-16T02:59:27.1122268Z PASS: 291 checks; roles, privacy, assignments, reports, profile editing, pictograms and session revocation.
+verify	Run npm run test:isolated	2026-11-16T02:59:27.6958951Z PASS: 2 database outage checks; health and authenticated requests return JSON 503.
+verify	Run npm run test:isolated	2026-11-16T02:59:32.8314355Z PASS: actual worker survives 503 and reconnects to the loopback API. No audio jobs or data created.

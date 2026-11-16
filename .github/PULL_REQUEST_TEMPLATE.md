@@ -1,25 +1,26 @@
-## Resumen
+## Cambio y motivo
 
-Describe brevemente que cambia esta rama.
+Ticket Jira TCS-___ y enlace. Explicar problema y resultado esperado.
 
-## Checklist de arquitectura
+## Trazabilidad
 
-- [ ] Respeta la base tecnica definida en `docs/TITLE_ARCHITECTURE.md`
-- [ ] No introduce un stack nuevo sin justificacion tecnica documentada
-- [ ] Mantiene separacion razonable entre UI, logica de negocio y persistencia
-- [ ] Si cambia API o datos, actualiza la documentacion correspondiente
+- Objetivo y requerimiento RF/RNF:
+- Historias y sprint:
+- Casos positivos, negativos y de borde:
+- Evidencia ejecutada, fecha y SHA:
+- Modelo/ADR afectado:
+- Brechas, deuda y limitaciones:
 
-## Checklist de calidad
+## Comprobaciones
 
-- [ ] Agrega o actualiza pruebas cuando corresponde
-- [ ] Explica si no se agregaron pruebas en esta rama
-- [ ] Verifica que el proyecto siga levantando en local con Docker
+- [ ] Permisos en servidor y privacidad admin/docente preservados
+- [ ] Pruebas apropiadas ejecutadas y resultados enlazados
+- [ ] CI aprobado para este commit; build no equivale a aceptación
+- [ ] Sin secretos, respaldos privados ni datos reales en Git
+- [ ] Documentación, contratos y CHANGELOG actualizados cuando corresponde
+- [ ] Compatible con los servicios existentes Vercel y Supabase
 
-## Checklist de despliegue
+## Aprobación del stakeholder
 
-- [ ] El cambio sigue siendo compatible con `Vercel + Render + Supabase`
-- [ ] Si modifica variables de entorno, actualiza `.env.example`
-
-## Evidencia
-
-- [ ] Incluye capturas, logs o notas de validacion si aplica
+Si aplica, enlazar decisión auténtica con nombre, rol, fecha y escenarios.
+No marcar aprobación por defecto ni atribuirla al estudiante o al asistente.

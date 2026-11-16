@@ -1,0 +1,485 @@
+{
+  "capturedAt": "2026-11-16",
+  "source": "Jira connector; project TCS",
+  "sprints": [
+    {
+      "id": 202,
+      "name": "Sprint 1 – Planificación",
+      "state": "closed",
+      "goal": "Definir el alcance de la primera iteración y preparar la base técnica del prototipo físico STCS en un dispositivo ESP32-S3 con pantalla redonda táctil, orientado a comunicación rápida mediante pictogramas.",
+      "startDate": "2026-08-18T20:55:17.213Z",
+      "endDate": "2026-09-13T04:00:00.000Z",
+      "completeDate": "2026-09-23T20:21:49.634Z"
+    },
+    {
+      "id": 320,
+      "name": "Sprint 2 - Prototipo funcional",
+      "state": "closed",
+      "goal": "",
+      "startDate": "2026-09-23T20:21:00.849Z",
+      "endDate": "2026-10-05T03:00:00.000Z",
+      "completeDate": "2026-10-27T22:39:13.918Z"
+    },
+    {
+      "id": 321,
+      "name": "Sprint 3 - Preparación clínica",
+      "state": "future",
+      "goal": "Dejar ESP y web listos para evaluación supervisada: Wi-Fi desde celular, protección de datos sensibles, funcionamiento offline, despliegue verificable y protocolo revisado. Cerrar solo con evidencia; sin menores antes de autorizaciones y decisión de preparación.",
+      "startDate": "2026-10-19T03:00:00.000Z",
+      "endDate": "2026-11-09T03:00:00.000Z"
+    }
+  ],
+  "activeSprint": {
+    "id": 321,
+    "name": "Sprint 3 - Preparación clínica",
+    "state": "future",
+    "goal": "Dejar ESP y web listos para evaluación supervisada: Wi-Fi desde celular, protección de datos sensibles, funcionamiento offline, despliegue verificable y protocolo revisado. Cerrar solo con evidencia; sin menores antes de autorizaciones y decisión de preparación.",
+    "startDate": "2026-10-19T03:00:00.000Z",
+    "endDate": "2026-11-09T03:00:00.000Z",
+    "originBoardId": 133
+  },
+  "issues": [
+    {
+      "key": "TCS-25",
+      "summary": "Configuración del ambiente de desarrollo ESP32",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-26",
+      "summary": "Prueba inicial de pantalla redonda",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-27",
+      "summary": "Prueba inicial de interacción táctil",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-28",
+      "summary": "Definición del flujo inicial de comunicación",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-29",
+      "summary": "Preparación técnica del prototipo ESP32",
+      "status": "Finalizada",
+      "type": "Epic",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-30",
+      "summary": "Selección de pictogramas iniciales",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-31",
+      "summary": "Diseño visual inicial del tablero en pantalla redonda",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-32",
+      "summary": "Definición de integración con plataforma web",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-36",
+      "summary": "Análisis de factibilidad del dispositivo ESP32",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-37",
+      "summary": "Definición del alcance funcional del dispositivo",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-40",
+      "summary": "Diseño de arquitectura ESP32-Web",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-41",
+      "summary": "Definición de datos mínimos del dispositivo",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-42",
+      "summary": "Identificación de riesgos del prototipo físico",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-43",
+      "summary": "Implementación de interfaz base del dispositivo ESP32",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-44",
+      "summary": "Implementación de navegación entre categorías",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-45",
+      "summary": "Implementación de selección táctil de pictogramas",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-46",
+      "summary": "Visualización del mensaje seleccionado",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-47",
+      "summary": "Implementación de botón volver y limpiar",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-48",
+      "summary": "Configuración del tablero desde la plataforma web",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-49",
+      "summary": "Persistencia de pictogramas en base de datos",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-51",
+      "summary": "Creación de endpoint para recepción de eventos del dispositivo",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-52",
+      "summary": "Visualización de eventos en historial",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-53",
+      "summary": "Gestión de perfiles y ciclo completo de dispositivos autorizados",
+      "status": "En curso",
+      "type": "Historia",
+      "sprint": "Sprint 3 - Preparación clínica",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-59",
+      "summary": "Aislamiento de datos y comunicaciones seguras",
+      "status": "En curso",
+      "type": "Historia",
+      "sprint": "Sprint 3 - Preparación clínica",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-60",
+      "summary": "Aceptación técnica integrada y decisión de preparación para el piloto",
+      "status": "Tareas por hacer",
+      "type": "Historia",
+      "sprint": "Sprint 3 - Preparación clínica",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-61",
+      "summary": "[Consolidada en TCS-77] Revisión experta de accesibilidad y vocabulario CAA",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-63",
+      "summary": "Comunicación aumentativa mediante pictogramas",
+      "status": "En curso",
+      "type": "Epic",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-64",
+      "summary": "Plataforma web de configuración y gestión",
+      "status": "En curso",
+      "type": "Epic",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-65",
+      "summary": "Integración ESP32, API y base de datos",
+      "status": "En curso",
+      "type": "Epic",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-66",
+      "summary": "Seguimiento, historial y análisis del progreso",
+      "status": "En curso",
+      "type": "Epic",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-67",
+      "summary": "Validación y pruebas",
+      "status": "Tareas por hacer",
+      "type": "Epic",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-68",
+      "summary": "Análisis de factibilidad del sistema de predicción de pictogramas",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-69",
+      "summary": "Definición de datos necesarios para predecir pictogramas",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-70",
+      "summary": "Definición de reglas iniciales de predicción",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-71",
+      "summary": "Evaluación de riesgos del sistema de predicción",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-72",
+      "summary": "Diseño del flujo de sugerencias en el tablero del ESP32",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-73",
+      "summary": "Diseño de integración del sistema predictivo con la plataforma web",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-74",
+      "summary": "Configuración de Wi-Fi del ESP desde el celular",
+      "status": "En curso",
+      "type": "Historia",
+      "sprint": "Sprint 3 - Preparación clínica",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-75",
+      "summary": "[Consolidada en TCS-53] Vinculación y reasignación segura de dispositivos",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-76",
+      "summary": "Cola persistente y recuperación sin conexión",
+      "status": "En curso",
+      "type": "Historia",
+      "sprint": "Sprint 3 - Preparación clínica",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-77",
+      "summary": "Preparación de validación supervisada: profesional, CAA y datos",
+      "status": "Tareas por hacer",
+      "type": "Historia",
+      "sprint": "Sprint 3 - Preparación clínica",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-79",
+      "summary": "[Consolidada en TCS-84] Inicio y cierre de sesión privada y revocable",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-81",
+      "summary": "[Consolidada en TCS-53] Ciclo de vida de credenciales individuales del ESP",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-82",
+      "summary": "[Consolidada en TCS-85] Estados de la web y recuperación ante errores",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-83",
+      "summary": "Historial completo con filtros y exportación seudonimizada",
+      "status": "En curso",
+      "type": "Historia",
+      "sprint": "Sprint 3 - Preparación clínica",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-84",
+      "summary": "Acceso seguro al portal y administración de cuentas por rol",
+      "status": "En curso",
+      "type": "Historia",
+      "sprint": "Sprint 3 - Preparación clínica",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-85",
+      "summary": "Experiencia web accesible y recuperación ante errores",
+      "status": "En curso",
+      "type": "Historia",
+      "sprint": "Sprint 3 - Preparación clínica",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-86",
+      "summary": "[Consolidada en TCS-88] Dependencias reproducibles y verificaciones continuas de la web",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-87",
+      "summary": "[Consolidada en TCS-77] Gobernanza de datos sensibles y derechos del participante",
+      "status": "Finalizada",
+      "type": "Historia",
+      "sprint": "No comprobado por tarjeta en esta captura",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    },
+    {
+      "key": "TCS-88",
+      "summary": "Entrega reproducible: CI, despliegue de ensayo y recuperación",
+      "status": "En curso",
+      "type": "Historia",
+      "sprint": "Sprint 3 - Preparación clínica",
+      "approval": "No verificada; el estado Finalizada no acredita aprobación externa"
+    }
+  ],
+  "descriptionUpdates": [
+    {
+      "key": "TCS-53",
+      "ok": true
+    },
+    {
+      "key": "TCS-59",
+      "ok": true
+    },
+    {
+      "key": "TCS-60",
+      "ok": true
+    },
+    {
+      "key": "TCS-74",
+      "ok": true
+    },
+    {
+      "key": "TCS-76",
+      "ok": true
+    },
+    {
+      "key": "TCS-77",
+      "ok": true
+    },
+    {
+      "key": "TCS-83",
+      "ok": true
+    },
+    {
+      "key": "TCS-84",
+      "ok": true
+    },
+    {
+      "key": "TCS-85",
+      "ok": true
+    },
+    {
+      "key": "TCS-88",
+      "ok": true
+    }
+  ]
+}
