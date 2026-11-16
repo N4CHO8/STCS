@@ -9,6 +9,9 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      STCS_TEST_ISOLATED: "1"
+      STCS_TEST_DB: stcs_release_tests
     services:
       postgres:
         image: postgres:17
@@ -35,6 +38,9 @@ jobs:
       - run: npm audit --omit=dev --audit-level=high
       - run: npm run test:unit
       - run: npm run test:prepare
+      - run: npm run test:coverage
       - run: npm run build
       - run: npm run typecheck
       - run: npm run test:isolated
+      - run: node node_modules/playwright/cli.js install --with-deps chromium
+      - run: npm run test:e2e

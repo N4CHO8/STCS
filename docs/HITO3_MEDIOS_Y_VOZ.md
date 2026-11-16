@@ -205,7 +205,7 @@ de energía durante escritura, funcionamiento prolongado y segundo ESP físico.
 La validación profesional por Zoom sigue siendo una revisión del prototipo,
 sin niños ni datos reales.
 
-## Evidencia y guion para el informe
+## Evidencia y procedimiento de comprobación
 
 Capturas sintéticas en `docs/evidencias/hito3`:
 

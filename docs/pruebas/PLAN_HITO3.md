@@ -32,6 +32,28 @@ líneas ≥70% de lógica de negocio. Debe medirse el alcance total antes de afi
 cumplimiento; cubrir solo validadores no prueba ese porcentaje en todo el backend.
 
 Una prueba que no se ejecutó cuenta como pendiente, nunca como aprobada.
+
+## Ampliación de cierre del 16 de noviembre
+
+Antes de ejecutar la nueva suite se definen diez recorridos Chromium reales:
+URL/login inválido, especialista con dos perfiles, CRUD y duplicados de tablero,
+subida inválida/válida, privacidad de docente, límites de apoderado, admin sin
+identidades, sesión vencida, caída API con recuperación y navegación móvil con
+logout. Se verifican también errores JavaScript/CSP y ausencia de eventos
+inventados por editar el tablero. Son navegador y API con PostgreSQL aislado,
+no pruebas del ESP ni Safari/iPhone físicos.
+
+La cobertura de negocio se mide sobre todos los TS de src/lib/server y
+permissions.ts/media-contract.ts, incluidos archivos sin ejecución. Se exige
+≥70% de líneas, conservando detalle de ramas y funciones. El build de medición
+usa webpack sin minificar y mapas de fuentes. Se rechazan mapas que pierdan
+los rangos de funciones de portal.ts; no se acepta una cifra engañosa por un
+mapa virtual mal interpretado. La compilación de producción se prueba aparte.
+
+DAST: ZAP Baseline 2.17.0 en contenedor por digest, araña y análisis pasivo sobre
+el servidor ficticio en puerto 3400. No ataca producción ni demuestra cobertura
+autenticada completa. Se conservan avisos y su análisis. Corregir cabeceras
+ausentes y repetir navegador/escaneo; aceptar solo los residuales justificados.
 La demostración de prueba que detecta una regresión se hará en copia aislada:
 retirar temporalmente el límite UTF-8, ejecutar CP-RF03-U02, observar fallo y
 restaurar. No modificar main, producción ni firmware para esa demostración.

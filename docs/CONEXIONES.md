@@ -131,4 +131,4 @@ propietario confirmó pantalla, tacto y audio; la sincronización en vivo sigue
 pendiente por HTTP 503 observado en serie y fuente/configuración no recuperados.
 El ensayo antiguo independiente respondió health 500: no se considera operativo
 ni se asume que sea el destino del equipo. No se cambió su base ni se cargó
-firmware en el dispositivo. Detalles y acciones: REVISION_PREVIA_ZOOM_2026-11-12.md.
+firmware en el dispositivo. El registro personal de preparación se conserva fuera de Git; el estado técnico vigente se documenta en CIERRE_STCS_20261115.md.

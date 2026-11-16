@@ -1,6 +1,6 @@
-# Entrega y defensa del Hito 3 de STCS
+# Índice técnico y evidencias del Hito 3
 
-Preparación del 16 de noviembre de 2026 para la presentación del **27 de noviembre: 10 minutos de explicación y 5 de demo**. Autor: Ignacio Benegas. La guía del profesor Matías Vargas Marín (10/11/2026, 19 páginas) pide nueve artefactos versionados y una auditoría en vivo. Esta carpeta organiza la evidencia; **la entrega aún no acredita cumplimiento completo de la rúbrica**.
+Corte documental del 16/11/2026. Índice de los nueve artefactos de entrega: especificación, trazabilidad, pruebas, calidad, arquitectura, repositorio y riesgos. Los resultados pendientes permanecen identificados. El material personal de exposición se conserva fuera del repositorio.
 
 ## Accesos para el profesor
 
@@ -9,10 +9,6 @@ Preparación del 16 de noviembre de 2026 para la presentación del **27 de novie
 - [Aplicación publicada](https://0stcs0.vercel.app): accesos sintéticos en README. No compartir cuenta administrativa, secretos, respaldos ni datos reales.
 - [CI del estado previo b972cca](https://github.com/N4CHO8/STCS/actions/runs/43795321079): 291 comprobaciones de integración, 2 de caída DB y reconexión del trabajador.
 - Firmware confirmado físicamente: v0.8.6-wifi-status. Tablero actual 96 activos, 24 por categoría, seis páginas. Máximo operativo ensayado 180/45, no límite físico absoluto.
-
-## Presentación y antecedentes
-
-El profesor evalúa principalmente la exposición según lo informado por Ignacio. Los informes sustentan la especificación; el guion obliga a mostrar y explicar en vivo la arquitectura, relaciones de datos y pruebas. No se considera que contenido escrito haya sido explicado oralmente. Los RF históricos conservan su significado; H3-RF/H3-RNF identifican el catálogo nuevo.
 
 ## Los nueve artefactos
 
@@ -28,26 +24,12 @@ El profesor evalúa principalmente la exposición según lo informado por Ignaci
 | A8 Repo, despliegue y tablero | [repositorio](REPOSITORIO_HITO3.md), README, CHANGELOG | Main protegida, CI y PR; tag final todavía no existe |
 | A9 Riesgos y deuda | [riesgos.md](riesgos.md) | Incluye riesgos materializados, límites y plan priorizado |
 
-La revisión de la retroalimentación de Hito 2 orienta el foco hacia arquitectura, modelo de datos, pruebas reproducibles y trazabilidad. Los documentos originales de evaluación se conservan fuera del repositorio público; este índice no publica la calificación ni sustituye esa evaluación.
-
 ## Bloqueantes para afirmar cumplimiento completo
 
 1. Los objetivos/requerimientos de Hito 1/2 ya se recuperaron de los cuatro archivos originales. [Comparación y equivalencias](ANTECEDENTES_HITOS_1_2.md). Falta ratificar indicadores y resultados con stakeholder; disponer del texto no acredita esa aprobación.
 2. Agendar revisión Zoom esta semana. Acordar con profesor si el profesional puede ser sustituto representativo para indicadores de usabilidad. No atribuir eficacia ni comprensión a niños que no participaron.
 3. Registrar nombre/rol/fecha y aprobación real de cada HU e indicador en Jira. Estado Finalizada o confirmación del estudiante no basta. Historias consolidadas no cuentan como funcionalidad adicional.
 4. Completar cobertura del backend de negocio, E2E automatizados y escáner dinámico, o declarar brechas. El 100% medido corresponde solo a tres módulos, no a toda la app.
-5. Resolver o acordar diferencias técnicas: cola 64 vs 256 de Jira; AP compartido sin cierre automático vs temporal/individual solicitado; pruebas de Android/iPhone, pérdida de ACK, segundo ESP y aislamiento entre varios niños.
+5. El propietario aceptó como alcance final del ESP la cola de 64 eventos y STCS-Config sin timeout; TCS-74/TCS-76 quedan finalizadas funcionalmente. Persisten como cobertura de pruebas la matriz móvil, pérdida de ACK, cola llena y múltiples placas, sin exigir cambios de firmware en este cierre.
 6. Verificar enlaces con la cuenta del profesor y congelar el tag hito3 **después** de incorporar toda la evidencia. No crear ahora un tag definitivo ni moverlo luego.
 
-## Ruta hasta la clase
-
-| Momento | Acción | Responsable |
-| --- | --- | --- |
-| 16–18/11 | Confirmar profesional, indicadores de medición y acceso del profesor | Ignacio |
-| Esta semana | Zoom con tareas, tiempos, errores, ayudas y valoración visual | Ignacio + profesional |
-| Después del Zoom | Incorporar acta real, resultados, aprobaciones y correcciones | Ignacio + responsable técnico |
-| Antes del 26/11 | Resolver brechas priorizadas o acordar exclusiones; auditar tres cadenas; congelar hito3 | Ignacio |
-| 26/11 | Ensayar 10 + 5 minutos con red de respaldo y vídeo corto del ESP | Ignacio |
-| 27/11 | Defensa sobre ambiente publicado, con repositorio y Jira abiertos | Ignacio |
-
-[Guion de exposición y demo](GUION_DEFENSA_HITO3.md). [Pauta de sesión y evidencia externa](validacion/PAUTA_HITO3.md).
