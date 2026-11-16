@@ -43,8 +43,9 @@ logout. Se verifican también errores JavaScript/CSP y ausencia de eventos
 inventados por editar el tablero. Son navegador y API con PostgreSQL aislado,
 no pruebas del ESP ni Safari/iPhone físicos.
 
-La cobertura de negocio se mide sobre todos los TS de src/lib/server y
-permissions.ts/media-contract.ts, incluidos archivos sin ejecución. Se exige
+La cobertura de servidor se mide sobre todos los TS de src/lib/server,
+src/app/api, proxy.ts y permissions.ts/media-contract.ts, incluidos archivos
+sin ejecución. Se exige
 ≥70% de líneas, conservando detalle de ramas y funciones. El build de medición
 usa webpack sin minificar y mapas de fuentes. Se rechazan mapas que pierdan
 los rangos de funciones de portal.ts; no se acepta una cifra engañosa por un
