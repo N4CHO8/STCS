@@ -172,10 +172,15 @@ try {
   );
   if (stages.some((s) => !s.passed)) process.exitCode = 1;
 } finally {
-  if (cookie)
-    await fetch(origin + "/api/auth/logout", {
-      method: "POST",
-      headers: { Cookie: cookie },
-    }).catch(() => {});
-  server.kill();
+  try {
+    if (cookie) {
+      const logout = await fetch(origin + "/api/auth/logout", {
+        method: "POST",
+        headers: { Cookie: cookie, Origin: origin },
+      });
+      assert.equal(logout.status, 200, "The load-test session must be revoked");
+    }
+  } finally {
+    server.kill();
+  }
 }

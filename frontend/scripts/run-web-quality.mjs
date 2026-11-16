@@ -219,31 +219,45 @@ try {
     "Editing the board must not invent child activity",
   );
 } finally {
-  if (connected) {
-    if (created) {
-      await db.query(
-        "DELETE FROM specialist_reports WHERE author_user_id=ANY($1::uuid[])",
-        [ids],
-      );
-      await db.query("DELETE FROM users WHERE id=ANY($1::uuid[])", [ids]);
-      await db.query("DELETE FROM phrase_audio WHERE phrase LIKE $1", [
-        marker + "%",
-      ]);
-      const limitKeys = Object.values(accounts).map((email) =>
-        createHash("sha256")
-          .update("login:" + email)
-          .digest("hex"),
-      );
-      await db.query("DELETE FROM app_rate_limits WHERE key=ANY($1::text[])", [
-        limitKeys,
-      ]);
+  let cleaned = !created;
+  try {
+    if (connected) {
+      if (created) {
+        await db.query(
+          "DELETE FROM specialist_reports WHERE author_user_id=ANY($1::uuid[])",
+          [ids],
+        );
+        await db.query(
+          "DELETE FROM pictogram_images WHERE student_profile_id=ANY($1::uuid[])",
+          [profiles],
+        );
+        await db.query("DELETE FROM users WHERE id=ANY($1::uuid[])", [ids]);
+        await db.query("DELETE FROM phrase_audio WHERE phrase LIKE $1", [
+          marker + "%",
+        ]);
+        const limitKeys = Object.values(accounts).map((email) =>
+          createHash("sha256")
+            .update("login:" + email)
+            .digest("hex"),
+        );
+        await db.query(
+          "DELETE FROM app_rate_limits WHERE key=ANY($1::text[])",
+          [limitKeys],
+        );
+        cleaned = true;
+      }
     }
-    await db.end();
+  } finally {
+    if (connected) await db.end();
+    server.kill();
+    log.end();
+    assert.ok(
+      resolve(folder).startsWith(resolve(tmpdir()) + sep + "stcs-web-quality-"),
+    );
+    if (cleaned) await rm(folder, { recursive: true, force: true });
+    else
+      console.error(
+        "Isolated fixture metadata retained for recovery; cleanup did not finish.",
+      );
   }
-  server.kill();
-  log.end();
-  assert.ok(
-    resolve(folder).startsWith(resolve(tmpdir()) + sep + "stcs-web-quality-"),
-  );
-  await rm(folder, { recursive: true, force: true });
 }

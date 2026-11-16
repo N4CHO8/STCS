@@ -219,7 +219,7 @@ test("CP-RF02-E04: administrator receives numbered profiles without child identi
     page.getByRole("button", { name: "Ficha del niño", exact: true }),
   ).toHaveCount(0);
 });
-test("CP-RF01-E02: expired server session clears the portal and redirects to login", async ({
+test("CP-RF01-E02: missing server credential clears the portal and redirects to login", async ({
   page,
   context,
 }) => {
