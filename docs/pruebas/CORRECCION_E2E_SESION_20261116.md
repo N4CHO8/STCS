@@ -31,9 +31,10 @@ localhost, el marcador de aislamiento y la limpieza de fixtures del runner.
 - Sintaxis Node y formato Prettier de la prueba revisados localmente.
 - Docker local estaba detenido; no se ejecuta el runner contra la base habitual
   ni se escribe sobre Supabase como alternativa.
-- El CI del candidato ejecutará el recorrido completo con PostgreSQL
-  descartable. Registrar su resultado antes de integrar y comprobar también
-  la ejecución de main, que fue donde se observó la diferencia anterior.
+- El [CI del candidato](https://github.com/N4CHO8/STCS/actions/runs/43924514791)
+  y el [CI de main 22fa385](https://github.com/N4CHO8/STCS/actions/runs/43925021420)
+  aprobaron el recorrido completo con PostgreSQL descartable, incluidos los
+  diez E2E. El caso de sesión pasó en ambas ejecuciones.
 
 Los reportes históricos de diez recorridos aprobados mantienen sus revisiones
 originales. No se altera su fecha ni se borra la ejecución fallida del historial.

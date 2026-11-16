@@ -4,23 +4,9 @@ Los nombres CL1/UC/SEQ/ACT son los localizadores de la matriz. Las entidades rep
 
 ## UC1–UC6 Casos de uso
 
-```mermaid
-flowchart LR
-  T[Especialista] --> UC1([UC1 Iniciar sesión adulta])
-  D[Docente] --> UC1
-  G[Apoderado] --> UC1
-  A[Administrador] --> UC1
-  T --> UC2([UC2 Consultar ficha e informes autorizados])
-  G --> UC2
-  D --> OR([Leer solo orientaciones])
-  T --> UC3([UC3 Editar tablero asignado])
-  D --> UC3
-  N[Niño en ESP] --> UC4([UC4 Elegir pictogramas y hablar])
-  T --> UC5([UC5 Consultar actividad autorizada])
-  G --> UC5
-  R[Adulto junto al ESP] --> UC6([UC6 Configurar Wi-Fi local])
-  A --> AD([Gestionar adultos y solicitar asignaciones])
-```
+![Casos de uso UML de STCS](figuras/casos-uso.svg)
+
+UC1–UC6 conservan las referencias de la matriz; UC7/UC8 explicitan gestión administrativa y orientaciones. Las asociaciones se limitan además por rol y asignación.
 
 Admin no recibe identidad ni clínica de niños. Child no es actor del portal adulto. El especialista redacta diagnóstico separado de orientaciones.
 
@@ -134,29 +120,6 @@ Implementación: frontend/src/lib/server/portal.ts, access.ts, auth.ts; rutas an
 
 ## ACT1 Operación del comunicador
 
-```mermaid
-flowchart TD
-  S([Inicio]) --> Load[Leer tablero y atlas guardados]
-  Load --> Net{Wi-Fi disponible}
-  Net -->|Sí| Sync[Sincronizar metadatos y recursos verificados]
-  Net -->|No| Cached[Usar recursos conservados y mostrar estado]
-  Sync --> Choose[Categoría y página]
-  Cached --> Choose
-  Choose --> Select[Agregar selección a frase]
-  Select --> Action{Acción}
-  Action -->|Navegar| Choose
-  Action -->|Borrar explícitamente| Clear[Vaciar frase]
-  Clear --> Choose
-  Action -->|Hablar| Ready{Audio vigente disponible}
-  Ready -->|Sí| Play[Reproducir]
-  Ready -->|No| Error[Descargar o indicar indisponibilidad]
-  Play --> Queue[Persistir evento y enviar al recuperar conexión]
-  Queue --> Ack{ACK correcto}
-  Ack -->|Sí| Retire[Retirar evento de cola]
-  Ack -->|No| Keep[Conservar para reintento]
-  Retire --> Choose
-  Keep --> Choose
-  Error --> Choose
-```
+![Actividad UML del comunicador](figuras/actividad.svg)
 
-La cola admite 64; llenado y corte de energía siguen requiriendo ensayo físico. La zona táctil inferior defectuosa se evita con controles superiores y flechas laterales; no se considera reparada.
+La cola admite 64; PF-03–05 fueron informados conformes por el autor, con trazas/conteos pendientes. Varios ESP no se probaron. Sin Wi-Fi no hubo voz en el ensayo. La zona táctil inferior defectuosa se evita con controles superiores y flechas laterales; no se considera reparada.

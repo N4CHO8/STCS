@@ -1,48 +1,32 @@
 # A4 Matriz de trazabilidad
 
-Firmware v0.8.6; CI histórico identificado por SHA en cada evidencia. Ya se recuperaron los objetivos y RF-01–RF-08/RD-01 del Hito 2. [Equivalencias de origen](ANTECEDENTES_HITOS_1_2.md) → catálogo H3 de esta matriz → casos/evidencia. OE1–OE4 son agrupaciones de medición enlazadas a H1-OE/H2-OE en objetivos.md; no sustituyen los textos originales.
+Los objetivos de origen H1/H2 se enlazan con OE1–OE4 en [A1](objetivos.md). Los IDs RF históricos se conservan en [antecedentes](ANTECEDENTES_HITOS_1_2.md); H3-RF/H3-RNF identifica el catálogo vigente. S1/S2/S3 son los sprints 202/320/321, verificados por conector.
 
-| Objetivo | Req | Modelo A7 | HU Jira | Caso o grupo de casos | Evidencia | Estado real | PR / historial |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| OE3 | H3-RF01 | UC1, SEQ2 | TCS-84 | CP-RNF01-I01 | verify-roles + CI b972cca | Parcial: técnica aprobada, aprobación externa pendiente | Histórico anterior a PR #1; sin ticket consistente |
-| OE3 | H3-RF02 | UC2, CL1, SEQ2 | TCS-53 / TCS-59 | CP-RNF01-U01 / I01 | JUnit y CI; captura docente/admin | Técnica aprobada en casos ejecutados; multicliente físico pendiente | #1, #5; no aprobación de stakeholder |
-| OE2 | H3-RF03 | UC3, SEQ1 | TCS-48 / TCS-49 / TCS-60 | CP-RF03-U01–04 / M01 | JUnit, regresión, evidencias imagen/edición/voz | Manual confirmado por autor; aceptación externa pendiente | #5, #6 |
-| OE1 | H3-RF04 | UC4, ACT1 | TCS-43–47 / TCS-85 | CP-RF04-M01 | CIERRE y WEB_Y_WIFI, confirmación física | Técnica manual comprobada; sobrecarga visual no validada | #5, #7, #9 |
-| OE4 | H3-RF05 | UC5, CL1 | TCS-51 / TCS-52 / TCS-83 | CP-RF05-U01–02 / I01 | JUnit, verify-roles/CI | API comprobada; PF-03/04/05 conformes informados por propietario, trazas pendientes | #2, #3, #5 |
-| OE1/OE4 | H3-RF06 | UC6 | TCS-74 | CP-RF06-M01 | WEB_Y_WIFI, v0.8.6 | Sin timeout; PF-06 conforme informado, matriz Android/iPhone completa no acreditada | #9 |
-| OE3 | H3-RF07 | UC2, CL1 | TCS-84 | CP-RNF01-I01 | verify-roles/CI | Casos API aprobados; validación del contenido clínico pendiente | Histórico + #5 |
-| OE4 | H3-RF08 | ACT1, CL1 | TCS-76 | CP-RNF04-M01 | ARRANQUE_RAPIDO y reinicio | Atlas/reinicio sí; PF-02–05 conformes informados, voz sin Wi-Fi no garantizada (L-01) | #7, #8 |
-| OE3 | H3-RF09 | UC1, CL1 | TCS-53 / TCS-84 | CP-RNF01-I01 | verify-roles/CI | Parcial: permisos/aprobaciones técnicas sí; ciclo completo dispositivo pendiente | #1 + histórico |
-| OE4 | H3-RF10 | UC5 | TCS-83 | CP-RF10-I01 | verify-roles/CI y alcance de Jira | Parcial: filtros/paginación con pruebas; completar criterios actuales de exportación | Histórico + #5 |
-| OE2 | H3-RF11 | SEQ1 | TCS-60 | CP-RF03-U04 / M02 | capacidad-180-telemetria.txt, confirmaciones 180/rechazo184 | 180 operativos ensayados; no físico absoluto ni todos offline | #5 |
-| OE3 | H3-RNF01 | SEQ2 | TCS-59 | CP-RNF01-S01 / I01 | npm-audit.json + CI | Dependencias/API y ZAP Baseline ejecutados; alcance en calidad/README.md | #5 y esta entrega |
-| OE4 | H3-RNF02 | SEQ1 | TCS-60 / TCS-88 | CP-RNF02-L01/L02 | carga-local.json | Local aprobada; no capacidad de producción | Esta entrega TCS-88 |
-| OE4 | H3-RNF03 | SEQ1/SEQ2 | TCS-88 | CP-RF03-U02 / CI | JUnit, regresion.json y workflow | Cobertura de servidor y E2E Chromium ejecutados; límites en pruebas/CIERRE_20261116.md | Esta entrega TCS-60/88 |
-| OE4 | H3-RNF04 | ACT1 | TCS-76 | CP-RNF04-M01 | ARRANQUE_RAPIDO | PF-03/04/05 informados conformes; sin conteos ni telemetría del borde, no prueba instrumentada | #7 |
-| Visión futura | FUT01 | Fuera del MPV implementado | TCS-68–73 | No ejecutado | Solo análisis en Jira | No hecho: predicción implementada no acreditada | Sin PR de implementación |
-| OE3/OE4 | FUT02 | CL1/SEQ2 | TCS-53 | No ejecutado en dos ESP | Un dispositivo disponible | No hecho en hardware; no extrapolar suite API a flota | Pendiente |
+| Objetivo / requisito | Modelo | HU y sprint | Caso o grupo | Evidencia | Revisión | Estado |
+| --- | --- | --- | --- | --- | --- | --- |
+| OE3 / H3-RF01 | UC1, SEQ2 | TCS-84 S3 | CP-RNF01-I01, CP-RF01-E01/E02 | [API/E2E](pruebas/RESULTADOS.md) | PR #13/#15 | Sesiones verificadas; aceptación externa pendiente |
+| OE3 / H3-RF02 | UC2, CL1, SEQ2 | TCS-53/59 S3 | CP-RNF01-U01/I01, CP-RF02-E01–04 | [Permisos](FLUJO_ROLES.md), [resultados](pruebas/RESULTADOS.md) | PR #1/#5/#13 | Casos técnicos aprobados; flota física pendiente |
+| OE2 / H3-RF03 | UC3, SEQ1 | TCS-48/49 S2, TCS-60 S3 | CP-RF03-U01–04, E01/E02, PF-01 | [JUnit](pruebas/reportes/unitarias-cierre.xml), [E2E](pruebas/reportes/e2e.xml), [físico](pruebas/FISICAS_20261115.md) | PR #5/#6/#13 | Imagen/frase/voz conectada confirmadas |
+| OE1 / H3-RF04 | UC4, ACT1 | TCS-43–47 S2, TCS-85 S3 | PF-01 | [Prueba física](pruebas/FISICAS_20261115.md) | PR #5/#7/#9 | Operación informada; usabilidad externa pendiente |
+| OE4 / H3-RF05 | UC5, CL1 | TCS-51/52 S2, TCS-83 S3 | CP-RF05-U01/U02/I01, PF-03–05 | [API](pruebas/RESULTADOS.md), [físico](pruebas/FISICAS_20261115.md) | PR #2/#3/#5 | Persistencia y deduplicación comprobadas; trazas físicas pendientes |
+| OE1/OE4 / H3-RF06 | UC6 | TCS-74 S3 | PF-06 | [Wi-Fi](pruebas/FISICAS_20261115.md) | PR #9 | Finalizada sin timeout; matriz móvil parcial |
+| OE3 / H3-RF07 | UC2, CL1 | TCS-84 S3 | CP-RNF01-I01 | [API](pruebas/RESULTADOS.md) | PR #5 | Separación informe/orientaciones técnica; pertinencia clínica pendiente |
+| OE4 / H3-RF08 | ACT1, CL1 | TCS-76 S3 | PF-02–05 | [Reinicio/cola](pruebas/FISICAS_20261115.md) | PR #7/#8 | Cola 64 aceptada; L-01 sin voz Wi-Fi |
+| OE3 / H3-RF09 | UC2, CL1 | TCS-53/84 S3 | CP-RNF01-I01 | [Roles y API](pruebas/RESULTADOS.md) | PR #1/#5 | Aprobación de asignación técnica; ciclo completo del ESP pendiente |
+| OE4 / H3-RF10 | UC5 | TCS-83 S3 | CP-RF10-I01 | [Historial](pruebas/RESULTADOS.md) | Histórico/#5 | Consulta probada; exportación CSV pendiente |
+| OE2 / H3-RF11 | SEQ1 | TCS-60 S3 | CP-RF03-U04, ensayo 180/rechazo184 | [Telemetría](evidencias/publicacion-20261115/capacidad-180-telemetria.txt) | PR #5 | 180 operativos, no máximo físico ni 180 voces offline |
+| OE3 / H3-RNF01 | SEQ2 | TCS-59 S3 | CP-RNF01-S01/I01 | [ZAP/npm](calidad/README.md) | PR #13 | Escaneo acotado; un medio residual |
+| OE4 / H3-RNF02 | SEQ1 | TCS-60/88 S3 | CP-RNF02-L01/L02 | [Carga](calidad/carga-local.json) | PR #13 | Local aprobada, no capacidad cloud |
+| OE4 / H3-RNF03 | SEQ1/SEQ2 | TCS-88 S3 | U02, CI y E2E | [Cobertura](calidad/README.md), [CI](https://github.com/N4CHO8/STCS/actions/runs/43925021420) | PR #13/#15 | Alcance de servidor verificado |
+| OE4 / H3-RNF04 | ACT1 | TCS-76 S3 | PF-03–05 | [Registro](pruebas/FISICAS_20261115.md) | PR #7 | Conforme informado; conteos/instantes de corte no instrumentados |
+| OE1/OE2 / aceptación | UC3/4 | TCS-77 S3 | PA-01–05 | [Protocolo](validacion/PAUTA.md) | Sin aceptación aún | Correo enviado; revisión pendiente |
+| FUT01 / predicción | Diseño futuro | TCS-68–71 S1, TCS-72/73 S2 | Análisis/diseño | [Antecedentes](ANTECEDENTES_HITOS_1_2.md) | Sin motor entregado | Fuera de implementación actual |
+| FUT02 / varios ESP | CL1/SEQ2 | TCS-53 S3 | PF-08 | [No ejecutado](pruebas/FISICAS_20261115.md) | Sin prueba de flota | Pendiente |
 
-## Actualización de confirmaciones físicas
+## Abrir la evidencia
 
-[Registro PF-01–PF-08](pruebas/FISICAS_20261115.md): pruebas del 15/11 comunicadas por Ignacio el 16/11; PF-01–07 conformes según el ejecutor, evidencia pendiente. PF-08 con varios ESP no ejecutada. L-01 documenta ausencia de voz sin Wi-Fi, aceptada sin cambio de firmware. No sustituye aprobación profesional ni mediciones de latencia/duración.
-
-[Informe técnico integrado](INFORME_HITO3.md) organiza A1–A9. Código publicado de referencia: [3dfff37, Hito 3](https://github.com/N4CHO8/STCS/commit/3dfff375085ccc455e113d5184c42e9a5c9980ca); [PR #13](https://github.com/N4CHO8/STCS/pull/13), [CI](https://github.com/N4CHO8/STCS/actions/runs/43809946817). La publicación de esta adenda documental no vuelve a ejecutar ni cambia las fechas de esos ensayos.
-
-## Localizar las ejecuciones y sprints
-
-- U: [test real](../frontend/tests/validation.test.mjs), [JUnit](pruebas/reportes/unitarias.xml), [metadatos](pruebas/reportes/ejecuciones.json).
-- I01: grupo de integración del script [verify-roles.mjs](../frontend/scripts/verify-roles.mjs) y módulos que invoca. CI [43795321079](https://github.com/N4CHO8/STCS/actions/runs/43795321079) ejecutó el grupo; el reporte no individualiza 291 HU/casos independientes.
-- L: [sonda real](../frontend/scripts/measure-quality.mjs), [reporte](calidad/carga-local.json).
-- M: casos manuales históricos con esperado/obtenido descritos en [resultados](pruebas/RESULTADOS_HITO3.md), [cierre](CIERRE_STCS_20261115.md), [Wi-Fi](WEB_Y_WIFI_20261115.md) y [reinicio](ARRANQUE_RAPIDO_ESP_20261115.md).
-- PR: https://github.com/N4CHO8/STCS/pulls?q=is%3Apr+is%3Amerged; los números de la tabla son referencias verificadas.
-- [Captura de Jira](evidencias/hito3-20261116/jira.json): Sprint 3 = TCS-53,59,60,74,76,77,83,84,85,88. Las asignaciones históricas por HU de otros sprints no se reconstruyeron una a una: pendiente.
-- Tag final hito3: **pendiente**. No crear enlace falso a un tag inexistente.
-
-## Auditoría de las tres pasadas
-
-Completitud: originales recuperados y enlazados; la tabla conserva futuras/parciales. Aceptación y pruebas pendientes no se convierten en aprobadas por recuperar archivos.
-Pertinencia: las pruebas U citan RF/RNF; las I históricas se agrupan y aún requieren indexación fina para cada Must.
-Veracidad: evidencia de laboratorio se distingue de hardware y nube; no hay aprobaciones externas acreditadas.
-Riesgos laterales: [riesgos.md](riesgos.md) cita los requerimientos amenazados.
-
-No se afirma “0 Must sin prueba”, “100% aceptado” ni “0 HU sin aprobación”. Reconciliar HU base, sprints y criterios oficiales antes de congelar; esta matriz permite navegar y declarar la brecha, no ocultarla.
+- [Modelos](arquitectura/modelos.md), [historias Jira](historias.md), [pertenencia verificada de los 50 IDs](evidencias/defensa-20261116/jira.json).
+- U: [tests reales](../frontend/tests/validation.test.mjs). I01 agrupa comprobaciones de [verify-roles](../frontend/scripts/verify-roles.mjs), no 291 HU independientes. E: [navegador](../frontend/tests/e2e/portal.spec.mjs). L: [sonda](../frontend/scripts/measure-quality.mjs).
+- [Ejecuciones y SHA](pruebas/reportes/cierre-20261116.json). Carga/cobertura/ZAP mantienen sus revisiones originales; el CI posterior comprueba la nueva revisión, no refecha esos reportes.
+- PR: [revisiones integradas](https://github.com/N4CHO8/STCS/pulls?q=is%3Apr+is%3Amerged). Las referencias históricas anteriores a la convención de tickets se reconocen como tales.
+- Tag `hito3`: pendiente. Los [riesgos y deuda](riesgos.md) enlazan los requerimientos afectados. Aprobación externa y evidencia aún no adjunta permanecen visibles.

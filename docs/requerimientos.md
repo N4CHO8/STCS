@@ -1,4 +1,4 @@
-# A2 Requerimientos y alcance de cierre
+# A2 Requerimientos del prototipo
 
 Los RF-01–RF-08 y RD-01 del Hito 2 ya se recuperaron y se conservan en la [equivalencia histórica](ANTECEDENTES_HITOS_1_2.md). Este catálogo H3-RF/H3-RNF amplía y agrupa el estado actual; no renumera aquellos requisitos. Must es la prioridad propuesta para el MPV técnico de cierre, no una aprobación externa. Los IDs CP-RF/CP-RNF de las pruebas ejecutadas se conservan como nombres de caso y se vinculan aquí al catálogo H3.
 

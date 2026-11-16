@@ -1,4 +1,4 @@
-# Contrato de medios y capacidad — firmware v0.8.4
+# Contrato del ESP medios y capacidad — v0.8.6-wifi-status
 
 La fuente de límites es `frontend/src/lib/pictogramCatalog.ts`, coordinada con
 `firmware/STCS_UI_Arduino/STCS_BoardConfig.h`. El máximo operativo probado es
@@ -28,6 +28,10 @@ confundir Content-Length ausente (-1) con un tamaño excesivo.
 El adaptador TLS de v0.8.2 evita lecturas incompletas del core ESP32 3.0.2;
 no deshabilita validación de certificados. La credencial de dispositivo no
 puede invocar las rutas del trabajador ni obtener archivos de otros tableros.
+
+## Eventos y confirmación
+
+`POST /api/stcs/devices/{code}/events` exige la misma credencial individual y valida tipo, pictograma/contexto y fecha. `externalEventId` identifica el registro en cada reintento. Tras persistir o recuperar un duplicado devuelve `ack.accepted=true` y el mismo `ack.externalEventId`; HTTP 201 para alta y 200 para duplicado. Un evento inválido no recibe ACK de éxito. El ESP retira solo el confirmado; al llegar a 64 pendientes rechaza nuevos encolados.
 
 ## Portal y preparación de voz
 
@@ -67,8 +71,8 @@ selecciones; cambios reales de metadatos siguen esperando Borrar.
 Metadatos y cola vinculados a URL/código/clave individual. Rotar clave al
 reasignar hardware. No adoptar caché antigua sin binding ni enviar eventos de
 otra configuración. Cola de 64 eventos; retirada solo tras ACK idempotente.
-No se formatea automáticamente la partición. Antes de firmware, conservar
+L-01: en la prueba sin Wi-Fi no hubo voz; la caché no garantiza los audios requeridos. No se formatea automáticamente la partición. Antes de firmware, conservar
 respaldo privado; jamás versionar binarios operativos ni dumps de memoria.
 
 Resultados físicos, límites de la evidencia y recuperación detallada:
-[CIERRE_STCS_20261115.md](CIERRE_STCS_20261115.md).
+[CIERRE_STCS_20261115.md](historico/CIERRE_STCS_20261115.md).

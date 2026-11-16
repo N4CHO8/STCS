@@ -1,3 +1,5 @@
+> Registro histórico de su fecha. Para estado, límites y operación actuales consultar [Defensa de STCS](../DEFENSA.md). Los contratos y procedimientos antiguos no son instrucciones vigentes.
+
 # Hito 3: imágenes y frases propias
 
 **Actualización 15/11:** la preparación de nube y capacidad ampliada se documenta
@@ -10,7 +12,7 @@ siguientes son evidencia histórica del 13/11, no la configuración vigente.
 
 ## Antecedente histórico del laboratorio del 13 de noviembre
 
-La publicación y el estado de entrega vigentes están en [HITO3_ENTREGA.md](HITO3_ENTREGA.md). El contenido siguiente documenta las condiciones anteriores, no pendientes actuales de nube.
+La publicación y el estado de entrega vigentes están en [HITO3_ENTREGA.md](../DEFENSA.md). El contenido siguiente documenta las condiciones anteriores, no pendientes actuales de nube.
 
 Estado histórico: implementación en la rama local `codex/hito3-medios-voz`. No publicada,
 sin migraciones ni archivos nuevos en Supabase o Vercel. Las pruebas usan
@@ -95,7 +97,7 @@ tablero no haya cambiado. La demostración debe precargar las frases necesarias.
 ## Laboratorio reproducible
 
 No usar `.env.local` de la raíz: conecta a la base compartida. Preparar únicamente
-el contenedor descartable de [PRUEBAS.md](PRUEBAS.md). Desde la raíz:
+el contenedor descartable de [PRUEBAS.md](../PRUEBAS.md). Desde la raíz:
 
 ```powershell
 python -m venv .codex-work/tts-env

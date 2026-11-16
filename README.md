@@ -1,112 +1,59 @@
 # STCS
 
-**Entrega técnica del Hito 3:** [índice A1–A9, evidencia y pendientes](docs/HITO3_ENTREGA.md).
+Prototipo de comunicación aumentativa con ESP32-S3 táctil y una plataforma web para sus responsables.
 
-[Informe técnico integrado](docs/INFORME_HITO3.md) y [registro físico del 15/11](docs/pruebas/FISICAS_20261115.md): resultados informados por el propietario, anexos pendientes. Sin Wi-Fi no hubo voz en el ensayo; no se garantiza voz offline. Varios ESP y revisión profesional aún no acreditados.
+**[Defensa y evidencias](docs/DEFENSA.md)** reúne los nueve artefactos solicitados por el profesor. [Estado de las pruebas](docs/pruebas/RESULTADOS.md) y [trazabilidad](docs/trazabilidad.md).
 
-La web, los medios privados y la voz alojada están publicados. El tablero
-inicial tiene 96 pictogramas (24 por categoría); el máximo operativo probado
-es 180 (45 por categoría). Consultar [estado, capacidad y evidencia del 15/11](docs/CIERRE_STCS_20261115.md)
-antes de usar los procedimientos históricos de laboratorio. Las pruebas
-automatizadas más recientes están en [CIERRE_20261116](docs/pruebas/CIERRE_20261116.md).
+## Producto entregado
 
-STCS es un proyecto de comunicacion aumentativa y alternativa para ninos con TEA. La version final se organiza en tres piezas principales:
+- Web React/Next.js y API HTTPS en Vercel; PostgreSQL y Storage privado en Supabase.
+- Piper en una función Python de Vercel. La operación cloud no depende del PC del autor.
+- Firmware Arduino v0.8.6-wifi-status para Waveshare ESP32-S3-Touch-LCD-1.46.
+- Tablero actual: 96 pictogramas, 24 por categoría y seis páginas. Máximo operativo ensayado: 180, 45 por categoría y 12 páginas; no es máximo físico absoluto.
+- Cuatro roles adultos con permisos de servidor. Child es un registro interno sin portal adulto.
 
-- Plataforma web para cuidadores, docentes, especialistas y administradores.
-- Base de datos PostgreSQL en Supabase.
-- Dispositivo fisico ESP32-S3 con pantalla redonda tactil programado con Arduino (interfaz activa) y un prototipo inicial en PlatformIO.
+Sin Wi-Fi no hubo voz en el ensayo físico. La caché limitada no garantiza audios offline. El dispositivo requiere alimentación USB de 5 V, sin batería instalada. Revisión profesional y prueba con varios ESP pendientes.
 
-El nino interactua con el dispositivo ESP32. La web se usa para configurar pictogramas, revisar eventos, consultar historial y analizar progreso.
+## Probar la aplicación
 
-## Stack final
+[Producción](https://0stcs0.vercel.app). Ingresar por `/login`. Cuentas públicas, ficticias y persistentes, solo para evaluación:
 
-- Web: `Next.js 16.4.6`, `React`, `TypeScript`, `Tailwind CSS`.
-- API: `Next.js API Routes` dentro de `frontend/src/app/api`.
-- Base de datos: `Supabase PostgreSQL`.
-- Firmware activo: `Arduino CLI + Arduino framework`; PlatformIO es un esqueleto histórico.
-- Dispositivo objetivo: `Waveshare ESP32-S3-Touch-LCD-1.46`.
-- Despliegue web: `Vercel`.
-- Versionamiento: `Git + GitHub`.
-
-## Estructura
-
-```text
-STCS/
-|- frontend/                 # Plataforma web y API routes para Vercel
-|- firmware/
-|  |- stcs-esp32/             # Proyecto PlatformIO del dispositivo
-|- docs/                     # Documentacion vigente del proyecto
-|- supabase/                 # Esquema SQL base para Supabase
-|- .env.example              # Variables necesarias para desarrollo
-|- .env.production.example   # Variables necesarias para Vercel
-```
-
-## Ejecutar la plataforma web
-
-1. Crear `.env` desde `.env.example`.
-2. Completar `DATABASE_URL` con la cadena de conexion de Supabase.
-3. Entrar al frontend e instalar dependencias:
-
-```powershell
-cd frontend
-npm install
-npm run dev
-```
-
-4. Abrir [http://localhost:3000](http://localhost:3000).
-
-El inicio de sesión no crea tablas ni modifica cuentas. Aplica el esquema y las migraciones antes de iniciar una instalación nueva.
-
-Consulta [el flujo de los cuatro perfiles](./docs/FLUJO_ROLES.md) para permisos, privacidad, administración y pruebas.
-
-La activación y recuperación requieren un correo real y SMTP configurado en Supabase. El titular establece su propia contraseña; no se aceptan contraseñas demo sin verificar el correo. El administrador no puede restablecer contraseñas ni modificar correos de adultos existentes.
-
-Las pruebas se ejecutan contra PostgreSQL descartable en localhost, separado de Supabase. Consulta [las instrucciones y límites de verificación](./docs/PRUEBAS.md) y [las correcciones de auditoría](./docs/ARREGLOS_AUDITORIA.md). No ejecutes seeds en la base compartida.
-
-## Firmware activo
-
-La implementación reproducible está en `firmware/STCS_UI_Arduino` para Waveshare
-ESP32-S3-Touch-LCD-1.46. Compilar con `scripts/verify-firmware.ps1`; la copia de
-comprobación usa credenciales ficticias y no debe cargarse como versión operativa.
-PlatformIO conserva un prototipo antiguo, no la interfaz instalada actual.
-
-## Evaluación y Hito 3
-
-Entrar por `/login`. La versión publicada retiró `/demo` y todos sus enlaces; no crea
-cuentas al iniciar sesión. Estas tres cuentas son **públicas, sintéticas y sin
-información real**, destinadas exclusivamente a evaluación:
-
-| Perfil | Correo ficticio | Contraseña demo pública |
+| Perfil | Correo | Contraseña de prueba |
 | --- | --- | --- |
 | Especialista | especialista.prueba01@stcs.test | Especialista123! |
 | Docente | docente.prueba01@stcs.test | Docente1234! |
 | Apoderado | apoderado.prueba01@stcs.test | Apoderado123! |
 
-El administrador real usa su correo y contraseña propios; no se publican aquí.
-Las cuentas reales nuevas requieren activación por correo. Las cuentas de
-prueba conservan las mismas restricciones de asignación y rol.
+El administrador real conserva su acceso privado. Las cuentas reales verifican correo y eligen contraseña. El login no crea tablas, repuebla datos ni restablece cuentas. `/demo` está retirado. No introducir datos reales en los accesos públicos.
 
-El nuevo editor permite subir imágenes y preparar voz española para la frase
-escrita. Los medios privados están en Supabase Storage y Piper funciona en
-Vercel; no necesita un trabajador encendido en el PC del propietario.
-Consulta [arquitectura, configuración, pruebas y guion del Hito 3](docs/HITO3_MEDIOS_Y_VOZ.md).
-El laboratorio aislado usa los mismos accesos sintéticos en localhost:3100.
-No ejecutar sus fixtures contra Supabase.
+## Desarrollo reproducible
 
-## Documentacion util
+Usar la versión de Node de [.node-version](.node-version). Completar las variables de [.env.example](.env.example) privadamente en `.env.local` de la raíz; Next carga ese entorno desde `frontend/next.config.mjs`.
 
-- [Alcance funcional web + ESP32](./docs/ALCANCE_FUNCIONAL_WEB_ESP32.md)
-- [Arquitectura final](./docs/ARQUITECTURA_FINAL.md)
-- [Integracion ESP32-Web](./docs/INTEGRACION_ESP32_WEB.md)
-- [Implementacion y demo del Hito 2](./docs/HITO2_IMPLEMENTACION.md)
-- [Esquema Supabase](./supabase/schema.sql)
-- [Firmware ESP32 activo](./firmware/STCS_UI_Arduino/README.md)
+```powershell
+cd frontend
+npm ci
+npm run dev
+```
 
-## Estado técnico
+Abrir localhost:3000. El entorno habitual conecta a la base compartida: **las escrituras afectan producción**. Para pruebas usar exclusivamente [PostgreSQL y runners aislados](docs/PRUEBAS.md); no ejecutar seeds ni migraciones para comprobar conectividad.
 
-Los cuatro roles adultos, sus asignaciones y las rutas de dispositivo se
-validan en servidor. La pantalla, tacto y audio físicos ya se probaron; no son
-pendientes de integración de drivers. El trabajo de imágenes y voz del Hito 3
-está publicado y tiene comprobaciones físicas documentadas. Los documentos antiguos
-de hitos conservan decisiones históricas; prevalecen CONEXIONES, FLUJO_ROLES y
-HITO3_MEDIOS_Y_VOZ para interpretar el estado vigente.
+## Código y operación
+
+| Ruta | Contenido |
+| --- | --- |
+| frontend/src/app/api y src/lib/server | API, validación, permisos y persistencia |
+| frontend/src/components/stcs | Portal de responsables y editor |
+| frontend/api/voice.py | Síntesis Piper alojada |
+| firmware/STCS_UI_Arduino | Firmware activo y reproducible |
+| supabase | Esquema y migraciones versionadas |
+| docs | Entrega técnica y procedimientos |
+| docs/historico | Antecedentes fechados; no contratos vigentes |
+
+- [Permisos y cuentas](docs/FLUJO_ROLES.md).
+- [Arquitectura y modelos](docs/arquitectura/README.md).
+- [Contrato API, medios y capacidad](docs/CONTRATO_MEDIOS_ESP.md).
+- [Compilar y recuperar firmware](firmware/STCS_UI_Arduino/README.md).
+- [Servicios y despliegue](docs/CONEXIONES.md), [contribución](CONTRIBUTING.md), [cambios](CHANGELOG.md).
+
+PlatformIO en `firmware/stcs-esp32` es un prototipo histórico. Presentación y guion personales permanecen fuera del repositorio.

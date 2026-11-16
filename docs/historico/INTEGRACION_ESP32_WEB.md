@@ -1,3 +1,5 @@
+> Registro histórico de su fecha. Para estado, límites y operación actuales consultar [Defensa de STCS](../DEFENSA.md). Los contratos y procedimientos antiguos no son instrucciones vigentes.
+
 # Integracion ESP32 - Plataforma Web STCS
 
 Este documento define el contrato minimo para conectar el dispositivo ESP32-S3 con la plataforma web STCS.

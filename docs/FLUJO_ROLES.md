@@ -36,18 +36,6 @@ flowchart TD
   admin --> config[Configurar nombre de app y soporte]
 ```
 
-## Evaluación local del Hito 3
-
-Actualización 15/11: los mismos permisos protegen medios privados en Supabase
-Storage y voz alojada en Vercel. El alcance y las pruebas de la publicación
-están en [CIERRE_STCS_20261115.md](CIERRE_STCS_20261115.md); lo siguiente
-conserva el contexto del ensayo local inicial.
-
-La rama local elimina `/demo` y sus enlaces. Los accesos sintéticos públicos
-se documentan únicamente en README; el login y los permisos no cambian.
-Imágenes y WAV nuevos se sirven solo por rutas autenticadas de usuarios
-asignados o del dispositivo individual. Admin y adultos ajenos son rechazados.
-
 ## Decisiones de privacidad
 
 - Un docente no recibe diagnóstico, notas privadas, edad, contexto, métricas ni
@@ -70,50 +58,14 @@ asignados o del dispositivo individual. Admin y adultos ajenos son rechazados.
   la propia cuenta administrativa ni eliminar el último administrador activo.
 - El inicio de sesión ya no crea tablas ni reescribe contraseñas demo.
 
-## Implementación y pruebas
+## Implementación y verificación
 
-- Matriz compartida: frontend/src/lib/permissions.ts.
-- Autorización y proyecciones: frontend/src/lib/server/portal.ts y access.ts.
-- API del portal: /api/stcs/portal. Rutas antiguas conservadas con restricciones.
-- Interfaz: portal.tsx, portal-forms.tsx y componentes existentes del comunicador.
-- Migración: supabase/migrations/20261111163114_role_based_portal.sql.
-  Aplicada a STCS; agrega campos, informes y configuración sin reemplazar datos.
-- RLS habilitado y acceso directo anon/authenticated cerrado en tablas nuevas y
-  en las tablas antiguas de registros y emociones. La API Node autentica y filtra
-  porque la conexión PostgreSQL del servidor es privilegiada.
-- La suite aislada verifica roles, aprobaciones, credenciales del titular, rutas antiguas, permisos, reportes idempotentes, dispositivos, paginación y concurrencia. Consulta docs/PRUEBAS.md para preparar PostgreSQL local y ejecutarla sin tocar producción.
-- Figma pidió seleccionar un equipo; se usó la alternativa autorizada de diseño
-  directo en la app. No se afirma que exista un diseño Figma generado.
+Matriz compartida en permissions.ts; autorización y proyecciones en portal.ts/access.ts; claves del ESP en deviceAuth.ts. La API filtra cada solicitud porque su conexión SQL es privilegiada; RLS y revocaciones complementan ese control. [Pruebas y alcance](pruebas/RESULTADOS.md).
 
-El entorno normal de desarrollo y producción comparten la base existente de STCS. La suite aislada usa otro PostgreSQL y rechaza bases remotas o servidores que no confirmen su aislamiento. No ejecutar seeds para validar roles.
+Las cuentas reales se activan/recuperan por código de correo y el titular elige contraseña. Admin no modifica correos existentes ni contraseñas. Nuevas asignaciones clínicas requieren otro responsable autorizado; la primera incorporación sin responsable se valida fuera del rol administrativo.
 
-La primera incorporación de responsables clínicos en una instalación sin ninguno autorizado exige validar sus identidades fuera del rol administrativo y asignarlas mediante una operación de mantenimiento autorizada. El portal nunca permite al administrador saltarse esa aprobación.
+## Entorno de demostración
 
-## Perfiles demo en la nube
+Luis es ficticio y tiene un ESP físico. Sus adultos públicos de prueba usan is_private_test y correos ficticios; solo esa marca persistida permite la excepción de activación. El portal no puede modificarla ni mezclar cohortes o convertir esas cuentas en administradores. Los accesos están en README y /demo está retirado.
 
-En la versión publicada previa, /demo muestra únicamente los tres accesos actuales de especialista, docente y apoderado de Luis, cada uno con contraseña sencilla distinta. Son accesos públicos de demostración con correos ficticios; usan /login, sesiones revocables, Supabase y el ESP físico. El administrador conserva su correo y contraseña personales.
-
-La demo actual conserva la marca técnica is_private_test de su aprovisionamiento inicial. No se cambian identidades ni asignaciones para renombrar el entorno en la interfaz. Esa marca persistida permite omitir activación, nunca el dominio del correo ni una propiedad del JWT; el portal no puede modificarla ni convertir una cuenta de prueba en administradora. Las asignaciones entre demostración y datos reales se rechazan en API y base, incluidas rutas antiguas.
-
-Las demos antiguas de Alex y Luna, sus cinco cuentas y sus registros sintéticos se retiraron de producción. No se crean informes, diagnósticos ni eventos de ejemplo para Luis. Su actividad procede del ESP. Las fixtures antiguas is_demo solo permanecen en pruebas descartables locales para verificar separación y regresiones; el aprovisionamiento antiguo está bloqueado en bases remotas.
-
-Los cambios persisten en Supabase. El inicio de sesión no aprovisiona, restablece ni repuebla datos. Las contraseñas simples de demostración no se usan como valores iniciales de cuentas reales. Al incorporarse una persona real, se crea su cuenta con correo verdadero y activa su propia contraseña mediante verificación; sus asignaciones necesitan aprobación.
-
-## Activación de futuras cuentas reales
-
-El administrador crea una cuenta con el correo real y el rol correspondiente. El botón «Copiar enlace de activación» genera /activate?email=... para compartir con el titular; el enlace no contiene una contraseña ni un secreto y no verifica por sí mismo la identidad. El destinatario solicita y verifica el código enviado a ese correo y elige su contraseña. Funciona para especialistas, docentes, apoderados y futuros administradores. Las cuentas nuevas reales nunca heredan la excepción demo. Las aprobaciones clínicas se mantienen, incluida la validación inicial fuera del rol administrativo cuando aún no existe un responsable autorizado.
-
-## Perfiles privados con hardware
-
-Luis usa un perfil interno child con is_demo=false e is_private_test=true. Sus
-adultos tienen credenciales demo distintas y la misma marca de entorno; no
-se declara falsamente verificado un correo ficticio. La excepción de activación
-se limita a ese entorno y no concede acceso a perfiles reales. Por decisión del
-propietario, sus accesos ahora se muestran como demostración pública en /demo.
-Las marcas se comprueban desde la base y son inmutables para el portal.
-
-Los adultos asignados pueden consultar disponibilidad técnica de sus ESP desde
-la nube. El docente recibe código/estado/última sincronización/alimentación y
-firmware, sin SSID de la red, historial, métricas, diagnóstico ni ficha clínica.
-El administrador sigue sin recibir dispositivos ni identidades infantiles.
-Detalles de acceso remoto y preservación de historial: LUIS_Y_DISPOSITIVOS.md.
+Las cuentas reales requieren verificación y asignación aprobada. Los cambios persisten y el login no crea tablas, repuebla demos ni reescribe contraseñas. Las orientaciones al docente son texto separado: el especialista debe evitar incluir clínica en ese campo.

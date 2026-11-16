@@ -1,38 +1,37 @@
-# A9 Riesgos deuda y mejoras
+# A9 Riesgos y deuda técnica
 
-Actualización 16/11/2026. Escala probabilidad e impacto 1–3; nivel = producto: 1–2 bajo, 3–4 medio, 6–9 alto. Son estimaciones de cierre, no probabilidades estadísticas.
+Escala 1–3 para probabilidad e impacto. Nivel = producto: 1–2 bajo, 3–4 medio, 6–9 alto. Evaluación del proyecto, no probabilidades clínicas medidas.
 
-| ID / afecta | P | I | Nivel | Estado | Mitigación | Contingencia |
-| --- | --- | --- | --- | --- | --- | --- |
-| R01 H3-RF04/OE1 táctil inferior falla | 3 | 2 | 6 alto | Materializado | Controles arriba y laterales, confirmado por autor | No usar controles esenciales abajo; evaluar hardware alternativo |
-| R02 H3-RF08/OE4 tarjetas ausentes tras reinicio | 2 | 3 | 6 alto | Materializado, corrección comprobada en tablero 96 | Metadatos separados de caché, atlas y refresco progresivo PR #7 | Conservar última versión y respaldos; no afirmar todos los audios offline |
-| R03 H3-RF03 voz/frase desincronizada o espera de red | 2 | 3 | 6 alto | Mitigado por hash/versión y rechazo de obsoletos | Validar tamaño/hash, estados de preparación y reintento | Indicar indisponible; no reproducir otra frase |
-| R04 H3-RNF01 fuga por rol/asignación | 2 | 3 | 6 alto | Controles e integración aprobados; revisión ampliada pendiente | Proyección y autorización en servidor, Storage privado | Revocar acceso y revisar incidente sin copiar clínica a logs |
-| R05 OE1 validación profesional no realizada | 3 | 3 | 9 alto | Correo enviado por el propietario; reunión sin confirmar | Coordinar esta semana; acordar sustitutos con profesor | Declarar brecha y solicitar alternativa al docente |
-| R06 A4/A8 evidencia inaccesible o sin tag | 2 | 3 | 6 alto | Abierto | Índice, reportes, enlaces, prueba con cuenta docente | Copia navegable autorizada; congelar después del cierre |
-| R07 H3-RF08 cola llena/corte de energía | 2 | 3 | 6 alto | Alcance 64 aceptado; PF-03–05 conformes informados, sin trazas del borde | Límite explícito; anexar conteos/ACK/cortes informados y tratar rechazo de eventos nuevos | No prometer ausencia de pérdida a cualquier tasa; resolver o acordar requisito |
-| R08 H3-RF06 AP compartido y sin timeout | 2 | 2 | 4 medio | AP persistente aceptado por propietario; riesgo residual de acceso cercano | Activación deliberada y clave mostrada en pantalla | Cerrar por reinicio; revisar el entorno de uso antes de incorporar datos reales |
-| R09 OE4 proveedor/cuotas/Internet | 2 | 2 | 4 medio | Riesgo vigente | Medios persistentes, caché, reintento y demo ensayada | Hotspot probado y vídeo fechado, sin simular conexión |
-| R10 H3-RF02/FUT02 solo un ESP | 3 | 2 | 6 alto | Limitación vigente | Suite API con usuarios ajenos | Segundo ESP y perfiles aislados antes de afirmar flota real |
-| R11 A1 ausencia de objetivos originales | 1 | 3 | 3 medio | Materializado y resuelto documentalmente el 16/11: archivos recibidos | Conservar textos y equivalencia H1/H2/H3 | Aprobaciones y métricas siguen pendientes; no inventarlas |
-| R12 A8 migración/pérdida de datos | 1 | 3 | 3 medio | Respaldo/restauración local comprobados en publicación | Migraciones aditivas, respaldos privados y revisión de escrituras | Restaurar solo con revisión del destino y cambios posteriores |
+| ID / requisito | P | I | Nivel | Estado y mitigación | Contingencia |
+| --- | --- | --- | --- | --- | --- |
+| R01 H3-RF04, tacto inferior | 3 | 2 | 6 | Materializado; controles arriba/laterales, defecto físico persiste | Revisar hardware antes de uso real |
+| R02 H3-RF08, tarjetas al reiniciar | 2 | 3 | 6 | Materializado y corregido; metadatos/atlas, reinicio confirmado | Recuperación progresiva y respaldo |
+| R03 H3-RF03, voz obsoleta o incompleta | 2 | 3 | 6 | Hash/versión y validación de tamaño, error explícito | Reintentar, sin reproducir otra frase |
+| R04 H3-RF02/H3-RNF01, fuga de datos | 2 | 3 | 6 | API/roles y medios privados comprobados; revisión ampliada pendiente | Revocar acceso y revisar sin copiar clínica a logs |
+| R05 OE1/OE2, sin aceptación externa | 3 | 3 | 9 | Correo enviado, reunión pendiente | Acordar evaluación o alternativa con profesor |
+| R06 A4/A8, evidencia sin acceso/tag | 2 | 3 | 6 | Índice y reportes disponibles; anexos/tag pendientes | Probar acceso del profesor antes de congelar |
+| R07 H3-RF05/08, cola llena/corte | 2 | 3 | 6 | Límite 64 y rechazo de nuevos encolados; PF-03–05 informados | Anexar trazas; no prometer registro ilimitado |
+| R08 H3-RF06, AP persistente | 2 | 2 | 4 | Activación deliberada, sin timeout aceptado | Cerrar por reinicio y controlar entorno |
+| R09 OE4, cuotas/conectividad | 2 | 2 | 4 | Storage persistente y caché acotada | Red alternativa; no garantizar gratuidad permanente |
+| R10 FUT02, solo un ESP | 3 | 2 | 6 | Simulación API multi-perfil, sin flota física | Probar dos placas antes de extender uso |
+| R11 A1, objetivos originales ausentes | 1 | 3 | 3 | Materializado y resuelto documentalmente con fuentes H1/H2 | Mantener equivalencias y medir aceptación |
+| R12 A8, pérdida al migrar/restaurar | 1 | 3 | 3 | Migraciones aditivas y respaldo/restauración local registrada | Revisar destino y escrituras posteriores |
+| R13/L-01 H3-RF03/08, voz sin Wi-Fi | 3 | 3 | 9 | Materializado, limitación aceptada sin cambio de firmware | Conexión y apoyo comunicativo alternativo del adulto |
 
-## Deuda priorizada
+## Backlog priorizado
 
-| Prioridad | Deuda / Jira | Criterio para cerrar |
+| Prioridad | Deuda / Jira | Criterio de cierre |
 | --- | --- | --- |
-| P0 académica | A1/A3: objetivos y validación externa / TCS-77 | Originales ya recuperados; ratificar método, mediciones y aprobaciones auténticas por HU/indicador |
-| P0 académica | A4/A8: trazabilidad y evidencia final / TCS-60 | Acceso de profesor, reconciliación de matriz y tag hito3 final |
-| P1 técnica | Ampliar escenarios aún no cubiertos de navegador y DAST autenticado / TCS-85,59,88 | Reportes con alcance y negativos; corregir hallazgos o declarar plan |
-| P1 técnica | Evidencia de cola 64, ACK perdido y cortes / TCS-76 | PF-03–05 conformes informados por el ejecutor; faltan anexos/conteos, no ampliar a 256 |
-| P1 técnica | Pruebas Wi-Fi: cambio fallido, Android/iPhone / TCS-74 | Pruebas físicas; AP sin timeout es el alcance aceptado |
-| P1 técnica | Varios dispositivos, reasignación y rotación / TCS-53 | Dos ESP/perfiles y controles de cambio probados |
-| P2 | Historial/exportación y escenarios de error/móvil / TCS-83,85 | Matriz completa ejecutada, no solo build |
-| P2 | Ramas/PR antiguos sin ticket y sprint desactualizado / TCS-88 | Correspondencia histórica declarada, convención futura y fechas reales |
-| P2 diseño | Formalizar notación UML de uso/actividad si profesor lo exige | Revisión de modelos y coherencia con código, sin inventar clases ORM |
+| P0 entrega | Revisión profesional / TCS-77 | Tareas y métricas acordadas, resultados y aprobación por alcance |
+| P0 entrega | Evidencia y congelación / TCS-60 | Anexos, trazabilidad, accesos y tag hito3 revisado |
+| P1 técnica | Seguridad / TCS-59 | DAST autenticado y negativos TLS/RLS ampliados, auditoría transversal y revisión de secretos |
+| P1 técnica | Dispositivos / TCS-53 | Alta por posesión, ciclo web de claves/reasignación y varias placas verificados; revisar fallback heredado limitado a un código |
+| P1 técnica | Portal / TCS-84/85 | Auditoría de operaciones, variantes de sesión/pestañas, teclado/foco/contraste y matriz Safari/teléfonos |
+| P2 técnica | Historial / TCS-83 | Exportación completa, alias, defensa CSV y auditoría de alcance |
+| P2 operación | Reproducción y recuperación / TCS-88 | Preparar desde cero el fixture de carga histórica; ensayo integral y staging cloud si se requiere, sin confundir demo con aislamiento |
 
-No se presenta riesgo mitigado como inexistente ni una tarea de evidencia como prueba técnica que aún no se hizo.
+## Antes de un entorno real
 
-## Riesgo materializado L-01
+La defensa actual usa adultos y datos ficticios. Reclutar menores requiere revisión profesional/institucional, consentimiento/asentimiento aplicable, seguridad de carcasa/temperatura/volumen/alimentación y política de retención, retirada, exportación y borrado con restauración coherente. Es trabajo futuro, no una lista de actividades ya aceptadas ni condición que se declare cumplida por cerrar documentación.
 
-El propietario informa ausencia de voz al desconectar Wi-Fi (pruebas 15/11). Probabilidad 3, impacto 3, nivel 9 alto para uso que dependa de salida vocal. Aceptado mantener el comportamiento del prototipo, sin declarar mitigado el riesgo ni aptitud para uso autónomo sin red. Contingencia: conexión disponible y apoyo comunicativo alternativo del adulto; revisión profesional pendiente. No se implementa voz offline garantizada. Ver pruebas/FISICAS_20261115.md.
+Las ampliaciones predictivas FUT01 permanecen en análisis/diseño. Los ensayos físicos conservan su origen de confirmación y sus límites en [A5](pruebas/FISICAS_20261115.md).

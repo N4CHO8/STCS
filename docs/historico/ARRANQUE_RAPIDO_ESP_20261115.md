@@ -1,3 +1,5 @@
+> Registro histórico de su fecha. Para estado, límites y operación actuales consultar [Defensa de STCS](../DEFENSA.md). Los contratos y procedimientos antiguos no son instrucciones vigentes.
+
 # Arranque rápido de imágenes — v0.8.4
 
 Estado: v0.8.4 instalado; recuperación técnica medida y confirmación física

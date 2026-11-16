@@ -1,3 +1,5 @@
+> Registro histórico de su fecha. Para estado, límites y operación actuales consultar [Defensa de STCS](../DEFENSA.md). Los contratos y procedimientos antiguos no son instrucciones vigentes.
+
 # Pictogramas ausentes después de reiniciar — v0.8.3
 
 ## Fallo confirmado y alcance

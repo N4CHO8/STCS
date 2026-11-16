@@ -1,3 +1,5 @@
+> Registro histórico de su fecha. Para estado, límites y operación actuales consultar [Defensa de STCS](../DEFENSA.md). Los contratos y procedimientos antiguos no son instrucciones vigentes.
+
 # Hito 2: implementacion y demostracion
 
 ## Coherencia con el Hito 1

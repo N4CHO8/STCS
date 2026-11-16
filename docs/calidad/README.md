@@ -48,3 +48,5 @@ node scripts/run-web-quality.mjs --dast
 ```
 
 No introducir URLs de producción ni credenciales reales. La sonda fija localhost, comprueba la base exacta y exige que esté vacía antes de crear fixtures; elimina únicamente sus IDs al terminar. CI ejecuta cobertura, API y E2E; ZAP es una comprobación explícita separada por duración y alcance.
+
+La sonda histórica `measure-quality.mjs` usa otro laboratorio fijo: puerto 3300 y base local `postgres`, con la cuenta ficticia `especialista.prueba01@stcs.test` ya preparada. `test:prepare` con STCS_TEST_DB=stcs_release_tests no prepara esa cuenta. Por eso no se presenta la carga como parte automática del comando anterior ni de CI; la preparación de un laboratorio de carga desde cero sigue registrada en TCS-88. El reporte conserva las condiciones del ensayo realmente ejecutado.

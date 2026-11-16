@@ -1,3 +1,5 @@
+> Registro histórico de su fecha. Para estado, límites y operación actuales consultar [Defensa de STCS](../DEFENSA.md). Los contratos y procedimientos antiguos no son instrucciones vigentes.
+
 # Cierre técnico del 15 de noviembre de 2026
 
 Última actualización de interfaz: [WEB_Y_WIFI_20261115.md](WEB_Y_WIFI_20261115.md),

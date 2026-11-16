@@ -1,3 +1,5 @@
+> Registro histórico de su fecha. Para estado, límites y operación actuales consultar [Defensa de STCS](../DEFENSA.md). Los contratos y procedimientos antiguos no son instrucciones vigentes.
+
 # Arquitectura publicada de STCS
 
 Actualización 16/11/2026. Web React/Next.js y API Node en Vercel; PostgreSQL y
@@ -15,6 +17,6 @@ archivos y reproduce la frase vigente; envía eventos persistentes con ACK.
 PostgreSQL mantiene entidades/relaciones y Storage PNG, RGB565 y WAV.
 
 El modelo, datos, secuencias y decisiones vigentes están en
-[arquitectura/README.md](arquitectura/README.md). La matriz de roles está en
-[FLUJO_ROLES.md](FLUJO_ROLES.md); el alcance de evidencia y limitaciones en
-[HITO3_ENTREGA.md](HITO3_ENTREGA.md). No se exponen claves SQL/Storage al ESP.
+[arquitectura/README.md](../arquitectura/README.md). La matriz de roles está en
+[FLUJO_ROLES.md](../FLUJO_ROLES.md); el alcance de evidencia y limitaciones en
+[HITO3_ENTREGA.md](../DEFENSA.md). No se exponen claves SQL/Storage al ESP.
