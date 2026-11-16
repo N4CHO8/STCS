@@ -19,6 +19,6 @@ Reporte [carga-local.json](carga-local.json), generado por scripts/measure-quali
 
 El generador, servidor y DB comparten computador. Hay pausa de 50 ms por cliente y calentamiento previo; no son llegadas abiertas ni usuarios humanos. No se midieron primera descarga, TTS, varias placas ni capacidad/cuotas de Vercel. El objetivo técnico se propuso antes del ensayo, todavía no fue ratificado por stakeholder. Si se cambia código/build o condiciones, conservar este reporte como histórico y repetir con nueva identificación.
 
-## Mantenibilidad RNF03
+## Mantenibilidad H3-RNF03
 
 Siete pruebas unitarias, JUnit y cobertura del 100% de líneas en permissions.ts, media-contract.ts y server/validation.ts. Los tres son parte del negocio y contrato, pero no todo el negocio. Portal, persistencia, autorización DB y procesos de voz requieren ampliar cobertura antes de afirmar ≥70% global. CI ejecuta la nueva suite. Ver [resultados](../pruebas/RESULTADOS_HITO3.md).

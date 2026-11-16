@@ -2,6 +2,10 @@
 
 Tiempo confirmado: 10 minutos de explicación y 5 minutos de demo. No gastar la exposición enumerando pantallas; explicar cómo se construyó, por qué y cómo se comprueba.
 
+## Qué debe quedar visible en clase
+
+Según Ignacio, el profesor no basa la evaluación principalmente en leer informes. La [comparación de Hito 1/2](ANTECEDENTES_HITOS_1_2.md) identifica lo documentado y lo visible en diapositivas; no acredita lo dicho oralmente. Para esta defensa cada afirmación importante debe acompañarse de una figura legible o una evidencia que se abra. Los informes y GitHub son respaldo navegable.
+
 ## Diez minutos de explicación
 
 | Minuto | Qué mostrar | Qué explicar |
@@ -41,3 +45,16 @@ Si la comisión elige otra muestra, abrir su fila directamente. No prometer que 
 ## Preparación física
 
 Cargador USB 5 V, cable, Wi-Fi 2,4 GHz o hotspot ensayado, otro navegador y cuentas sintéticas preparadas. No abrir .env, claves del AP, Supabase API Keys ni respaldos. Precargar las frases de la demo. Llevar vídeo de respaldo del ESP, identificado con fecha/versión y sin presentarlo como conexión en vivo. Si cae Internet, explicar el fallo y el límite de caché; no simular nube.
+
+## Secuencia de láminas y frase que debe quedar dicha
+
+1. **Problema y objetivo original — 1 min.** Citar objetivo general del proyecto; distinguir el objetivo técnico del Hito 2 de la evaluación de cierre. No inventar una eficacia clínica.
+2. **Recorrido de una modificación — 2 min.** “El navegador y el ESP son clientes de la API en Vercel. Ni el navegador ni el ESP consultan directamente PostgreSQL; lo hace la API. La API valida, persiste y sirve la configuración”. Mostrar flechas etiquetadas, sin diagonal Supabase–ESP.
+3. **Datos y autorización — 1 min.** Mostrar relaciones, no solo nombres de tablas. “El dispositivo y sus pictogramas pertenecen al perfil; user_access define qué adulto puede acceder. El servidor filtra antes de responder”.
+4. **Decisiones — 1,5 min.** API integrada frente a backend separado; SQL para relaciones; medios/voz en nube con caché acotada. Explicar coste y límites de cada elección.
+5. **Prueba verificable — 2 min.** Seleccionar un requisito histórico, seguir equivalencia H3 y abrir caso con esperado/obtenido/reporte/SHA. Distinguir siete casos unitarios de 291 comprobaciones de integración. Mostrar por qué una prueba falla al retirar el control UTF-8 en copia temporal.
+6. **Calidad medida — 1 min.** Mostrar p95 local, condiciones y límites; dependencias auditadas no equivalen a auditoría completa de seguridad.
+7. **Validación y pendientes — 1 min.** Presentar resultados profesionales reales si ya existen y su alcance. Cuatro opciones por página es una decisión técnica, no una prueba de ausencia de sobrecarga visual.
+8. **Cierre — 0,5 min.** Jira, tag final y brechas declaradas, antes de los cinco minutos de demo.
+
+Usar una cadena por ejemplo y tener disponibles todas las demás para muestreo. No llenar la lámina con una matriz ilegible: abrir la fila pertinente en GitHub. Este guion no es una presentación PowerPoint final ni acredita un ensayo cronometrado.

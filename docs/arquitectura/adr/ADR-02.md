@@ -1,6 +1,6 @@
 # ADR 02 Datos relacionales y autorización
 
-Estado: implementada, justificación retrospectiva. RF02/RF05/RF09 y RNF01.
+Estado: implementada, justificación retrospectiva. H3-RF02/H3-RF05/H3-RF09 y H3-RNF01.
 
 Alternativas: PostgreSQL gestionado con API autorizadora; almacén documental con permisos propios; archivos locales por dispositivo. Escala 1–5, mayor mejor; pesos razonados, no medición comparativa de proveedores.
 
