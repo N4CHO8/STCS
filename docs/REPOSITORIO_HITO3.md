@@ -6,7 +6,7 @@ Lectura de GitHub verificada el 16/11/2026: repo público N4CHO8/STCS, main prot
 
 Rama codex/TCS-60-hito3-evidencias; commits y PR citan ticket. La plantilla exige requerimiento, casos, evidencia y brechas. El historial antiguo contiene ramas/commits/PR sin ticket. No se reescribe ni se inventa que siempre se cumplió la convención. La matriz registra la correspondencia reconstruida.
 
-Sprint 3 tiene diez historias consolidadas. La captura del conector lo devuelve como **future**, con fechas 19/10–09/11 ya pasadas y objetivo de preparación supervisada. Sprint 2 está cerrado con objetivo vacío. Son inconsistencias de planificación que debe resolver el propietario con fechas reales; no inventar inicio/cierre retroactivos para ajustarlas.
+Sprint 3 tiene diez historias consolidadas. La captura del conector lo devuelve como **future**, con fechas 19/10–09/11 ya pasadas y objetivo de preparación supervisada. Sprint 2 está cerrado con objetivo vacío. El objetivo del Sprint 2 se recuperó ahora de diapositiva 2 y sección 4 del informe: su ausencia en Jira es de registro. Persisten inconsistencias de planificación que deben resolverse con fechas reales; no inventar inicio/cierre retroactivos.
 
 ## Tag hito3
 

@@ -1,0 +1,30 @@
+{
+  "reviewDate": "2026-11-16",
+  "sources": [
+    {
+      "filename": "STCS_Sprint_1.pptx",
+      "sha256": "c7240c05ef398bcd8be36b90e63df7434ca9b89eb34d3388f82e548321c186af",
+      "sourceUnmodified": true,
+      "originalRedistributed": false
+    },
+    {
+      "filename": "Informe — Sprint 1.docx",
+      "sha256": "f174be20b613d7e2cee43eafab3b1477174e236d09366cc41975b1abda9432eb",
+      "sourceUnmodified": true,
+      "originalRedistributed": false
+    },
+    {
+      "filename": "Presentacion Hito 2 - STCS.pptx",
+      "sha256": "22093d5a07e6d4f6c76ddb06b9af8cb1189b9bb6266b99d2fbe435661f58fee7",
+      "sourceUnmodified": true,
+      "originalRedistributed": false
+    },
+    {
+      "filename": "Informe — Hito 2.docx",
+      "sha256": "0b156363cf9c660b9dca9ae67cdeaab9f0e15b86a5981400b5520c1ed9c3f953",
+      "sourceUnmodified": true,
+      "originalRedistributed": false
+    }
+  ],
+  "limitation": "Text, slide notes, tables and embedded Hito 2 architecture inspected; no class recording; no claim about actual speech or stakeholder approval."
+}

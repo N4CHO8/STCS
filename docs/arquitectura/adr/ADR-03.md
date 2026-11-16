@@ -1,6 +1,6 @@
 # ADR 03 Imágenes voz y caché del ESP
 
-Estado: implementada, evaluación retrospectiva. RF03/RF04/RF08/RF11; RNF02/RNF04.
+Estado: implementada, evaluación retrospectiva. H3-RF03/H3-RF04/H3-RF08/H3-RF11; H3-RNF02/H3-RNF04.
 
 Alternativas: catálogo/audio embebidos; descarga sin caché; medios privados persistentes, síntesis Piper en nube y caché acotada. Puntajes 1–5 de juicio técnico.
 

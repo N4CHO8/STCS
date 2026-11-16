@@ -1,6 +1,6 @@
 # ADR 01 API y despliegue web
 
-Estado: decisión implementada, explicación retrospectiva del 16/11/2026; sin aprobación externa atribuida. RF01/RF03/RF05, RNF02/RNF03.
+Estado: decisión implementada, explicación retrospectiva del 16/11/2026; sin aprobación externa atribuida. H3-RF01/H3-RF03/H3-RF05, H3-RNF02/H3-RNF03.
 
 Alternativas: API integrada Next.js en Vercel; frontend más backend separado en otro servicio; conexión directa del navegador a la base. Escala 1–5, mayor mejor. Puntajes son juicio técnico, no benchmarks.
 
