@@ -7,14 +7,14 @@
 | Elemento | Estado |
 | --- | --- |
 | Main protegida | PR y `verify` obligatorios, también para administradores; 0 revisores obligatorios, sin revisión independiente atribuida |
-| CI publicado | [ebfc605 aprobado](https://github.com/N4CHO8/STCS/actions/runs/43932850718); el candidato posterior conserva reportes propios de laboratorio |
+| CI publicado | [PR #17 aprobado](https://github.com/N4CHO8/STCS/actions/runs/44972359096), integrado como main 6defc3b; Vercel READY y comprobaciones de nube registradas |
 | HU y criterios | Historias con criterios Dado/Cuando/Entonces; Heriber como stakeholder de pertinencia y comprobación técnica por pruebas. Revisión profesional del 20/11 registrada. [Detalle A3](historias.md) |
 | Ramas/commits/PR | Convención reciente con ticket; existen PR antiguos sin él y agrupaciones de varias HU |
 | Plantillas | [PR](../.github/PULL_REQUEST_TEMPLATE.md) y [HU](../.github/ISSUE_TEMPLATE/historia-de-usuario.md); enlazan objetivo, requisito, casos y evidencia |
 | Tablero | Por hacer, En curso, Hecho y Listo; falta columna «Aprobada por stakeholder» |
 | Sprints | Tres con objetivo; 37 historias principales asignadas y 7 referencias consolidadas sin sprint |
 | Prioridad y tipo | MoSCoW/requisito en etiquetas; tipo en campo Jira. Etiquetas feat/fix no uniformes en PR antiguos |
-| Versiones | Existe hito-2; candidato del 21/11 identificado por huellas de fuente |
+| Versiones | hito-2 conserva el corte anterior; [hito3](https://github.com/N4CHO8/STCS/tree/hito3) fija la entrega actual |
 
 Las plantillas orientan la revisión; CI no valida automáticamente todos sus campos. [A4](trazabilidad.md) conserva las excepciones sin alterar el historial.
 
@@ -72,6 +72,6 @@ CI verifica código, pero no ejecuta todas las sondas de carga/DAST/recuperació
 
 Los reportes del 21/11 identifican el commit base `ebfc605` y las huellas de sus fuentes. La compilación y las pruebas corresponden a esa revisión con cambios, no al despliegue del commit base. Se preservan los PR históricos y las excepciones de convención; no se reescribe el historial para aparentar una metodología distinta.
 
-Una versión de entrega se identifica por el commit integrado, su CI y despliegue y un tag inmutable `hito3`. El registro disponible no acredita todavía ese tag para el candidato del 21/11. Este alcance se declara para que la muestra pueda verificarse sin atribuir evidencia a otra versión.
+Una versión de entrega se identifica por el commit integrado, su CI y despliegue y un tag inmutable `hito3`. El [registro final](pruebas/reportes/comprobacion-final-20261121/README.md) distingue las comprobaciones de Vercel, el firmware físico y las suites aisladas. Los reportes previos mantienen sus versiones; el tag no cambia sus resultados originales.
 
 La evaluación utiliza acceso de lectura al repositorio y al tablero; los secretos y respaldos privados permanecen fuera de Git. Las presentaciones y guiones personales también se conservan fuera del repositorio.

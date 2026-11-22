@@ -1,4 +1,6 @@
-# STCS UI — firmware v0.8.6-wifi-status
+# STCS UI — firmware v0.8.8-adaptive-board
+
+El especialista asignado elige las categorías y pictogramas visibles desde la web. El ESP oculta las categorías vacías y abre directamente el tablero si solo queda una. La selección no borra el catálogo ni cambia el límite de capacidad. La versión conserva configuración Wi-Fi, cola y caché existentes. [Comprobación de publicación](../../docs/pruebas/reportes/comprobacion-final-20261121/README.md).
 
 Inicio: Hablar y Wi-Fi en la parte superior. Wi-Fi abre la configuración del
 adulto, con Volver — Activar — Ver clave arriba. Conectar el celular a
@@ -12,8 +14,10 @@ El arranque conserva todas las tarjetas y páginas del tablero guardado aunque
 no estén todas sus imágenes en caché. Las imágenes verificadas aparecen
 progresivamente sin cambiar de página ni borrar la frase. Detalles y prueba
 de reinicio: [ARREGLO_REINICIO_ESP_20261115.md](../../docs/historico/ARREGLO_REINICIO_ESP_20261115.md).
-La copia compacta de imágenes ocupa hasta 192 KiB dentro de la caché total;
-el tablero actual de 96 recuperó todas sus imágenes desde flash en 408 ms.
+La copia compacta admite hasta 384 KiB dentro de la caché total de 512 KiB.
+Se conservan 256 KiB de espacio libre reservado para metadatos y eventos.
+El ensayo histórico de 96 imágenes simples recuperó la copia anterior en 408 ms;
+esa duración no se atribuye al catálogo ARASAAC.
 Condiciones, medida y límites: [ARRANQUE_RAPIDO_ESP_20261115.md](../../docs/historico/ARRANQUE_RAPIDO_ESP_20261115.md).
 
 Controles esenciales superiores, flechas laterales y frase inferior de lectura.
@@ -81,7 +85,7 @@ La primera carga tras cambiar ese ámbito requiere red. Rotar clave al reasignar
 La preparación de nube, mediciones, recuperación y estado real de instalación
 están en [el cierre técnico](../../docs/historico/CIERRE_STCS_20261115.md).
 
-## Tablero adaptable — v0.8.7-adaptive-board
+## Tablero adaptable — v0.8.8-adaptive-board
 
 Versión candidata local; no instalada en el ESP del propietario. La API entrega solo los pictogramas que seleccionó el especialista para ese niño. El inicio oculta categorías sin elementos y, al aplicar un tablero con una sola categoría, abre directamente sus pictogramas. Volver mantiene accesible el inicio y el menú Wi-Fi. Hablar, Volver, Borrar, frase y flechas conservan su distribución.
 

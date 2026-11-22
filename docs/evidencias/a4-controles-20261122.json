@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-22",
+  "requirements": 17,
+  "must": 9,
+  "unmappedRequirements": 0,
+  "mustWithoutModelCaseOrEvidenceReference": 0,
+  "scope": "Checks documentation links, not blanket approval of every test variant or user metric",
+  "professionalReview": "Qualitative, with owner-confirmed decisions recorded separately from technical tests"
+}

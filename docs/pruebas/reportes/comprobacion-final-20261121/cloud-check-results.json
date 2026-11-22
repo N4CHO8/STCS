@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-22T01:47:42.554Z",
+  "base": "https://0stcs0.vercel.app",
+  "commit": "6defc3b6e8bf847b7f17a650f15ba75d9e4154d2",
+  "results": [
+    {
+      "flow": "therapist login, portal y permisos",
+      "status": "PASS",
+      "pictograms": 97
+    },
+    {
+      "flow": "teacher login, portal y permisos",
+      "status": "PASS",
+      "pictograms": 97
+    },
+    {
+      "flow": "guardian login, portal y permisos",
+      "status": "PASS",
+      "pictograms": 97
+    },
+    {
+      "flow": "Crear pictograma controlado",
+      "status": "PASS"
+    },
+    {
+      "flow": "Voz nueva Piper en Vercel",
+      "status": "PASS",
+      "milliseconds": 4972,
+      "bytes": 72118
+    }
+  ]
+}

@@ -36,7 +36,7 @@ La ampliación del candidato se fijó durante la implementación antes de su rep
 | Escenarios físicos informados | 9 | 9 | 0 | PF-01–08 y MC-WEB-01 conformes según Ignacio; [registro](FISICAS_20261115.md) |
 | Medición de sincronización y TLS físico | 2 | 2 | 0 | PC-01/02, [18/11](CIERRE.md) |
 | Compilación de firmware adaptable | 1 | 1 | 0 | Con credenciales ficticias; [reporte](reportes/adaptacion-20261121/compilacion-firmware.txt) |
-| Ensayo físico CP-ADAPT-P01 | 1 | 0 | 1 | Se conservó el ESP instalado por instrucción del propietario; compilación no equivale a prueba física |
+| Ensayo físico CP-ADAPT-P01 | 1 | 1 | 0 | Una categoría/un pictograma, imagen, voz, Volver/Wi-Fi y edición de frase confirmados por Ignacio el 22/11; [registro final](reportes/comprobacion-final-20261121/README.md) |
 | Aceptación PA completa según protocolo | 5 | 0 | 5 | Una sesión cualitativa realizada; no equivale a cinco ejecuciones con tiempos y errores. [Registro](../validacion/REGISTRO.md) |
 
 El cumplimiento se expresa por nivel: 15/15 unitarias y 40/40 E2E no demuestran ≥95 % de todo el protocolo. Los casos no ejecutados conservan motivo y relación con R05 en [A9](../riesgos.md).

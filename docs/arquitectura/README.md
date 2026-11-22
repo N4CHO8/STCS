@@ -42,6 +42,6 @@ Cada matriz suma peso × puntaje, con pesos al 100%. Escala: 1 bajo encaje/retra
 
 ## Coherencia y límites de versión
 
-Los modelos describen web/API, Supabase, Storage y Piper en nube, y el firmware de referencia v0.8.6. La auditoría CSV se separa como CL2 local; FUT01/FUT03 no aparecen como funciones ejecutadas. Voz pendiente/error y límites de caché se reflejan en las secuencias/actividad.
+Los modelos describen web/API, Supabase, Storage y Piper en nube, y el firmware v0.8.8. La auditoría CSV publicada se detalla en CL2; FUT01/FUT03 no aparecen como funciones ejecutadas. Voz pendiente/error y límites de caché se reflejan en las secuencias/actividad.
 
 [Código y modelos](modelos.md), [pruebas](../pruebas/RESULTADOS.md), [riesgos](../riesgos.md) y [estado de entrega](../DEFENSA.md).

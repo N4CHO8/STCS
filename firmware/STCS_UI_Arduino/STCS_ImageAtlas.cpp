@@ -189,6 +189,15 @@ bool STCS_AtlasSave(const char *binding, const StcsBoardConfig &board) {
   memcpy(packet + 8, &count, 2);
   LittleFS.remove(temp);
   ok = STCS_CacheRoom(packet_bytes, STCS_ATLAS_PATH);
+  if (!ok) {
+    // Two ARASAAC snapshots may exceed the total cache quota. The complete
+    // replacement is already bounded in PSRAM; evict the old cache snapshot
+    // only as a last resort. Metadata and the durable event queue are never
+    // candidates. A power cut here can require image downloads after reboot.
+    printf("STCS_ATLAS|state=replacing_cache|bytes=%u\r\n",
+           (unsigned)packet_bytes);
+    ok = STCS_CacheRoom(packet_bytes, "");
+  }
   File file;
   if (ok) {
     file = LittleFS.open(temp, FILE_WRITE);
@@ -196,8 +205,9 @@ bool STCS_AtlasSave(const char *binding, const StcsBoardConfig &board) {
     file.flush(); file.close();
   }
   free(packet);
-  // Validate every decoded image against its expected SHA before replacing a
-  // working snapshot. Validation of a bad temporary never removes the prior.
+  // Validate every decoded image before publishing the new snapshot. If cache
+  // eviction was necessary, a failure is recovered by downloading again; the
+  // durable board metadata and pending events remain untouched.
   if (ok) {
     ok = open_reader(temp, binding);
     for (size_t i = 0; ok && i < board.count; i++)
@@ -205,8 +215,8 @@ bool STCS_AtlasSave(const char *binding, const StcsBoardConfig &board) {
     STCS_AtlasClose();
   }
   free(output);
-  // LittleFS rename replaces the old file atomically; never remove the valid
-  // prior snapshot before a complete bounded replacement is ready.
+  // The completed file is validated before publishing its name. Cache eviction
+  // above is deliberately recoverable, unlike board metadata or pending events.
   if (ok) ok = LittleFS.rename(temp, STCS_ATLAS_PATH);
   if (!ok) LittleFS.remove(temp);
   else STCS_CacheTouch(STCS_ATLAS_PATH);

@@ -10,8 +10,8 @@ El [índice de entrega](docs/DEFENSA.md) reúne los artefactos, las pruebas y el
 
 - Web React/Next.js y API HTTPS en Vercel; PostgreSQL y Storage privado en Supabase.
 - Piper en una función Python de Vercel. La operación cloud no depende del PC del autor.
-- Firmware Arduino v0.8.6-wifi-status para Waveshare ESP32-S3-Touch-LCD-1.46.
-- Tablero de referencia: 96 pictogramas, 24 por categoría y seis páginas. Máximo operativo ensayado: 180, 45 por categoría y 12 páginas; no es máximo físico absoluto.
+- Firmware Arduino v0.8.8-adaptive-board para Waveshare ESP32-S3-Touch-LCD-1.46.
+- Tablero de referencia ensayado: 96 pictogramas, 24 por categoría y seis páginas. El especialista puede reducir las opciones visibles por niño sin borrar el catálogo. Máximo operativo ensayado: 180, 45 por categoría y 12 páginas; no es máximo físico absoluto.
 - Cuatro roles adultos con permisos de servidor. Child es un registro interno sin portal adulto.
 
 Sin Wi-Fi no hubo voz en el ensayo físico. La caché limitada no garantiza audios offline. El dispositivo requiere alimentación USB de 5 V, sin batería instalada. Revisión del prototipo realizada con Heriber Galleguillos el 20/11; se conserva su alcance en el [registro](docs/validacion/REGISTRO.md). No acredita eficacia clínica con niños. El propietario confirmó separación de dos ESP físicos y acceso desde varios computadores el 16/11; [registro multicliente](docs/pruebas/MULTICLIENTE_20261116.md), demostración física documentada por el ejecutor.

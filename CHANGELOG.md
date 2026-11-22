@@ -1,39 +1,41 @@
 # Cambios de STCS
 
-## Hito3 Comprobación final
+## Hito3 — comprobación final del 22/11/2026
 
 - TCS-83/84/85: historial/CSV y auditoría, sesiones, accesibilidad, selección de tablero por especialista, fecha de inicio y observaciones docentes.
 - TCS-60/D15: configuración Piper empaquetada y modelo fijado para preparar frases nuevas.
 - TCS-85: catálogo ARASAAC y créditos visibles, conservando imágenes propias y referencias históricas.
-- TCS-59/88: migraciones aditivas revisadas, RLS/privilegios de servidor, pruebas aisladas y firmware adaptable v0.8.7.
+- TCS-59/88: migraciones aditivas revisadas, RLS/privilegios de servidor, pruebas aisladas y firmware adaptable v0.8.8.
+- TCS-76/D19: atlas ARASAAC hasta 384 KiB dentro de la caché total de 512 KiB; reemplazo de copias grandes con reserva para metadatos/eventos. Tablero de 94 con 89 imágenes únicas, 305.992 bytes, verificado en ESP.
+- TCS-60/88: arranque con cargador de 5 V y voz exacta confirmado por el propietario; [PR #17](https://github.com/N4CHO8/STCS/pull/17) publica los flujos y [PR #18](https://github.com/N4CHO8/STCS/pull/18) reúne el cierre y su evidencia.
 - TCS-77: revisión cualitativa de Heriber y alcance real de aprobación; indicadores externos no medidos declarados en A1.
 - La evidencia final de nube y hardware se registra en `docs/pruebas/reportes/comprobacion-final-20261121/`.
 
 
-## Sin publicar — corrección de voz en nube del 18 de noviembre de 2026
+## Preparación — corrección de voz en nube del 18 de noviembre de 2026
 
 - TCS-60/D15: fallo real 422 al generar frases nuevas en Vercel. Configuración local y descarga externa tenían hashes distintos; se conserva y empaqueta la configuración revisada y se fija la revisión del modelo.
-- Ocho pruebas de regresión y petición HTTP local con Piper aprobadas. Errores del servidor se distinguen de entradas inválidas. Producción todavía requiere despliegue y comprobación con el ESP; no se modificaron datos, firmware ni audios existentes.
+- Ocho pruebas de regresión y petición HTTP local con Piper aprobadas. Errores del servidor se distinguen de entradas inválidas. El ensayo de ese día fue local; la publicación y comprobación posterior en Vercel y ESP constan en el cierre del 22/11. No se modificaron datos, firmware ni audios existentes durante aquella preparación.
 
-## Sin publicar — comprobaciones físicas del 18 de noviembre de 2026
+## Preparación — comprobaciones físicas del 18 de noviembre de 2026
 
 - TCS-60: seis cambios LAN instrumentados, tres nuevos y tres reutilizados, todos aplicados; 7,836–16,889 s. Una muestra supera 15 s; se conserva el incumplimiento del KPI histórico. Imágenes/frases nuevas y última reutilización confirmadas por el autor.
 - TCS-59: rechazo TLS físico con clave ficticia y control positivo confiable; tres rechazos y cero peticiones HTTP no confiables. Copia temporal del firmware; respaldo completo restaurado, verificado y confirmado. Sin despliegue ni cambios del firmware habitual.
 
-## Sin publicar — revisión del 18 de noviembre de 2026
+## Preparación — revisión del 18 de noviembre de 2026
 
 - TCS-60/88: ficha del sprint, tareas en las HU existentes, criterios numerados y enlace de los 52 casos a sus criterios. Seguimiento de riesgos e impedimentos, balance técnico y Review externa pendiente.
 - Informe: fundamento CAA con referencias y alternativas concretas; costo informado $30.942 CLP y servicios sin pagos hasta esta fecha. Separación del diseño predictivo y actualización de límites del ESP.
 - Cierre preparado: sincronización medida y TLS físico aún por comprobar, atribución visible y video/confirmación pendientes. Sin commits, despliegues, migraciones ni cambios de firmware.
 
-## Sin publicar — revisión de entrega del 17 de noviembre de 2026
+## Preparación — revisión de entrega del 17 de noviembre de 2026
 
 - TCS-60/TCS-88: A1–A9 revisados contra la guía, con objetivos originales, alcance justificado, trazabilidad y evidencia separada por revisión; no aceptación profesional atribuida.
 - TCS-53: cierre para ESP previamente configurados por decisión del propietario; vinculación/rotación/reasignación web diferidas a FUT03, no implementadas. Sustituye ese pendiente del corte del 16/11 sin reescribirlo.
 - TCS-59/TCS-85/TCS-88: catálogo y recuentos de A5, repetición unitaria/TLS del 17/11 con JUnit (11 aprobados) y contraste de seguridad/carga con A2. Reportes anteriores conservados.
 - TCS-88: A8 documenta main protegida y CI de ebfc605/PR #16, plantillas, despliegue reproducible y excepciones históricas. Tag hito3, columna de aprobación del stakeholder y publicación final pendientes. No se modificó el workflow Jira ni se publicó código.
 
-## Sin publicar — verificación local del 16 de noviembre de 2026
+## Preparación — verificación local del 16 de noviembre de 2026
 
 - TCS-83: filtros de historial completos y exportación CSV autorizada, seudonimizada y auditada; límites 10.000 eventos/3 MiB y controles de fórmulas.
 - TCS-84/85: contraste y foco, hidratación segura del login, invalidación de sesión tras 401 sin afectar logins nuevos y cancelación de consultas al salir de la página.

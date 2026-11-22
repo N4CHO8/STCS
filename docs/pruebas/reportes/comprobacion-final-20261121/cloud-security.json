@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-22T12:30:59.359Z",
+  "url": "https://0stcs0.vercel.app/login",
+  "status": 200,
+  "https": true,
+  "headers": {
+    "hsts": true,
+    "nosniff": true,
+    "antiFrame": true,
+    "nonceScripts": true,
+    "styleUnsafeInline": true
+  },
+  "tlsVerification": "Node fetch default certificate and hostname validation enabled"
+}
