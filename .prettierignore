@@ -1,0 +1,2 @@
+# Piper config is pinned byte-for-byte to its upstream SHA256, not reformatted.
+frontend/api/voice-model-config.json

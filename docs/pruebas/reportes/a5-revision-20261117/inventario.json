@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-17",
+  "scope": "Reconciled inventory; not retrospective proof of prior planning",
+  "unit": {
+    "cases": 10,
+    "executed": 10,
+    "passed": 10,
+    "newRun": true
+  },
+  "tls": {
+    "cases": 1,
+    "executed": 1,
+    "passed": 1,
+    "newRun": true
+  },
+  "api": {
+    "suites": 1,
+    "passedSuites": 1,
+    "assertions": 319,
+    "newRun": false
+  },
+  "resilience": {
+    "databaseChecks": 2,
+    "workerReconnectScenarios": 1,
+    "passed": true,
+    "newRun": false
+  },
+  "e2e": {
+    "perEngine": 16,
+    "engines": [
+      "chromium",
+      "webkit"
+    ],
+    "executed": 32,
+    "passed": 32,
+    "skipped": 0,
+    "newRun": false
+  },
+  "acceptance": {
+    "cases": 5,
+    "executed": 0,
+    "pending": [
+      "PA-01",
+      "PA-02",
+      "PA-03",
+      "PA-04",
+      "PA-05"
+    ]
+  },
+  "physical": {
+    "scenarios": 9,
+    "ownerReportedConforme": 9,
+    "agentInstrumented": false
+  },
+  "globalCompliancePercentage": null,
+  "globalComplianceReason": "Different units and reconciled-after-execution inventory; no verified denominator for original integral plan",
+  "catalogRows": 52
+}

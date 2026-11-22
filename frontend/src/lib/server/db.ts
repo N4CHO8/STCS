@@ -1,4 +1,4 @@
-import { Pool, QueryResult, QueryResultRow, types } from "pg";
+import { Pool, types, type QueryResult, type QueryResultRow } from "pg";
 import { rootCertificates } from "node:tls";
 import { SUPABASE_CA } from "./supabase-ca";
 // Legacy timestamp columns store UTC without an offset. Node must not interpret them as the workstation's local time.

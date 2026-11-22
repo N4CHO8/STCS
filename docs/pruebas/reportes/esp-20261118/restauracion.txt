@@ -1,0 +1,5 @@
+2026-11-18
+Respaldo: 16777216 bytes; SHA256 26bd3b581511bfdeb7290794bfbbf516161026bd442ba1b8719505fd577a3aa1
+Esptool: exit 0; Hash of data verified.
+Firmware observado después: v0.8.6-wifi-status. HTTP 201 en inspección serie.
+El autor confirmó Wi-Fi, seis páginas por categoría y Vaso nube con voz habitual.

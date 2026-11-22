@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-16",
+  "publishedCommit": "ebfc605612b1ecfa237569e64801eb65ba32f0c1",
+  "newCodePublished": false,
+  "mainProtection": {
+    "requiresPR": true,
+    "checks": [
+      "verify"
+    ],
+    "enforceAdmins": true,
+    "requiredApprovals": 0
+  },
+  "sprint3": {
+    "id": 321,
+    "state": "active",
+    "name": "Sprint 3 - Verificación y revisión profesional",
+    "startDate": "2026-10-26T03:00:00.000Z",
+    "endDate": "2026-11-24T02:59:00.000Z",
+    "originBoardId": 133,
+    "goal": "Demostrar el prototipo integrado con un ESP y datos ficticios, enlazar requisitos con pruebas y decisiones técnicas y realizar la revisión profesional del alcance observado. Inicio aproximado: 26/10/2026, según recuerda el autor; término previsto: 23/11/2026."
+  },
+  "storiesWithMoscowLabels": 44,
+  "pendingTechnicalIssues": [
+    "TCS-53",
+    "TCS-59",
+    "TCS-83",
+    "TCS-85",
+    "TCS-88"
+  ],
+  "testFixturesAfterShutdown": {
+    "users": 0,
+    "deviceEvents": 0,
+    "operationAudits": 0
+  },
+  "firmwareWritten": false
+}

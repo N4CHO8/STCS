@@ -33,3 +33,4 @@ firmware/**/STCS_NetworkSecrets.h
 .codex-work/
 .codex-output/
 supabase/.temp/
+__pycache__/

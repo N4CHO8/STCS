@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-21",
+  "policy": "Heriber is the pertinence stakeholder. Technical tasks use test evidence; professors are supervisors and assessors.",
+  "source": "Owner confirmation and qualitative review of 2026-11-20",
+  "pertinenceApproved": [
+    "TCS-30",
+    "TCS-45",
+    "TCS-48",
+    "TCS-60",
+    "TCS-77",
+    "TCS-85"
+  ],
+  "conditionalOnAdaptation": [
+    "TCS-26",
+    "TCS-28",
+    "TCS-31",
+    "TCS-43",
+    "TCS-44"
+  ],
+  "quantitativeUserMetricsMeasured": false
+}

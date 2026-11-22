@@ -14,9 +14,16 @@
     "test:isolated": "node scripts/run-isolated.mjs",
     "test:demo": "node scripts/run-isolated.mjs",
     "demo:provision": "node scripts/provision-cloud-demo.mjs",
-    "test:unit": "node --import ./scripts/test-typescript.mjs --experimental-test-coverage --test-coverage-include=src/lib/server/validation.ts --test-coverage-include=src/lib/permissions.ts --test-coverage-include=src/lib/media-contract.ts --test tests/validation.test.mjs",
+    "test:unit": "node --import ./scripts/test-typescript.mjs --experimental-test-coverage --test-coverage-include=src/lib/server/validation.ts --test-coverage-include=src/lib/permissions.ts --test-coverage-include=src/lib/media-contract.ts --test tests/validation.test.mjs tests/history.test.mjs tests/auth-client.test.mjs tests/board-selection.test.mjs tests/pictogram-catalog.test.mjs",
     "test:coverage": "node scripts/run-business-coverage.mjs",
-    "test:e2e": "node scripts/run-web-quality.mjs"
+    "test:e2e": "node scripts/run-web-quality.mjs",
+    "test:security": "node --import ./scripts/test-typescript.mjs --test tests/tls.test.mjs",
+    "test:load": "node scripts/measure-quality.mjs",
+    "test:recovery": "node scripts/verify-recovery.mjs",
+    "test:dast": "node scripts/run-web-quality.mjs --dast-auth --dast-only",
+    "review:local": "node scripts/run-web-quality.mjs --review",
+    "catalog:verify": "node --import ./scripts/test-typescript.mjs --test tests/pictogram-catalog.test.mjs",
+    "catalog:generate": "node scripts/generate-arasaac-pictograms.mjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
@@ -29,6 +36,7 @@
     "sharp": "0.35.5"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
     "@playwright/test": "1.65.1",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22.10.1",

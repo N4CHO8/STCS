@@ -9,6 +9,8 @@ import { getStcsOverview } from "./stcsData";
 import { withAudioState } from "./media";
 import { InputValidationError } from "./validation";
 import { objectInput } from "./inputs";
+import { getBoardSelection, parseBoardSelection } from "./board-selection";
+import { canAccessSubject } from "./access";
 
 const uuid = (value: unknown) => {
   if (
@@ -116,6 +118,7 @@ export async function getPortal(user: AuthTokenPayload): Promise<PortalData> {
   const summary = result.profiles.find((p) => p.id === selected);
   if (!summary) throw new ForbiddenError();
   const detail: ChildDetail = { profile: summary, reports: [], pictograms: [] };
+  detail.boardSelection = await getBoardSelection(selected);
   // Every assigned adult may see technical availability, never another child's activity or Wi-Fi identity.
   const linkedDevices = await query(
     "SELECT device_code,status,last_sync_at,power_source,battery_level,firmware_version FROM devices WHERE student_profile_id=$1 ORDER BY created_at",
@@ -147,7 +150,8 @@ export async function getPortal(user: AuthTokenPayload): Promise<PortalData> {
   }));
   if (sensitive) {
     const p = await query(
-      `SELECT sp.age,sp.support_level,sp.main_context,sp.sensitive_notes,u.full_name
+      `SELECT sp.age,sp.support_level,sp.main_context,sp.sensitive_notes,u.full_name,
+       to_char(sp.usage_started_on,'YYYY-MM-DD') AS usage_started_on
       FROM student_profiles sp JOIN users u ON u.id=sp.child_user_id WHERE sp.id=$1`,
       [selected],
     );
@@ -159,6 +163,7 @@ export async function getPortal(user: AuthTokenPayload): Promise<PortalData> {
       supportLevel: row.support_level,
       mainContext: row.main_context,
       notes: row.sensitive_notes,
+      usageStartedOn: row.usage_started_on,
     };
     // Some children may not have hardware yet. Their clinical file still remains usable.
     const device = await query(
@@ -167,6 +172,21 @@ export async function getPortal(user: AuthTokenPayload): Promise<PortalData> {
     );
     if (device.rowCount)
       detail.overview = await getStcsOverview({ ...user, profileId: selected });
+  }
+  if (user.role === "therapist" || user.role === "teacher") {
+    const observations = await query(
+      `SELECT o.id,o.observation,o.created_at,u.full_name AS author
+       FROM communication_observations o JOIN users u ON u.id=o.author_user_id
+       WHERE o.student_profile_id=$1 AND ($2::text='therapist' OR o.author_user_id=$3)
+       ORDER BY o.created_at DESC,o.id DESC LIMIT 50`,
+      [selected, user.role, user.sub],
+    );
+    detail.observations = observations.rows.map((o) => ({
+      id: o.id,
+      text: o.observation,
+      author: o.author,
+      createdAt: o.created_at.toISOString(),
+    }));
   }
   const board = await query(
     `SELECT id,label,message,category,color_tone,icon_name,image_path,position FROM pictograms WHERE student_profile_id=$1 AND is_active=TRUE ORDER BY position,label`,
@@ -203,6 +223,89 @@ export async function mutatePortal(
     throw new ForbiddenError(
       "El tipo de cuenta demo no se puede cambiar desde el portal.",
     );
+  if (action === "usageStart" || action === "observation") {
+    if (user.role !== (action === "usageStart" ? "therapist" : "teacher"))
+      throw new ForbiddenError();
+    const profileId = uuid(input.profileId);
+    const scope = await getPortal({ ...user, profileId });
+    if (!scope.detail) throw new ForbiddenError();
+    if (action === "usageStart") {
+      const date = input.date;
+      const today = new Intl.DateTimeFormat("sv-SE", {
+        timeZone: "America/Santiago",
+      }).format(new Date());
+      if (
+        date !== null &&
+        (typeof date !== "string" ||
+          !/^\d{4}-\d{2}-\d{2}$/.test(date) ||
+          !Number.isFinite(Date.parse(date)) ||
+          new Date(date).toISOString().slice(0, 10) !== date ||
+          date < "1900-01-01" ||
+          date > today)
+      )
+        throw new InputValidationError(
+          "Indica una fecha válida que no sea posterior a hoy.",
+        );
+      await query(
+        "UPDATE student_profiles SET usage_started_on=$2::date,updated_at=NOW() WHERE id=$1",
+        [profileId, date],
+      );
+    } else {
+      await query(
+        `INSERT INTO communication_observations(id,student_profile_id,author_user_id,request_id,observation)
+        VALUES($1,$2,$3,$4,$5) ON CONFLICT(author_user_id,request_id) DO NOTHING`,
+        [
+          randomUUID(),
+          profileId,
+          user.sub,
+          uuid(input.requestId),
+          text(input.text, 2000, true),
+        ],
+      );
+    }
+    return;
+  }
+  if (action === "boardSelection") {
+    if (user.role !== "therapist") throw new ForbiddenError();
+    const profileId = uuid(input.profileId);
+    const subject = await query(
+      "SELECT child_user_id FROM student_profiles WHERE id=$1",
+      [profileId],
+    );
+    if (
+      !subject.rowCount ||
+      !(await canAccessSubject(user, subject.rows[0].child_user_id)).allowed
+    )
+      throw new ForbiddenError();
+    const selection = parseBoardSelection(input.selection);
+    await transaction(async (client) => {
+      await client.query(
+        "SELECT pg_advisory_xact_lock(hashtextextended($1,0))",
+        [profileId],
+      );
+      if (selection) {
+        const selected = await client.query(
+          `SELECT id,category FROM pictograms WHERE student_profile_id=$1 AND is_active
+           AND id=ANY($2::uuid[]) AND category=ANY($3::text[])`,
+          [profileId, selection.pictogramIds, selection.categories],
+        );
+        if (
+          selected.rowCount !== selection.pictogramIds.length ||
+          selection.categories.some(
+            (category) => !selected.rows.some((p) => p.category === category),
+          )
+        )
+          throw new InputValidationError(
+            "Cada categoría debe tener pictogramas activos de este niño. Recarga el tablero y revisa la selección.",
+          );
+      }
+      await client.query(
+        "UPDATE student_profiles SET board_selection=$2::jsonb,updated_at=NOW() WHERE id=$1",
+        [profileId, selection === null ? null : JSON.stringify(selection)],
+      );
+    });
+    return;
+  }
   if (action === "approval") {
     if (!canReadSensitive(user.role)) throw new ForbiddenError();
     const actorId = uuid(input.actorId),

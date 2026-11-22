@@ -15,15 +15,15 @@ FILES = {
     "es_ES-davefx-medium.onnx": "d2c9224e122321aac3c33343957fff4d0f465226cb74c66b0f520ca3f8c0dd07",
     "es_ES-davefx-medium.onnx.json": "531c4051502e1acbc10b42437f11679bfce9e3919e1796e51fabd73e01e7fd2e",
 }
-MODEL_URL = "https://huggingface.co/rhasspy/piper-voices/resolve/main/es/es_ES/davefx/medium/"
+MODEL_REVISION = "0ca208afc2a2ee102b1e961e72e0a7e4907be3d0"
+MODEL_URL = f"https://huggingface.co/rhasspy/piper-voices/resolve/{MODEL_REVISION}/es/es_ES/davefx/medium/"
+CONFIG_PATH = Path(__file__).with_name("voice-model-config.json")
 lock = threading.Lock()
 voice = None
 
 
 def get_voice():
     global voice
-    if voice is not None:
-        return voice
     if voice is not None:
         return voice
     from piper import PiperVoice
@@ -35,13 +35,19 @@ def get_voice():
         if not path.exists() or hashlib.sha256(path.read_bytes()).hexdigest() != digest:
             temp = folder / (name + ".download")
             try:
-                with urllib.request.urlopen(MODEL_URL + name, timeout=35) as source, temp.open("wb") as target:
-                    size = 0
-                    while chunk := source.read(1024 * 1024):
-                        size += len(chunk)
-                        if size > 65_000_000:
-                            raise ValueError("Model size limit")
-                        target.write(chunk)
+                if name.endswith(".json"):
+                    # Keep the exact reviewed configuration used by existing voice/cache keys.
+                    # Upstream includes extra metadata and therefore has a different byte hash.
+                    # Packaging this small file avoids relying on a mutable external config.
+                    temp.write_bytes(CONFIG_PATH.read_bytes())
+                else:
+                    with urllib.request.urlopen(MODEL_URL + name, timeout=35) as source, temp.open("wb") as target:
+                        size = 0
+                        while chunk := source.read(1024 * 1024):
+                            size += len(chunk)
+                            if size > 65_000_000:
+                                raise ValueError("Model size limit")
+                            target.write(chunk)
                 if hashlib.sha256(temp.read_bytes()).hexdigest() != digest:
                     raise ValueError("Model checksum mismatch")
                 temp.replace(path)
@@ -96,10 +102,14 @@ class handler(BaseHTTPRequestHandler):
             text = body["text"]
             if body.get("voice") != VOICE or not isinstance(text, str) or not text.strip() or len(text.encode("utf-8")) > 95:
                 raise ValueError("Invalid phrase")
-            data = synthesize(text)
         except (ValueError, KeyError, TypeError):
-            return self.reply(422, b'{"error":"Invalid phrase or audio"}')
+            return self.reply(422, b'{"error":"Invalid phrase"}')
+        try:
+            data = synthesize(text)
         except Exception:
+            # Server/model failures are retryable; do not misclassify valid user text as invalid.
+            # Never log the phrase, credential, headers, or full exception message.
+            print("STCS_VOICE|stage=synthesis|state=unavailable", flush=True)
             return self.reply(503, b'{"error":"Voice preparation unavailable"}')
         self.reply(200, data, "audio/wav")
 

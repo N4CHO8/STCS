@@ -34,3 +34,14 @@ input {
   outline-color: var(--focus);
   outline-offset: 3px;
 }
+
+/* A consistent keyboard indicator also covers selects and textareas. */
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 3px solid #065f46;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

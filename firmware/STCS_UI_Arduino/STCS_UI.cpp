@@ -570,17 +570,23 @@ void show_home() {
   create_wifi_connection(81, 100, 250);
   const lv_coord_t positions[4][2] = {
       {70, 120}, {216, 120}, {70, 214}, {216, 214}};
-  for (uint8_t i = 0; i < CATEGORY_COUNT; i++)
+  uint8_t visible_slot = 0;
+  for (uint8_t i = 0; i < CATEGORY_COUNT; i++) {
+    if (board_ready && categories[i].count == 0)
+      continue;
     create_symbol_button(lv_scr_act(), categories[i].name, categories[i].image,
-                         positions[i][0], positions[i][1], 126, 90,
+                         positions[visible_slot][0], positions[visible_slot][1], 126, 90,
                          categories[i].color, category_event, &categories[i]);
+    visible_slot++;
+  }
   create_phrase_panel(310);
   char progress[40];
   snprintf(progress, sizeof(progress), "Imágenes %u/%u",
            board_ready ? active_board_config->count - missing_images : 0,
            board_ready ? active_board_config->count : 0);
   create_status(!board_ready ? "Sincronizando tablero..." :
-                missing_images ? progress : "");
+                missing_images ? progress :
+                active_board_config->count == 0 ? "Tablero sin pictogramas" : "");
 }
 void wifi_text(const char *text, lv_coord_t y, lv_coord_t width,
                const lv_font_t *font) {
@@ -768,14 +774,31 @@ void STCS_UI_ApplyBoardConfig(const StcsBoardConfig *config) {
   board_reported_complete = missing_images == 0;
   xSemaphoreGive(board_images_mutex);
   board_ready = true;
+  // A removed category must never keep an empty screen active. Category objects
+  // themselves remain stable; only their populated slots belong to this board.
+  if (active_category && active_category->count == 0)
+    active_category = nullptr;
   // A completed download is not a navigation request. Category objects and
   // current_page remain stable; show_category clamps only if the board shrank.
   if (wifi_screen)
     show_wifi();
   else if (active_category)
     show_category(active_category);
-  else
-    show_home();
+  else {
+    Category *only_category = nullptr;
+    uint8_t visible_categories = 0;
+    for (uint8_t i = 0; i < CATEGORY_COUNT; i++) {
+      if (!categories[i].count) continue;
+      only_category = &categories[i];
+      visible_categories++;
+    }
+    // Skip the category choice only when applying a single-category board.
+    // Volver still opens home, keeping Wi-Fi configuration reachable.
+    if (visible_categories == 1) {
+      current_page = 0;
+      show_category(only_category);
+    } else show_home();
+  }
   printf("STCS_BOARD|pictograms=%u|images=%u|needs=%u|emotions=%u|actions=%u|places=%u\r\n",
          config->count, config->count - missing_images, categories[0].count,
          categories[1].count, categories[2].count, categories[3].count);

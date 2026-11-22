@@ -1,6 +1,6 @@
 {
   "date": "2026-11-16",
-  "source": "Atlassian connectors, project TCS, board 133; descriptions read back after cleanup",
+  "source": "Atlassian connector readback 2026-11-16; local implementations pending publication; no new stakeholder approval",
   "issues": [
     {
       "key": "TCS-25",
@@ -10,7 +10,11 @@
       "sprints": [
         202
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-25"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-25",
+      "labels": [
+        "h3-rnf03",
+        "should"
+      ]
     },
     {
       "key": "TCS-26",
@@ -20,7 +24,11 @@
       "sprints": [
         320
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-26"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-26",
+      "labels": [
+        "h3-rf04",
+        "must"
+      ]
     },
     {
       "key": "TCS-27",
@@ -30,7 +38,11 @@
       "sprints": [
         320
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-27"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-27",
+      "labels": [
+        "h3-rf04",
+        "must"
+      ]
     },
     {
       "key": "TCS-28",
@@ -40,7 +52,11 @@
       "sprints": [
         202
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-28"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-28",
+      "labels": [
+        "h3-rf04",
+        "must"
+      ]
     },
     {
       "key": "TCS-29",
@@ -48,7 +64,8 @@
       "status": "Finalizada",
       "type": "Epic",
       "sprints": [],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-29"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-29",
+      "labels": []
     },
     {
       "key": "TCS-30",
@@ -58,7 +75,11 @@
       "sprints": [
         202
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-30"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-30",
+      "labels": [
+        "h3-rf04",
+        "must"
+      ]
     },
     {
       "key": "TCS-31",
@@ -68,7 +89,11 @@
       "sprints": [
         202
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-31"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-31",
+      "labels": [
+        "h3-rf04",
+        "must"
+      ]
     },
     {
       "key": "TCS-32",
@@ -78,7 +103,12 @@
       "sprints": [
         202
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-32"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-32",
+      "labels": [
+        "h3-rf03",
+        "h3-rf05",
+        "must"
+      ]
     },
     {
       "key": "TCS-36",
@@ -88,7 +118,12 @@
       "sprints": [
         202
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-36"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-36",
+      "labels": [
+        "h3-rf04",
+        "h3-rnf03",
+        "must"
+      ]
     },
     {
       "key": "TCS-37",
@@ -98,7 +133,12 @@
       "sprints": [
         202
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-37"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-37",
+      "labels": [
+        "h3-rf04",
+        "h3-rnf03",
+        "must"
+      ]
     },
     {
       "key": "TCS-40",
@@ -108,7 +148,13 @@
       "sprints": [
         202
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-40"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-40",
+      "labels": [
+        "h3-rf03",
+        "h3-rf05",
+        "h3-rnf03",
+        "must"
+      ]
     },
     {
       "key": "TCS-41",
@@ -118,7 +164,12 @@
       "sprints": [
         202
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-41"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-41",
+      "labels": [
+        "h3-rf02",
+        "h3-rf05",
+        "must"
+      ]
     },
     {
       "key": "TCS-42",
@@ -128,7 +179,12 @@
       "sprints": [
         202
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-42"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-42",
+      "labels": [
+        "h3-rnf03",
+        "h3-rnf04",
+        "should"
+      ]
     },
     {
       "key": "TCS-43",
@@ -138,7 +194,11 @@
       "sprints": [
         320
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-43"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-43",
+      "labels": [
+        "h3-rf04",
+        "must"
+      ]
     },
     {
       "key": "TCS-44",
@@ -148,7 +208,12 @@
       "sprints": [
         320
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-44"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-44",
+      "labels": [
+        "h3-rf04",
+        "h3-rf11",
+        "must"
+      ]
     },
     {
       "key": "TCS-45",
@@ -158,7 +223,12 @@
       "sprints": [
         320
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-45"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-45",
+      "labels": [
+        "h3-rf04",
+        "h3-rf05",
+        "must"
+      ]
     },
     {
       "key": "TCS-46",
@@ -168,7 +238,11 @@
       "sprints": [
         320
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-46"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-46",
+      "labels": [
+        "h3-rf04",
+        "must"
+      ]
     },
     {
       "key": "TCS-47",
@@ -178,7 +252,11 @@
       "sprints": [
         320
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-47"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-47",
+      "labels": [
+        "h3-rf04",
+        "must"
+      ]
     },
     {
       "key": "TCS-48",
@@ -188,7 +266,11 @@
       "sprints": [
         320
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-48"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-48",
+      "labels": [
+        "h3-rf03",
+        "must"
+      ]
     },
     {
       "key": "TCS-49",
@@ -198,7 +280,11 @@
       "sprints": [
         320
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-49"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-49",
+      "labels": [
+        "h3-rf03",
+        "must"
+      ]
     },
     {
       "key": "TCS-51",
@@ -208,7 +294,11 @@
       "sprints": [
         320
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-51"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-51",
+      "labels": [
+        "h3-rf05",
+        "must"
+      ]
     },
     {
       "key": "TCS-52",
@@ -218,17 +308,29 @@
       "sprints": [
         320
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-52"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-52",
+      "labels": [
+        "h3-rf05",
+        "h3-rf10",
+        "must"
+      ]
     },
     {
       "key": "TCS-53",
       "summary": "Perfiles y dispositivos autorizados",
-      "status": "En curso",
+      "status": "Finalizada",
       "type": "Historia",
       "sprints": [
         321
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-53"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-53",
+      "labels": [
+        "h3-rf02",
+        "h3-rf09",
+        "hito-3",
+        "must",
+        "sprint3-consolidado"
+      ]
     },
     {
       "key": "TCS-59",
@@ -238,7 +340,13 @@
       "sprints": [
         321
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-59"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-59",
+      "labels": [
+        "h3-rf02",
+        "h3-rnf01",
+        "hito-3",
+        "must"
+      ]
     },
     {
       "key": "TCS-60",
@@ -248,7 +356,14 @@
       "sprints": [
         321
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-60"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-60",
+      "labels": [
+        "h3-rf03",
+        "h3-rf04",
+        "h3-rf05",
+        "hito-3",
+        "must"
+      ]
     },
     {
       "key": "TCS-61",
@@ -256,15 +371,24 @@
       "status": "Finalizada",
       "type": "Historia",
       "sprints": [],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-61"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-61",
+      "labels": [
+        "cierre-por-consolidacion",
+        "h3-rf03",
+        "h3-rf04",
+        "hito-3",
+        "must",
+        "sprint3-consolidada"
+      ]
     },
     {
       "key": "TCS-63",
       "summary": "Comunicación aumentativa mediante pictogramas",
-      "status": "En curso",
+      "status": "Finalizada",
       "type": "Epic",
       "sprints": [],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-63"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-63",
+      "labels": []
     },
     {
       "key": "TCS-64",
@@ -272,7 +396,8 @@
       "status": "En curso",
       "type": "Epic",
       "sprints": [],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-64"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-64",
+      "labels": []
     },
     {
       "key": "TCS-65",
@@ -280,7 +405,8 @@
       "status": "En curso",
       "type": "Epic",
       "sprints": [],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-65"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-65",
+      "labels": []
     },
     {
       "key": "TCS-66",
@@ -288,7 +414,8 @@
       "status": "En curso",
       "type": "Epic",
       "sprints": [],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-66"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-66",
+      "labels": []
     },
     {
       "key": "TCS-67",
@@ -296,7 +423,8 @@
       "status": "Tareas por hacer",
       "type": "Epic",
       "sprints": [],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-67"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-67",
+      "labels": []
     },
     {
       "key": "TCS-68",
@@ -306,7 +434,11 @@
       "sprints": [
         202
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-68"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-68",
+      "labels": [
+        "could",
+        "fut01"
+      ]
     },
     {
       "key": "TCS-69",
@@ -316,7 +448,11 @@
       "sprints": [
         202
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-69"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-69",
+      "labels": [
+        "could",
+        "fut01"
+      ]
     },
     {
       "key": "TCS-70",
@@ -326,7 +462,11 @@
       "sprints": [
         202
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-70"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-70",
+      "labels": [
+        "could",
+        "fut01"
+      ]
     },
     {
       "key": "TCS-71",
@@ -336,7 +476,11 @@
       "sprints": [
         202
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-71"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-71",
+      "labels": [
+        "could",
+        "fut01"
+      ]
     },
     {
       "key": "TCS-72",
@@ -346,7 +490,11 @@
       "sprints": [
         320
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-72"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-72",
+      "labels": [
+        "could",
+        "fut01"
+      ]
     },
     {
       "key": "TCS-73",
@@ -356,17 +504,26 @@
       "sprints": [
         320
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-73"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-73",
+      "labels": [
+        "could",
+        "fut01"
+      ]
     },
     {
       "key": "TCS-74",
       "summary": "Configuración Wi-Fi móvil del ESP",
-      "status": "Finalizada",
+      "status": "Cerrada",
       "type": "Historia",
       "sprints": [
         321
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-74"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-74",
+      "labels": [
+        "h3-rf06",
+        "hito-3",
+        "must"
+      ]
     },
     {
       "key": "TCS-75",
@@ -374,17 +531,31 @@
       "status": "Finalizada",
       "type": "Historia",
       "sprints": [],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-75"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-75",
+      "labels": [
+        "cierre-por-consolidacion",
+        "h3-rf02",
+        "h3-rf09",
+        "hito-3",
+        "must",
+        "sprint3-consolidada"
+      ]
     },
     {
       "key": "TCS-76",
       "summary": "Cola de 64 eventos y caché del ESP",
-      "status": "Finalizada",
+      "status": "Cerrada",
       "type": "Historia",
       "sprints": [
         321
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-76"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-76",
+      "labels": [
+        "h3-rf08",
+        "h3-rnf04",
+        "hito-3",
+        "should"
+      ]
     },
     {
       "key": "TCS-77",
@@ -394,7 +565,14 @@
       "sprints": [
         321
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-77"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-77",
+      "labels": [
+        "h3-rf03",
+        "h3-rf04",
+        "hito-3",
+        "must",
+        "sprint3-consolidado"
+      ]
     },
     {
       "key": "TCS-79",
@@ -402,7 +580,16 @@
       "status": "Finalizada",
       "type": "Historia",
       "sprints": [],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-79"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-79",
+      "labels": [
+        "cierre-por-consolidacion",
+        "h3-rf01",
+        "h3-rf02",
+        "h3-rf09",
+        "hito-3",
+        "must",
+        "sprint3-consolidada"
+      ]
     },
     {
       "key": "TCS-81",
@@ -410,7 +597,15 @@
       "status": "Finalizada",
       "type": "Historia",
       "sprints": [],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-81"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-81",
+      "labels": [
+        "cierre-por-consolidacion",
+        "h3-rf02",
+        "h3-rf09",
+        "hito-3",
+        "must",
+        "sprint3-consolidada"
+      ]
     },
     {
       "key": "TCS-82",
@@ -418,7 +613,15 @@
       "status": "Finalizada",
       "type": "Historia",
       "sprints": [],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-82"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-82",
+      "labels": [
+        "cierre-por-consolidacion",
+        "h3-rf04",
+        "h3-rnf03",
+        "hito-3",
+        "must",
+        "sprint3-consolidada"
+      ]
     },
     {
       "key": "TCS-83",
@@ -428,17 +631,31 @@
       "sprints": [
         321
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-83"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-83",
+      "labels": [
+        "h3-rf05",
+        "h3-rf10",
+        "hito-3",
+        "must"
+      ]
     },
     {
       "key": "TCS-84",
       "summary": "Sesiones y cuentas por rol",
-      "status": "En curso",
+      "status": "Cerrada",
       "type": "Historia",
       "sprints": [
         321
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-84"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-84",
+      "labels": [
+        "h3-rf01",
+        "h3-rf02",
+        "h3-rf09",
+        "hito-3",
+        "must",
+        "sprint3-consolidado"
+      ]
     },
     {
       "key": "TCS-85",
@@ -448,7 +665,14 @@
       "sprints": [
         321
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-85"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-85",
+      "labels": [
+        "h3-rf04",
+        "h3-rnf03",
+        "hito-3",
+        "must",
+        "sprint3-consolidado"
+      ]
     },
     {
       "key": "TCS-86",
@@ -456,7 +680,14 @@
       "status": "Finalizada",
       "type": "Historia",
       "sprints": [],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-86"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-86",
+      "labels": [
+        "cierre-por-consolidacion",
+        "h3-rnf03",
+        "hito-3",
+        "should",
+        "sprint3-consolidada"
+      ]
     },
     {
       "key": "TCS-87",
@@ -464,7 +695,15 @@
       "status": "Finalizada",
       "type": "Historia",
       "sprints": [],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-87"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-87",
+      "labels": [
+        "cierre-por-consolidacion",
+        "h3-rf03",
+        "h3-rf04",
+        "hito-3",
+        "must",
+        "sprint3-consolidada"
+      ]
     },
     {
       "key": "TCS-88",
@@ -474,18 +713,57 @@
       "sprints": [
         321
       ],
-      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-88"
+      "url": "https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-88",
+      "labels": [
+        "h3-rnf03",
+        "hito-3",
+        "should",
+        "sprint3-consolidado"
+      ]
     }
   ],
-  "limits": "No states changed. External acceptance pending; consolidated histories are not additional accepted functionality.",
+  "limits": "39 completed; 11 remain open including validation and genuine technical gaps. TCS-84 and epic TCS-63 transitioned to completed. No external acceptance fabricated.",
   "sprint3": {
     "id": 321,
-    "state": "future",
+    "state": "active",
     "name": "Sprint 3 - Verificación y revisión profesional",
     "plannedEndDate": "2026-11-24T02:59:00.000Z",
     "plannedEndLocal": "2026-11-23 23:59 America/Santiago",
-    "actualStart": "Pending owner confirmation after Sprint 2 delay",
+    "actualStart": "Approximately 2026-10-26 according to owner recollection; exact date not independently verified",
     "presentationDate": "2026-11-27",
-    "source": "Owner confirmed planned completion on 2026-11-16; end date updated and read back through Atlassian connector; no sprint closure performed"
+    "source": "Atlassian readback: active; owner recalled approximate start 26 October, planned end 23 November; no closure",
+    "approximateStartDate": "2026-10-26T03:00:00.000Z"
+  },
+  "huTemplate": {
+    "storiesUpdated": 44,
+    "epics": 6,
+    "fields": [
+      "Historia",
+      "Requerimiento",
+      "Objetivo",
+      "Prioridad",
+      "Criterios de aceptación",
+      "Aprobación del stakeholder"
+    ],
+    "stakeholderApproval": "Pending; name, role and date not supplied",
+    "stateComments": 50
+  },
+  "physicalFollowup": {
+    "date": "2026-11-16",
+    "case": "PF-08",
+    "result": "Conforme según propietario",
+    "physicalEspCount": 2,
+    "additionalWebClients": "Multiple computers; count not provided",
+    "instrumented": false,
+    "attachmentsPending": true
+  },
+  "scopeAdjustment20261117": {
+    "source": "Explicit owner instruction in chat and Atlassian transition response",
+    "issue": "TCS-53",
+    "status": "Finalizada",
+    "scope": "Access and separation of preconfigured ESP devices",
+    "deferred": "FUT03: web enrollment by possession, key rotation and reassignment; not implemented",
+    "externalApproval": "Pending",
+    "codeCommitted": false
   }
 }

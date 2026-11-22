@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import {
   clearAuthSession,
+  portalFetch,
+  invalidatePendingAuthRequests,
   getAuthSession,
   AUTH_EVENT_KEY,
   type AuthSession,
@@ -28,6 +30,10 @@ import {
   DevicesView,
 } from "./views";
 import { PaginatedHistory } from "./history";
+import {
+  UsageStart,
+  CommunicationObservations,
+} from "./professional-follow-up";
 import { AdminWorkspace } from "./admin-workspace";
 import { ProfileForm, ReportForm, type SaveAction } from "./portal-forms";
 
@@ -58,6 +64,27 @@ const panel =
 export function Portal() {
   const router = useRouter();
   const latestRequest = useRef(0);
+  const portalRequest = useRef<AbortController | null>(null);
+  const mutationRequest = useRef<AbortController | null>(null);
+  const pageActive = useRef(true);
+  useEffect(() => {
+    pageActive.current = true;
+    const hide = () => {
+      pageActive.current = false;
+      portalRequest.current?.abort();
+      mutationRequest.current?.abort();
+    };
+    const show = () => {
+      pageActive.current = true;
+    };
+    window.addEventListener("pagehide", hide);
+    window.addEventListener("pageshow", show);
+    return () => {
+      hide();
+      window.removeEventListener("pagehide", hide);
+      window.removeEventListener("pageshow", show);
+    };
+  }, []);
   const [session, setSession] = useState<AuthSession | null>(null),
     [data, setData] = useState<PortalData | null>(null),
     [selected, setSelected] = useState("");
@@ -65,9 +92,11 @@ export function Portal() {
     [busy, setBusy] = useState(true),
     [error, setError] = useState(""),
     [notice, setNotice] = useState("");
+  useEffect(() => () => mutationRequest.current?.abort(), [selected, session]);
   useEffect(() => {
     let current = true;
-    void getAuthSession()
+    const controller = new AbortController();
+    void getAuthSession(controller.signal)
       .then((stored) => {
         if (!current) return;
         if (!stored) {
@@ -84,11 +113,13 @@ export function Portal() {
       });
     return () => {
       current = false;
+      controller.abort();
     };
   }, [router]);
   useEffect(() => {
     if (!session) return;
     const leave = () => {
+      invalidatePendingAuthRequests();
       latestRequest.current++;
       setData(null);
       setSession(null);
@@ -98,18 +129,26 @@ export function Portal() {
       if (event.key === AUTH_EVENT_KEY) leave();
     };
     window.addEventListener("storage", sync);
+    window.addEventListener(AUTH_EVENT_KEY, leave);
     const timer = setTimeout(
       leave,
       Math.max(0, Date.parse(session.expiresAt) - Date.now()),
     );
     return () => {
       window.removeEventListener("storage", sync);
+      window.removeEventListener(AUTH_EVENT_KEY, leave);
       clearTimeout(timer);
     };
   }, [session, router]);
   const load = useCallback(
     async (signal?: AbortSignal, background = false) => {
-      if (!session) return;
+      if (!session || !pageActive.current) return;
+      portalRequest.current?.abort();
+      const controller = new AbortController();
+      portalRequest.current = controller;
+      signal = signal
+        ? AbortSignal.any([signal, controller.signal])
+        : controller.signal;
       // Ignore slower responses from a previously selected child or manual refresh.
       const requestId = ++latestRequest.current;
       const isCurrent = () =>
@@ -121,6 +160,7 @@ export function Portal() {
           `/api/stcs/portal${selected ? `?profileId=${selected}` : ""}`,
           {
             cache: "no-store",
+            mode: "same-origin",
             signal,
           },
         );
@@ -168,13 +208,17 @@ export function Portal() {
     };
   }, [load, section, session]);
   const save: SaveAction = async (body) => {
+    const controller = new AbortController();
+    mutationRequest.current?.abort();
+    mutationRequest.current = controller;
     setNotice("");
     const sanitized =
       body.action === "user"
         ? { ...body, profileIds: (body.profileIds as string[]).filter(Boolean) }
         : body;
-    const response = await fetch("/api/stcs/portal", {
+    const response = await portalFetch("/api/stcs/portal", {
       method: "POST",
+      signal: controller.signal,
       headers: {
         "Content-Type": "application/json",
       },
@@ -182,7 +226,7 @@ export function Portal() {
     });
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.message);
-    await load();
+    if (!controller.signal.aborted && pageActive.current) await load();
     setNotice("Cambios guardados correctamente.");
   };
   const role = data?.role,
@@ -295,7 +339,7 @@ export function Portal() {
             </div>
             <div className="flex items-center gap-3">
               {role !== "admin" && !!data?.profiles.length && (
-                <label className="grid gap-1 text-xs font-semibold text-stone-500">
+                <label className="grid gap-1 text-xs font-semibold text-stone-700">
                   Niño asignado
                   <select
                     aria-label="Seleccionar niño asignado"
@@ -465,6 +509,25 @@ export function Portal() {
                     {active === "board" &&
                       (canEditBoard(role ?? "") ? (
                         <CommunicatorView
+                          boardSelection={detail.boardSelection ?? null}
+                          canAdapt={role === "therapist"}
+                          onSelectionSaved={(selection) => {
+                            // The server has accepted this selection; catalog and
+                            // clinical data did not change. Avoid a redundant full
+                            // portal fetch, and never update another child's view.
+                            setData((current) =>
+                              current?.detail?.profile.id === profileId
+                                ? {
+                                    ...current,
+                                    detail: {
+                                      ...current.detail,
+                                      boardSelection: selection,
+                                    },
+                                  }
+                                : current,
+                            );
+                            setNotice("Selección del ESP guardada.");
+                          }}
                           key={profileId}
                           profileId={profileId}
                           pictograms={detail.pictograms.map(mapPictogram)}
@@ -599,6 +662,25 @@ export function Portal() {
                         </section>
                       </>
                     )}
+                    {active === "profile" && sensitive && (
+                      <UsageStart
+                        key={`${profileId}:${detail.profile.usageStartedOn}`}
+                        profileId={profileId}
+                        date={detail.profile.usageStartedOn ?? null}
+                        editable={role === "therapist"}
+                        save={save}
+                      />
+                    )}
+                    {active === "reports" &&
+                      (role === "therapist" || role === "teacher") && (
+                        <CommunicationObservations
+                          key={profileId}
+                          profileId={profileId}
+                          items={detail.observations ?? []}
+                          writable={role === "teacher"}
+                          save={save}
+                        />
+                      )}
                     {active === "devices" && (
                       <DevicesView devices={detail.devices ?? []} />
                     )}
@@ -616,6 +698,11 @@ export function Portal() {
                     )}
                   </>
                 )}
+                <div className="py-3 text-center text-xs text-stone-600">
+                  <Link href="/creditos" prefetch={false} className="underline">
+                    Créditos de imágenes
+                  </Link>
+                </div>
                 {data.settings.supportEmail && (
                   <footer className="py-4 text-center text-xs text-stone-500">
                     ¿Necesitas ayuda?{" "}

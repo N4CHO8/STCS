@@ -1,0 +1,11 @@
+Autor: Sergio Palao.
+Propiedad: Gobierno de Aragón (España).
+Procedencia: ARASAAC — https://arasaac.org
+Licencia: Creative Commons BY-NC-SA.
+Condiciones oficiales: https://arasaac.org/terms-of-use
+
+Adaptación en STCS: escalado proporcional a 90 x 90 píxeles, centrado
+en un PNG blanco de 96 x 96, sin recorte. Las imágenes adaptadas se
+comparten bajo la misma licencia. Uso no comercial, con atribución.
+La procedencia de cada archivo consta en ARASAAC-CATALOG.json.
+ARASAAC y sus autores no han aprobado ni avalado STCS.

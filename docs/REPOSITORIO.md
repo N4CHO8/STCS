@@ -1,24 +1,77 @@
-# Repositorio despliegue y versiones
+# A8 Repositorio y control de versiones
 
-Código y artefactos en [N4CHO8/STCS](https://github.com/N4CHO8/STCS), tablero [Jira TCS](https://uandresbello-team-bg7iosbc.atlassian.net/jira/software/projects/TCS), web [publicada](https://0stcs0.vercel.app).
+[GitHub](https://github.com/N4CHO8/STCS), [Jira TCS](https://uandresbello-team-bg7iosbc.atlassian.net/jira/software/projects/TCS), [web](https://0stcs0.vercel.app). Configuración e historial comprobados el 17/11. [Registro](evidencias/a8-repositorio-20261117.json).
 
-## Control de cambios
+## Estado frente al criterio del profesor
 
-Main protegida con check verify requerido y sin excepción administrativa. Las ramas `codex/TCS-...` y los PR enlazan tickets, requisitos, pruebas y evidencia. El título de commit se conserva según instrucción del propietario; el cuerpo identifica el ticket. Hay omisiones históricas de convención que no se reescriben.
+| Elemento | Estado |
+| --- | --- |
+| Main protegida | PR y `verify` obligatorios, también para administradores; 0 revisores obligatorios, sin revisión independiente atribuida |
+| CI publicado | [ebfc605 aprobado](https://github.com/N4CHO8/STCS/actions/runs/43932850718); el candidato posterior conserva reportes propios de laboratorio |
+| HU y criterios | Historias con criterios Dado/Cuando/Entonces; Heriber como stakeholder de pertinencia y comprobación técnica por pruebas. Revisión profesional del 20/11 registrada. [Detalle A3](historias.md) |
+| Ramas/commits/PR | Convención reciente con ticket; existen PR antiguos sin él y agrupaciones de varias HU |
+| Plantillas | [PR](../.github/PULL_REQUEST_TEMPLATE.md) y [HU](../.github/ISSUE_TEMPLATE/historia-de-usuario.md); enlazan objetivo, requisito, casos y evidencia |
+| Tablero | Por hacer, En curso, Hecho y Listo; falta columna «Aprobada por stakeholder» |
+| Sprints | Tres con objetivo; 37 historias principales asignadas y 7 referencias consolidadas sin sprint |
+| Prioridad y tipo | MoSCoW/requisito en etiquetas; tipo en campo Jira. Etiquetas feat/fix no uniformes en PR antiguos |
+| Versiones | Existe hito-2; candidato del 21/11 identificado por huellas de fuente |
 
-[CI de main 22fa385](https://github.com/N4CHO8/STCS/actions/runs/43925021420): dependencias, unitarias, cobertura/integración, tipos, build y diez E2E aprobados. [PR #15](https://github.com/N4CHO8/STCS/pull/15) corrigió una carrera de sincronización del test; el [fallo anterior](pruebas/CORRECCION_E2E_SESION_20261116.md) permanece documentado. [Workflow vigente](../.github/workflows/verify.yml).
+Las plantillas orientan la revisión; CI no valida automáticamente todos sus campos. [A4](trazabilidad.md) conserva las excepciones sin alterar el historial.
 
-## Reproducir y recuperar
+El Sprint 3 utiliza 31 subtareas reales bajo sus diez HU principales. Los desgloses anteriores se conservan como antecedentes; no se presentan como tareas planificadas con esos IDs antes de desarrollarse. [Ficha y anexo](gestion.md).
 
-- Web: Node declarado, `npm ci`, variables de ejemplo completadas fuera de Git, build y tipos. Vercel despliega `frontend/` desde main. [Servicios](CONEXIONES.md).
-- Pruebas: PostgreSQL/servidor local descartable con guardas; no usar datos reales. [Procedimiento](PRUEBAS.md).
-- Firmware: `scripts/verify-firmware.ps1`, toolchain/particiones del [README activo](../firmware/STCS_UI_Arduino/README.md). La compilación de verificación usa clave ficticia y no se carga como operativa.
-- Recuperación: preservar cabecera, respaldos y manifiestos privados; revisar destino y cambios posteriores antes de restaurar. Los registros fechados de publicación conservan lo efectivamente ensayado. No hay staging cloud independiente ni recuperación integral de flota acreditados.
+## Estructura real y correspondencia con la guía
+
+```text
+STCS/
+├── README.md, CHANGELOG.md, CONTRIBUTING.md
+├── .github/       # plantillas y verify.yml
+├── docs/
+│   ├── DEFENSA.md, objetivos.md, requerimientos.md, historias.md
+│   ├── trazabilidad.md, REPOSITORIO.md, riesgos.md
+│   ├── pruebas/   # plan, casos, resultados y reportes
+│   ├── calidad/   # seguridad y eficiencia
+│   └── arquitectura/  # UML y adr/
+├── frontend/
+│   ├── src/       # UI, API y servidor
+│   ├── tests/, scripts/
+│   └── api/voice.py
+├── firmware/STCS_UI_Arduino/
+└── supabase/      # esquema y migraciones
+```
+
+Los artefactos se localizan desde [DEFENSA](DEFENSA.md). Presentaciones/guiones personales, respaldos de memoria y credenciales quedan fuera de Git.
+
+## Convención y muestra real
+
+Para cambios nuevos: `codex/TCS-<id>-<cambio>`, ticket en cuerpo de commit y PR, requisitos/casos/reportes de la revisión. Se prefiere una HU por cambio; un PR de integración debe declarar todas las HU que reúne.
+
+Muestra: [PR #16](https://github.com/N4CHO8/STCS/pull/16), rama `codex/TCS-60-defensa-documentacion`, commit [ebfc605](https://github.com/N4CHO8/STCS/commit/ebfc605612b1ecfa237569e64801eb65ba32f0c1). Título `Hito3-ValidacionClinica`, cuerpo TCS-60/TCS-88 y CI enlazado arriba. El título no acredita que la revisión clínica haya ocurrido.
+
+Los cuerpos de PR #1–10 no citan ticket; PR #5/#6 comparten rama. A4 conserva su correspondencia por contenido. No se cumple la convención retrospectivamente en toda muestra.
+
+En Jira, el PR se enlaza como vínculo o comentario técnico. La aprobación se registra por separado con nombre, rol, fecha y alcance; `Closes #12` de GitHub no sustituye un enlace TCS.
 
 ## Sprints y entrega
 
-Sprint 1: planificación/base técnica. Sprint 2: prototipo funcional integrado. Sprint 3: verificación y revisión profesional. Asignaciones verificadas mediante el conector; [matriz](trazabilidad.md).
+| Sprint | Objetivo | Estado |
+| --- | --- | --- |
+| S1 (202) | Alcance y base técnica del comunicador | Cerrado |
+| S2 (320) | Integrar ESP, web y Supabase; coherencia de requisitos/diseño/pruebas | Cerrado, retraso histórico conservado |
+| S3 (321) | Verificar prototipo, trazabilidad y revisión profesional | Activo; inicio aproximado 26/10 según autor, término previsto 23/11; exposición 27/11 |
 
-El autor confirmó término previsto del Sprint 3 el 23/11/2026 y presentación el 27/11/2026. Jira ya refleja ese término; aún figura future y su inicio real queda por confirmar, porque Sprint 2 se atrasó. No se ha cerrado el sprint ni acreditado aceptación por cambiar el calendario. Su nombre/objetivo se actualizaron a verificación y revisión profesional. El objetivo de Sprint 2 se recuperó de su entrega y se registró en el tablero al depurar, conservando fechas y cierre originales. La fecha administrativa de sprint no acredita pruebas o aceptación.
+MoSCoW y prioridad High/Medium son campos distintos. Las fechas administrativas no prueban aceptación. [Snapshot de sprints](evidencias/a8-repositorio-20261117.json).
 
-El tag exigido por la guía sigue siendo **hito3**, pendiente de incorporar evidencia y revisión final. Crear una sola etiqueta inmutable sobre main revisada después de comprobar accesos del profesor; lo añadido después no pertenece a esa entrega. No crear ni mover el tag automáticamente durante una limpieza documental.
+## Reproducir, desplegar y recuperar
+
+El [README](../README.md#despliegue-en-los-servicios-existentes) contiene requisitos, variables, comandos y publicación en Vercel existente. [Pruebas](PRUEBAS.md): solo laboratorio para escrituras. [Firmware](../firmware/STCS_UI_Arduino/README.md): compilación verificable con clave ficticia, distinta de una imagen operativa.
+
+CI verifica código, pero no ejecuta todas las sondas de carga/DAST/recuperación ni hardware. La recuperación local sintética no acredita restauración real cloud/flota. [A5](pruebas/PLAN.md), [A9](riesgos.md).
+
+## Identificación y reproducción de la entrega
+
+Los reportes del 21/11 identifican el commit base `ebfc605` y las huellas de sus fuentes. La compilación y las pruebas corresponden a esa revisión con cambios, no al despliegue del commit base. Se preservan los PR históricos y las excepciones de convención; no se reescribe el historial para aparentar una metodología distinta.
+
+Una versión de entrega se identifica por el commit integrado, su CI y despliegue y un tag inmutable `hito3`. El registro disponible no acredita todavía ese tag para el candidato del 21/11. Este alcance se declara para que la muestra pueda verificarse sin atribuir evidencia a otra versión.
+
+La evaluación utiliza acceso de lectura al repositorio y al tablero; los secretos y respaldos privados permanecen fuera de Git. Las presentaciones y guiones personales también se conservan fuera del repositorio.

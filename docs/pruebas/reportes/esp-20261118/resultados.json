@@ -1,0 +1,112 @@
+{
+  "date": "2026-11-18",
+  "baseCommit": "ebfc605612b1ecfa237569e64801eb65ba32f0c1",
+  "workingTreeDirty": true,
+  "newCommit": null,
+  "device": "ESP32-S3 Waveshare 16 MiB flash / 8 MiB PSRAM",
+  "originalFirmware": "v0.8.6-wifi-status",
+  "testFirmware": "v0.8.6-pc18-lab",
+  "fixture": "Four fictitious pictograms, one changed through the actual local API; no production test writes",
+  "transport": "Next.js 16.4.6 localhost + Piper + PostgreSQL localhost55432/stcs_release_tests + HTTPS LAN proxy + physical ESP",
+  "timing": "PC wall clock at PUT start and receipt of UI apply serial marker; not photon or acoustic timing; upload performed before PUT",
+  "stats": {
+    "cold": {
+      "samples": 3,
+      "medianMs": 11410,
+      "maxMs": 13841
+    },
+    "warm": {
+      "samples": 3,
+      "medianMs": 10020,
+      "maxMs": 16889
+    },
+    "all": {
+      "samples": 6,
+      "minMs": 7836,
+      "medianMs": 11010.5,
+      "maxMs": 16889,
+      "atMost15Seconds": 5
+    }
+  },
+  "tls": {
+    "untrustedHandshakeRejections": 3,
+    "untrustedHttpRequests": 0,
+    "trustedRequests": 65,
+    "sameBeginRequestFunction": true,
+    "testCaAddedAlongsideOriginalRoots": true,
+    "testCredentialOnly": true,
+    "result": "passed"
+  },
+  "humanChecks": [
+    {
+      "stage": "cold",
+      "n": 1,
+      "imageAndPhraseConfirmed": true,
+      "clearConfirmed": true,
+      "source": "User reply in chat"
+    },
+    {
+      "stage": "cold",
+      "n": 2,
+      "imageAndPhraseConfirmed": true,
+      "clearConfirmed": true,
+      "source": "User reply in chat"
+    },
+    {
+      "stage": "cold",
+      "n": 3,
+      "imageAndPhraseConfirmed": true,
+      "clearConfirmed": true,
+      "source": "User reply in chat"
+    },
+    {
+      "stage": "warm",
+      "n": 3,
+      "imageAndPhraseConfirmed": true,
+      "clearConfirmed": true,
+      "source": "User reply in chat"
+    }
+  ],
+  "playbackToDecoder": [
+    {
+      "requested": 1795020627167,
+      "decoderReady": 1795020630622,
+      "delayMs": 3455
+    },
+    {
+      "requested": 1795020717119,
+      "decoderReady": 1795020720970,
+      "delayMs": 3851
+    },
+    {
+      "requested": 1795020796641,
+      "decoderReady": 1795020802184,
+      "delayMs": 5543
+    },
+    {
+      "requested": 1795020944938,
+      "decoderReady": 1795020945179,
+      "delayMs": 241
+    }
+  ],
+  "backup": {
+    "bytes": 16777216,
+    "sha256": "26bd3b581511bfdeb7290794bfbbf516161026bd442ba1b8719505fd577a3aa1",
+    "appMatchesSavedV086": true,
+    "firmwareObserved": "v0.8.6-wifi-status"
+  },
+  "restoration": {
+    "flashWriteExitCode": 0,
+    "hashVerifiedByEsptool": true,
+    "restoredBytes": 16777216,
+    "serialFirmware": "v0.8.6-wifi-status",
+    "userConfirmedNormalBoardAndVoice": true,
+    "source": "Serial inspection and user reply after restoring full backup"
+  },
+  "sources": {
+    "firmware/STCS_UI_Arduino/STCS_Network.cpp": "3eb7689cdedc3ee98c80934195011630363d77f7e7647154e3d757b20397ded0",
+    "firmware/STCS_UI_Arduino/STCS_UI.cpp": "257094834ade1cd420622c83f213104bf10f6df8f1708df0db60710188a454ba",
+    "firmware/STCS_UI_Arduino/STCS_TrustRoots.h": "ab22dde6b71a2e59ac1eee37f6883150fa6b19049233cedb48b2acd807accc35",
+    "firmware/STCS_UI_Arduino/STCS_UI_Arduino.ino": "0eef32b3fda732078e99e074567bf82d1c3127cb91854d58303b655a451447f3"
+  }
+}

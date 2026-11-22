@@ -58,6 +58,8 @@ try {
     "20261111202504_cloud_demo_accounts.sql",
     "20261112164531_private_device_profiles.sql",
     "20261113215338_pictogram_media_audio.sql",
+    "20261116214529_operation_audit.sql",
+    "20261121120000_board_selection.sql",
   ])
     await db.query(
       readFileSync(

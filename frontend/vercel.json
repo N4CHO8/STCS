@@ -3,6 +3,7 @@
   "functions": {
     "api/voice.py": {
       "maxDuration": 90,
+      "includeFiles": "api/voice-model-config.json",
       "excludeFiles": "{node_modules/**,.next/**,public/**,scripts/**,src/**,**/__pycache__/**}"
     }
   }

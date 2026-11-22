@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-17",
+  "scope": "Reconciliation of existing reports with A2; no new load/security run",
+  "loadPassed": true,
+  "securityChecks": 13,
+  "securityChecksMatchingExpected": 13,
+  "deniedExpectedAndObserved": 5,
+  "allowedExpectedAndObserved": 8,
+  "alerts": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0,
+    "informational": 1
+  },
+  "sourceReports": [
+    {
+      "path": "docs/pruebas/reportes/arreglos-locales-20261116/carga-local.json",
+      "sha256": "5c1518c3793530f5e28eb80b1e89ec7b11903fb1abea1cb8f01d2c7142658cc9"
+    },
+    {
+      "path": "docs/pruebas/reportes/arreglos-locales-20261116/seguridad-autenticada.json",
+      "sha256": "19b29fa635727f86e7a12656cb8f3d561a576b02fdaf74050241002e5209c67a"
+    },
+    {
+      "path": "docs/pruebas/reportes/arreglos-locales-20261116/npm-audit.json",
+      "sha256": "ba166cad22a82a15842af75a8e925f9789e29d85c6ec8956416e91dc6c9ffdfc"
+    },
+    {
+      "path": "docs/pruebas/reportes/arreglos-locales-20261116/supabase-readonly.json",
+      "sha256": "073ded45b989134174dc63505aaa881ee8226e8e732c91c0eee695a06911678c"
+    }
+  ],
+  "claimLimits": [
+    "Local load only, minimal fixture",
+    "Passive authenticated scan, not exhaustive pentest",
+    "CSP inline styles residual risk retained",
+    "Final CI/deployment and professional acceptance pending"
+  ]
+}

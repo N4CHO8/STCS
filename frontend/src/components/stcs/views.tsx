@@ -1,6 +1,16 @@
 "use client";
+import { portalFetch } from "@/lib/auth";
+import { BoardSelectionEditor } from "./board-selection";
+import { visibleBoard, type BoardSelection } from "@/lib/board-selection";
 
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type ReactNode,
+  FormEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { PictogramVoice } from "./pictogram-voice";
 import {
   BarChart3,
@@ -48,6 +58,7 @@ import {
   DEVICE_MAX_PAGES_PER_CATEGORY,
   DEVICE_MAX_PICTOGRAMS,
   ALL_PICTOGRAM_ASSETS,
+  getImageSourceLabel,
   type DeviceCategory,
 } from "@/lib/pictogramCatalog";
 import type {
@@ -169,11 +180,17 @@ export function DashboardView({
 }
 
 export function CommunicatorView({
+  boardSelection = null,
+  canAdapt = false,
+  onSelectionSaved,
   onDeleted,
   onSaved,
   pictograms,
   profileId,
 }: {
+  boardSelection?: BoardSelection | null;
+  canAdapt?: boolean;
+  onSelectionSaved: (selection: BoardSelection | null) => void;
   onDeleted: (pictogramId: string) => void;
   onSaved: (pictogram: PictogramConfig) => void;
   pictograms: Pictogram[];
@@ -184,10 +201,6 @@ export function CommunicatorView({
     useState<DeviceCategory>("Necesidades");
   const categoryPictograms = pictograms.filter(
     (item) => item.category === selectedCategory,
-  );
-  const pageCount = Math.max(
-    1,
-    Math.ceil(categoryPictograms.length / DEVICE_ITEMS_PER_PAGE),
   );
   const occupiedPositions = new Set(pictograms.map((item) => item.position));
   const nextPosition =
@@ -212,12 +225,24 @@ export function CommunicatorView({
         title="Configuracion del Comunicador"
       />
 
+      <BoardSelectionEditor
+        key={
+          JSON.stringify(boardSelection) +
+          pictograms.map((p) => `${p.id}:${p.category}`).join()
+        }
+        profileId={profileId}
+        items={pictograms}
+        selection={boardSelection}
+        editable={canAdapt}
+        onSaved={onSelectionSaved}
+      />
+
       <section className="grid gap-7 lg:grid-cols-[340px_1fr]">
         <Card className="flex min-h-[520px] flex-col items-center">
           <SectionTitle>Vista previa</SectionTitle>
           <RoundDevice
             category={selectedCategory}
-            pictograms={categoryPictograms}
+            pictograms={visibleBoard(categoryPictograms, boardSelection)}
           />
         </Card>
 
@@ -228,7 +253,7 @@ export function CommunicatorView({
                 <button
                   className={`h-10 rounded-lg px-3 text-sm font-bold transition ${
                     category === selectedCategory
-                      ? "bg-[#518b51] text-white"
+                      ? "bg-[#3f713f] text-white"
                       : "border border-stone-200 bg-white text-stone-500 hover:bg-stone-50"
                   }`}
                   key={category}
@@ -241,16 +266,17 @@ export function CommunicatorView({
             </div>
             <div className="mb-5 flex items-center justify-between gap-4">
               <div>
-                <SectionTitle>Pictogramas activos</SectionTitle>
-                <p className="mt-1 text-sm text-stone-400">
-                  {categoryPictograms.length} pictogramas en {pageCount}{" "}
-                  {pageCount === 1 ? "pagina" : "paginas"}
+                <SectionTitle>Pictogramas del catálogo</SectionTitle>
+                <p className="mt-1 text-sm text-stone-600">
+                  {categoryPictograms.length} guardados ·{" "}
+                  {visibleBoard(categoryPictograms, boardSelection).length}{" "}
+                  visibles en el ESP
                 </p>
                 <p className="mt-2 text-sm font-semibold text-stone-600">
                   Límite: {DEVICE_MAX_ITEMS_PER_CATEGORY} por categoría, hasta{" "}
                   {DEVICE_MAX_PAGES_PER_CATEGORY} páginas (la última con un
                   pictograma). {pictograms.length}/{DEVICE_MAX_PICTOGRAMS}{" "}
-                  activos en total.
+                  guardados en total.
                 </p>
               </div>
               <SmallButton
@@ -300,32 +326,30 @@ export function HistoryView({
   events,
   isRefreshing,
   onRefresh,
+  filters,
+  onExport,
+  isExporting,
 }: {
   events: DeviceEvent[];
   isRefreshing: boolean;
   onRefresh: () => void;
+  filters?: ReactNode;
+  onExport?: () => void;
+  isExporting?: boolean;
 }) {
-  const [context, setContext] = useState("all");
-  const [eventType, setEventType] = useState("all");
-  const contexts = useMemo(
-    () => Array.from(new Set(events.map((event) => event.context))).sort(),
-    [events],
-  );
-  const eventTypes = useMemo(
-    () => Array.from(new Set(events.map((event) => event.eventType))).sort(),
-    [events],
-  );
-  const filteredEvents = events.filter(
-    (event) =>
-      (context === "all" || event.context === context) &&
-      (eventType === "all" || event.eventType === eventType),
-  );
-
   return (
     <div className="grid gap-6">
       <PageHeader
         action={
           <div className="flex flex-wrap gap-2">
+            {onExport && (
+              <SmallButton
+                disabled={isRefreshing || isExporting}
+                onClick={onExport}
+              >
+                {isExporting ? "Exportando…" : "Exportar CSV"}
+              </SmallButton>
+            )}
             <SmallButton disabled={isRefreshing} muted onClick={onRefresh}>
               <span className="inline-flex items-center gap-2">
                 <RefreshCw
@@ -340,44 +364,13 @@ export function HistoryView({
         title="Historial"
       />
       <Card className="min-h-[430px]">
-        <div className="mb-5 grid gap-3 sm:grid-cols-2">
-          <label className="text-sm font-semibold text-stone-500">
-            Contexto
-            <select
-              className="mt-2 h-10 w-full rounded-lg border border-stone-200 bg-white px-3"
-              onChange={(event) => setContext(event.target.value)}
-              value={context}
-            >
-              <option value="all">Todos</option>
-              {contexts.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="text-sm font-semibold text-stone-500">
-            Tipo de evento
-            <select
-              className="mt-2 h-10 w-full rounded-lg border border-stone-200 bg-white px-3"
-              onChange={(event) => setEventType(event.target.value)}
-              value={eventType}
-            >
-              <option value="all">Todos</option>
-              {eventTypes.map((item) => (
-                <option key={item} value={item}>
-                  {formatEventType(item)}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-        {filteredEvents.length > 0 ? (
+        {filters}
+        {events.length > 0 ? (
           <div className="grid gap-3">
-            <p className="text-xs font-bold uppercase text-stone-400">
-              {filteredEvents.length} eventos, del mas reciente al mas antiguo
+            <p className="text-xs font-bold uppercase text-stone-600">
+              {events.length} eventos, del mas reciente al mas antiguo
             </p>
-            {filteredEvents.map((event) => (
+            {events.map((event) => (
               <ActivityItem key={event.id} event={event} large />
             ))}
           </div>
@@ -529,7 +522,7 @@ function WeeklyUseChart({ data }: { data: StcsOverview["weeklyUse"] }) {
             type="monotone"
             dataKey="interactions"
             name="Interacciones"
-            stroke="#518b51"
+            stroke="#3f713f"
             strokeWidth={3}
             dot={{ r: 4 }}
           />
@@ -551,7 +544,7 @@ function CategoryUseChart({ data }: { data: StcsOverview["categoryUse"] }) {
           <Bar
             dataKey="value"
             name="Usos"
-            fill="#518b51"
+            fill="#3f713f"
             radius={[0, 9, 9, 0]}
           />
         </BarChart>
@@ -577,7 +570,7 @@ function EmotionProgressChart({
             type="monotone"
             dataKey="positive"
             name="Feliz/Tranquilo"
-            stroke="#518b51"
+            stroke="#3f713f"
             strokeWidth={3}
           />
           <Line
@@ -664,7 +657,7 @@ function PictogramEditor({
     try {
       const body = new FormData();
       body.set("image", file);
-      const r = await fetch("/api/stcs/images", {
+      const r = await portalFetch("/api/stcs/images", {
         method: "POST",
         headers: { "x-stcs-profile-id": profileId },
         body,
@@ -722,7 +715,7 @@ function PictogramEditor({
     setErrorMessage("");
 
     try {
-      const response = await fetch(
+      const response = await portalFetch(
         pictogram
           ? `/api/stcs/pictograms/${pictogram.id}`
           : "/api/stcs/pictograms",
@@ -767,12 +760,15 @@ function PictogramEditor({
     setErrorMessage("");
 
     try {
-      const response = await fetch(`/api/stcs/pictograms/${pictogram.id}`, {
-        method: "DELETE",
-        headers: {
-          "x-stcs-profile-id": profileId,
+      const response = await portalFetch(
+        `/api/stcs/pictograms/${pictogram.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "x-stcs-profile-id": profileId,
+          },
         },
-      });
+      );
       const payload = (await response.json()) as { message?: string };
 
       if (!response.ok) {
@@ -809,7 +805,7 @@ function PictogramEditor({
             >
               {pictogram ? "Editar pictograma" : "Agregar pictograma"}
             </h2>
-            <p className="mt-1 text-sm text-stone-400">
+            <p className="mt-1 text-sm text-stone-600">
               Configura el tablero. Las selecciones se registran al usar el
               comunicador.
             </p>
@@ -894,7 +890,7 @@ function PictogramEditor({
                   aria-pressed={form.imagePath === option.imagePath}
                   className={`grid aspect-square place-items-center rounded-lg border p-1 transition ${
                     form.imagePath === option.imagePath
-                      ? "border-[#518b51] ring-2 ring-emerald-100"
+                      ? "border-[#3f713f] ring-2 ring-emerald-100"
                       : "border-stone-200"
                   }`}
                   key={option.imagePath}
@@ -1137,7 +1133,7 @@ function RoundDevice({
           </button>
           {pages.map((_, index) => (
             <span
-              className={`h-2 w-2 rounded-full ${index === page ? "bg-[#518b51]" : "bg-stone-300"}`}
+              className={`h-2 w-2 rounded-full ${index === page ? "bg-[#3f713f]" : "bg-stone-300"}`}
               key={index}
             />
           ))}
@@ -1185,11 +1181,14 @@ function PictogramCard({
         <strong className="block text-sm font-black text-stone-600">
           {pictogram.label}
         </strong>
-        <span className="mt-2 block text-[10px] font-bold uppercase tracking-[0.18em] text-stone-400">
+        <span className="mt-2 block text-[10px] font-bold uppercase tracking-[0.18em] text-stone-600">
           {pictogram.category}
         </span>
       </div>
       <p className="mt-2 text-sm text-stone-600">{pictogram.message}</p>
+      <span className="text-xs text-stone-500">
+        {getImageSourceLabel(pictogram.imagePath)}
+      </span>
       <PictogramVoice id={pictogram.id} message={pictogram.message} />
     </article>
   );

@@ -1,0 +1,173 @@
+{
+  "date": "2026-11-17",
+  "scope": "Risk and debt documentation; qualitative assessments retained; no new incident/test/service change",
+  "riskIds": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R06",
+    "R07",
+    "R08",
+    "R09",
+    "R10",
+    "R11",
+    "R12",
+    "R13/L-01"
+  ],
+  "scale": {
+    "probability": [
+      1,
+      2,
+      3
+    ],
+    "impact": [
+      1,
+      2,
+      3
+    ],
+    "low": [
+      1,
+      2
+    ],
+    "medium": [
+      3,
+      4
+    ],
+    "high": [
+      6,
+      9
+    ]
+  },
+  "risks": [
+    {
+      "id": "R01",
+      "probability": 3,
+      "impact": 2,
+      "level": 6,
+      "hasMitigation": true,
+      "hasContingency": true,
+      "closureState": "Materializado, mitigado; defecto físico vigente. D04/PF-01, no reparación acreditada"
+    },
+    {
+      "id": "R02",
+      "probability": 2,
+      "impact": 3,
+      "level": 6,
+      "hasMitigation": true,
+      "hasContingency": true,
+      "closureState": "Materializado y corregido en el alcance observado; D01, PR #7/#8 y reinicio con cargador conforme según autor"
+    },
+    {
+      "id": "R03",
+      "probability": 2,
+      "impact": 3,
+      "level": 6,
+      "hasMitigation": true,
+      "hasContingency": true,
+      "closureState": "Descarga HTTPS incompleta materializada y corregida (D02/PR #6). No se afirma que se haya reproducido una frase clínica incorrecta"
+    },
+    {
+      "id": "R04",
+      "probability": 2,
+      "impact": 3,
+      "level": 6,
+      "hasMitigation": true,
+      "hasContingency": true,
+      "closureState": "Preventivo con residual: casos negativos aprobados, sin fuga real acreditada; CSP de estilos conserva aviso medio. Arreglos locales pendientes de publicar"
+    },
+    {
+      "id": "R05",
+      "probability": 3,
+      "impact": 3,
+      "level": 9,
+      "hasMitigation": true,
+      "hasContingency": true,
+      "closureState": "Abierto: correo enviado, reunión/resultados/aprobación no acreditados. No es un resultado clínico negativo"
+    },
+    {
+      "id": "R06",
+      "probability": 2,
+      "impact": 3,
+      "level": 6,
+      "hasMitigation": true,
+      "hasContingency": true,
+      "closureState": "Abierto: tag hito3 y acceso del profesor por confirmar; demostración física prevista, sin anexos audiovisuales adicionales requeridos"
+    },
+    {
+      "id": "R07",
+      "probability": 2,
+      "impact": 3,
+      "level": 6,
+      "hasMitigation": true,
+      "hasContingency": true,
+      "closureState": "Ensayos controlados conformes según autor (PF-03–05); límite y rechazo explícitos. No hay conteos físicos/instantes de corte instrumentados"
+    },
+    {
+      "id": "R08",
+      "probability": 2,
+      "impact": 2,
+      "level": 4,
+      "hasMitigation": true,
+      "hasContingency": true,
+      "closureState": "Limitación conocida aceptada para el prototipo: sin timeout. PF-06 conforme; no se atribuye un incidente de acceso no autorizado"
+    },
+    {
+      "id": "R09",
+      "probability": 2,
+      "impact": 2,
+      "level": 4,
+      "hasMitigation": true,
+      "hasContingency": true,
+      "closureState": "Riesgo operativo abierto. Fallos de red/descarga están documentados; no hay agotamiento de cuota acreditado ni garantía de gratuidad permanente"
+    },
+    {
+      "id": "R10",
+      "probability": 2,
+      "impact": 2,
+      "level": 4,
+      "hasMitigation": true,
+      "hasContingency": true,
+      "closureState": "Dos ESP conformes según autor el 16/11; flota mayor no ensayada. No confundir diez clientes HTTP con diez ESP"
+    },
+    {
+      "id": "R11",
+      "probability": 1,
+      "impact": 3,
+      "level": 3,
+      "hasMitigation": true,
+      "hasContingency": true,
+      "closureState": "Materializado y resuelto documentalmente: antecedentes recuperados y A1 corregido al problema original. Medición/aceptación externa sigue pendiente"
+    },
+    {
+      "id": "R12",
+      "probability": 1,
+      "impact": 3,
+      "level": 3,
+      "hasMitigation": true,
+      "hasContingency": true,
+      "closureState": "Preventivo: recuperación SQL/medios sintéticos local aprobada; sin pérdida real atribuida ni recuperación cloud/flash acreditada"
+    },
+    {
+      "id": "R13/L-01",
+      "probability": 3,
+      "impact": 3,
+      "level": 9,
+      "hasMitigation": true,
+      "hasContingency": true,
+      "closureState": "Materializado y aceptado por el propietario sin cambio de firmware. No corregido: seleccionar pictogramas no garantiza audio sin red"
+    }
+  ],
+  "debtIds": [
+    "DT-01",
+    "DT-02",
+    "DT-03",
+    "DT-04",
+    "DT-05",
+    "DT-06"
+  ],
+  "noClinicalAcceptanceClaim": true,
+  "noInventedIncidentCounts": true,
+  "codeCommitted": false
+}

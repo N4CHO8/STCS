@@ -1,2 +1,5 @@
 # Preserve generated text reports, whose aligned tables contain trailing spaces.
 docs/pruebas/reportes/*.txt whitespace=-blank-at-eol
+docs/pruebas/reportes/**/*.txt whitespace=-blank-at-eol,-blank-at-eof
+# The bundled voice config is verified byte-for-byte on Windows and Linux.
+frontend/api/voice-model-config.json text eol=lf

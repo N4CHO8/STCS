@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-21",
+  "baseCommit": "ebfc605612b1ecfa237569e64801eb65ba32f0c1",
+  "uncommitted": true,
+  "environment": "localhost y PostgreSQL desechable 127.0.0.1:55432/stcs_release_tests",
+  "productionWrites": false,
+  "firmwareFlashed": false,
+  "sha256": {
+    "frontend/src/lib/pictogramCatalog.ts": "1c53d552f6d6333b0bd79d5023fbb9faa80aee4a996dadb6a746c41bbeceb951",
+    "frontend/public/pictograms/ARASAAC-CATALOG.json": "2242144ad16a326caea0cbce8b886cfcb4ac6d929396cd7b4f8ea8b95c519bb9",
+    "frontend/src/app/creditos/page.tsx": "cf664145932e5f6254ce59f6cfe200a0849f28c92af37772ed608599ce18cfe9",
+    "frontend/src/app/login/page.tsx": "0538784e9fa48bae0a6c87fef37ed9838824d81b56444658707e8b8b04d32eaf",
+    "frontend/src/components/stcs/portal.tsx": "ea8293f5fbd8352e7509f4f9bf5edbc874a07f6133313e37524b4690e56e24b5",
+    "frontend/src/components/stcs/views.tsx": "2a3781a696f494e5538019af84544d35df8fa2740460ecb3a793b12cdf681fc4",
+    "frontend/scripts/generate-arasaac-pictograms.mjs": "e57f7868bf4a03337682473152e3545988e4f4756354b492d05b67acbff48ab2",
+    "frontend/tests/pictogram-catalog.test.mjs": "c2c090960d62dc408633361a2f5f2614345f3dfa30f7152ee3515f55d73ad075",
+    "frontend/tests/e2e/portal.spec.mjs": "3ed6b3e4b5b074dde766f78f0c6ec90e8062905593e0fcfbc628ee46de5990ae"
+  }
+}

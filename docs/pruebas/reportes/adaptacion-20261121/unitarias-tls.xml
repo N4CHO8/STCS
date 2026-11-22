@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testcase name="CP-RF01-U02: stale or aborted 401 cannot invalidate a newer login" time="0.039452" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\auth-client.test.mjs"/>
+	<testcase name="CP-ADAPT-U01: adaptive board preserves default catalog and filters both ID and category" time="0.001660" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\board-selection.test.mjs"/>
+	<testcase name="CP-ADAPT-U02: adaptive selection rejects empty, malformed, duplicate and oversized payloads" time="0.000778" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\board-selection.test.mjs"/>
+	<testcase name="Security report guard accepts both ZAP numeric and textual risk levels" time="0.000965" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\history.test.mjs"/>
+	<testcase name="CP-RF10-U01: CSV quotes delimiters and neutralizes formulas including whitespace and full-width prefixes" time="0.000561" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\history.test.mjs"/>
+	<testcase name="CP-RNF01-TLS01: actual PostgreSQL adapter rejects an untrusted server certificate" time="0.872607" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\tls.test.mjs"/>
+	<testcase name="CP-RF03-U01: the spoken phrase is independent from the label and image" time="0.001288" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\validation.test.mjs"/>
+	<testcase name="CP-RF03-U02: UTF-8 limits prevent truncation on the ESP" time="0.001821" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\validation.test.mjs"/>
+	<testcase name="CP-RF03-U03: empty, malformed and missing input is rejected" time="0.000551" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\validation.test.mjs"/>
+	<testcase name="CP-RF03-U04: catalog, uploads, category and positions enforce the contract" time="0.000415" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\validation.test.mjs"/>
+	<testcase name="CP-RNF01-U01: adult permissions deny child and unknown roles" time="0.000602" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\validation.test.mjs"/>
+	<testcase name="CP-RF05-U01: events preserve identifiers, capture time and valid edge values" time="0.000274" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\validation.test.mjs"/>
+	<testcase name="CP-RF05-U02: invalid selections, event types and numeric ranges fail" time="0.000357" classname="test" file="C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\tests\validation.test.mjs"/>
+	<!-- tests 13 -->
+	<!-- suites 0 -->
+	<!-- pass 13 -->
+	<!-- fail 0 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 1015.9464 -->
+</testsuites>

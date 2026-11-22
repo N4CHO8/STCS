@@ -1,0 +1,98 @@
+{
+  "date": "2026-11-17",
+  "scope": "Documentation, weighted arithmetic, code/schema references and SVG XML reviewed; no deployment/database/firmware writes",
+  "modelPath": "UML",
+  "requiredElements": {
+    "useCases": "UC1-UC8 SVG",
+    "classes": "CL1 entities and associations",
+    "sequences": [
+      "SEQ1 image and asynchronous voice",
+      "SEQ2 authorized projection and rejection"
+    ],
+    "activity": "ACT1 communicator and independent event task"
+  },
+  "weightedDecisions": [
+    {
+      "file": "docs/arquitectura/adr/ADR-01.md",
+      "weightsTotal": 100,
+      "computedTotals": [
+        4.7,
+        3.7,
+        2.7
+      ],
+      "recordedTotals": [
+        4.7,
+        3.7,
+        2.7
+      ],
+      "passed": true,
+      "comparisonType": "Retrospective architectural fit, not comparative benchmark"
+    },
+    {
+      "file": "docs/arquitectura/adr/ADR-02.md",
+      "weightsTotal": 100,
+      "computedTotals": [
+        4.85,
+        3.25,
+        1.7
+      ],
+      "recordedTotals": [
+        4.85,
+        3.25,
+        1.7
+      ],
+      "passed": true,
+      "comparisonType": "Retrospective architectural fit, not comparative benchmark"
+    },
+    {
+      "file": "docs/arquitectura/adr/ADR-03.md",
+      "weightsTotal": 100,
+      "computedTotals": [
+        2.85,
+        3.4,
+        4.2
+      ],
+      "recordedTotals": [
+        2.85,
+        3.4,
+        4.2
+      ],
+      "passed": true,
+      "comparisonType": "Retrospective architectural fit, not comparative benchmark"
+    }
+  ],
+  "mermaidCheck": "Source blocks reviewed structurally; no new browser rendering asserted",
+  "svgXmlValid": true,
+  "evidenceLimit": "Alternatives not implemented are design assumptions; selected option has code and test references; no benchmark against other providers",
+  "pending": [
+    "External acceptance",
+    "Final commit/tag/CI/deployment",
+    "CL2 local audit migration/publication"
+  ],
+  "sources": [
+    {
+      "path": "frontend/package.json",
+      "sha256": "8d1a421eb87f259b02dafb91f03cc44a344ba450c8407a00e17b47fc6621cfb7"
+    },
+    {
+      "path": "frontend/vercel.json",
+      "sha256": "8b97cd9372d7b8ed4fc6b595ea51a98089ede4b44d87f43acb3915404c85fda2"
+    },
+    {
+      "path": "supabase/schema.sql",
+      "sha256": "9f688b2ff5b0f6fe0db72ff32645a70b85de193a9f38ce5641490704e4585ab3"
+    },
+    {
+      "path": "frontend/src/lib/server/cloud-voice.ts",
+      "sha256": "33f3a5e20de52654087372bd7306d8464e0a21cce2cc80cfb31f0255f4405af9"
+    },
+    {
+      "path": "frontend/src/lib/server/deviceAuth.ts",
+      "sha256": "371565c865023d255605b0388dc3100b41d176dfcbd81be62374ce62cb193c12"
+    },
+    {
+      "path": "firmware/STCS_UI_Arduino/STCS_AudioStorage.h",
+      "sha256": "8568ac0beeeff87f07ff1d800997bc6c139359db253f42aa4f8257ffd5301670"
+    }
+  ]
+}

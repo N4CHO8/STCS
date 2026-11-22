@@ -8,13 +8,19 @@ export default defineConfig({
   retries: 0,
   reporter: [
     ["list"],
-    ["junit", { outputFile: "../docs/pruebas/reportes/e2e.xml" }],
+    [
+      "junit",
+      {
+        outputFile:
+          process.env.STCS_E2E_JUNIT ?? "../docs/pruebas/reportes/e2e.xml",
+      },
+    ],
     ["json", { outputFile: "../.codex-work/e2e-results.json" }],
   ],
   outputDir: "../.codex-work/e2e-artifacts",
   use: {
     baseURL: "http://127.0.0.1:3400",
-    browserName: "chromium",
+    browserName: process.env.STCS_E2E_BROWSER ?? "chromium",
     headless: true,
     trace: "retain-on-failure",
   },

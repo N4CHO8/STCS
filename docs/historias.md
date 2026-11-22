@@ -1,20 +1,17 @@
 # A3 Historias y criterios de aceptación
 
-Jira es la fuente de los criterios Dado/Cuando/Entonces; esta tabla enlaza las historias activas sin copiar sus descripciones. Las historias consolidadas solo remiten a su principal y no cuentan como entregables extra.
+Las historias y sus subtareas se gestionan en [Jira TCS](https://uandresbello-team-bg7iosbc.atlassian.net/jira/software/projects/TCS). Sus descripciones contienen Descripción, Criterios y, cuando corresponde, Aprobación del stakeholder. Los estados se mantienen en el campo de Jira y no se duplican en el texto.
 
-| Historia | Alcance / requisitos | Verificación asociada | Pendiente concreto |
-| --- | --- | --- | --- |
-| [TCS-53](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-53) | Perfiles/dispositivos; H3-RF02/09 | API de asignación y credenciales | Ciclo completo de alta/reasignación web y varios ESP |
-| [TCS-59](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-59) | Seguridad; H3-RNF01 | Negativos API/E2E, npm y ZAP | Auditoría y seguridad autenticada/TLS/RLS ampliadas |
-| [TCS-60](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-60) | Aceptación integrada; H3-RF03/04/05 | CI y PF-01–07 | Anexos, indicadores externos y tag final |
-| [TCS-74](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-74) | Wi-Fi móvil; H3-RF06 | PF-06 | Finalizada en alcance sin timeout; matriz móvil completa no acreditada |
-| [TCS-76](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-76) | Cola/caché; H3-RF08/H3-RNF04 | API ACK y PF-02–05 | Finalizada, 64 pendientes; anexos/conteos pendientes |
-| [TCS-77](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-77) | Revisión profesional; OE1/OE2 | PA-01–05 por ejecutar | Reunión y aprobación externa |
-| [TCS-83](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-83) | Historial/exportación; H3-RF05/10 | API de historial y paginación | Exportación CSV y auditoría asociada |
-| [TCS-84](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-84) | Sesiones/cuentas; H3-RF01/02/09 | API, OTP ficticio y E2E | Auditoría operativa y escenarios ampliados de pestañas |
-| [TCS-85](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-85) | Accesibilidad/error; H3-RNF03 | Diez E2E Chromium | Teclado/foco/contraste completos y teléfonos/Safari |
-| [TCS-88](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-88) | CI/despliegue/recuperación; H3-RNF03 | CI y despliegue de referencia | Recuperación integral ampliada; no staging cloud acreditado |
+## Historias y tareas
 
-**Aceptación externa:** pendiente. Registrar en cada ticket revisado la decisión auténtica, nombre/rol, fecha, versión y casos observados. [Pauta](validacion/PAUTA.md). Cierre técnico o confirmación del autor no equivalen a aprobación del stakeholder.
+El [Sprint 2](gestion/HISTORIAS_SPRINT2.md) conserva trece fichas y distingue el diseño predictivo de una función ejecutada. El [Sprint 3](gestion/HISTORIAS_SPRINT3.md) reúne diez historias principales y 31 subtareas reales. Las referencias consolidadas no se cuentan como funcionalidades adicionales. [Objetivos y trazabilidad](trazabilidad.md).
 
-Las HU de Sprint 1/2 conservan su ID, criterios compactos y estado histórico en Jira. [Matriz](trazabilidad.md) y [asignación verificada](evidencias/defensa-20261116/jira.json). El diseño predictivo TCS-68–73 sigue fuera del motor implementado.
+## Revisión del stakeholder
+
+El stakeholder de pertinencia es **Heriber Galleguillos**, psicólogo infantojuvenil especialista en NEE y TEA. La revisión por Zoom se realizó el 20/11/2026 con adultos y datos ficticios. El [registro](validacion/REGISTRO.md) conserva aprobaciones, observaciones y límites por HU.
+
+TCS-30/45/48/60/77/85 tienen aprobación de pertinencia confirmada por Ignacio. La simplificación por niño es la condición comunicada para TCS-26/28/31/43/44. Para TCS-27/46/47 no se solicitaron cambios adicionales, según esa confirmación. No se atribuye al profesional la comprobación técnica de código posterior a la sesión.
+
+Las tareas de desarrollo, seguridad, persistencia, despliegue y recuperación se verifican con sus pruebas; no llevan una aprobación de stakeholder atribuida a los profesores. Matías Vargas y César Cheuque conservan su función de profesores guía y evaluadores, no de aprobadores clínicos.
+
+La aceptación de TCS-77 se delimita a una revisión cualitativa por decisión del propietario. Los tiempos, errores y ayudas no medidos permanecen como limitación de A1 y no se convierten en resultados por cerrar la HU. Esta decisión de alcance no acredita eficacia terapéutica ni evaluación con menores.

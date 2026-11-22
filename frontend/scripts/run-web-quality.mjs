@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { authenticatedDast } from "./lib/authenticated-dast.mjs";
 import { spawn } from "node:child_process";
 import { randomUUID, randomBytes, createHash } from "node:crypto";
 import { mkdir, mkdtemp, writeFile, rm } from "node:fs/promises";
@@ -14,6 +15,10 @@ const origin = "http://127.0.0.1:3400";
 const connectionString =
   "postgresql://postgres:stcs-isolated-tests@127.0.0.1:55432/stcs_release_tests";
 const dast = process.argv.includes("--dast");
+const review = process.argv.includes("--review");
+assert.ok(
+  !process.argv.includes("--dast-only") || process.argv.includes("--dast-auth"),
+);
 const folder = await mkdtemp(join(tmpdir(), "stcs-web-quality-"));
 const db = new pg.Client({ connectionString, ssl: false });
 const ids = Array.from({ length: 6 }, () => randomUUID());
@@ -22,7 +27,14 @@ const roles = ["therapist", "teacher", "guardian", "admin", "child", "child"];
 const marker = "e2e-" + randomUUID();
 const password = "Pruebas-Aisladas-123!";
 const accounts = Object.fromEntries(
-  roles.slice(0, 4).map((role, i) => [role, `${marker}-${i}@test.invalid`]),
+  roles
+    .slice(0, 4)
+    .map((role, i) => [
+      role,
+      review
+        ? `${["especialista", "docente", "apoderado", "admin"][i]}.revision@stcs.test`
+        : `${marker}-${i}@test.invalid`,
+    ]),
 );
 const fixture = {
   profiles,
@@ -49,7 +61,9 @@ const server = spawn(
     "node_modules/next/dist/bin/next",
     "start",
     "--hostname",
-    dast ? "0.0.0.0" : "127.0.0.1",
+    dast || review || process.argv.includes("--dast-auth")
+      ? "0.0.0.0"
+      : "127.0.0.1",
     "--port",
     "3400",
   ],
@@ -66,6 +80,7 @@ const server = spawn(
       STCS_MEDIA_STORAGE: "local",
       STCS_MEDIA_DIR: join(folder, "media"),
       STCS_VOICE_URL: "",
+      STCS_MEDIA_WORKER_KEY: "isolated-worker-key-never-used-in-cloud-123456",
       VERCEL_URL: "",
       SUPABASE_URL: "http://127.0.0.1:3399",
       SUPABASE_PUBLISHABLE_KEY: "isolated-no-provider",
@@ -126,7 +141,7 @@ try {
           i >= 4
             ? `Prueba${i === 4 ? "A" : "B"} ApellidoReservado`
             : `Adulto E2E ${roles[i]}`,
-          `${marker}-${i}@test.invalid`,
+          i < 4 ? accounts[roles[i]] : `${marker}-${i}@test.invalid`,
           hash,
           roles[i],
         ],
@@ -174,15 +189,59 @@ try {
     await db.query("ROLLBACK");
     throw error;
   }
-  const e2eCode = await run(
-    process.execPath,
-    [
-      "node_modules/playwright/cli.js",
-      "test",
-      "--config=playwright.config.mjs",
-    ],
-    { ...process.env, STCS_E2E_FIXTURE_FILE: fixtureFile },
-  );
+  let e2eCode = 0;
+  if (review) {
+    for (let i = 0; i < 2; i++) {
+      const device = randomUUID();
+      await db.query(
+        "INSERT INTO devices(id,student_profile_id,device_code,name,api_key_hash) VALUES($1,$2,$3,'Equipo ficticio',$4)",
+        [
+          device,
+          profiles[i],
+          "LOCAL-REVIEW-" + device,
+          createHash("sha256").update(randomBytes(32)).digest("hex"),
+        ],
+      );
+      await db.query(
+        `INSERT INTO device_events(id,device_id,student_profile_id,event_type,action_label,context,payload) VALUES($1,$2,$3,'navigation','Evento ficticio de laboratorio','Laboratorio','{"source":"esp32-device"}')`,
+        [randomUUID(), device, profiles[i]],
+      );
+    }
+    const accessFile = resolve("../.codex-work/review-access.json");
+    await writeFile(
+      accessFile,
+      JSON.stringify(
+        {
+          origin,
+          accounts,
+          password,
+          profiles,
+          scope: "Isolated synthetic local lab; not the real ESP or production",
+        },
+        null,
+        2,
+      ),
+    );
+    console.log(
+      "REVIEW LAB READY on port 3400; synthetic access details in " +
+        accessFile,
+    );
+    console.log("Press Ctrl+C to stop and remove only this run's fixtures.");
+    await new Promise((done) => {
+      process.once("SIGINT", done);
+      process.once("SIGTERM", done);
+    });
+  } else if (!process.argv.includes("--dast-only")) {
+    e2eCode = await run(
+      process.execPath,
+      [
+        "node_modules/playwright/cli.js",
+        "test",
+        "--config=playwright.config.mjs",
+      ],
+      { ...process.env, STCS_E2E_FIXTURE_FILE: fixtureFile },
+    );
+  }
   if (dast) {
     const code = await run("docker", [
       "run",
@@ -207,17 +266,20 @@ try {
     );
     if (![0, 2].includes(code)) process.exitCode = 1;
   }
+  if (process.argv.includes("--dast-auth"))
+    await authenticatedDast({ origin, accounts, password, profiles });
   if (e2eCode !== 0) process.exitCode = 1;
-  assert.equal(
-    (
-      await db.query(
-        "SELECT COUNT(*)::int AS n FROM device_events WHERE student_profile_id=ANY($1::uuid[])",
-        [profiles],
-      )
-    ).rows[0].n,
-    0,
-    "Editing the board must not invent child activity",
-  );
+  if (!review)
+    assert.equal(
+      (
+        await db.query(
+          "SELECT COUNT(*)::int AS n FROM device_events WHERE student_profile_id=ANY($1::uuid[])",
+          [profiles],
+        )
+      ).rows[0].n,
+      0,
+      "Editing the board must not invent child activity",
+    );
 } finally {
   let cleaned = !created;
   try {

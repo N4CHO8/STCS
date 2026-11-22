@@ -1,4 +1,5 @@
 "use client";
+import { portalFetch } from "@/lib/auth";
 import { useEffect, useState } from "react";
 import type { AudioStatus } from "@/lib/media-contract";
 
@@ -14,18 +15,48 @@ export function PictogramVoice({
     [busy, setBusy] = useState(false),
     [audioKey, setAudioKey] = useState(""),
     [version, setVersion] = useState(0);
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     const abort = new AbortController();
     let timer: ReturnType<typeof setTimeout> | undefined;
     setError("");
     setStatus("pending");
     setAudioKey("");
+    setLoaded(false);
+    let querying = false;
+    const cancel = () => {
+      abort.abort();
+      if (timer) clearTimeout(timer);
+    };
+    const resume = () => {
+      if (document.visibilityState === "visible") {
+        if (timer) clearTimeout(timer);
+        void refresh();
+      }
+    };
+    // A hard reload does not guarantee React cleanup before WebKit tears down the document.
+    window.addEventListener("pagehide", cancel);
+    const restore = (event: PageTransitionEvent) => {
+      if (event.persisted) setVersion((v) => v + 1);
+    };
+    window.addEventListener("pageshow", restore);
+    document.addEventListener("visibilitychange", resume);
     async function refresh() {
+      if (
+        querying ||
+        abort.signal.aborted ||
+        document.visibilityState === "hidden"
+      )
+        return;
+      querying = true;
       try {
-        const r = await fetch(`/api/stcs/pictograms/${id}/audio?status=1`, {
-          signal: abort.signal,
-          cache: "no-store",
-        });
+        const r = await portalFetch(
+          `/api/stcs/pictograms/${id}/audio?status=1`,
+          {
+            signal: abort.signal,
+            cache: "no-store",
+          },
+        );
         const data = await r.json();
         if (!r.ok) throw new Error(data.message);
         if (abort.signal.aborted) return;
@@ -37,19 +68,28 @@ export function PictogramVoice({
         setAudioKey(data.data.audioKey ?? "");
         setStatus(data.data.audioStatus);
         setError(data.data.audioError ?? "");
-        if (["pending", "processing"].includes(data.data.audioStatus))
+        if (
+          !abort.signal.aborted &&
+          document.visibilityState === "visible" &&
+          ["pending", "processing"].includes(data.data.audioStatus)
+        )
           timer = setTimeout(refresh, 3000);
       } catch (e) {
         if (!abort.signal.aborted)
           setError(
             e instanceof Error ? e.message : "No se pudo consultar la voz.",
           );
+      } finally {
+        querying = false;
+        if (!abort.signal.aborted) setLoaded(true);
       }
     }
     void refresh();
     return () => {
-      abort.abort();
-      if (timer) clearTimeout(timer);
+      window.removeEventListener("pagehide", cancel);
+      window.removeEventListener("pageshow", restore);
+      document.removeEventListener("visibilitychange", resume);
+      cancel();
     };
   }, [id, message, version]);
   async function prepare() {
@@ -57,7 +97,7 @@ export function PictogramVoice({
     setBusy(true);
     setError("");
     try {
-      const r = await fetch(`/api/stcs/pictograms/${id}/audio`, {
+      const r = await portalFetch(`/api/stcs/pictograms/${id}/audio`, {
         method: "POST",
       });
       const data = await r.json();
@@ -72,13 +112,15 @@ export function PictogramVoice({
   return (
     <div className="mt-3 grid w-full gap-2 text-left text-xs">
       <p role="status">
-        {status === "ready"
-          ? "Voz lista"
-          : status === "pending" || status === "processing"
-            ? "Preparando voz…"
-            : status === "error"
-              ? "No se pudo preparar la voz"
-              : "Voz sin preparar"}
+        {!loaded
+          ? "Consultando voz…"
+          : status === "ready"
+            ? "Voz lista"
+            : status === "pending" || status === "processing"
+              ? "Preparando voz…"
+              : status === "error"
+                ? "No se pudo preparar la voz"
+                : "Voz sin preparar"}
       </p>
       {status === "ready" && (
         <audio

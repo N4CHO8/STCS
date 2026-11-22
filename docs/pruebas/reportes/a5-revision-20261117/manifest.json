@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-17",
+  "scope": "A5 documentation and unit/TLS repeat only; no production or firmware changes",
+  "baseCommit": "ebfc605612b1ecfa237569e64801eb65ba32f0c1",
+  "workingTreeDirty": true,
+  "committed": false,
+  "reports": [
+    {
+      "path": "inventario.json",
+      "sha256": "0a16785c9e7ebecbd021a5fd5eac921c4076ff57dbfbf84eb004b4df323b8fd1",
+      "bytes": 1191
+    },
+    {
+      "path": "metadatos.json",
+      "sha256": "ff069e420fcd2a9c33ec81234452b83ed2ae60e6e490d5700aac2412c6d44f3d",
+      "bytes": 11097
+    },
+    {
+      "path": "unitarias-tls.xml",
+      "sha256": "41b1b88e2e37b1a2b21c1b9d57bd3a109d578973f9f6cb70ff0ea2f36fd440fd",
+      "bytes": 2583
+    }
+  ]
+}

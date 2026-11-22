@@ -1,0 +1,188 @@
+{
+  "date": "2026-11-17",
+  "scope": "Read-only service verification and local documentation; no commits/tags/releases/deployments or Jira workflow mutations",
+  "repository": "N4CHO8/STCS",
+  "mainCommit": "ebfc605612b1ecfa237569e64801eb65ba32f0c1",
+  "mainPR": 16,
+  "mainProtection": {
+    "requiresPR": true,
+    "checks": [
+      "verify"
+    ],
+    "enforceAdmins": true,
+    "requiredApprovals": 0
+  },
+  "latestMainCI": {
+    "status": "completed",
+    "conclusion": "success",
+    "headSha": "ebfc605612b1ecfa237569e64801eb65ba32f0c1",
+    "url": "https://github.com/N4CHO8/STCS/actions/runs/43932850718"
+  },
+  "tags": [
+    "hito-2"
+  ],
+  "tagHito3Exists": false,
+  "boardColumns": [
+    "Por hacer",
+    "En curso",
+    "Hecho",
+    "Listo"
+  ],
+  "stakeholderApprovalColumnExists": false,
+  "sprints": [
+    {
+      "id": 202,
+      "state": "closed",
+      "name": "Sprint 1 – Planificación",
+      "startDate": "2026-08-18T20:55:17.213Z",
+      "endDate": "2026-09-13T04:00:00.000Z",
+      "completeDate": "2026-09-23T20:21:49.634Z",
+      "originBoardId": 133,
+      "goal": "Definir el alcance de la primera iteración y preparar la base técnica del prototipo físico STCS en un dispositivo ESP32-S3 con pantalla redonda táctil, orientado a comunicación rápida mediante pictogramas."
+    },
+    {
+      "id": 320,
+      "state": "closed",
+      "name": "Sprint 2 - Prototipo funcional",
+      "startDate": "2026-09-23T20:21:00.849Z",
+      "endDate": "2026-10-05T03:00:00.000Z",
+      "completeDate": "2026-10-27T22:39:13.918Z",
+      "originBoardId": 133,
+      "goal": "Consolidar técnicamente el MVP: integrar ESP32-S3, plataforma web y Supabase/PostgreSQL y demostrar coherencia entre requerimientos, arquitectura, datos, código y pruebas."
+    },
+    {
+      "id": 321,
+      "state": "active",
+      "name": "Sprint 3 - Verificación y revisión profesional",
+      "startDate": "2026-10-26T03:00:00.000Z",
+      "endDate": "2026-11-24T02:59:00.000Z",
+      "originBoardId": 133,
+      "goal": "Demostrar el prototipo integrado con un ESP y datos ficticios, enlazar requisitos con pruebas y decisiones técnicas y realizar la revisión profesional del alcance observado. Inicio aproximado: 26/10/2026, según recuerda el autor; término previsto: 23/11/2026."
+    }
+  ],
+  "huPriorityLabels": {
+    "stories": 44,
+    "missing": 0
+  },
+  "historicalPRSample": [
+    {
+      "number": 16,
+      "branch": "codex/TCS-60-defensa-documentacion",
+      "mergedAt": "2026-11-16T18:49:17Z",
+      "commit": "ebfc605612b1ecfa237569e64801eb65ba32f0c1",
+      "ticketInBody": true
+    },
+    {
+      "number": 15,
+      "branch": "codex/TCS-88-e2e-sesion",
+      "mergedAt": "2026-11-16T18:04:41Z",
+      "commit": "22fa38538621ef6cde10568de185698dc3284b04",
+      "ticketInBody": true
+    },
+    {
+      "number": 14,
+      "branch": "codex/TCS-60-informe-hito3",
+      "mergedAt": "2026-11-16T17:33:42Z",
+      "commit": "d52d95536a37d2e8bb6ea6aa5a10def56b364984",
+      "ticketInBody": true
+    },
+    {
+      "number": 13,
+      "branch": "codex/TCS-88-pruebas-cierre",
+      "mergedAt": "2026-11-16T05:27:25Z",
+      "commit": "3dfff375085ccc455e113d5184c42e9a5c9980ca",
+      "ticketInBody": true
+    },
+    {
+      "number": 12,
+      "branch": "codex/TCS-60-antecedentes-hitos",
+      "mergedAt": "2026-11-16T04:32:34Z",
+      "commit": "6d1734fb06b2acebcecacde731d5e2d35352f297",
+      "ticketInBody": true
+    },
+    {
+      "number": 11,
+      "branch": "codex/TCS-60-hito3-evidencias",
+      "mergedAt": "2026-11-16T04:16:11Z",
+      "commit": "1bf9187a7bfc2a83eb822be64eb68b46d752ee08",
+      "ticketInBody": true
+    },
+    {
+      "number": 10,
+      "branch": "codex/cierre-web-wifi",
+      "mergedAt": "2026-11-16T02:58:22Z",
+      "commit": "b972cca829c9a2a5529859f1247ff33b425f93b7",
+      "ticketInBody": false
+    },
+    {
+      "number": 9,
+      "branch": "codex/limpiar-web-config-wifi",
+      "mergedAt": "2026-11-15T23:14:58Z",
+      "commit": "cce29a226d6e5354585ad8783f8de2ec8e010513",
+      "ticketInBody": false
+    },
+    {
+      "number": 8,
+      "branch": "codex/evidencia-arranque-confirmado",
+      "mergedAt": "2026-11-15T22:49:32Z",
+      "commit": "f544e5cedb3ffb462e27e8261fa7cc35b0a3d3bd",
+      "ticketInBody": false
+    },
+    {
+      "number": 7,
+      "branch": "codex/fix-board-restart",
+      "mergedAt": "2026-11-15T22:16:08Z",
+      "commit": "4e5ba396faccc9fa8e0895588fb8805439ac7605",
+      "ticketInBody": false
+    },
+    {
+      "number": 6,
+      "branch": "codex/hito3-medios-voz",
+      "mergedAt": "2026-11-15T21:25:42Z",
+      "commit": "b528dee1b1f88f3b55c687b26f8ceb65153436f9",
+      "ticketInBody": false
+    },
+    {
+      "number": 5,
+      "branch": "codex/hito3-medios-voz",
+      "mergedAt": "2026-11-15T18:04:49Z",
+      "commit": "c1fdbf88b041f7b1c34c9706a8ef11d74d9c42d6",
+      "ticketInBody": false
+    },
+    {
+      "number": 4,
+      "branch": "codex/demo-luis-unificada",
+      "mergedAt": "2026-11-12T17:53:34Z",
+      "commit": "cf0871796d54219e5283314d3cf897a399cf7b05",
+      "ticketInBody": false
+    },
+    {
+      "number": 3,
+      "branch": "codex/esp-ack-contract",
+      "mergedAt": "2026-11-12T17:29:01Z",
+      "commit": "c9548d474a7af18af3e2ea5b73ac66649b07844e",
+      "ticketInBody": false
+    },
+    {
+      "number": 2,
+      "branch": "codex/respaldo-esp-luis",
+      "mergedAt": "2026-11-12T17:25:26Z",
+      "commit": "1ef249a2c8d1ffd508c92a29f1660ccd7fc30503",
+      "ticketInBody": false
+    },
+    {
+      "number": 1,
+      "branch": "codex/luis-esp-privado",
+      "mergedAt": "2026-11-12T16:59:49Z",
+      "commit": "dfa48e8cb6ac9057fa1b8fa1b6ad803113e5eea4",
+      "ticketInBody": false
+    }
+  ],
+  "limitations": [
+    "PR sample checks ticket presence, not full independent review of each criterion",
+    "No universal one-branch/one-PR-per-HU history",
+    "Final candidate remains local",
+    "Clinical acceptance pending",
+    "Workflow lacks separate stakeholder-approved column"
+  ]
+}

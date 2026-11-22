@@ -1,0 +1,829 @@
+{
+  "recorded": "2026-11-18",
+  "source": "Conector Jira y documentación local; desglose actual, no planificación histórica",
+  "issues": 44,
+  "tasks": 92,
+  "caseRowsMapped": 52,
+  "snapshot": [
+    {
+      "key": "TCS-25",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-25.T1",
+          "text": "Preparar herramientas y librerías del ESP",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-25.T2",
+          "text": "Documentar compilación y carga",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "9c3ba17097f9e4c738f3464abfbf66ff57e3a3285155469380c1107ed19998c9"
+    },
+    {
+      "key": "TCS-26",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-26.T1",
+          "text": "Ajustar elementos a la pantalla circular",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-26.T2",
+          "text": "Comprobar texto y controles visibles",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "a60659840d37f33870fc3c983ccbd618c987ce5f882db3943ad8fc7a23df0b49"
+    },
+    {
+      "key": "TCS-27",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-27.T1",
+          "text": "Definir áreas táctiles y respuesta visual",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-27.T2",
+          "text": "Comprobar selección y evitar la zona inferior defectuosa",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "ec83010f2b181eace8bea51fa8f47e5c501f53ac8ac567ed97d9aee1b1bf7d34"
+    },
+    {
+      "key": "TCS-28",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-28.T1",
+          "text": "Definir recorrido de categorías y frase",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-28.T2",
+          "text": "Comprobar conservación de selección hasta Borrar",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "35b5c118a1e5348e72dba6001e93ed60a1117c0844bcd98d7ec0141025d871ee"
+    },
+    {
+      "key": "TCS-30",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-30.T1",
+          "text": "Organizar vocabulario inicial por categorías",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-30.T2",
+          "text": "Señalar símbolos que requieren revisión profesional",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "686746e043bdc2306e7565c2c3f93caf55151f6bd72756ca06f80848b94ccfb2"
+    },
+    {
+      "key": "TCS-31",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-31.T1",
+          "text": "Separar dibujos, etiquetas y controles",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-31.T2",
+          "text": "Comprobar cuatro opciones por página y bordes",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "16e2831ee5984e3346e511101ddab582a96ec76b27c227b7644625bf37987815"
+    },
+    {
+      "key": "TCS-32",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-32.T1",
+          "text": "Definir el contrato web–API–ESP",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-32.T2",
+          "text": "Documentar autenticación y sincronización",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "5a091f5cbe5867b786dcb4c1181a59a34d3d46dc584b44df7dc230f99ec0a3fe"
+    },
+    {
+      "key": "TCS-36",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-36.T1",
+          "text": "Revisar pantalla, memoria, audio y conectividad",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-36.T2",
+          "text": "Documentar límites del prototipo",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "a8818a029e398bee0e993e5506d501a5a49d04e8d8dbacc58c711d43e7bc2540"
+    },
+    {
+      "key": "TCS-37",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-37.T1",
+          "text": "Definir funciones y exclusiones del dispositivo",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-37.T2",
+          "text": "Relacionar alcance con requisitos",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "83ad69ba91d9471fcf4bc88e5dd2af9b3c0d83dea7209d2ce129f8e2c88adfd5"
+    },
+    {
+      "key": "TCS-40",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-40.T1",
+          "text": "Separar responsabilidades de web, API y ESP",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-40.T2",
+          "text": "Representar conexiones y autorización en los modelos",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "262946503e8b1389fda6d85c56ad6fd7c7173bc22016b037908e7daa93a3d158"
+    },
+    {
+      "key": "TCS-41",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-41.T1",
+          "text": "Definir perfiles, pictogramas, dispositivos y eventos",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-41.T2",
+          "text": "Relacionar entidades y datos intercambiados",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "8500403e4004eb304453498c969c286366e60e9466cdbd8db4ded011f408c1a8"
+    },
+    {
+      "key": "TCS-42",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-42.T1",
+          "text": "Identificar riesgos físicos y de operación",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-42.T2",
+          "text": "Definir mitigaciones y límites de uso",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "25d6c68fa8ebc186422e8629c830ec7f5b31f8d6bb63d747238217945a4ca98f"
+    },
+    {
+      "key": "TCS-43",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-43.T1",
+          "text": "Construir el menú y la interfaz base",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-43.T2",
+          "text": "Comprobar presentación en el ESP",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "4bf94755b90cd5d507f309375fdccb2201b20d8f8e56ce68b7876e2f005b9c49"
+    },
+    {
+      "key": "TCS-44",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-44.T1",
+          "text": "Implementar categorías y paginación",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-44.T2",
+          "text": "Comprobar navegación conservando la frase",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "3f8c7ec69ba0d80497b6cf055bb4d473e5f5b90819701c2921c57c1088300707"
+    },
+    {
+      "key": "TCS-45",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-45.T1",
+          "text": "Implementar selección y respuesta visual",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-45.T2",
+          "text": "Comprobar que se añade la opción elegida",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "c80668a49b51a5ad4c1deec49c945c2bc08b85221310efa52df05a95de584b8f"
+    },
+    {
+      "key": "TCS-46",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-46.T1",
+          "text": "Mostrar la frase en orden",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-46.T2",
+          "text": "Comprobar que navegar no la borra",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "001a577aeeb3f3d69148725df3b08a8489c2e2be6fbbcf7bf68b1cc5a1cf2f27"
+    },
+    {
+      "key": "TCS-47",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-47.T1",
+          "text": "Implementar Volver y Borrar",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-47.T2",
+          "text": "Comprobar regreso sin pérdida y borrado explícito",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "5847f5e8f6ed2b249df575a7594dd3334a8ed437a739c1fd1b17e334ce3edeae"
+    },
+    {
+      "key": "TCS-48",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-48.T1",
+          "text": "Implementar edición del tablero por perfil",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-48.T2",
+          "text": "Comprobar guardado, sincronización y mensaje vigente",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "dc47e969351bd3286b13c96f61b65865d2e379740d23f3da8c91e13c6c6f5128"
+    },
+    {
+      "key": "TCS-49",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-49.T1",
+          "text": "Persistir pictogramas con validación",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-49.T2",
+          "text": "Comprobar consulta, edición y desactivación autorizadas",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "cbbc4aa2fa93659ade2cf4a906d27c436252ddb050a32855679d646dea588fda"
+    },
+    {
+      "key": "TCS-51",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-51.T1",
+          "text": "Recibir eventos autenticados",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-51.T2",
+          "text": "Comprobar rechazo de entradas y deduplicación",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "52545901225af148aa51cb20b9ada1158c8e5d9537722d0441df17ce9e83ec12"
+    },
+    {
+      "key": "TCS-52",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-52.T1",
+          "text": "Consultar actividad por perfil autorizado",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-52.T2",
+          "text": "Comprobar orden y restricciones de acceso",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "1ca66b0951334bee0df82b043f28a0d85ae0486357c321b3a9d524de044bbae8"
+    },
+    {
+      "key": "TCS-53",
+      "status": "Cerrada",
+      "criteriaCount": 3,
+      "tasks": [
+        {
+          "id": "TCS-53.T1",
+          "text": "Comprobar asignaciones y proyecciones por rol",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-53.T2",
+          "text": "Registrar la separación de dos ESP y varios computadores",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "63e942ded65c66ce42d209f1abbf260ca59d88ae16c5a94b0f08d5a7c72a95a7"
+    },
+    {
+      "key": "TCS-59",
+      "status": "En curso",
+      "criteriaCount": 3,
+      "tasks": [
+        {
+          "id": "TCS-59.T1",
+          "text": "Comprobar roles, rutas antiguas y respuestas restringidas",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-59.T2",
+          "text": "Revisar dependencias, ZAP y acceso anónimo",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-59.T3",
+          "text": "Registrar rechazo de certificado inválido en el ESP físico",
+          "state": "Pendiente"
+        },
+        {
+          "id": "TCS-59.T4",
+          "text": "Verificar seguridad de la versión publicada final",
+          "state": "Pendiente"
+        }
+      ],
+      "descriptionSHA256": "930da650502d63ea544c075834dcce05f58eca4310510939349a9e7490059a90"
+    },
+    {
+      "key": "TCS-60",
+      "status": "Tareas por hacer",
+      "criteriaCount": 3,
+      "tasks": [
+        {
+          "id": "TCS-60.T1",
+          "text": "Relacionar requisitos, HU, casos y reportes",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-60.T2",
+          "text": "Medir sincronización web–ESP en frío y caché",
+          "state": "Pendiente"
+        },
+        {
+          "id": "TCS-60.T3",
+          "text": "Incorporar decisiones reales del profesional",
+          "state": "Pendiente"
+        },
+        {
+          "id": "TCS-60.T4",
+          "text": "Cerrar informe, Review y versión de entrega",
+          "state": "Pendiente"
+        }
+      ],
+      "descriptionSHA256": "f034bd9114af0c8cba2018ca0dc250df6cc862f2ecd4434d52a3995422d6b40c"
+    },
+    {
+      "key": "TCS-61",
+      "status": "Finalizada",
+      "criteriaCount": 1,
+      "tasks": [
+        {
+          "id": "TCS-61.T1",
+          "text": "Mantener referencia a TCS-77; revisar tareas y aceptación en la principal",
+          "state": "Consolidada"
+        }
+      ],
+      "descriptionSHA256": "619b7de25a46e647135640dfe54d23ad2ceccc6e3ae0484698b4197abb5bfb99"
+    },
+    {
+      "key": "TCS-68",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-68.T1",
+          "text": "Analizar viabilidad de sugerencias",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-68.T2",
+          "text": "Documentar diseño y límites sin afirmar motor implementado",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "d9b1a531fa7ab4f960d142928dc9c9b4664b7d6b65a5eeb127b52ff8b3637e9a"
+    },
+    {
+      "key": "TCS-69",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-69.T1",
+          "text": "Definir entradas mínimas del diseño predictivo",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-69.T2",
+          "text": "Documentar privacidad y falta de precisión medida",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "209073b4c275b3f735a936d069fd28f39fdb504aa90eadc2867be0fda829eb81"
+    },
+    {
+      "key": "TCS-70",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-70.T1",
+          "text": "Definir reglas conceptuales de candidatos",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-70.T2",
+          "text": "Documentar elección manual y condiciones de descarte",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "f701b827d2310cd426eeb643b133abb8b470ea64633945e006e4ed0551ca583c"
+    },
+    {
+      "key": "TCS-71",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-71.T1",
+          "text": "Identificar riesgos de sugerencias erróneas",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-71.T2",
+          "text": "Definir límites antes de habilitar predicción",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "69dbb1663166237f2da46237cff3ab28ad054bb171170a3ef36a74014c9f00b5"
+    },
+    {
+      "key": "TCS-72",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-72.T1",
+          "text": "Diseñar dónde aparecerían las sugerencias",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-72.T2",
+          "text": "Documentar elección explícita y separación de la frase",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "b70002f4bcdb66450635a301b7109b201f6c89ba7a366b615d9f7d8e82bd2b84"
+    },
+    {
+      "key": "TCS-73",
+      "status": "Finalizada",
+      "criteriaCount": 2,
+      "tasks": [
+        {
+          "id": "TCS-73.T1",
+          "text": "Diseñar contrato futuro de integración predictiva",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-73.T2",
+          "text": "Documentar que el motor no está implementado",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "1edf89014bf637792ed3132ea18349b60ce87fff2ccf6f5d12d3f2770b50e286"
+    },
+    {
+      "key": "TCS-74",
+      "status": "Cerrada",
+      "criteriaCount": 3,
+      "tasks": [
+        {
+          "id": "TCS-74.T1",
+          "text": "Restaurar menú Wi-Fi y formulario móvil",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-74.T2",
+          "text": "Comprobar cambio de red y texto conectado/desconectado",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "70ed67295184d267e9eeec19995de93c7da62d14ea1188ca2abae19388d76e4d"
+    },
+    {
+      "key": "TCS-75",
+      "status": "Finalizada",
+      "criteriaCount": 1,
+      "tasks": [
+        {
+          "id": "TCS-75.T1",
+          "text": "Mantener referencia a TCS-53; revisar tareas y aceptación en la principal",
+          "state": "Consolidada"
+        }
+      ],
+      "descriptionSHA256": "236aa78214c196fd579382c56d5201d75ad69395fa99090fd696168e0f79e1de"
+    },
+    {
+      "key": "TCS-76",
+      "status": "Cerrada",
+      "criteriaCount": 3,
+      "tasks": [
+        {
+          "id": "TCS-76.T1",
+          "text": "Persistir eventos en LittleFS hasta ACK coincidente",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-76.T2",
+          "text": "Registrar reinicio, reconexión y reintentos comprobados por el autor",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-76.T3",
+          "text": "Definir cola de 64 y límites de voz/caché",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "8a3ff438e4f5a51d8fa03812b087c5ed5cea4754e8cc30782c09f370287ee14f"
+    },
+    {
+      "key": "TCS-77",
+      "status": "Tareas por hacer",
+      "criteriaCount": 3,
+      "tasks": [
+        {
+          "id": "TCS-77.T1",
+          "text": "Preparar tareas, métricas y registro de decisión",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-77.T2",
+          "text": "Realizar reunión con profesional y datos ficticios",
+          "state": "Pendiente"
+        },
+        {
+          "id": "TCS-77.T3",
+          "text": "Registrar decisiones por HU y atender observaciones",
+          "state": "Pendiente"
+        }
+      ],
+      "descriptionSHA256": "af5853ad9533a5fbdf5b52a53a9e8725e17e574f0ad281e11602c2b2ae90722c"
+    },
+    {
+      "key": "TCS-79",
+      "status": "Finalizada",
+      "criteriaCount": 1,
+      "tasks": [
+        {
+          "id": "TCS-79.T1",
+          "text": "Mantener referencia a TCS-84; revisar tareas y aceptación en la principal",
+          "state": "Consolidada"
+        }
+      ],
+      "descriptionSHA256": "4c8b57e3618a16b1ba220bae714efde15556b22c7fc44382937c65490d686d3e"
+    },
+    {
+      "key": "TCS-81",
+      "status": "Finalizada",
+      "criteriaCount": 1,
+      "tasks": [
+        {
+          "id": "TCS-81.T1",
+          "text": "Mantener referencia a TCS-53; revisar tareas y aceptación en la principal",
+          "state": "Consolidada"
+        }
+      ],
+      "descriptionSHA256": "879f3738643edd5ccbb693b80f3e8c74fb54a1fb6921f4654d641512c85b2642"
+    },
+    {
+      "key": "TCS-82",
+      "status": "Finalizada",
+      "criteriaCount": 1,
+      "tasks": [
+        {
+          "id": "TCS-82.T1",
+          "text": "Mantener referencia a TCS-85; revisar tareas y aceptación en la principal",
+          "state": "Consolidada"
+        }
+      ],
+      "descriptionSHA256": "b073508a387eeae714d2bab83994c1b9ebd101f32a88129b5a92dcc597411440"
+    },
+    {
+      "key": "TCS-83",
+      "status": "En curso",
+      "criteriaCount": 3,
+      "tasks": [
+        {
+          "id": "TCS-83.T1",
+          "text": "Implementar filtros globales y CSV autorizado",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-83.T2",
+          "text": "Comprobar permisos, límites y descarga en dos motores",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-83.T3",
+          "text": "Aplicar migración revisada y publicar el candidato final",
+          "state": "Pendiente"
+        }
+      ],
+      "descriptionSHA256": "d4415dda0dc8f4bf2473df77e5dc3c5e6d537d4c1a57e3e7ad304c51ca8a649c"
+    },
+    {
+      "key": "TCS-84",
+      "status": "Cerrada",
+      "criteriaCount": 4,
+      "tasks": [
+        {
+          "id": "TCS-84.T1",
+          "text": "Implementar sesiones, activación y revocación",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-84.T2",
+          "text": "Comprobar roles, CSRF, child y ausencia de seeds en login",
+          "state": "Hecha"
+        }
+      ],
+      "descriptionSHA256": "b75530a50bd459a363e5f5f6cb669f3b5bed14580f2908b2d36bf9e184dbbb31"
+    },
+    {
+      "key": "TCS-85",
+      "status": "En curso",
+      "criteriaCount": 3,
+      "tasks": [
+        {
+          "id": "TCS-85.T1",
+          "text": "Corregir foco, contraste, sesión y consultas al salir",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-85.T2",
+          "text": "Comprobar Chromium, WebKit y recorrido Safari informado",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-85.T3",
+          "text": "Revisar claridad de uso con el profesional",
+          "state": "Pendiente"
+        },
+        {
+          "id": "TCS-85.T4",
+          "text": "Publicar y comprobar los cambios finales",
+          "state": "Pendiente"
+        },
+        {
+          "id": "TCS-85.T5",
+          "text": "Comprobar y presentar atribuciones de los recursos en la interfaz publicada",
+          "state": "Pendiente"
+        }
+      ],
+      "descriptionSHA256": "8c5b2fe45044d93ac7d1b08f09ac6992f37f27cb4b42b341bab5a6db0b81a029"
+    },
+    {
+      "key": "TCS-86",
+      "status": "Finalizada",
+      "criteriaCount": 1,
+      "tasks": [
+        {
+          "id": "TCS-86.T1",
+          "text": "Mantener referencia a TCS-88; revisar tareas y aceptación en la principal",
+          "state": "Consolidada"
+        }
+      ],
+      "descriptionSHA256": "6782675d9fa9aab5fec154ee9ddf169e613732f0a429782bbf0dc40e69f3dbb9"
+    },
+    {
+      "key": "TCS-87",
+      "status": "Finalizada",
+      "criteriaCount": 1,
+      "tasks": [
+        {
+          "id": "TCS-87.T1",
+          "text": "Mantener referencia a TCS-77; revisar tareas y aceptación en la principal",
+          "state": "Consolidada"
+        }
+      ],
+      "descriptionSHA256": "dd656fe722d14e9114f06e40463dc3ab34455ec933b07ec66cd620d374a621bb"
+    },
+    {
+      "key": "TCS-88",
+      "status": "En curso",
+      "criteriaCount": 3,
+      "tasks": [
+        {
+          "id": "TCS-88.T1",
+          "text": "Conservar reportes reproducibles y recuperación sintética",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-88.T2",
+          "text": "Preparar ficha de avance, DoD y plan de cierre",
+          "state": "Hecha"
+        },
+        {
+          "id": "TCS-88.T3",
+          "text": "Ejecutar CI, verificar despliegue y crear tag final",
+          "state": "Pendiente"
+        }
+      ],
+      "descriptionSHA256": "1fde3567ee66ce05ed10a52fe886b2dc672bf2db2af15571695b8091a92e5131"
+    }
+  ],
+  "followUp": {
+    "date": "2026-11-18",
+    "changes": {
+      "TCS-59.T3": "Hecha; PC-02",
+      "TCS-60.T2": "Hecha; PC-01 LAN, KPI histórico no garantizado"
+    },
+    "evidence": "../pruebas/reportes/esp-20261118/README.md"
+  }
+}

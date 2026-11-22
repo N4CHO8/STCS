@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { resetLoginLimits } from "./reset-login-limits.mjs";
 
 const fixture = JSON.parse(
   readFileSync(process.env.STCS_E2E_FIXTURE_FILE, "utf8"),
@@ -12,7 +13,8 @@ test.beforeAll(async ({ request }) => {
     "127.0.0.1:55432/stcs_release_tests",
   );
 });
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page, request }) => {
+  await resetLoginLimits(request, fixture.accounts);
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("console", (message) => {
@@ -30,7 +32,10 @@ test.afterEach(async ({ page }) => {
   expect(page.__criticalErrors).toEqual([]);
 });
 async function login(page, role = "therapist") {
-  await page.goto("/login");
+  if (!/\/login$/.test(page.url())) await page.goto("/login");
+  await expect(
+    page.getByRole("heading", { name: "Iniciar sesion", exact: true }),
+  ).toBeVisible();
   await page
     .getByLabel("Correo electronico", { exact: true })
     .fill(fixture.accounts[role]);
@@ -39,7 +44,236 @@ async function login(page, role = "therapist") {
   await expect(
     page.getByRole("button", { name: "Cerrar sesión", exact: true }),
   ).toBeVisible();
+  const identity = await page.request.get("/api/auth/me");
+  expect((await identity.json()).user.role).toBe(role);
 }
+
+test("CP-RF03-ARASAAC: public credits and complete catalog images without unreviewed choices", async ({
+  page,
+}) => {
+  await page.goto("/login");
+  await page
+    .getByRole("link", { name: "Créditos de imágenes", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Créditos de los recursos gráficos" }),
+  ).toBeVisible();
+  await expect(page.getByText(/Autor: Sergio Palao/)).toBeVisible();
+  const registry = await page.request.get("/pictograms/ARASAAC-CATALOG.json");
+  expect(registry.ok()).toBe(true);
+  const manifest = await registry.json();
+  expect(manifest.items).toHaveLength(91);
+  await login(page);
+  await expect(
+    page.getByRole("link", { name: "Créditos de imágenes", exact: true }),
+  ).toBeVisible();
+  await page
+    .getByLabel("Seleccionar niño asignado")
+    .selectOption(fixture.profiles[0]);
+  await page.getByRole("button", { name: "Comunicación", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Agregar", exact: true })
+    .first()
+    .click();
+  const dialog = page.getByRole("dialog");
+  for (const category of ["Necesidades", "Emociones", "Acciones", "Lugares"]) {
+    await dialog
+      .getByRole("combobox", { name: "Categoria", exact: true })
+      .selectOption(category);
+    const choices = dialog.getByRole("button", { name: /^Usar imagen / });
+    expect(await choices.count()).toBe(
+      manifest.items.filter((a) => a.category === category).length,
+    );
+    await expect
+      .poll(() =>
+        choices
+          .locator("img")
+          .evaluateAll((images) =>
+            images.every(
+              (image) =>
+                image.complete &&
+                image.naturalWidth === 96 &&
+                image.naturalHeight === 96,
+            ),
+          ),
+      )
+      .toBe(true);
+  }
+  await dialog
+    .getByRole("combobox", { name: "Categoria", exact: true })
+    .selectOption("Emociones");
+  for (const label of ["Inseguridad", "Frustración", "Entusiasmo"]) {
+    await expect(
+      dialog.getByRole("button", { name: `Usar imagen ${label}`, exact: true }),
+    ).toHaveCount(0);
+  }
+  await dialog.getByRole("button", { name: "Cerrar", exact: true }).click();
+});
+
+test("CP-ADAPT-E01: specialist selects visible categories, persists and restores the catalog", async ({
+  page,
+}) => {
+  await login(page);
+  await page
+    .getByLabel("Seleccionar niño asignado")
+    .selectOption(fixture.profiles[0]);
+  await page.getByRole("button", { name: "Comunicación", exact: true }).click();
+  const settings = page.getByRole("group", {
+    name: "Categorías y pictogramas visibles",
+  });
+  await expect(settings).toBeVisible();
+  const target = `/api/stcs/pictograms?profileId=${fixture.profiles[0]}`;
+  const created = await page.request.post(target, {
+    headers: { Origin: "http://127.0.0.1:3400" },
+    data: {
+      label: "Opción adaptable",
+      message: "Estoy feliz",
+      category: "Emociones",
+      colorTone: "yellow",
+      iconName: "Smile",
+      imagePath: "/pictograms/happy.png",
+      position: 2,
+    },
+  });
+  expect(created.status()).toBe(201);
+  const id = (await created.json()).data.id;
+  try {
+    await page.reload();
+    await page
+      .getByRole("button", { name: "Comunicación", exact: true })
+      .click();
+    await settings.getByLabel("Emociones (1/1)", { exact: true }).uncheck();
+    const save = page.getByRole("button", {
+      name: "Guardar selección del ESP",
+      exact: true,
+    });
+    const saved = page.waitForResponse(
+      (r) =>
+        r.url().endsWith("/api/stcs/portal") && r.request().method() === "POST",
+    );
+    await save.click();
+    expect((await saved).ok()).toBe(true);
+    await page.reload();
+    await page
+      .getByRole("button", { name: "Comunicación", exact: true })
+      .click();
+    await expect(
+      settings.getByLabel("Emociones (0/1)", { exact: true }),
+    ).not.toBeChecked();
+    await expect(
+      page.getByText("Opción adaptable", { exact: true }),
+    ).toBeVisible();
+    await settings.getByLabel(/Necesidades \(/).uncheck();
+    await expect(save).toBeDisabled();
+    const restored = page.waitForResponse(
+      (r) =>
+        r.url().endsWith("/api/stcs/portal") && r.request().method() === "POST",
+    );
+    await page
+      .getByRole("button", { name: "Mostrar todo el catálogo", exact: true })
+      .click();
+    expect((await restored).ok()).toBe(true);
+    await page.reload();
+    await page
+      .getByRole("button", { name: "Comunicación", exact: true })
+      .click();
+    await expect(
+      settings.getByLabel("Emociones (1/1)", { exact: true }),
+    ).toBeChecked();
+  } finally {
+    await page.request.post("/api/stcs/portal", {
+      headers: { Origin: "http://127.0.0.1:3400" },
+      data: {
+        action: "boardSelection",
+        profileId: fixture.profiles[0],
+        selection: null,
+      },
+    });
+    await page.request.delete(
+      `/api/stcs/pictograms/${id}?profileId=${fixture.profiles[0]}`,
+      {
+        headers: { Origin: "http://127.0.0.1:3400" },
+      },
+    );
+  }
+});
+
+test("CP-ADAPT-E02: teacher sees selection information without specialist controls", async ({
+  page,
+}) => {
+  await login(page, "teacher");
+  await page.getByRole("button", { name: "Comunicación", exact: true }).click();
+  await expect(
+    page.getByText("Tablero visible en el ESP", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", {
+      name: "Guardar selección del ESP",
+      exact: true,
+    }),
+  ).toHaveCount(0);
+});
+
+test("CP-FOLLOW-E01: specialist start date and teacher observation persist with role boundaries", async ({
+  page,
+}) => {
+  await login(page);
+  await page
+    .getByLabel("Seleccionar niño asignado")
+    .selectOption(fixture.profiles[0]);
+  await page
+    .getByRole("button", { name: "Ficha del niño", exact: true })
+    .click();
+  await page.getByLabel("Fecha de inicio", { exact: true }).fill("2020-01-02");
+  await page
+    .getByRole("button", { name: "Guardar fecha de inicio", exact: true })
+    .click();
+  await expect(page.getByLabel("Fecha de inicio", { exact: true })).toHaveValue(
+    "2020-01-02",
+  );
+  await page.reload();
+  await page
+    .getByRole("button", { name: "Ficha del niño", exact: true })
+    .click();
+  await expect(page.getByLabel("Fecha de inicio", { exact: true })).toHaveValue(
+    "2020-01-02",
+  );
+  await page
+    .getByRole("button", { name: "Cerrar sesión", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/login$/);
+  await login(page, "teacher");
+  await page
+    .getByRole("button", { name: "Orientaciones", exact: true })
+    .click();
+  const text = "Observación E2E de comunicación: pidió agua con apoyo visual.";
+  await page
+    .getByLabel("Observación para el especialista", { exact: true })
+    .fill(text);
+  await page
+    .getByRole("button", { name: "Enviar observación", exact: true })
+    .click();
+  await expect(page.getByText(text, { exact: true })).toBeVisible();
+  await expect(
+    page.getByText("DIAGNOSTICO_PRIVADO", { exact: true }),
+  ).toHaveCount(0);
+  await page
+    .getByRole("button", { name: "Cerrar sesión", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/login$/);
+  await login(page);
+  await page
+    .getByLabel("Seleccionar niño asignado")
+    .selectOption(fixture.profiles[0]);
+  await page
+    .getByRole("button", { name: "Informes y orientaciones", exact: true })
+    .click();
+  await expect(page.getByText(text, { exact: true })).toBeVisible();
+  await page
+    .getByLabel("Seleccionar niño asignado")
+    .selectOption(fixture.profiles[1]);
+  await expect(page.getByText(text, { exact: true })).toHaveCount(0);
+});
 test("CP-RF01-E01: direct URL requires login and invalid credentials show an error", async ({
   page,
 }) => {
@@ -88,6 +322,9 @@ test("CP-RF03-E01: create, persist, edit and reject a duplicate through the brow
     .click();
   await dialog.getByRole("button", { name: "Guardar", exact: true }).click();
   await expect(dialog).toHaveCount(0);
+  await expect(page.getByText("Consultando voz…", { exact: true })).toHaveCount(
+    0,
+  );
   await page.reload();
   await page.getByRole("button", { name: "Comunicación", exact: true }).click();
   await page
@@ -162,6 +399,9 @@ test("CP-RF03-E02: invalid upload is rejected and a valid image persists", async
   ).toBeVisible();
   await dialog.getByRole("button", { name: "Guardar", exact: true }).click();
   await expect(dialog).toHaveCount(0);
+  await expect(page.getByText("Consultando voz…", { exact: true })).toHaveCount(
+    0,
+  );
   await page.reload();
   await page.getByRole("button", { name: "Comunicación", exact: true }).click();
   await page
@@ -309,10 +549,19 @@ test("CP-RNF03-E02: mobile navigation fits and logout prevents returning to priv
       () => document.documentElement.scrollWidth <= window.innerWidth,
     ),
   ).toBe(true);
+  const signedOutCheck = page.waitForResponse(
+    (response) =>
+      new URL(response.url()).pathname === "/api/auth/me" &&
+      response.status() === 401,
+  );
   await page
     .getByRole("button", { name: "Cerrar sesión", exact: true })
     .click();
+  await signedOutCheck;
   await expect(page).toHaveURL(/\/login$/);
+  await expect(
+    page.getByRole("heading", { name: "Iniciar sesion", exact: true }),
+  ).toBeVisible();
   await page.goto("/");
   await expect(page).toHaveURL(/\/login$/);
 });

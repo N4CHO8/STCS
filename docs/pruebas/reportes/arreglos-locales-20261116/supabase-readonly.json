@@ -1,0 +1,78 @@
+{
+  "generatedAt": "2026-11-16T22:30:53.491Z",
+  "project": "mvdjzjwidygmhvhfcpgg",
+  "scope": "Anonymous Data API GET of identifier columns only; no real identities selected, no writes",
+  "passed": true,
+  "checks": [
+    {
+      "table": "users",
+      "status": 200,
+      "result": "zero rows"
+    },
+    {
+      "table": "student_profiles",
+      "status": 200,
+      "result": "zero rows"
+    },
+    {
+      "table": "devices",
+      "status": 200,
+      "result": "zero rows"
+    },
+    {
+      "table": "device_events",
+      "status": 200,
+      "result": "zero rows"
+    },
+    {
+      "table": "pictograms",
+      "status": 200,
+      "result": "zero rows"
+    },
+    {
+      "table": "user_access",
+      "status": 200,
+      "result": "zero rows"
+    },
+    {
+      "table": "specialist_reports",
+      "status": 401,
+      "result": "permission denied"
+    },
+    {
+      "table": "app_sessions",
+      "status": 401,
+      "result": "permission denied"
+    },
+    {
+      "table": "app_rate_limits",
+      "status": 401,
+      "result": "permission denied"
+    },
+    {
+      "table": "app_settings",
+      "status": 401,
+      "result": "permission denied"
+    },
+    {
+      "table": "pictogram_images",
+      "status": 401,
+      "result": "permission denied"
+    },
+    {
+      "table": "phrase_audio",
+      "status": 401,
+      "result": "permission denied"
+    },
+    {
+      "table": "records",
+      "status": 401,
+      "result": "permission denied"
+    },
+    {
+      "table": "emotions",
+      "status": 401,
+      "result": "permission denied"
+    }
+  ]
+}

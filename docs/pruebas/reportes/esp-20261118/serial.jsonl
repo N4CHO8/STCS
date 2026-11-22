@@ -1,0 +1,234 @@
+{"time": 1795020533364, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=85340|psram=8061712|laSTCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=85192|psram=8061692|largest=7995380"}
+{"time": 1795020536050, "line": "STCS_SYNC|state=error|http=-1|wifi=3|errno=9|largest=40948"}
+{"time": 1795020548365, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=85192|psram=8061692|largest=7995380"}
+{"time": 1795020551359, "line": "STCS_SYNC|state=error|http=-1|wifi=3|errno=9|largest=40948"}
+{"time": 1795020563368, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=84956|psram=8061692|largest=7995380"}
+{"time": 1795020563372, "line": "STCS_NET|ip=192.168.1.86|gateway=192.168.1.1|rssi=-64"}
+{"time": 1795020563973, "line": "STCS_CACHE|bytes=474217|files=13|budget=524288|free=303104"}
+{"time": 1795020565021, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020568152, "line": "STCS_MEDIA|http=200|declared=-1|received=18432|result=18432|valid=1"}
+{"time": 1795020568770, "line": "STCS_CACHE|bytes=492649|files=14|budget=524288|free=282624"}
+{"time": 1795020570615, "line": "STCS_MEDIA|http=200|declared=-1|received=18432|result=18432|valid=1"}
+{"time": 1795020571297, "line": "STCS_CACHE|bytes=511081|files=15|budget=524288|free=262144"}
+{"time": 1795020573070, "line": "STCS_MEDIA|http=200|declared=-1|received=18432|result=18432|valid=1"}
+{"time": 1795020573585, "line": "STCS_CACHE|bytes=477827|files=15|budget=524288|free=294912"}
+{"time": 1795020574842, "line": "STCS_MEDIA|http=200|declared=-1|received=18432|result=18432|valid=1"}
+{"time": 1795020575428, "line": "STCS_CACHE|bytes=496259|files=16|budget=524288|free=274432"}
+{"time": 1795020576340, "line": "STCS_ATLAS|state=open|images=4|bytes=9662"}
+{"time": 1795020576432, "line": "STCS_ATLAS|state=saved|images=4|bytes=9662|duration_ms=917"}
+{"time": 1795020576439, "line": "STCS_SYNC|state=ready|firmware=v0.8.6-pc18-lab|pictograms=4|images=4|ram_copied=0|duration_ms=9621|min_psram=7887800"}
+{"time": 1795020576540, "line": "STCS_PROBE|label=Agua|audio=1|image=1|ms=73181"}
+{"time": 1795020576542, "line": "STCS_BOARD|pictograms=4|images=4|needs=1|emotions=1|actions=1|places=1"}
+{"time": 1795020576543, "line": "DEVICE_EVENT|type=board_applied|pictograms=4"}
+{"time": 1795020577567, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020578370, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=84840|psram=7987900|largest=7864308"}
+{"time": 1795020584000, "line": "STCS_MEDIA|http=200|declared=-1|received=18432|result=18432|valid=1"}
+{"time": 1795020584697, "line": "STCS_CACHE|bytes=350276|files=17|budget=524288|free=450560"}
+{"time": 1795020585728, "line": "STCS_ATLAS|state=open|images=4|bytes=8230"}
+{"time": 1795020585848, "line": "STCS_ATLAS|state=saved|images=4|bytes=8230|duration_ms=1052"}
+{"time": 1795020585852, "line": "STCS_SYNC|state=ready|firmware=v0.8.6-pc18-lab|pictograms=4|images=4|ram_copied=3|duration_ms=3579|min_psram=7813956"}
+{"time": 1795020585972, "line": "STCS_PROBE|label=Frio 1|audio=1|image=1|ms=82614"}
+{"time": 1795020585974, "line": "STCS_BOARD|pictograms=4|images=4|needs=1|emotions=1|actions=1|places=1"}
+{"time": 1795020585975, "line": "DEVICE_EVENT|type=board_applied|pictograms=4"}
+{"time": 1795020586576, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020593378, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=84848|psram=7987900|largest=7864308"}
+{"time": 1795020608382, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=84848|psram=7987900|largest=7864308"}
+{"time": 1795020622713, "line": "DEVICE_EVENT|type=category_opened|category=Necesidades"}
+{"time": 1795020622833, "line": "STCS_PAGE|page=1|pages=1|items=1|heap=82532|psram=7987932"}
+{"time": 1795020623380, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=36424|psram=7986000|largest=7864308"}
+{"time": 1795020623636, "line": "DEVICE_EVENT|type=pictogram_selected|category=Necesidades|pictogram=Frio 1|phrase_count=1"}
+{"time": 1795020623945, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020623946, "line": "STCS_NET|ip=192.168.1.86|gateway=192.168.1.1|rssi=-59"}
+{"time": 1795020624772, "line": "STCS_CACHE|bytes=348844|files=17|budget=524288|free=450560"}
+{"time": 1795020625402, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020626030, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020627167, "line": "DEVICE_EVENT|type=audio_requested|items=1"}
+{"time": 1795020630273, "line": "STCS_MEDIA|http=200|declared=-1|received=62830|result=62830|valid=1"}
+{"time": 1795020630344, "line": "DEVICE_EVENT|type=audio_started|pictogram=Frio 1|path=/v7cache/8769d52e25ed5f362968296375122640d7979839a980d64f071a42f4b05ed356.wav|position=1"}
+{"time": 1795020630387, "line": "AUDIO_INFO|PSRAM found, inputBufferSize: 638965 bytes"}
+{"time": 1795020630389, "line": "AUDIO_INFO|buffers freed, free Heap: 81772 bytes"}
+{"time": 1795020630427, "line": "AUDIO_INFO|Reading file: \"/v7cache/8769d52e25ed5f362968296375122640d7979839a980d64f071a42f4b05ed356.wav\""}
+{"time": 1795020630613, "line": "AUDIO_INFO|FormatCode: 1"}
+{"time": 1795020630614, "line": "AUDIO_INFO|DataRate: 32000"}
+{"time": 1795020630615, "line": "AUDIO_INFO|DataBlockSize: 2"}
+{"time": 1795020630616, "line": "AUDIO_INFO|BitsPerSample: 16"}
+{"time": 1795020630619, "line": "AUDIO_INFO|Audio-Length: 62742"}
+{"time": 1795020630622, "line": "AUDIO_INFO|stream ready"}
+{"time": 1795020630623, "line": "AUDIO_INFO|syncword found at pos 0"}
+{"time": 1795020630625, "line": "AUDIO_INFO|Channels: 1"}
+{"time": 1795020630626, "line": "AUDIO_INFO|SampleRate: 16000"}
+{"time": 1795020630627, "line": "AUDIO_INFO|BitsPerSample: 16"}
+{"time": 1795020630630, "line": "AUDIO_INFO|BitRate: 256000"}
+{"time": 1795020630943, "line": "STCS_CACHE|bytes=411674|files=18|budget=524288|free=385024"}
+{"time": 1795020630944, "line": "STCS_MEDIA|state=audio_ready"}
+{"time": 1795020631369, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020632690, "line": "AUDIO_INFO|Closing audio file \"8769d52e25ed5f362968296375122640d7979839a980d64f071a42f4b05ed356.wav\""}
+{"time": 1795020632693, "line": "AUDIO_EOF|8769d52e25ed5f362968296375122640d7979839a980d64f071a42f4b05ed356.wav"}
+{"time": 1795020632702, "line": "AUDIO_INFO|End of file \"8769d52e25ed5f362968296375122640d7979839a980d64f071a42f4b05ed356.wav\""}
+{"time": 1795020632906, "line": "DEVICE_EVENT|type=audio_completed|items=1"}
+{"time": 1795020637669, "line": "DEVICE_EVENT|type=phrase_cleared"}
+{"time": 1795020637808, "line": "STCS_PAGE|page=1|pages=1|items=1|heap=81948|psram=7331860"}
+{"time": 1795020638351, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020638383, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86556|psram=7332532|largest=7208948"}
+{"time": 1795020653384, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86604|psram=7332564|largest=7208948"}
+{"time": 1795020659178, "line": "STCS_MEDIA|http=200|declared=-1|received=18432|result=18432|valid=1"}
+{"time": 1795020659819, "line": "STCS_CACHE|bytes=430106|files=19|budget=524288|free=364544"}
+{"time": 1795020660793, "line": "STCS_ATLAS|state=open|images=4|bytes=8308"}
+{"time": 1795020660887, "line": "STCS_ATLAS|state=saved|images=4|bytes=8308|duration_ms=976"}
+{"time": 1795020660893, "line": "STCS_SYNC|state=ready|firmware=v0.8.6-pc18-lab|pictograms=4|images=4|ram_copied=3|duration_ms=3652|min_psram=7158628"}
+{"time": 1795020660963, "line": "STCS_PAGE|page=1|pages=1|items=1|heap=79096|psram=7323028"}
+{"time": 1795020660965, "line": "STCS_PROBE|label=Frio 2|audio=1|image=1|ms=157608"}
+{"time": 1795020660969, "line": "STCS_BOARD|pictograms=4|images=4|needs=1|emotions=1|actions=1|places=1"}
+{"time": 1795020660973, "line": "DEVICE_EVENT|type=board_applied|pictograms=4"}
+{"time": 1795020661533, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020668386, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86612|psram=7332564|largest=7077876"}
+{"time": 1795020683387, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86564|psram=7332564|largest=7077876"}
+{"time": 1795020683974, "line": "STCS_NET|ip=192.168.1.86|gateway=192.168.1.1|rssi=-60"}
+{"time": 1795020684739, "line": "STCS_CACHE|bytes=430184|files=19|budget=524288|free=364544"}
+{"time": 1795020685745, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020698391, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86612|psram=7332564|largest=7077876"}
+{"time": 1795020713393, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=85820|psram=7332564|largest=7077876"}
+{"time": 1795020713405, "line": "DEVICE_EVENT|type=pictogram_selected|category=Necesidades|pictogram=Frio 2|phrase_count=1"}
+{"time": 1795020714322, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020717119, "line": "DEVICE_EVENT|type=audio_requested|items=1"}
+{"time": 1795020720644, "line": "STCS_MEDIA|http=200|declared=-1|received=64316|result=64316|valid=1"}
+{"time": 1795020720686, "line": "DEVICE_EVENT|type=audio_started|pictogram=Frio 2|path=/v7cache/5f59221cacd358c5ce4f041cbf5c0bab3a8adb455e5d26c346de7921615b3914.wav|position=1"}
+{"time": 1795020720688, "line": "AUDIO_INFO|buffers freed, free Heap: 82920 bytes"}
+{"time": 1795020720739, "line": "AUDIO_INFO|Reading file: \"/v7cache/5f59221cacd358c5ce4f041cbf5c0bab3a8adb455e5d26c346de7921615b3914.wav\""}
+{"time": 1795020720960, "line": "AUDIO_INFO|FormatCode: 1"}
+{"time": 1795020720960, "line": "AUDIO_INFO|DataRate: 32000"}
+{"time": 1795020720961, "line": "AUDIO_INFO|DataBlockSize: 2"}
+{"time": 1795020720962, "line": "AUDIO_INFO|BitsPerSample: 16"}
+{"time": 1795020720967, "line": "AUDIO_INFO|Audio-Length: 64228"}
+{"time": 1795020720970, "line": "AUDIO_INFO|stream ready"}
+{"time": 1795020720971, "line": "AUDIO_INFO|syncword found at pos 0"}
+{"time": 1795020720972, "line": "AUDIO_INFO|Channels: 1"}
+{"time": 1795020720973, "line": "AUDIO_INFO|SampleRate: 16000"}
+{"time": 1795020720974, "line": "AUDIO_INFO|BitsPerSample: 16"}
+{"time": 1795020720976, "line": "AUDIO_INFO|BitRate: 256000"}
+{"time": 1795020721569, "line": "STCS_CACHE|bytes=494500|files=20|budget=524288|free=299008"}
+{"time": 1795020721571, "line": "STCS_MEDIA|state=audio_ready"}
+{"time": 1795020722249, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020723037, "line": "AUDIO_INFO|Closing audio file \"5f59221cacd358c5ce4f041cbf5c0bab3a8adb455e5d26c346de7921615b3914.wav\""}
+{"time": 1795020723041, "line": "AUDIO_EOF|5f59221cacd358c5ce4f041cbf5c0bab3a8adb455e5d26c346de7921615b3914.wav"}
+{"time": 1795020723048, "line": "AUDIO_INFO|End of file \"5f59221cacd358c5ce4f041cbf5c0bab3a8adb455e5d26c346de7921615b3914.wav\""}
+{"time": 1795020723253, "line": "DEVICE_EVENT|type=audio_completed|items=1"}
+{"time": 1795020726970, "line": "DEVICE_EVENT|type=phrase_cleared"}
+{"time": 1795020727066, "line": "STCS_PAGE|page=1|pages=1|items=1|heap=85540|psram=7332564"}
+{"time": 1795020727486, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020728394, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86624|psram=7332564|largest=7077876"}
+{"time": 1795020743397, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86624|psram=7332564|largest=7077876"}
+{"time": 1795020744019, "line": "STCS_NET|ip=192.168.1.86|gateway=192.168.1.1|rssi=-63"}
+{"time": 1795020744876, "line": "STCS_CACHE|bytes=494500|files=20|budget=524288|free=299008"}
+{"time": 1795020745774, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020749123, "line": "STCS_MEDIA|http=200|declared=-1|received=18432|result=18432|valid=1"}
+{"time": 1795020750015, "line": "STCS_CACHE|bytes=512932|files=21|budget=524288|free=278528"}
+{"time": 1795020751642, "line": "STCS_ATLAS|state=open|images=4|bytes=8302"}
+{"time": 1795020751720, "line": "STCS_ATLAS|state=saved|images=4|bytes=8302|duration_ms=1599"}
+{"time": 1795020751724, "line": "STCS_SYNC|state=ready|firmware=v0.8.6-pc18-lab|pictograms=4|images=4|ram_copied=3|duration_ms=4171|min_psram=7158628"}
+{"time": 1795020751791, "line": "STCS_PAGE|page=1|pages=1|items=1|heap=84128|psram=7323020"}
+{"time": 1795020751793, "line": "STCS_PROBE|label=Frio 3|audio=1|image=1|ms=248438"}
+{"time": 1795020751796, "line": "STCS_BOARD|pictograms=4|images=4|needs=1|emotions=1|actions=1|places=1"}
+{"time": 1795020751799, "line": "DEVICE_EVENT|type=board_applied|pictograms=4"}
+{"time": 1795020752629, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020758402, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86612|psram=7332564|largest=7208948"}
+{"time": 1795020773407, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86612|psram=7332564|largest=7208948"}
+{"time": 1795020788411, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86612|psram=7332564|largest=7208948"}
+{"time": 1795020796074, "line": "DEVICE_EVENT|type=pictogram_selected|category=Necesidades|pictogram=Frio 3|phrase_count=1"}
+{"time": 1795020796635, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020796641, "line": "DEVICE_EVENT|type=audio_requested|items=1"}
+{"time": 1795020801867, "line": "STCS_MEDIA|http=200|declared=-1|received=65432|result=65432|valid=1"}
+{"time": 1795020801905, "line": "DEVICE_EVENT|type=audio_started|pictogram=Frio 3|path=/v7cache/de3a1ae8390e86612696781a87ea9c727a1088391f7b889b826043c5f2ed5622.wav|position=1"}
+{"time": 1795020801906, "line": "AUDIO_INFO|buffers freed, free Heap: 82924 bytes"}
+{"time": 1795020801968, "line": "AUDIO_INFO|Reading file: \"/v7cache/de3a1ae8390e86612696781a87ea9c727a1088391f7b889b826043c5f2ed5622.wav\""}
+{"time": 1795020802174, "line": "AUDIO_INFO|FormatCode: 1"}
+{"time": 1795020802175, "line": "AUDIO_INFO|DataRate: 32000"}
+{"time": 1795020802176, "line": "AUDIO_INFO|DataBlockSize: 2"}
+{"time": 1795020802177, "line": "AUDIO_INFO|BitsPerSample: 16"}
+{"time": 1795020802180, "line": "AUDIO_INFO|Audio-Length: 65344"}
+{"time": 1795020802184, "line": "AUDIO_INFO|stream ready"}
+{"time": 1795020802185, "line": "AUDIO_INFO|syncword found at pos 0"}
+{"time": 1795020802186, "line": "AUDIO_INFO|Channels: 1"}
+{"time": 1795020802187, "line": "AUDIO_INFO|SampleRate: 16000"}
+{"time": 1795020802188, "line": "AUDIO_INFO|BitsPerSample: 16"}
+{"time": 1795020802191, "line": "AUDIO_INFO|BitRate: 256000"}
+{"time": 1795020802728, "line": "STCS_CACHE|bytes=502068|files=19|budget=524288|free=294912"}
+{"time": 1795020802730, "line": "STCS_MEDIA|state=audio_ready"}
+{"time": 1795020803413, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=27700|psram=7327480|largest=7208948"}
+{"time": 1795020803603, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020804043, "line": "STCS_NET|ip=192.168.1.86|gateway=192.168.1.1|rssi=-64"}
+{"time": 1795020804252, "line": "AUDIO_INFO|Closing audio file \"de3a1ae8390e86612696781a87ea9c727a1088391f7b889b826043c5f2ed5622.wav\""}
+{"time": 1795020804265, "line": "AUDIO_EOF|de3a1ae8390e86612696781a87ea9c727a1088391f7b889b826043c5f2ed5622.wav"}
+{"time": 1795020804270, "line": "AUDIO_INFO|End of file \"de3a1ae8390e86612696781a87ea9c727a1088391f7b889b826043c5f2ed5622.wav\""}
+{"time": 1795020804476, "line": "DEVICE_EVENT|type=audio_completed|items=1"}
+{"time": 1795020804838, "line": "STCS_CACHE|bytes=502068|files=19|budget=524288|free=294912"}
+{"time": 1795020805715, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020812561, "line": "DEVICE_EVENT|type=phrase_cleared"}
+{"time": 1795020812709, "line": "STCS_PAGE|page=1|pages=1|items=1|heap=81936|psram=7331860"}
+{"time": 1795020813414, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020818415, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86612|psram=7332564|largest=7208948"}
+{"time": 1795020833416, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86612|psram=7332564|largest=7208948"}
+{"time": 1795020839555, "line": "STCS_ATLAS|state=open|images=4|bytes=8230"}
+{"time": 1795020839670, "line": "STCS_ATLAS|state=saved|images=4|bytes=8230|duration_ms=1080"}
+{"time": 1795020839676, "line": "STCS_SYNC|state=ready|firmware=v0.8.6-pc18-lab|pictograms=4|images=4|ram_copied=3|duration_ms=1234|min_psram=7158628"}
+{"time": 1795020839752, "line": "STCS_PAGE|page=1|pages=1|items=1|heap=84084|psram=7323028"}
+{"time": 1795020839754, "line": "STCS_PROBE|label=Cache 1|audio=1|image=1|ms=336398"}
+{"time": 1795020839756, "line": "STCS_BOARD|pictograms=4|images=4|needs=1|emotions=1|actions=1|places=1"}
+{"time": 1795020839758, "line": "DEVICE_EVENT|type=board_applied|pictograms=4"}
+{"time": 1795020840458, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020848421, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86632|psram=7332564|largest=7077876"}
+{"time": 1795020863427, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86632|psram=7332564|largest=7077876"}
+{"time": 1795020864076, "line": "STCS_NET|ip=192.168.1.86|gateway=192.168.1.1|rssi=-63"}
+{"time": 1795020864924, "line": "STCS_CACHE|bytes=501996|files=19|budget=524288|free=294912"}
+{"time": 1795020865956, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020868803, "line": "STCS_ATLAS|state=open|images=4|bytes=8308"}
+{"time": 1795020868932, "line": "STCS_ATLAS|state=saved|images=4|bytes=8308|duration_ms=1157"}
+{"time": 1795020868938, "line": "STCS_SYNC|state=ready|firmware=v0.8.6-pc18-lab|pictograms=4|images=4|ram_copied=3|duration_ms=1313|min_psram=7158628"}
+{"time": 1795020869009, "line": "STCS_PAGE|page=1|pages=1|items=1|heap=79212|psram=7323020"}
+{"time": 1795020869010, "line": "STCS_PROBE|label=Cache 2|audio=1|image=1|ms=365656"}
+{"time": 1795020869012, "line": "STCS_BOARD|pictograms=4|images=4|needs=1|emotions=1|actions=1|places=1"}
+{"time": 1795020869016, "line": "DEVICE_EVENT|type=board_applied|pictograms=4"}
+{"time": 1795020870201, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020878429, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86680|psram=7332564|largest=7077876"}
+{"time": 1795020893430, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86632|psram=7332564|largest=7077876"}
+{"time": 1795020899206, "line": "STCS_ATLAS|state=open|images=4|bytes=8302"}
+{"time": 1795020899287, "line": "STCS_ATLAS|state=saved|images=4|bytes=8302|duration_ms=1430"}
+{"time": 1795020899292, "line": "STCS_SYNC|state=ready|firmware=v0.8.6-pc18-lab|pictograms=4|images=4|ram_copied=3|duration_ms=1584|min_psram=7158628"}
+{"time": 1795020899362, "line": "STCS_PAGE|page=1|pages=1|items=1|heap=84088|psram=7323028"}
+{"time": 1795020899363, "line": "STCS_PROBE|label=Cache 3|audio=1|image=1|ms=396010"}
+{"time": 1795020899366, "line": "STCS_BOARD|pictograms=4|images=4|needs=1|emotions=1|actions=1|places=1"}
+{"time": 1795020899370, "line": "DEVICE_EVENT|type=board_applied|pictograms=4"}
+{"time": 1795020900043, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020908434, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86620|psram=7332564|largest=7077876"}
+{"time": 1795020923434, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86380|psram=7332564|largest=7077876"}
+{"time": 1795020924088, "line": "STCS_NET|ip=192.168.1.86|gateway=192.168.1.1|rssi=-63"}
+{"time": 1795020924789, "line": "STCS_CACHE|bytes=502068|files=19|budget=524288|free=294912"}
+{"time": 1795020925747, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020938438, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86572|psram=7332564|largest=7077876"}
+{"time": 1795020944144, "line": "DEVICE_EVENT|type=pictogram_selected|category=Necesidades|pictogram=Cache 3|phrase_count=1"}
+{"time": 1795020944938, "line": "DEVICE_EVENT|type=audio_requested|items=1"}
+{"time": 1795020945063, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020945069, "line": "DEVICE_EVENT|type=audio_started|pictogram=Cache 3|path=/v7cache/de3a1ae8390e86612696781a87ea9c727a1088391f7b889b826043c5f2ed5622.wav|position=1"}
+{"time": 1795020945073, "line": "AUDIO_INFO|buffers freed, free Heap: 85224 bytes"}
+{"time": 1795020945103, "line": "AUDIO_INFO|Reading file: \"/v7cache/de3a1ae8390e86612696781a87ea9c727a1088391f7b889b826043c5f2ed5622.wav\""}
+{"time": 1795020945168, "line": "AUDIO_INFO|FormatCode: 1"}
+{"time": 1795020945170, "line": "AUDIO_INFO|DataRate: 32000"}
+{"time": 1795020945171, "line": "AUDIO_INFO|DataBlockSize: 2"}
+{"time": 1795020945172, "line": "AUDIO_INFO|BitsPerSample: 16"}
+{"time": 1795020945176, "line": "AUDIO_INFO|Audio-Length: 65344"}
+{"time": 1795020945179, "line": "AUDIO_INFO|stream ready"}
+{"time": 1795020945181, "line": "AUDIO_INFO|syncword found at pos 0"}
+{"time": 1795020945182, "line": "AUDIO_INFO|Channels: 1"}
+{"time": 1795020945183, "line": "AUDIO_INFO|SampleRate: 16000"}
+{"time": 1795020945183, "line": "AUDIO_INFO|BitsPerSample: 16"}
+{"time": 1795020945186, "line": "AUDIO_INFO|BitRate: 256000"}
+{"time": 1795020945909, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020947245, "line": "AUDIO_INFO|Closing audio file \"de3a1ae8390e86612696781a87ea9c727a1088391f7b889b826043c5f2ed5622.wav\""}
+{"time": 1795020947249, "line": "AUDIO_EOF|de3a1ae8390e86612696781a87ea9c727a1088391f7b889b826043c5f2ed5622.wav"}
+{"time": 1795020947258, "line": "AUDIO_INFO|End of file \"de3a1ae8390e86612696781a87ea9c727a1088391f7b889b826043c5f2ed5622.wav\""}
+{"time": 1795020947462, "line": "DEVICE_EVENT|type=audio_completed|items=1"}
+{"time": 1795020951451, "line": "DEVICE_EVENT|type=phrase_cleared"}
+{"time": 1795020951589, "line": "STCS_PAGE|page=1|pages=1|items=1|heap=82112|psram=7331860"}
+{"time": 1795020952295, "line": "STCS_EVENT|http=201|accepted=1"}
+{"time": 1795020953442, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=86536|psram=7332564|largest=7077876"}
+{"time": 1795020968448, "line": "STCS_HEALTH|firmware=v0.8.6-pc18-lab|heap=85968|psram=7332564|largest=7077876"}

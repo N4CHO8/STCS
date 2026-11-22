@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-16",
+  "executor": "Ignacio Benegas",
+  "source": "Owner confirmation in chat",
+  "device": "iPhone 17",
+  "browser": "Safari",
+  "osVersion": null,
+  "browserVersion": null,
+  "duration": null,
+  "environment": "Isolated LAN lab, temporary accounts and two fictitious profiles; real ESP unchanged on production",
+  "checks": [
+    {
+      "scenario": "Navigate menu",
+      "expected": "Operation available without blocking navigation",
+      "observed": "Conforme según ejecutor"
+    },
+    {
+      "scenario": "Switch between two fictitious profiles",
+      "expected": "Operation available without blocking navigation",
+      "observed": "Conforme según ejecutor"
+    },
+    {
+      "scenario": "Download Activity CSV",
+      "expected": "Operation available without blocking navigation",
+      "observed": "Conforme según ejecutor"
+    }
+  ],
+  "instrumented": false,
+  "attachmentsPending": true,
+  "limitations": "No claim of full Safari accessibility, all filters, real clinical acceptance or production CSV availability"
+}
