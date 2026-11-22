@@ -1,5 +1,11 @@
 # Cambios de STCS
 
+## Revisión documental del 22/11/2026
+
+- TCS-60/88: informe, fichas de HU y registro profesional alineados con las comprobaciones de nube y ESP; se mantienen los límites de la revisión cualitativa.
+- TCS-60: cifras de carga contrastadas con su JSON original; aprobaciones de pertinencia atribuidas únicamente a Heriber.
+- Documentación revisada en `hito3-revision-documental-1`; el tag original `hito3` conserva su corte funcional. Sin cambios de aplicación, firmware ni datos.
+
 ## Hito3 — comprobación final del 22/11/2026
 
 - TCS-83/84/85: historial/CSV y auditoría, sesiones, accesibilidad, selección de tablero por especialista, fecha de inicio y observaciones docentes.

@@ -1,5 +1,8 @@
 # Catálogo ARASAAC — 21/11/2026
 
+Este reporte conserva el estado del ensayo local del 21/11. Los pendientes de publicación y hardware aquí descritos se resolvieron después; consultar la [comprobación final del 21–22/11](../comprobacion-final-20261121/README.md). Sus datos originales no se reescriben como una ejecución posterior.
+
+
 Revisión del candidato local, sin publicar ni cambiar el ESP instalado. [Revisión y huellas del código](metadatos.json). Requisito: H3-RF03; HU relacionadas: TCS-30, TCS-48 y TCS-85. Esta comprobación técnica no añade una aprobación del profesional.
 
 ## Qué cambió

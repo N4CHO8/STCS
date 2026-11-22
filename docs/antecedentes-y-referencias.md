@@ -28,9 +28,9 @@ La [Ley 19.628](https://www.bcn.cl/leychile/navegar?idNorma=141599) regula el tr
 
 La [Ley 21.719](https://www.bcn.cl/leychile/Navegar?idNorma=1209272) modifica el marco de protección de datos. Antes de un despliegue con personas reales deberán comprobarse su vigencia y obligaciones aplicables, responsables, bases del tratamiento, derechos, conservación y eliminación. La demo adulta no autoriza un piloto con menores.
 
-El catálogo candidato incorpora 91 pictogramas ARASAAC: autor Sergio Palao, propiedad del Gobierno de Aragón, licencia CC BY-NC-SA. Se conserva la procedencia por archivo y se presentan créditos en la web. Inseguridad, Frustración y Entusiasmo quedan fuera del selector hasta revisión; sus imágenes anteriores se mantienen para registros existentes. Lucide continúa en los iconos de la interfaz. Las imágenes propias no se atribuyen a ARASAAC. [Catálogo y condiciones](PICTOGRAMAS.md).
+El catálogo publicado incorpora 91 pictogramas ARASAAC: autor Sergio Palao, propiedad del Gobierno de Aragón, licencia CC BY-NC-SA. Se conserva la procedencia por archivo y se presentan créditos en la web. Inseguridad, Frustración y Entusiasmo quedan fuera del selector hasta revisión; sus imágenes anteriores se mantienen para registros existentes. Lucide continúa en los iconos de la interfaz. Las imágenes propias no se atribuyen a ARASAAC. [Catálogo y condiciones](PICTOGRAMAS.md).
 
-La elección de un recurso ARASAAC no demuestra por sí sola que sea adecuado para cada niño ni implica aprobación de STCS por sus autores. El especialista conserva esa decisión. Este cambio sigue en local; la interfaz publicada se comprobará al liberar la versión.
+La elección de un recurso ARASAAC no demuestra por sí sola que sea adecuado para cada niño ni implica aprobación de STCS por sus autores. El especialista conserva esa decisión. El catálogo y sus créditos están publicados; la sincronización de imágenes se confirmó en el ESP el 22/11. La elección individual sigue correspondiendo al especialista.
 
 ## Referencias
 

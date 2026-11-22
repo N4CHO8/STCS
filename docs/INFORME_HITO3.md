@@ -20,7 +20,7 @@ Noviembre de 2026
 
 STCS es un prototipo de Comunicación Aumentativa y Alternativa que combina un comunicador ESP32-S3 con pantalla táctil y una plataforma web para los adultos responsables. Su propósito es apoyar la expresión de necesidades, emociones y mensajes de niños con TEA que requieren apoyo comunicativo. El niño utiliza pictogramas y voz en el dispositivo; el especialista configura el apoyo desde la web y cada adulto accede solo a la información que le corresponde.
 
-El semestre avanzó desde la definición del problema y el diseño del Hito 1 hasta la integración del Hito 2 y las pruebas de seguridad, continuidad, privacidad y pertinencia del Hito 3. Se verificaron personalización, persistencia, eventos, historial, configuración Wi-Fi y separación de perfiles. Los ensayos del hardware establecieron un máximo operativo de 180 pictogramas activos, 45 por categoría. El catálogo base del candidato incluye 91 opciones ARASAAC; ese número no es el límite de registros activos ni un recuento del tablero instalado.
+El semestre avanzó desde la definición del problema y el diseño del Hito 1 hasta la integración del Hito 2 y las pruebas de seguridad, continuidad, privacidad y pertinencia del Hito 3. Se verificaron personalización, persistencia, eventos, historial, configuración Wi-Fi y separación de perfiles. Los ensayos del hardware establecieron un máximo operativo de 180 pictogramas activos, 45 por categoría. El catálogo base publicado incluye 91 opciones ARASAAC; ese número no es el límite de registros activos ni un recuento del tablero instalado.
 
 La revisión con Heriber Galleguillos del 20 de noviembre aportó una aprobación de pertinencia y una condición de adaptar la complejidad a cada niño. Se implementaron selección de categorías y pictogramas por especialista, fecha de inicio y observaciones docentes. Las pruebas del candidato del 21 de noviembre registran 15 unitarias y 40 recorridos de navegador aprobados, una suite de 387 comprobaciones API y 90,05 % de cobertura de líneas en servidor. Estos resultados son de laboratorio; los ensayos físicos y de nube se identifican por separado.
 
@@ -50,7 +50,7 @@ Kasari y colaboradores estudiaron dispositivos de voz dentro de una intervenció
 
 ### 3.2 Pictogramas y acceso
 
-El catálogo candidato reúne 91 opciones ARASAAC, con autor, propietario, licencia y origen por archivo [4]. Las imágenes conservan proporción, margen blanco e independencia respecto de la frase. Inseguridad, Frustración y Entusiasmo quedaron fuera del selector inicial hasta revisión del símbolo; sus imágenes anteriores se conservan para registros existentes. Las imágenes propias mantienen su procedencia y no se atribuyen a ARASAAC.
+El catálogo publicado reúne 91 opciones ARASAAC, con autor, propietario, licencia y origen por archivo [4]. Las imágenes conservan proporción, margen blanco e independencia respecto de la frase. Inseguridad, Frustración y Entusiasmo quedaron fuera del selector inicial hasta revisión del símbolo; sus imágenes anteriores se conservan para registros existentes. Las imágenes propias mantienen su procedencia y no se atribuyen a ARASAAC.
 
 Los controles importantes se ubicaron arriba y en los laterales porque el tacto inferior del equipo respondió mal. La frase se mantiene abajo como zona de lectura. Esta distribución mitiga el acceso, sin reparar el panel. La personalización por especialista permite reducir la cantidad de opciones y categorías visibles, según la necesidad individual.
 
@@ -368,12 +368,12 @@ Ignacio confirmó la aprobación de TCS-30/45/48/60/77/85 en pertinencia de uso.
 
 | Observación | Decisión aplicada | Comprobación disponible |
 | --- | --- | --- |
-| Pantalla pequeña y muchos pasos | Especialista decide categorías/pictogramas visibles; una categoría abre directamente | Persistencia, permisos, selección no vacía y firmware compilado |
+| Pantalla pequeña y muchos pasos | Especialista decide categorías/pictogramas visibles; una categoría abre directamente | Persistencia y permisos comprobados en nube; tablero de una categoría y un pictograma confirmado en el ESP el 22/11 |
 | Acompañar el proceso del niño | Fecha de inicio registrada por especialista y consultada por apoderado | Fecha inválida/futura y restricciones por rol verificadas |
 | Docente como apoyo comunicativo | Observaciones al especialista, sin diagnóstico ni progreso | Autoría, idempotencia y aislamiento por perfil comprobados |
 | Símbolos adecuados al mensaje | Catálogo ARASAAC y origen por archivo | 91 opciones revisadas; tres conceptos fuera del selector hasta revisión |
 
-La condición de adaptación está implementada, pero la versión física ensayada sigue siendo la habitual: compilar el firmware adaptable no demuestra su operación táctil. Tampoco se midieron autonomía, errores, ayudas o eficacia con niños. [Registro de la revisión](validacion/REGISTRO.md).
+La adaptación se publicó y se comprobó en el ESP con firmware v0.8.8-adaptive-board el 22/11: una categoría, un pictograma, imagen completa, voz nueva y frase editada. Ignacio confirmó estas interacciones y el regreso al tablero habitual; son pruebas técnicas posteriores a la revisión de Heriber. No se midieron autonomía, errores, ayudas o eficacia con niños. [Registro de la revisión](validacion/REGISTRO.md).
 
 ### 12.3 Retrospectiva
 
@@ -390,9 +390,10 @@ La estructura separa `frontend/`, `firmware/`, `supabase/` y `docs/`. La API int
 | Jira | https://uandresbello-team-bg7iosbc.atlassian.net/jira/software/projects/TCS |
 | Hito 2 | Commit 4d63c4c y etiqueta hito-2, como antecedente |
 | Base de los reportes del 21/11 | ebfc605; los manifiestos identifican las fuentes del candidato por hash |
-| Publicación de referencia | PR #16 y CI enlazados en A8; no se atribuyen los reportes posteriores a ese despliegue |
+| Entrega funcional | PR #17 y #18; commit f8b743f fijado por hito3, CI 45025353582 aprobado |
+| Revisión documental | hito3-revision-documental-1 conserva las correcciones de coherencia; no cambia la aplicación ni el firmware |
 
-Las instrucciones de instalación, variables sin valores secretos, compilación, pruebas y despliegue están en README y [A8](REPOSITORIO.md). Los PR recientes enlazan tickets; existen excepciones históricas que se conservan. La evidencia final debe corresponder a su revisión y tag; los datos de este informe no acreditan un tag `hito3` no registrado en el corte consultado. Las notas de operación y los respaldos privados no forman parte del informe.
+Las instrucciones de instalación, variables sin valores secretos, compilación, pruebas y despliegue están en README y [A8](REPOSITORIO.md). Los PR recientes enlazan tickets; existen excepciones históricas que se conservan. Los reportes mantienen la fecha y revisión de su ejecución; el tag original no se modifica al corregir la documentación. Las notas de operación y los respaldos privados no forman parte del informe.
 
 ## 14 Implantación
 
@@ -466,6 +467,8 @@ Como usuario del comunicador, quiero ver los elementos de la pantalla completos 
 | TCS-26.T1 | Ajustar elementos a la pantalla circular. | Hecha |
 | TCS-26.T2 | Comprobar texto y controles visibles. | Hecha |
 
+**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia condicionada a simplificar categorías y pictogramas según cada niño. La condición se implementó y su operación física se confirmó el 22/11/2026; esa comprobación corresponde al ejecutor, no a una nueva evaluación de Heriber.
+
 ### Sprint 2 TCS-27 Prueba inicial de interacción táctil
 
 Como usuario del comunicador, quiero seleccionar opciones mediante el tacto para comunicar mi elección sin activar otra opción.
@@ -479,6 +482,8 @@ Como usuario del comunicador, quiero seleccionar opciones mediante el tacto para
 | --- | --- | --- |
 | TCS-27.T1 | Definir áreas táctiles y respuesta visual. | Hecha |
 | TCS-27.T2 | Comprobar selección y evitar la zona inferior defectuosa. | Hecha |
+
+**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Según la confirmación de Ignacio, no solicitó cambios adicionales en tacto, frase visible o Volver/Borrar; se mantiene la adaptación individual del tablero. No certifica autonomía infantil ni precisión táctil cuantificada.
 
 ### Sprint 2 TCS-73 Diseño de integración del sistema predictivo con la plataforma web
 
@@ -508,6 +513,8 @@ Como usuario del comunicador, quiero acceder a categorías y controles visibles 
 | TCS-43.T1 | Construir el menú y la interfaz base. | Hecha |
 | TCS-43.T2 | Comprobar presentación en el ESP. | Hecha |
 
+**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia condicionada a simplificar categorías y pictogramas según cada niño. La condición se implementó y su operación física se confirmó el 22/11/2026; esa comprobación corresponde al ejecutor, no a una nueva evaluación de Heriber.
+
 ### Sprint 2 TCS-47 Implementación de botón volver y limpiar
 
 Como usuario del comunicador, quiero volver al menú y borrar la frase de forma explícita para navegar sin perder selecciones por accidente.
@@ -521,6 +528,8 @@ Como usuario del comunicador, quiero volver al menú y borrar la frase de forma 
 | --- | --- | --- |
 | TCS-47.T1 | Implementar Volver y Borrar. | Hecha |
 | TCS-47.T2 | Comprobar regreso sin pérdida y borrado explícito. | Hecha |
+
+**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Según la confirmación de Ignacio, no solicitó cambios adicionales en tacto, frase visible o Volver/Borrar; se mantiene la adaptación individual del tablero. No certifica autonomía infantil ni precisión táctil cuantificada.
 
 ### Sprint 2 TCS-44 Implementación de navegación entre categorías
 
@@ -536,6 +545,8 @@ Como usuario del comunicador, quiero navegar por categorías y páginas conserva
 | TCS-44.T1 | Implementar categorías y paginación. | Hecha |
 | TCS-44.T2 | Comprobar navegación conservando la frase. | Hecha |
 
+**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia condicionada a simplificar categorías y pictogramas según cada niño. La condición se implementó y su operación física se confirmó el 22/11/2026; esa comprobación corresponde al ejecutor, no a una nueva evaluación de Heriber.
+
 ### Sprint 2 TCS-45 Implementación de selección táctil de pictogramas
 
 Como usuario del comunicador, quiero seleccionar un pictograma mediante el tacto para incorporar mi elección al mensaje.
@@ -550,6 +561,8 @@ Como usuario del comunicador, quiero seleccionar un pictograma mediante el tacto
 | TCS-45.T1 | Implementar selección y respuesta visual. | Hecha |
 | TCS-45.T2 | Comprobar que se añade la opción elegida. | Hecha |
 
+**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia del vocabulario e interacción mostrados; sin evaluación de eficacia clínica con niños. Las comprobaciones técnicas posteriores se registran por separado.
+
 ### Sprint 2 TCS-46 Visualización del mensaje seleccionado
 
 Como usuario del comunicador, quiero leer la frase seleccionada en orden para comprobar el mensaje antes de reproducirlo.
@@ -563,6 +576,8 @@ Como usuario del comunicador, quiero leer la frase seleccionada en orden para co
 | --- | --- | --- |
 | TCS-46.T1 | Mostrar la frase en orden. | Hecha |
 | TCS-46.T2 | Comprobar que navegar no la borra. | Hecha |
+
+**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Según la confirmación de Ignacio, no solicitó cambios adicionales en tacto, frase visible o Volver/Borrar; se mantiene la adaptación individual del tablero. No certifica autonomía infantil ni precisión táctil cuantificada.
 
 ### Sprint 2 TCS-49 Persistencia de pictogramas en base de datos
 
@@ -619,6 +634,8 @@ Como especialista o docente asignado, quiero editar imágenes, nombres, categor�
 | --- | --- | --- |
 | TCS-48.T1 | Implementar edición del tablero por perfil. | Hecha |
 | TCS-48.T2 | Comprobar guardado, sincronización y mensaje vigente. | Hecha |
+
+**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia del vocabulario e interacción mostrados; sin evaluación de eficacia clínica con niños. Las comprobaciones técnicas posteriores se registran por separado.
 
 ### Sprint 3 TCS-53 Perfiles y dispositivos autorizados
 

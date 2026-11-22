@@ -2,10 +2,12 @@
 
 Publicación de TCS-53/59/60/74/76/77/83/84/85/88. Publicación inicial el 21/11 y cierre de pruebas el 22/11, hora de Chile. Las marcas UTC se conservan en los registros.
 
-- Código: [main 6defc3b](https://github.com/N4CHO8/STCS/commit/6defc3b6e8bf847b7f17a650f15ba75d9e4154d2), [PR #17](https://github.com/N4CHO8/STCS/pull/17).
+- Publicación inicial de la aplicación: [6defc3b](https://github.com/N4CHO8/STCS/commit/6defc3b6e8bf847b7f17a650f15ba75d9e4154d2), [PR #17](https://github.com/N4CHO8/STCS/pull/17).
 - CI: [Verify STCS 44972359096](https://github.com/N4CHO8/STCS/actions/runs/44972359096), aprobado sobre el head 7724d12 antes de integrar. Incluye dependencias, unitarias, TLS, Python, cobertura, build, tipos, API aislada y E2E Chromium.
 - Vercel: `dpl_GBuujeawRYTPnrJTAPJvbXM4WK1U`, READY para ese main, [aplicación](https://0stcs0.vercel.app).
 - Firmware final: v0.8.8-adaptive-board; 1.987.245 bytes de programa y 146.616 de RAM estática. Se escribió solamente app0, con hash verificado. El propietario confirmó arranque, categorías y Wi-Fi conectado; la aplicación de la selección y el audio se verificaron por separado.
+
+El cierre posterior se integró por [PR #18](https://github.com/N4CHO8/STCS/pull/18), commit `f8b743f`, con [CI 45025353582](https://github.com/N4CHO8/STCS/actions/runs/45025353582) aprobado y Vercel `dpl_EW1rotBR4JWEwEk1jdSQyeEYGaqH` en READY. El tag `hito3` fija ese corte, incluido el firmware final. Los JSON conservan el SHA de la aplicación con la que se ejecutaron las solicitudes; no se reescriben como una ejecución posterior.
 
 ## Comprobaciones en producción
 

@@ -34,7 +34,7 @@ Los permisos concretos están en [FLUJO_ROLES](FLUJO_ROLES.md). La administraci�
 | --- | --- | --- | --- |
 | Portal y responsables | Incluido | Administrar apoyos y proteger información; OE3 | Cuatro roles adultos; child sin login; permisos en servidor |
 | Imagen, frase y voz | Incluido | Adaptar el mensaje al perfil; OE2 | Nombre/imagen/frase independientes, medios privados y voz vigente |
-| Comunicador | Incluido | Seleccionar y expresar mensajes; OE1 | Hasta cuatro categorías, cuatro opciones por página; tablero de referencia de 96 activos, 24 por categoría y seis páginas. El tablero instalado se conserva y no se recontó en esta revisión. Adaptación por niño implementada en local |
+| Comunicador | Incluido | Seleccionar y expresar mensajes; OE1 | Hasta cuatro categorías, cuatro opciones por página; tablero de referencia de 96 activos, 24 por categoría y seis páginas. El tablero de Luis conserva 97 registros, 94 visibles. La adaptación por niño está publicada y comprobada en el ESP; el límite es 45 activos por categoría y 180 en total |
 | Capacidad | Incluida con límite | Ampliar vocabulario dentro del hardware; OE2/OE4 | 180 activos/45 por categoría; doce páginas, última con uno; rechazo de exceso |
 | Wi-Fi, caché y eventos | Incluidos | Sincronizar y conservar lo disponible; OE4 | Cola de 64, caché acotada, AP sin timeout; voz offline no garantizada |
 | Informes/orientaciones | Incluidos | Apoyar al docente sin exponer diagnóstico; OE3 | Separación de campos y permisos; sin diagnóstico automático |

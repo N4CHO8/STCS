@@ -35,14 +35,14 @@ Una historia cumple técnicamente cuando sus criterios tienen evidencia identifi
 | 15/11 | Tacto inferior poco fiable | Reubicar controles; defecto físico conservado como limitación | Ignacio Benegas |
 | 15/11 | Ausencia de voz sin Wi-Fi | Mantener dependencia de red y alternativa comunicativa del adulto; L-01 | Ignacio Benegas |
 | 16/11 | Filtros limitados a una página y consultas de sesiones antiguas | Filtros globales y cancelación de peticiones; regresión API/E2E conforme | Ignacio Benegas |
-| 18/11 | Frases nuevas rechazadas por voz en nube | Reproducir D15, fijar configuración Piper y verificar ocho pruebas Python y WAV real en laboratorio | Ignacio Benegas |
+| 18/11 | Frases nuevas rechazadas por voz en nube | Reproducir D15 y fijar configuración Piper; ocho regresiones conformes. Resolución confirmada en Vercel y ESP el 22/11, con frase nueva y editada | Ignacio Benegas |
 | 20/11 | Complejidad del recorrido en pantalla pequeña | Selección de categorías/pictogramas por especialista y acceso directo con una categoría | Ignacio Benegas; pertinencia revisada por Heriber |
 
 Las fechas corresponden a los registros disponibles. No se reconstruyen reuniones semanales ni fechas de resolución que no estén documentadas.
 
 ## Review y retrospectiva
 
-La review del 20/11 contrastó el prototipo con un profesional. Se registraron aprobaciones de pertinencia y la condición de simplificar según cada niño. Las decisiones derivadas fueron adaptar el tablero, añadir fecha de inicio y habilitar observaciones del docente al especialista. Los cambios se verificaron con permisos y persistencia en laboratorio. [Registro](validacion/REGISTRO.md).
+La review del 20/11 contrastó el prototipo con un profesional. Se registraron aprobaciones de pertinencia y la condición de simplificar según cada niño. Las decisiones derivadas fueron adaptar el tablero, añadir fecha de inicio y habilitar observaciones del docente al especialista. Los cambios se verificaron con permisos y persistencia en laboratorio y nube; la adaptación y la voz se confirmaron en el ESP el 22/11. [Registro](validacion/REGISTRO.md).
 
 La retrospectiva documental identifica tres mejoras concretas: fijar el inventario de pruebas antes de ejecutar; enlazar cada resultado con su criterio y revisión; y mantener una sola ficha de versión para evitar cifras contradictorias. Se aplicaron en los reportes del 21/11 y en esta organización. No se presenta este análisis como un acta de una reunión anterior.
 

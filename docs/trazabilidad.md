@@ -86,7 +86,7 @@ PR integrados comprobados por GitHub el 17/11:
 | [PR #13](https://github.com/N4CHO8/STCS/pull/13) | [3dfff37](https://github.com/N4CHO8/STCS/commit/3dfff375085ccc455e113d5184c42e9a5c9980ca) |
 | [PR #15](https://github.com/N4CHO8/STCS/pull/15) | [22fa385](https://github.com/N4CHO8/STCS/commit/22fa38538621ef6cde10568de185698dc3284b04) |
 
-La versión documental publicada actual corresponde al [PR #16 / ebfc605](https://github.com/N4CHO8/STCS/pull/16). El historial anterior conserva omisiones de tickets; las correspondencias de esta matriz son retrospectivas cuando así corresponde. [A8](REPOSITORIO.md).
+El [PR #16 / ebfc605](https://github.com/N4CHO8/STCS/pull/16) conserva la base documental anterior. El cierre funcional corresponde al [PR #18](https://github.com/N4CHO8/STCS/pull/18); la revisión de coherencia se identifica en [hito3-revision-documental-1](https://github.com/N4CHO8/STCS/tree/hito3-revision-documental-1), sin mover el tag original. El historial anterior conserva omisiones de tickets; las correspondencias de esta matriz son retrospectivas cuando así corresponde. [A8](REPOSITORIO.md).
 
 ## Casos y reportes que se pueden abrir
 
