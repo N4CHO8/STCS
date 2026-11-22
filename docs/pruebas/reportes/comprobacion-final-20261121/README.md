@@ -52,3 +52,7 @@ Resultado medido: 94 pictogramas visibles, 89 imágenes únicas, atlas de 305.99
 ## Alcance
 
 Las pruebas nuevas complementan las [suites de laboratorio](../arasaac-20261121/README.md) y los [ensayos anteriores](../../FISICAS_20261115.md). No sustituyen una evaluación con niños, un ensayo de carga cloud ni una garantía de voz sin conexión. La revisión profesional sigue siendo cualitativa y los indicadores no medidos de A1 permanecen declarados.
+
+## Reinicio final con alimentación independiente
+
+El 22/11 Ignacio confirmó que, con el ESP conectado únicamente a un cargador USB de 5 V, los dibujos aparecieron sin esperar descargas, pudo recorrer las cuatro categorías y «Vaso nube» reprodujo «Necesito beber agua, por favor». No se cronometró este reinicio. La sincronización y la voz preparadas funcionan con Vercel/Supabase; el PC no ejecuta ningún servicio necesario para ese recorrido. La voz sin red conserva L-01.

@@ -12,7 +12,8 @@
     "editedPhraseExactVoice": true,
     "backAndWifiMenu": true,
     "webSelectionSavedAndPersisted": true,
-    "administratorEnumeratedChildrenOnly": true
+    "administratorEnumeratedChildrenOnly": true,
+    "chargerOnlyRebootImagesNavigationAndVoice": true
   },
   "limits": {
     "activePictograms": 180,
@@ -51,5 +52,11 @@
     "bootLoadedPictograms": 94,
     "oldAtlasBootedDuringMeasurement": true,
     "note": "Boot measurement read the previous 97-entry atlas, which covered all 94 visible items; a subsequent charger restart is recorded separately."
+  },
+  "chargerOnlyReboot": {
+    "date": "2026-11-22",
+    "power": "USB 5 V charger, no PC connection",
+    "result": "Owner confirmed immediate images, four categories and exact Vaso nube phrase",
+    "durationMeasured": false
   }
 }

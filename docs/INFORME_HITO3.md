@@ -287,6 +287,8 @@ ADR-03 eligió nube y caché acotada: permite cambiar imagen/frase sin recompila
 
 Hito 1 definió el entorno, hardware, datos y flujo. Hito 2 produjo selección, navegación, frase, audio, persistencia, sincronización e historial. Hito 3 añadió separación de roles, cuentas reales y ficticias delimitadas, configuración Wi-Fi, cola persistente, caché, medios propios, seguridad y evidencia ampliada. Los filtros/CSV, ajustes profesionales y catálogo se comprobaron en laboratorio y luego se publicaron mediante PR #17. El 22/11 se confirmaron en Vercel y ESP la adaptación y las frases nuevas/actualizadas.
 
+El 22/11 el propietario confirmó además reinicio con cargador USB de 5 V, imágenes disponibles sin esperar descargas, navegación por las cuatro categorías y voz correcta de «Vaso nube». La copia comprimida actual guarda 89 imágenes únicas para 94 pictogramas visibles; no se promete esa conservación para cualquier catálogo o tras la expulsión de la caché.
+
 La cola se implementó en LittleFS, con escritura temporal y renombrado. Cumple el propósito de persistencia aunque la recomendación inicial mencionaba NVS; no se declara que ambos mecanismos sean iguales. El límite es 64, con ID estable y retirada tras ACK coincidente. Si se interrumpe la confirmación, el reintento no debe crear otro evento. El propietario confirmó esos escenarios físicos.
 
 ### 11.2 Plan y cumplimiento
