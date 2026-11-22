@@ -208,7 +208,7 @@ El Sprint Goal del Hito 3 es dejar un prototipo integrado y reproducible con pri
 
 Una HU cumple técnicamente cuando sus criterios tienen evidencia, las entradas inválidas y permisos se comprueban y las pruebas aplicables no dejan un defecto crítico sin tratar. La decisión del stakeholder se registra con alcance y procedencia; el estudiante ejecuta pruebas, pero no se autoaprueba. La comprobación de código, la aceptación de uso y la operación desplegada son evidencias diferentes.
 
-El Anexo A presenta por HU rol, acción, beneficio, criterios, tareas y estado de comprobación. La consulta de Jira del 21/11 conserva las diez HU de Sprint 3 En curso; se informa el estado real y no se cambia desde este informe. Las fichas detalladas de [Sprint 2](gestion/HISTORIAS_SPRINT2.md) y [Sprint 3](gestion/HISTORIAS_SPRINT3.md) permiten abrir cada ticket.
+El Anexo A presenta por HU rol, acción, beneficio, criterios, tareas y estado de comprobación. Los comentarios de cierre de Jira enlazan la evidencia y distinguen aprobación de pertinencia de comprobación técnica. El estado administrativo vigente se consulta en el tablero. Las fichas detalladas de [Sprint 2](gestion/HISTORIAS_SPRINT2.md) y [Sprint 3](gestion/HISTORIAS_SPRINT3.md) permiten abrir cada ticket.
 
 ### 9.3 Gestión del cambio
 

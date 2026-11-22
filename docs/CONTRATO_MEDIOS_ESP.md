@@ -1,4 +1,4 @@
-# Contrato del ESP medios y capacidad — v0.8.6-wifi-status
+# Contrato del ESP medios y capacidad — v0.8.8-adaptive-board
 
 La fuente de límites es `frontend/src/lib/pictogramCatalog.ts`, coordinada con
 `firmware/STCS_UI_Arduino/STCS_BoardConfig.h`. El máximo operativo probado es

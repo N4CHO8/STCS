@@ -90,6 +90,16 @@ classDiagram
   }
   StudentProfile "1" --> "*" CommunicationObservation : observaciones docentes
   User "1" --> "*" CommunicationObservation : autor docente
+  class AppOperationAudit {
+    uuid id
+    uuid actor_user_id
+    uuid student_profile_id
+    string operation
+    json metadata
+    timestamp created_at
+  }
+  StudentProfile "1" --> "*" AppOperationAudit : exportaciones autorizadas
+  User "1" --> "*" AppOperationAudit : actor
   class PhraseAudio {
     string cache_key
     string status
@@ -111,7 +121,7 @@ classDiagram
   Pictogram "*" --> "0..1" PhraseAudio : frase versionada
 ```
 
-Modelo lógico resumido, no DDL ni ORM. User, StudentProfile, UserAccess, Device, Pictogram, Event, AppSession, PictogramImage, PhraseAudio y SpecialistReport corresponden respectivamente a users, student_profiles, user_access, devices, pictograms, device_events, app_sessions, pictogram_images, phrase_audio y specialist_reports. Los nombres y relaciones se contrastan con el [esquema base](../../supabase/schema.sql), [sesiones/aprobaciones](../../supabase/migrations/20261111185152_audit_hardening.sql), [informes](../../supabase/migrations/20261111163114_role_based_portal.sql) y [medios](../../supabase/migrations/20261113215338_pictogram_media_audio.sql).
+Modelo lógico resumido, no DDL ni ORM. User, StudentProfile, UserAccess, Device, Pictogram, Event, AppSession, PictogramImage, PhraseAudio y SpecialistReport corresponden respectivamente a users, student_profiles, user_access, devices, pictograms, device_events, app_sessions, pictogram_images, phrase_audio y specialist_reports. CommunicationObservation y AppOperationAudit representan communication_observations y app_operation_audit. Los nombres y relaciones se contrastan con el [esquema base](../../supabase/schema.sql), [sesiones/aprobaciones](../../supabase/migrations/20261111185152_audit_hardening.sql), [informes](../../supabase/migrations/20261111163114_role_based_portal.sql) y [medios](../../supabase/migrations/20261113215338_pictogram_media_audio.sql).
 
 `pictogram_id` del evento puede ser nulo; `image_path` es una referencia resuelta por la API, no una FK directa a imágenes. `audio_key` sí referencia phrase_audio(cache_key). El evento conserva su perfil/dispositivo de origen y no se reasigna en este alcance. Los informes y orientaciones se proyectan por rol en servidor; no se descargan todas las filas para ocultarlas en el navegador.
 
@@ -198,9 +208,9 @@ Implementación: [portal](../../frontend/src/lib/server/portal.ts), [asignacione
 
 La cola admite 64; PF-03–05 fueron informados conformes por el autor, sin conteos instrumentados. Dos ESP físicos con información separada fueron confirmados por el propietario el 16/11; no acredita una flota mayor. Se prevé demostración presencial, sin exigir anexos audiovisuales adicionales. Sin Wi-Fi no hubo voz en el ensayo. La zona táctil inferior defectuosa se evita con controles superiores y flechas laterales; no se considera reparada.
 
-## CL2 Ampliación local de auditoría, no desplegada
+## CL2 Auditoría de exportación publicada
 
-El CSV ampliado registra generación, actor, perfil, filtros y cantidad en app_operation_audit. Su [migración aditiva](../../supabase/migrations/20261116214529_operation_audit.sql) solo se aplicó en laboratorio: no se añade a CL1 como si ya existiera en nube. No registra por sí sola toda petición denegada ni acredita apertura del archivo por el destinatario. [Implementación local](../../frontend/src/lib/server/stcsData.ts), [pruebas](../pruebas/ARREGLOS_LOCALES_20261116.md).
+El CSV ampliado registra generación, actor, perfil, filtros y cantidad en app_operation_audit. Su [migración aditiva](../../supabase/migrations/20261116214529_operation_audit.sql) se aplicó también en Supabase tras respaldo, con RLS y privilegios de servidor. No registra por sí sola toda petición denegada ni acredita apertura del archivo por el destinatario. [Implementación](../../frontend/src/lib/server/stcsData.ts), [pruebas](../pruebas/ARREGLOS_LOCALES_20261116.md).
 
 ## Correspondencia entre modelos, implementación y pruebas
 
@@ -209,13 +219,13 @@ El CSV ampliado registra generación, actor, perfil, filtros y cantidad en app_o
 | UC1/UC2/UC7/UC8 y SEQ2 | H3-RF01/02/07/09, H3-RNF01 | auth/access/portal y tablas de asignación/sesión | CP-RF02-E01–04, API de permisos y rutas antiguas; sin autorización clínica del admin |
 | UC3 y SEQ1 | H3-RF03/11 | media/cloud-voice, API y Storage privado | CRUD/imagen/validaciones, voz exacta y capacidad; fallos de red/voz no se ocultan |
 | UC4 y ACT1 | H3-RF04/08 | Firmware C++ UI, audio y red | PF-01–05: confirmaciones del ejecutor, sin medición clínica |
-| UC5 y CL1 | H3-RF05/10 | device_events, API y consultas por perfil | Deduplicación, historial y permisos; CSV ampliado separado como local |
+| UC5 y CL1 | H3-RF05/10 | device_events, API y consultas por perfil | Deduplicación, historial y permisos; CSV ampliado con auditoría de exportación |
 | UC6 | H3-RF06 | Menú/portal Wi-Fi del firmware | PF-06; asociación Wi-Fi no garantiza Internet/API |
 
 Los diagramas no incorporan como operación real el motor predictivo FUT01 ni la gestión automática FUT03. Los actores Niño en ESP y Adulto junto al ESP no conceden acceso al portal a un registro child. Las asociaciones de casos de uso siempre se restringen además por perfil/asignación.
 
-### Adaptación y seguimiento del candidato local
+### Adaptación y seguimiento publicados
 
 `board_selection` separa el catálogo de la selección que recibe el ESP. `NULL` conserva el tablero completo; una selección explícita guarda categorías e IDs autorizados. Los escritores del tablero comparten un bloqueo por perfil para impedir que una edición concurrente lo deje vacío. El dispositivo deriva las categorías visibles del contenido, sin recibir datos clínicos nuevos.
 
-`usage_started_on` es una fecha de inicio de uso, no la fecha de creación del registro. `communication_observations` separa los comentarios del docente de los informes clínicos: el especialista asignado lee las observaciones del perfil y el docente solo las propias. RLS y revocación de permisos públicos complementan la autorización del servidor. Estas adiciones están preparadas en la migración del 21/11 y aún no están desplegadas.
+`usage_started_on` es una fecha de inicio de uso, no la fecha de creación del registro. `communication_observations` separa los comentarios del docente de los informes clínicos: el especialista asignado lee las observaciones del perfil y el docente solo las propias. RLS y revocación de permisos públicos complementan la autorización del servidor. Estas adiciones se publicaron mediante las migraciones aditivas aplicadas en Supabase y el PR #17; [comprobación final](../pruebas/reportes/comprobacion-final-20261121/README.md).

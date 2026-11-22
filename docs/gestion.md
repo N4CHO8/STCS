@@ -21,7 +21,7 @@
 | Revisión externa | Heriber Galleguillos, Zoom del 20/11/2026, adultos y datos ficticios |
 | Evidencia | [A4](trazabilidad.md), [A5](pruebas/RESULTADOS.md) y [registro profesional](validacion/REGISTRO.md) |
 
-Las fichas de [Sprint 2](gestion/HISTORIAS_SPRINT2.md) y [Sprint 3](gestion/HISTORIAS_SPRINT3.md) relacionan historia, criterio, tarea y resultado. Los estados administrativos son los consultados en Jira el 21/11; no sustituyen el resultado de una prueba. El desglose documental posterior no se presenta como planificación original.
+Las fichas de [Sprint 2](gestion/HISTORIAS_SPRINT2.md) y [Sprint 3](gestion/HISTORIAS_SPRINT3.md) relacionan historia, criterio, tarea y resultado. Los estados administrativos se consultan en Jira y sus comentarios enlazan el registro de cierre; no sustituyen el resultado de una prueba. El desglose documental posterior no se presenta como planificación original.
 
 ## Definition of Done
 

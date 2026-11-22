@@ -77,7 +77,7 @@ Ignacio confirmó que Heriber condicionó la aprobación de ese recorrido a la s
 | TCS-27/46/47 | Tacto, frase visible y Volver/Borrar adecuados, sin cambios adicionales según Ignacio; adaptación general sujeta a la condición anterior |
 | TCS-77 y referencias TCS-61/87 | TCS-77 aprobada según confirmación de Ignacio; las consolidadas remiten a ella, sin extender la decisión a criterios no revisados |
 
-La supervisión técnica de Profesores a cargo se registra por separado en [A3](../historias.md).
+Los profesores conservan su función de guías y evaluadores; Heriber es el stakeholder de pertinencia, como se registra en [A3](../historias.md).
 
 ## Precisiones para el informe
 
