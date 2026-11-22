@@ -489,8 +489,198 @@ try {
     return payload;
   };
   const config = await hardware(`/api/stcs/devices/${code}/config`);
+  // CP-FOLLOW-I01 — H3-RF13 / TCS-85.CA05/CA06: role-scoped follow-up.
+  const startDate = {
+    action: "usageStart",
+    profileId: profiles[0],
+    date: "2020-01-02",
+  };
+  for (const index of [1, 2, 3])
+    await api(index, "/api/stcs/portal", startDate, 403);
+  for (const date of [
+    undefined,
+    42,
+    "",
+    "2020-02-31",
+    "9999-01-01",
+    "0000-01-01",
+  ])
+    await api(0, "/api/stcs/portal", { ...startDate, date }, 400);
+  await api(
+    0,
+    "/api/stcs/portal",
+    { ...startDate, profileId: randomUUID() },
+    403,
+  );
+  await api(0, "/api/stcs/portal", startDate);
+  assert.equal(
+    (await api(1, `/api/stcs/portal?profileId=${profiles[0]}`)).data.detail
+      .profile.usageStartedOn,
+    "2020-01-02",
+  );
+  assert.equal(
+    (await api(2, `/api/stcs/portal?profileId=${profiles[0]}`)).data.detail
+      .profile.usageStartedOn,
+    undefined,
+  );
+  checks += 2;
+  const observation = {
+    action: "observation",
+    profileId: profiles[0],
+    requestId: randomUUID(),
+    text: "OBSERVACION_DOCENTE: pidió agua con un pictograma",
+  };
+  for (const index of [0, 1, 3])
+    await api(index, "/api/stcs/portal", observation, 403);
+  await api(
+    2,
+    "/api/stcs/portal",
+    { ...observation, profileId: profiles[1] },
+    403,
+  );
+  for (const text of [undefined, "", " ", "a".repeat(2001)])
+    await api(2, "/api/stcs/portal", { ...observation, text }, 400);
+  await api(2, "/api/stcs/portal", observation);
+  await api(2, "/api/stcs/portal", observation);
+  const observationRows = (
+    await api(0, `/api/stcs/portal?profileId=${profiles[0]}`)
+  ).data.detail.observations;
+  assert.equal(observationRows.length, 1, "Repeated submission is idempotent");
+  assert.equal(observationRows[0].text, observation.text);
+  const otherTeacherId = randomUUID();
+  extraIds.push(otherTeacherId);
+  await db.query(
+    "INSERT INTO users(id,full_name,email,password_hash,role) VALUES($1,'Otro docente',$2,$3,'teacher')",
+    [otherTeacherId, `${marker}-other-teacher@test.invalid`, hash],
+  );
+  await db.query(
+    "INSERT INTO communication_observations(id,student_profile_id,author_user_id,request_id,observation) VALUES($1,$2,$3,$4,'Observación de otro docente')",
+    [randomUUID(), profiles[0], otherTeacherId, randomUUID()],
+  );
+  assert.equal(
+    (await api(2, `/api/stcs/portal?profileId=${profiles[0]}`)).data.detail
+      .observations.length,
+    1,
+    "Teacher must not receive another teacher's observations",
+  );
+  assert.equal(
+    (await api(0, `/api/stcs/portal?profileId=${profiles[0]}`)).data.detail
+      .observations.length,
+    2,
+  );
+  checks += 2;
+  assert.equal(
+    (await api(1, `/api/stcs/portal?profileId=${profiles[0]}`)).data.detail
+      .observations,
+    undefined,
+  );
+  assert.ok(
+    !JSON.stringify((await api(3, "/api/stcs/portal")).data).includes(
+      "OBSERVACION_DOCENTE",
+    ),
+  );
+  assert.equal(
+    (await api(0, `/api/stcs/portal?profileId=${profiles[1]}`)).data.detail
+      .observations.length,
+    0,
+  );
+  checks += 5;
+  await api(0, "/api/stcs/portal", { ...startDate, date: null });
   assert.deepEqual(Object.keys(config.data.profile), ["id"]);
   assert.ok(!JSON.stringify(config).includes("PRIVADO"));
+  // CP-ADAPT-I01 — H3-RF12 / TCS-85.CA04: per-child selection independent of catalog CRUD.
+  const extraBoardItem = await api(
+    0,
+    `/api/stcs/pictograms?profileId=${profiles[0]}`,
+    { ...pictogram, label: "Opción conservada en catálogo" },
+    201,
+  );
+  const boardSelection = {
+    action: "boardSelection",
+    profileId: profiles[0],
+    selection: { categories: ["Emociones"], pictogramIds: [emotionId] },
+  };
+  for (const role of [1, 2, 3])
+    await api(role, "/api/stcs/portal", boardSelection, 403);
+  await api(4, "/api/stcs/portal", boardSelection, 401);
+  await api(
+    0,
+    "/api/stcs/portal",
+    { ...boardSelection, profileId: randomUUID() },
+    403,
+  );
+  await api(
+    0,
+    "/api/stcs/portal",
+    { ...boardSelection, profileId: profiles[1] },
+    400,
+  );
+  for (const selection of [
+    undefined,
+    {},
+    { categories: [], pictogramIds: [] },
+    { categories: ["Emociones"], pictogramIds: [emotionId, emotionId] },
+    { categories: ["Inventada"], pictogramIds: [emotionId] },
+    { categories: ["Emociones"], pictogramIds: [randomUUID()] },
+    { categories: ["Emociones", "Necesidades"], pictogramIds: [emotionId] },
+    { categories: ["Emociones"], pictogramIds: Array(181).fill(emotionId) },
+  ])
+    await api(0, "/api/stcs/portal", { ...boardSelection, selection }, 400);
+  await api(0, "/api/stcs/portal", boardSelection);
+  const reducedConfig = await hardware(`/api/stcs/devices/${code}/config`);
+  assert.deepEqual(
+    reducedConfig.data.pictograms.map((p) => p.id),
+    [emotionId],
+  );
+  checks++;
+  const selectedPortal = await api(
+    0,
+    `/api/stcs/portal?profileId=${profiles[0]}`,
+  );
+  assert.equal(
+    selectedPortal.data.detail.pictograms.length,
+    2,
+    "Hidden items stay in catalog",
+  );
+  assert.deepEqual(
+    selectedPortal.data.detail.boardSelection,
+    boardSelection.selection,
+  );
+  checks += 2;
+  await api(
+    2,
+    `/api/stcs/pictograms/${emotionId}?profileId=${profiles[0]}`,
+    null,
+    400,
+    "DELETE",
+  );
+  await api(
+    2,
+    `/api/stcs/pictograms/${emotionId}?profileId=${profiles[0]}`,
+    { ...pictogram, label: "No vaciar selección", category: "Necesidades" },
+    400,
+    "PUT",
+  );
+  assert.deepEqual(
+    (await hardware(`/api/stcs/devices/${code}/config`)).data.pictograms.map(
+      (p) => p.id,
+    ),
+    [emotionId],
+  );
+  checks++;
+  await api(0, "/api/stcs/portal", { ...boardSelection, selection: null });
+  assert.equal(
+    (await hardware(`/api/stcs/devices/${code}/config`)).data.pictograms.length,
+    2,
+  );
+  checks++;
+  await api(
+    2,
+    `/api/stcs/pictograms/${extraBoardItem.data.id}?profileId=${profiles[0]}`,
+    null,
+    200,
+    "DELETE",
+  );
   assert.equal(
     (await db.query("SELECT last_sync_at FROM devices WHERE id=$1", [deviceId]))
       .rows[0].last_sync_at,
@@ -562,6 +752,143 @@ try {
   assert.equal(page2.data.length, 8);
   assert.ok(
     !page2.data.some((e) => page1.data.some((first) => first.id === e.id)),
+  );
+  // Direct DB API roles cannot bypass the server projection, even on populated tables.
+  for (const role of ["anon", "authenticated"]) {
+    await db.query("BEGIN");
+    try {
+      await db.query(
+        "GRANT SELECT ON users,student_profiles,user_access,devices,device_events TO anon,authenticated",
+      );
+      await db.query(`SET LOCAL ROLE ${role}`);
+      for (const table of [
+        "users",
+        "student_profiles",
+        "user_access",
+        "devices",
+        "device_events",
+        "app_operation_audit",
+      ]) {
+        await db.query("SAVEPOINT rls_check");
+        try {
+          assert.equal(
+            (await db.query(`SELECT count(*)::int AS n FROM ${table}`)).rows[0]
+              .n,
+            0,
+          );
+        } catch (e) {
+          await db.query("ROLLBACK TO SAVEPOINT rls_check");
+          assert.equal(e.code, "42501");
+        }
+        checks++;
+      }
+    } finally {
+      await db.query("ROLLBACK");
+    }
+  }
+  // TCS-83: full filtered export, not just the visible 100-row page.
+  const csvExport = async (index, suffix = "", expected = 200) => {
+    const r = await fetch(
+      base + `/api/stcs/events/export?profileId=${profiles[0]}` + suffix,
+      { method: "POST", headers: { Authorization: `Bearer ${tokens[index]}` } },
+    );
+    assert.equal(r.status, expected);
+    checks++;
+    return r;
+  };
+  const exported = await csvExport(0);
+  assert.equal(exported.headers.get("x-stcs-export-rows"), "108");
+  const csv = await exported.text();
+  assert.equal(csv.includes("PRIVADO"), false);
+  assert.equal(csv.includes("esp32-device"), false);
+  assert.equal(
+    (
+      await db.query(
+        "SELECT count(*)::int AS n FROM app_operation_audit WHERE actor_user_id=$1 AND operation='history_export'",
+        [ids[0]],
+      )
+    ).rows[0].n,
+    1,
+  );
+  const filtered = await csvExport(1, "&context=Test&eventType=navigation");
+  assert.equal(filtered.headers.get("x-stcs-export-rows"), "105");
+  for (const role of [2, 3]) await csvExport(role, "", 403);
+  await csvExport(0, "&from=2026-02-30", 400);
+  await csvExport(0, "&from=0000-01-01", 400);
+  await csvExport(0, "&from=2026-02-20&to=2026-02-01", 400);
+  await csvExport(0, "&deviceId=invalid", 400);
+  const denied = await fetch(
+    base + `/api/stcs/events/export?profileId=${profiles[1]}`,
+    { method: "POST", headers: { Authorization: `Bearer ${tokens[1]}` } },
+  );
+  assert.equal(denied.status, 403);
+  checks++;
+  const allFiltered = await api(
+    0,
+    `/api/stcs/events?profileId=${profiles[0]}&context=Test&eventType=navigation`,
+  );
+  assert.equal(allFiltered.total, 105);
+  assert.equal(allFiltered.contexts.includes("Test"), true);
+  await db.query(
+    "UPDATE device_events SET action_label=$1 WHERE id=(SELECT id FROM device_events WHERE student_profile_id=$2 LIMIT 1)",
+    [' =HYPERLINK("bad")', profiles[0]],
+  );
+  const formulaCsv = await (await csvExport(0)).text();
+  assert.ok(formulaCsv.includes("' =HYPERLINK"));
+  await db.query(
+    `INSERT INTO device_events(id,device_id,student_profile_id,event_type,action_label,context,payload) SELECT gen_random_uuid(),$1,$2,'navigation','Carga','ExportLimit','{"source":"esp32-device"}'::jsonb FROM generate_series(1,10001)`,
+    [deviceId, profiles[0]],
+  );
+  await csvExport(0, "&context=ExportLimit", 409);
+  await db.query(
+    "DELETE FROM device_events WHERE student_profile_id=$1 AND context='ExportLimit'",
+    [profiles[0]],
+  );
+  const auditCount = (
+    await db.query(
+      "SELECT count(*)::int AS n FROM app_operation_audit WHERE actor_user_id=$1",
+      [ids[0]],
+    )
+  ).rows[0].n;
+  const empty = await csvExport(0, "&context=NoSuchContext");
+  assert.equal(empty.headers.get("x-stcs-export-rows"), "0");
+  assert.equal(
+    (
+      await db.query(
+        "SELECT count(*)::int AS n FROM app_operation_audit WHERE actor_user_id=$1",
+        [ids[0]],
+      )
+    ).rows[0].n,
+    auditCount + 1,
+  );
+  await db.query(
+    `INSERT INTO device_events(id,device_id,student_profile_id,event_type,action_label,context,payload) SELECT gen_random_uuid(),$1,$2,'navigation',repeat('界',150),'LargeCsv','{"source":"esp32-device"}'::jsonb FROM generate_series(1,6500)`,
+    [deviceId, profiles[0]],
+  );
+  await csvExport(0, "&context=LargeCsv", 409);
+  await db.query(
+    "DELETE FROM device_events WHERE student_profile_id=$1 AND context='LargeCsv'",
+    [profiles[0]],
+  );
+  await db.query(
+    "UPDATE device_events SET occurred_at='2026-01-02 00:00:00' WHERE id=(SELECT id FROM device_events WHERE student_profile_id=$1 ORDER BY id LIMIT 1)",
+    [profiles[0]],
+  );
+  await db.query(
+    "UPDATE device_events SET occurred_at='2026-01-03 00:00:00' WHERE id=(SELECT id FROM device_events WHERE student_profile_id=$1 ORDER BY id OFFSET 1 LIMIT 1)",
+    [profiles[0]],
+  );
+  assert.equal(
+    (await csvExport(0, "&from=2026-01-02&to=2026-01-02")).headers.get(
+      "x-stcs-export-rows",
+    ),
+    "1",
+  );
+  assert.equal(
+    (await csvExport(0, "&deviceId=" + randomUUID())).headers.get(
+      "x-stcs-export-rows",
+    ),
+    "0",
   );
   // Count and INSERT share a transaction lock; only eight concurrent creations fit a category.
   const concurrent = await Promise.all(

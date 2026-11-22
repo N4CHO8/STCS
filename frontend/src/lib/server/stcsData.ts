@@ -1,4 +1,7 @@
 import { randomUUID } from "crypto";
+import type { HistoryFilters } from "@/lib/history-contract";
+import { csvDocument } from "@/lib/history-contract";
+import { HISTORY_PREDICATE, historyParams } from "./history-filters";
 import type { QueryResultRow } from "pg";
 
 import { canAccessSubject, ForbiddenError } from "./access";
@@ -8,6 +11,7 @@ import { query, transaction } from "./db";
 import { phraseKey, withAudioState, deviceMediaConfig } from "./media";
 import { MEDIA_VOICE, uploadedImageId } from "@/lib/media-contract";
 import type { PoolClient } from "pg";
+import { getBoardSelection, assertUsableSelection } from "./board-selection";
 import type { DeviceEventInput, PictogramInput } from "./validation";
 import {
   DEVICE_MAX_ITEMS_PER_CATEGORY,
@@ -381,6 +385,7 @@ export const getDeviceBoardConfig = async (
 ): Promise<DeviceBoardConfig> => {
   const device = await getDeviceByCode(deviceCode);
   const profile = await getProfileById(device.student_profile_id);
+  const selection = await getBoardSelection(device.student_profile_id);
   const pictogramsResult = await query<PictogramRow>(
     `SELECT id, label, message, category, color_tone, icon_name, image_path, position
      FROM (
@@ -388,10 +393,16 @@ export const getDeviceBoardConfig = async (
               ROW_NUMBER() OVER (PARTITION BY category ORDER BY position ASC, label ASC) AS category_position
        FROM pictograms p
        WHERE student_profile_id = $1 AND is_active = TRUE
+         AND ($3::text[] IS NULL OR (category = ANY($3) AND id = ANY($4::uuid[])))
      ) configured
      WHERE category_position <= $2
      ORDER BY position ASC, label ASC`,
-    [device.student_profile_id, DEVICE_MAX_ITEMS_PER_CATEGORY],
+    [
+      device.student_profile_id,
+      DEVICE_MAX_ITEMS_PER_CATEGORY,
+      selection?.categories ?? null,
+      selection?.pictogramIds ?? null,
+    ],
   );
 
   return {
@@ -570,6 +581,7 @@ export const updatePictogram = async (
         throw new StcsNotFoundError("No se encontro el pictograma solicitado.");
       }
 
+      await assertUsableSelection(client, profile.id);
       return mapPictogram(result.rows[0]);
     } catch (error) {
       if ((error as { code?: string }).code === "23505") {
@@ -597,65 +609,161 @@ export const deletePictogram = async (
     );
   }
 
-  const result = await query(
-    `UPDATE pictograms
+  await transaction(async (client) => {
+    await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1,0))", [
+      profile.id,
+    ]);
+    const result = await client.query(
+      `UPDATE pictograms
      SET is_active = FALSE, updated_at = NOW()
      WHERE id = $1 AND student_profile_id = $2 AND is_active = TRUE`,
-    [pictogramId, profile.id],
-  );
+      [pictogramId, profile.id],
+    );
 
-  if (!result.rowCount) {
-    throw new StcsNotFoundError("No se encontro el pictograma solicitado.");
-  }
+    if (!result.rowCount) {
+      throw new StcsNotFoundError("No se encontro el pictograma solicitado.");
+    }
+    await assertUsableSelection(client, profile.id);
+  });
 };
 
 export const getDeviceEventHistory = async (
   authUser: AuthTokenPayload,
-  filters: { context?: string; eventType?: string; offset?: number } = {},
+  filters: HistoryFilters & { offset?: number } = {},
 ): Promise<{
   events: DeviceEvent[];
   total: number;
   offset: number;
   hasMore: boolean;
+  contexts: string[];
+  eventTypes: string[];
+  devices: { id: string; label: string }[];
 }> => {
   if (!canReadSensitive(authUser.role)) throw new ForbiddenError();
   const profile = await getAccessibleProfile(authUser);
-  const access = await canAccessSubject(authUser, profile.childUserId);
-
-  if (!access.allowed) {
-    throw new Error("El usuario no tiene permiso para ver este historial.");
-  }
-
-  const result = await query<EventRow>(
-    `SELECT *
-     FROM device_events
-     WHERE student_profile_id = $1
-       AND (payload->>'source' = 'esp32-device' OR (${authUser.isDemo ? "TRUE" : "FALSE"} AND payload->>'source' = 'demo-fixture'))
-       AND ($2::text IS NULL OR context = $2)
-       AND ($3::text IS NULL OR event_type = $3)
-     ORDER BY occurred_at DESC, created_at DESC, id DESC
-     LIMIT 100 OFFSET $4`,
-    [
-      profile.id,
-      filters.context ?? null,
-      filters.eventType ?? null,
-      filters.offset ?? 0,
-    ],
-  );
-
-  const count = await query<{ total: number }>(
-    `SELECT COUNT(*)::int AS total FROM device_events WHERE student_profile_id=$1 AND (payload->>'source'='esp32-device' OR (${authUser.isDemo ? "TRUE" : "FALSE"} AND payload->>'source'='demo-fixture')) AND ($2::text IS NULL OR context=$2) AND ($3::text IS NULL OR event_type=$3)`,
-    [profile.id, filters.context ?? null, filters.eventType ?? null],
-  );
-  const total = count.rows[0].total,
-    offset = filters.offset ?? 0;
-  return {
-    events: result.rows.map(mapEvent),
-    total,
-    offset,
-    hasMore: offset + result.rows.length < total,
-  };
+  const params = historyParams(profile.id, Boolean(authUser.isDemo), filters);
+  const offset = filters.offset ?? 0;
+  // One snapshot keeps count, page and facets coherent while the ESP uploads events.
+  return transaction(async (client) => {
+    await client.query(
+      "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY",
+    );
+    const result = await client.query<EventRow>(
+      `SELECT e.* FROM device_events e WHERE ${HISTORY_PREDICATE} ORDER BY e.occurred_at DESC,e.created_at DESC,e.id DESC LIMIT 100 OFFSET $8`,
+      [...params, offset],
+    );
+    const count = await client.query(
+      `SELECT COUNT(*)::int AS total FROM device_events e WHERE ${HISTORY_PREDICATE}`,
+      params,
+    );
+    const facets = await client.query(
+      `SELECT DISTINCT e.context,e.event_type FROM device_events e WHERE e.student_profile_id=$1 AND (e.payload->>'source'='esp32-device' OR ($2::boolean AND e.payload->>'source'='demo-fixture'))`,
+      params.slice(0, 2),
+    );
+    const devices = await client.query(
+      `SELECT DISTINCT e.device_id AS id FROM device_events e WHERE e.student_profile_id=$1 ORDER BY e.device_id`,
+      [profile.id],
+    );
+    const total = count.rows[0].total;
+    return {
+      events: result.rows.map(mapEvent),
+      total,
+      offset,
+      hasMore: offset + result.rows.length < total,
+      contexts: [
+        ...new Set(facets.rows.map((r) => r.context as string)),
+      ].sort(),
+      eventTypes: [
+        ...new Set(facets.rows.map((r) => r.event_type as string)),
+      ].sort(),
+      devices: devices.rows.map((r, i) => ({
+        id: r.id,
+        label: `Dispositivo ${i + 1}`,
+      })),
+    };
+  });
 };
+
+export async function exportDeviceEventHistory(
+  authUser: AuthTokenPayload,
+  filters: HistoryFilters,
+) {
+  if (!canReadSensitive(authUser.role)) throw new ForbiddenError();
+  const profile = await getAccessibleProfile(authUser);
+  return transaction(async (client) => {
+    // Bound memory, hold a consistent snapshot, and only succeed if the audit persists.
+    await client.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ");
+    const grant = await client.query(
+      `SELECT 1 FROM user_access WHERE actor_user_id=$1 AND subject_user_id=$2
+       AND relationship=$3 AND approved_at IS NOT NULL FOR SHARE`,
+      [authUser.sub, profile.childUserId, authUser.role],
+    );
+    if (!grant.rowCount) throw new ForbiddenError();
+    const result = await client.query(
+      `SELECT e.id,e.device_id,e.event_type,e.action_label,e.context,e.occurred_at
+      FROM device_events e WHERE ${HISTORY_PREDICATE} ORDER BY e.occurred_at DESC,e.created_at DESC,e.id DESC LIMIT 10001`,
+      historyParams(profile.id, Boolean(authUser.isDemo), filters),
+    );
+    if (result.rows.length > 10000)
+      throw new StcsConflictError(
+        "El resultado supera 10.000 eventos. Acota las fechas o los filtros antes de exportar.",
+      );
+    const aliases = await client.query(
+      "SELECT DISTINCT device_id FROM device_events WHERE student_profile_id=$1 ORDER BY device_id",
+      [profile.id],
+    );
+    const deviceIds = aliases.rows.map((r) => r.device_id as string);
+    const profileNumber = (
+      await client.query(
+        "SELECT public_number FROM student_profiles WHERE id=$1",
+        [profile.id],
+      )
+    ).rows[0].public_number;
+    const rows = result.rows.map((r) => [
+      `Usuario ${profileNumber}`,
+      `Dispositivo ${deviceIds.indexOf(r.device_id) + 1}`,
+      r.occurred_at.toISOString(),
+      r.event_type,
+      r.action_label,
+      r.context,
+    ]);
+    const csv = csvDocument([
+      [
+        "Perfil (alias)",
+        "Dispositivo (alias)",
+        "Fecha UTC",
+        "Tipo",
+        "Acción",
+        "Contexto",
+      ],
+      ...rows,
+    ]);
+    if (Buffer.byteLength(csv, "utf8") > 3 * 1024 * 1024)
+      throw new StcsConflictError(
+        "El archivo supera 3 MiB. Acota las fechas o los filtros antes de exportar.",
+      );
+    const id = randomUUID();
+    await client.query(
+      `INSERT INTO app_operation_audit(id,actor_user_id,student_profile_id,operation,metadata) VALUES($1,$2,$3,'history_export',$4::jsonb)`,
+      [
+        id,
+        authUser.sub,
+        profile.id,
+        JSON.stringify({
+          rows: rows.length,
+          filters,
+          timezone: "UTC",
+          maximumRows: 10000,
+        }),
+      ],
+    );
+    return {
+      id,
+      csv,
+      count: rows.length,
+    };
+  });
+}
 
 export const createDeviceEventFromDevice = async (
   deviceCode: string,

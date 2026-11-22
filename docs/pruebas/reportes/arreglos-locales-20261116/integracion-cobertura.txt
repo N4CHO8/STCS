@@ -1,0 +1,151 @@
+▲ Next.js 16.4.6 (webpack)
+✓ Running next.config.mjs took 30ms
+- Experiments (use with caution):
+  ⨯ serverMinification
+  ✓ serverSourceMaps
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.0s
+  Running TypeScript ...
+  Finished TypeScript in 2.6s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/4) ...
+  Generating static pages using 11 workers (1/4) 
+  Generating static pages using 11 workers (2/4) 
+  Generating static pages using 11 workers (3/4) 
+✓ Generating static pages using 11 workers (4/4) in 671ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /activate
+├ ƒ /api/auth/activate
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/me
+├ ƒ /api/emotions
+├ ƒ /api/health
+├ ƒ /api/internal/media-jobs
+├ ƒ /api/internal/media-jobs/[key]
+├ ƒ /api/internal/media-run
+├ ƒ /api/internal/media-storage
+├ ƒ /api/records
+├ ƒ /api/stcs/device-events
+├ ƒ /api/stcs/devices/[deviceCode]/config
+├ ƒ /api/stcs/devices/[deviceCode]/events
+├ ƒ /api/stcs/devices/[deviceCode]/media/[pictogramId]/[kind]
+├ ƒ /api/stcs/events
+├ ƒ /api/stcs/events/export
+├ ƒ /api/stcs/images
+├ ƒ /api/stcs/images/[imageId]
+├ ƒ /api/stcs/overview
+├ ƒ /api/stcs/pictograms
+├ ƒ /api/stcs/pictograms/[pictogramId]
+├ ƒ /api/stcs/pictograms/[pictogramId]/audio
+├ ƒ /api/stcs/portal
+└ ƒ /login
+
+
+ƒ Proxy (Middleware)
+
+ƒ  (Dynamic)  server-rendered on demand
+
+▲ Next.js 16.4.6
+- Local:         http://127.0.0.1:3500
+- Network:       http://127.0.0.1:3500
+✓ Ready in 214ms
+✓ Running next.config.mjs took 23ms
+(node:17848) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/nacho/OneDrive/Documentos/ChatGPT/STCS/frontend/src/lib/pictogramCatalog.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS: 319 checks; roles, privacy, assignments, reports, profile editing, pictograms and session revocation.
+▲ Next.js 16.4.6
+- Local:         http://127.0.0.1:3502
+- Network:       http://127.0.0.1:3502
+✓ Ready in 235ms
+✓ Running next.config.mjs took 23ms
+PASS: 2 database outage checks; health and authenticated requests return JSON 503.
+PASS: actual worker survives 503 and reconnects to the loopback API. No audio jobs or data created.
+---------------------------------------|---------|----------|---------|---------|-------------------
+File                                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+---------------------------------------|---------|----------|---------|---------|-------------------
+All files                              |   89.58 |    75.87 |   97.52 |   89.58 |                   
+ src                                   |   96.61 |    81.25 |     100 |   96.61 |                   
+  proxy.ts                             |   96.61 |    81.25 |     100 |   96.61 | 46-47             
+ src/app/api/auth/activate             |   94.11 |     87.5 |     100 |   94.11 |                   
+  route.ts                             |   94.11 |     87.5 |     100 |   94.11 | 41-42,54-55       
+ src/app/api/auth/login                |   90.27 |    88.23 |     100 |   90.27 |                   
+  route.ts                             |   90.27 |    88.23 |     100 |   90.27 | 25-26,36-40       
+ src/app/api/auth/logout               |   90.47 |    33.33 |     100 |   90.47 |                   
+  route.ts                             |   90.47 |    33.33 |     100 |   90.47 | 19-20             
+ src/app/api/auth/me                   |    87.8 |       80 |     100 |    87.8 |                   
+  route.ts                             |    87.8 |       80 |     100 |    87.8 | 26-30             
+ src/app/api/emotions                  |   46.59 |    42.85 |   66.66 |   46.59 |                   
+  route.ts                             |   46.59 |    42.85 |   66.66 |   46.59 | ...54-175,178-188 
+ src/app/api/health                    |      80 |    33.33 |     100 |      80 |                   
+  route.ts                             |      80 |    33.33 |     100 |      80 | 20-24             
+ src/app/api/internal/media-jobs       |     100 |      100 |     100 |     100 |                   
+  route.ts                             |     100 |      100 |     100 |     100 |                   
+ src/app/api/internal/media-jobs/[key] |     100 |    83.33 |     100 |     100 |                   
+  route.ts                             |     100 |    83.33 |     100 |     100 | 25                
+ src/app/api/internal/media-run        |     100 |       50 |     100 |     100 |                   
+  route.ts                             |     100 |       50 |     100 |     100 | 12                
+ src/app/api/internal/media-storage    |   30.76 |       20 |     100 |   30.76 |                   
+  route.ts                             |   30.76 |       20 |     100 |   30.76 | 16-25,27-61       
+ src/app/api/records                   |   79.78 |    66.66 |     100 |   79.78 |                   
+  route.ts                             |   79.78 |    66.66 |     100 |   79.78 | ...47-148,154-161 
+ src/app/api/stcs/device-events        |   88.88 |    33.33 |     100 |   88.88 |                   
+  route.ts                             |   88.88 |    33.33 |     100 |   88.88 | 8-9               
+ ...i/stcs/devices/[deviceCode]/config |    87.5 |    66.66 |     100 |    87.5 |                   
+  route.ts                             |    87.5 |    66.66 |     100 |    87.5 | 35-39             
+ ...i/stcs/devices/[deviceCode]/events |   96.07 |       80 |     100 |   96.07 |                   
+  route.ts                             |   96.07 |       80 |     100 |   96.07 | 20-21             
+ ...ceCode]/media/[pictogramId]/[kind] |     100 |    83.33 |     100 |     100 |                   
+  route.ts                             |     100 |    83.33 |     100 |     100 | 16                
+ src/app/api/stcs/events               |   95.12 |     87.5 |     100 |   95.12 |                   
+  route.ts                             |   95.12 |     87.5 |     100 |   95.12 | 15-16             
+ src/app/api/stcs/events/export        |     100 |       75 |     100 |     100 |                   
+  route.ts                             |     100 |       75 |     100 |     100 | 12                
+ src/app/api/stcs/images               |     100 |    71.42 |     100 |     100 |                   
+  route.ts                             |     100 |    71.42 |     100 |     100 | 11,18             
+ src/app/api/stcs/images/[imageId]     |     100 |       75 |     100 |     100 |                   
+  route.ts                             |     100 |       75 |     100 |     100 | 11                
+ src/app/api/stcs/overview             |    92.3 |       75 |     100 |    92.3 |                   
+  route.ts                             |    92.3 |       75 |     100 |    92.3 | 13-14             
+ src/app/api/stcs/pictograms           |   94.28 |       75 |     100 |   94.28 |                   
+  route.ts                             |   94.28 |       75 |     100 |   94.28 | 15-16             
+ .../api/stcs/pictograms/[pictogramId] |   89.47 |    57.14 |     100 |   89.47 |                   
+  route.ts                             |   89.47 |    57.14 |     100 |   89.47 | 18-19,45-46,55-56 
+ ...tcs/pictograms/[pictogramId]/audio |     100 |       80 |     100 |     100 |                   
+  route.ts                             |     100 |       80 |     100 |     100 | 17,25,47          
+ src/app/api/stcs/portal               |   87.17 |    86.66 |     100 |   87.17 |                   
+  route.ts                             |   87.17 |    86.66 |     100 |   87.17 | 31-35             
+ src/lib                               |     100 |    93.33 |     100 |     100 |                   
+  history-contract.ts                  |     100 |    85.71 |     100 |     100 | 11                
+  media-contract.ts                    |     100 |      100 |     100 |     100 |                   
+  permissions.ts                       |     100 |      100 |     100 |     100 |                   
+ src/lib/server                        |   92.88 |    76.82 |   97.61 |   92.88 |                   
+  access.ts                            |     100 |      100 |     100 |     100 |                   
+  apiResponse.ts                       |   68.62 |    68.75 |     100 |   68.62 | 12-23,28,38,44,47 
+  auth.ts                              |     100 |    77.77 |     100 |     100 | ...,81,92,123-133 
+  cloud-voice.ts                       |     100 |       50 |      50 |     100 | 62                
+  db.ts                                |     100 |       75 |     100 |     100 | 14,32,65          
+  deviceAuth.ts                        |     100 |    58.33 |     100 |     100 | 12-23,28,42       
+  emailAuth.ts                         |      76 |    61.53 |     100 |      76 | ...23,39-42,45-47 
+  errors.ts                            |     100 |      100 |     100 |     100 |                   
+  history-filters.ts                   |     100 |    96.15 |     100 |     100 | 13                
+  inputs.ts                            |     100 |      100 |     100 |     100 |                   
+  jwt.ts                               |     100 |       85 |     100 |     100 | 67,74,85          
+  media-store.ts                       |      45 |       40 |      75 |      45 | ...50,63-74,78-79 
+  media.ts                             |   96.94 |    76.61 |     100 |   96.94 | ...04,380-382,424 
+  portal.ts                            |   94.11 |    84.44 |     100 |   94.11 | ...92,308,355-363 
+  sessionCookie.ts                     |     100 |       80 |     100 |     100 | 24                
+  sessions.ts                          |     100 |    66.66 |     100 |     100 | 38                
+  stcsData.ts                          |   93.37 |    70.76 |     100 |   93.37 | ...64-780,854-855 
+  supabase-ca.ts                       |     100 |      100 |     100 |     100 |                   
+  validation.ts                        |   86.86 |    63.41 |     100 |   86.86 | ...41-242,260-263 
+  withApi.ts                           |     100 |      100 |     100 |     100 |                   
+---------------------------------------|---------|----------|---------|---------|-------------------

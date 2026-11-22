@@ -1,0 +1,283 @@
+{
+  "recordedAt": "2026-11-17T17:30:01.432417+00:00",
+  "reportCompletedAtFromFile": "2026-11-17T17:27:30.709305+00:00",
+  "date": "2026-11-17",
+  "baseCommit": "ebfc605612b1ecfa237569e64801eb65ba32f0c1",
+  "workingTreeDirty": true,
+  "newCommit": null,
+  "tool": "v24.22.1 / node:test JUnit",
+  "command": "node --import ./scripts/test-typescript.mjs --test --test-reporter=junit --test-reporter-destination=../docs/pruebas/reportes/a5-revision-20261117/unitarias-tls.xml tests/validation.test.mjs tests/history.test.mjs tests/auth-client.test.mjs tests/tls.test.mjs",
+  "cwd": "frontend",
+  "exitCode": 0,
+  "tests": 11,
+  "passed": 11,
+  "unitTests": 10,
+  "tlsIntegrationTests": 1,
+  "failed": 0,
+  "skipped": 0,
+  "reportSHA256": "41b1b88e2e37b1a2b21c1b9d57bd3a109d578973f9f6cb70ff0ea2f36fd440fd",
+  "sourceCheckpoint": [
+    {
+      "path": "frontend/src/lib/auth.ts",
+      "sha256": "3ad088a63e4fae6524b37bc9ef7f34536680f3335eab782451acddf6bd80ba5e"
+    },
+    {
+      "path": "frontend/src/lib/history-contract.ts",
+      "sha256": "96a73e521c440254c1dd8a880b7780b7c1dbbf2a9ec03bf6636a5a44bc4ca5f8"
+    },
+    {
+      "path": "frontend/src/lib/media-contract.ts",
+      "sha256": "479b7c000eca1c52ad749ad723091c8adc6f94085d2817558cc0896c932bf448"
+    },
+    {
+      "path": "frontend/src/lib/permissions.ts",
+      "sha256": "fc53f108f6d2918bc6b05880b13ba44f08c65dc5430b74e3b9d34a3b510c849b"
+    },
+    {
+      "path": "frontend/src/lib/pictogramCatalog.ts",
+      "sha256": "589f4f4dfeb30037f0622081687db20fb2d457c45898b434bcbd9f6aa1ba19c3"
+    },
+    {
+      "path": "frontend/src/lib/server/access.ts",
+      "sha256": "4dea61c6ac3b52bac4d084a91a2e56d2978e18fc43f08990dbe44f707074a72c"
+    },
+    {
+      "path": "frontend/src/lib/server/apiResponse.ts",
+      "sha256": "8b65ffa1fe5a7bb75020f8f06902907e1b2d3f793387f7391136e79a41d26fbb"
+    },
+    {
+      "path": "frontend/src/lib/server/auth.ts",
+      "sha256": "19fc6fd5e2c75b7552af4b70b365ac8cf9b2d6b46b900786ef94a8fdfd80c888"
+    },
+    {
+      "path": "frontend/src/lib/server/cloud-voice.ts",
+      "sha256": "33f3a5e20de52654087372bd7306d8464e0a21cce2cc80cfb31f0255f4405af9"
+    },
+    {
+      "path": "frontend/src/lib/server/db.ts",
+      "sha256": "9635e5783ef335a7f7382c8162a4cbfdc854d0f179ed06b7bf65d1aa12ddddb6"
+    },
+    {
+      "path": "frontend/src/lib/server/deviceAuth.ts",
+      "sha256": "371565c865023d255605b0388dc3100b41d176dfcbd81be62374ce62cb193c12"
+    },
+    {
+      "path": "frontend/src/lib/server/emailAuth.ts",
+      "sha256": "25cf95c472e555a3fb01c5b0c6ba195eae5ee4b7e3af64f6d058ff0146b61400"
+    },
+    {
+      "path": "frontend/src/lib/server/errors.ts",
+      "sha256": "fd5989f86073f32d15c048d16accafe0d17de56763078a24064d456a7ee2c8df"
+    },
+    {
+      "path": "frontend/src/lib/server/history-filters.ts",
+      "sha256": "d1a724435ab5a50a10d443efb5a27b73269baea30d1f411caa94e7c2899c8fd5"
+    },
+    {
+      "path": "frontend/src/lib/server/inputs.ts",
+      "sha256": "0af92d5acd9571a39862122bef92ac2c41a8e449302343b0e50e77433eb75e0d"
+    },
+    {
+      "path": "frontend/src/lib/server/jwt.ts",
+      "sha256": "226f7807f2526a355f32e98ed361ac8ba7fd79adc38d88d7628041af3bf1aa08"
+    },
+    {
+      "path": "frontend/src/lib/server/media-store.ts",
+      "sha256": "987db3efc81ac2c89835ab5c051c8b34a33d08fe9cbf1053a531cc64c667fd80"
+    },
+    {
+      "path": "frontend/src/lib/server/media.ts",
+      "sha256": "eb6bc073f38c222a9ffea71a7d40e654e8330c46c5153ad3ffcecb724065a71a"
+    },
+    {
+      "path": "frontend/src/lib/server/portal.ts",
+      "sha256": "c496f993cdddeef0b86c5adafd6ab18a184106fd649c651e51a687ed7135700c"
+    },
+    {
+      "path": "frontend/src/lib/server/sessionCookie.ts",
+      "sha256": "a245e42dfb626adba7dc375ef044aa8bc2a31d9c9003fb61f0e7c9acc5a0ae8e"
+    },
+    {
+      "path": "frontend/src/lib/server/sessions.ts",
+      "sha256": "8c54ce572e8907171a7c3f79f3b8310c0d4f2c4370117b6d8cc7a27396ca156c"
+    },
+    {
+      "path": "frontend/src/lib/server/stcsData.ts",
+      "sha256": "b79b768b626f0d86d153819dd851bd250ee69fae0e12d738bfef5dd5b76b6d26"
+    },
+    {
+      "path": "frontend/src/lib/server/supabase-ca.ts",
+      "sha256": "fc58b8f04bd13d3fa1ebf13c4587b833ceb662907d69a1c1d3695ef1c0cd79bc"
+    },
+    {
+      "path": "frontend/src/lib/server/validation.ts",
+      "sha256": "1a2060388157078d6160fd155744f7c50663c085ae879e50e867872ffd8b18bd"
+    },
+    {
+      "path": "frontend/src/lib/server/withApi.ts",
+      "sha256": "5e5ab011d98e2059347d42d6855522a4d2a572e07a56ff6ce25923b1e7043235"
+    },
+    {
+      "path": "frontend/src/lib/stcsUi.ts",
+      "sha256": "2e1c5d866951006c84a294b493575d112e6cffd3726a9771964648ede766d75e"
+    },
+    {
+      "path": "frontend/tests/auth-client.test.mjs",
+      "sha256": "980d8657900c3cf4d7021793daf2e9cfe6212a36a2cbb7f2853537ea7205d61d"
+    },
+    {
+      "path": "frontend/tests/e2e/accessibility.spec.mjs",
+      "sha256": "7c45ef23b0b7534001b1023b10949ff09055229e6e8473d78ab797d68d23a829"
+    },
+    {
+      "path": "frontend/tests/e2e/portal.spec.mjs",
+      "sha256": "f17aaf5d5f10d4024e8cb1d328725981f93f138c31d2bb886c74a71f711c83aa"
+    },
+    {
+      "path": "frontend/tests/history.test.mjs",
+      "sha256": "df0301a1b770862953801d60ca5a8b1cbe4be6dc50405aedf6ca4bfcda10ea85"
+    },
+    {
+      "path": "frontend/tests/tls.test.mjs",
+      "sha256": "778f545f5866c2443151710939e10acc766a0cd9b43bacdc1aecbe4feae7fa4f"
+    },
+    {
+      "path": "frontend/tests/validation.test.mjs",
+      "sha256": "6713a2966e6ae10d3d26f19efc4fe275d2f568327a32e7436fb44141c124a73c"
+    },
+    {
+      "path": "frontend/scripts/capacity-lab.mjs",
+      "sha256": "14962a23838fc89c215a5dbb9bad64e0ef3f110b0c53501f3a21cba191f9b52e"
+    },
+    {
+      "path": "frontend/scripts/fixtures/hardware-demo-accounts.ts",
+      "sha256": "4805b7d620ce07fe9e638e1a994347eb726f976974f82e061b05b633900a6128"
+    },
+    {
+      "path": "frontend/scripts/fixtures/legacy-demo-accounts.ts",
+      "sha256": "95a77cbfa60dd10bffbafb85602f128d57ee16454f41880ce6cb0ee4901b3fbd"
+    },
+    {
+      "path": "frontend/scripts/generate-additional-pictograms.mjs",
+      "sha256": "36f1bbd9566c0370ce33d10375bfb28894a173ff132edb82d10ae1f30255c92d"
+    },
+    {
+      "path": "frontend/scripts/lib/authenticated-dast.mjs",
+      "sha256": "ceb83ee005368a2ef8a12d141e03c5fce94399d38769d895a8ca99d444fab41d"
+    },
+    {
+      "path": "frontend/scripts/lib/cloud-demo.mjs",
+      "sha256": "f46529ff9d23917cd1cad57e4b04e685cf166321434939c17ac50bee8bc29f97"
+    },
+    {
+      "path": "frontend/scripts/lib/private-profile.mjs",
+      "sha256": "620a202fd7cded5d256a61fc14d35e9b6bf735cca68871301c77067d89f8a5d9"
+    },
+    {
+      "path": "frontend/scripts/lib/test-session.mjs",
+      "sha256": "9f5c9e143fcd2063302f64236cd368d4230924c1209756a83d82b143254fc0e5"
+    },
+    {
+      "path": "frontend/scripts/measure-quality.mjs",
+      "sha256": "af9f83699dd69f88bd447ed2b700f3fe9cf7a125304be4c423ae08169a90e27b"
+    },
+    {
+      "path": "frontend/scripts/media-worker.mjs",
+      "sha256": "9cf0ffa602b039236cf4abcd917a34df4ed9ba116771ad8cb101cf56dbd22ed7"
+    },
+    {
+      "path": "frontend/scripts/prepare-existing-media.mjs",
+      "sha256": "46a0d46923a4b5b4d20b0745ccc676e387907a4fdb4eb13ed74d13358e7613b4"
+    },
+    {
+      "path": "frontend/scripts/prepare-isolated-db.mjs",
+      "sha256": "14ae3587d4f974fd79599da36f88bbe89bde78aaee4268db07ed6b165d3f3ffa"
+    },
+    {
+      "path": "frontend/scripts/prepare-luis-six-pages.mjs",
+      "sha256": "1d2ac1455c18385ea876ae616a8ad698054e171ace98a485b7f665707a6cfdc1"
+    },
+    {
+      "path": "frontend/scripts/prove-validation-regression.mjs",
+      "sha256": "8bed9562c61728c044f09546d996c7331a9951281a42dfba1ef84cf2f689a7fc"
+    },
+    {
+      "path": "frontend/scripts/provision-cloud-demo.mjs",
+      "sha256": "cdcf7cffaa13c17dfb615b171bdfe1de6334614be3f3e788bfa9286e5f17cf3e"
+    },
+    {
+      "path": "frontend/scripts/provision-private-profile.mjs",
+      "sha256": "2d141b6712136bd353cd03a7edf8bea764f0c81b5dba8f9ecc53872413b55e31"
+    },
+    {
+      "path": "frontend/scripts/run-business-coverage.mjs",
+      "sha256": "ee8fdff87e99c79941af8eb4cbc34e16218ba684f657934775eb5189d382aba9"
+    },
+    {
+      "path": "frontend/scripts/run-isolated.mjs",
+      "sha256": "15786c8fc5243541885416363b21bc2de12cc110b17e961d6ea6b318dc348d0d"
+    },
+    {
+      "path": "frontend/scripts/run-media-lab.mjs",
+      "sha256": "57fd4b2265afbea9431dcab59ded4d987b70c51937193dd159f3c980e7974565"
+    },
+    {
+      "path": "frontend/scripts/run-web-quality.mjs",
+      "sha256": "4648da3a0e1d29d98d10f19498e28eaf03d3788623962b87b8086841f3ebd5d1"
+    },
+    {
+      "path": "frontend/scripts/seed-stcs-demo.mjs",
+      "sha256": "bcd18b073913b5a2512b096cbe939426048ed736e03065a8be43f38f2d60e4b3"
+    },
+    {
+      "path": "frontend/scripts/stress-media-lab.mjs",
+      "sha256": "8a19fcda9442faf8356f750884dbe6ef287468013f6e75e955a69efaae7e5e06"
+    },
+    {
+      "path": "frontend/scripts/test-typescript.mjs",
+      "sha256": "8f911143f3c75102533c88a42b0a6649b1339ca57223f263e1491900ea762ac7"
+    },
+    {
+      "path": "frontend/scripts/verify-cloud-demo.mjs",
+      "sha256": "1de28aac983def402b5c9545aa3aca0bd8a0fa321b685c7f69b12b5113300225"
+    },
+    {
+      "path": "frontend/scripts/verify-cloud-readonly.mjs",
+      "sha256": "e8b63020194d6e0522c2d28f0a305ea71bd90ac6d530306b081f9a7bcc7114a4"
+    },
+    {
+      "path": "frontend/scripts/verify-cookie-session.mjs",
+      "sha256": "65063ca973d7e1df0cffbb2b027281aa940a0836eaee3bcee33b1ee8d877784a"
+    },
+    {
+      "path": "frontend/scripts/verify-hito2.mjs",
+      "sha256": "31b9562dc4b17f9befe2f475f87c9b2a4ab0177d2ea632e125086a03aa1bb60c"
+    },
+    {
+      "path": "frontend/scripts/verify-media-worker.mjs",
+      "sha256": "5e2d07c35ef3e8a3a83640026709a5e85e7b4e217113a842a2e1cb4cb90e147e"
+    },
+    {
+      "path": "frontend/scripts/verify-media.mjs",
+      "sha256": "a58e6245bda1164ac21d4c49f0d406133a409f13b45bc4a2b3efb2d6272cbf54"
+    },
+    {
+      "path": "frontend/scripts/verify-private-profile.mjs",
+      "sha256": "4a966908109bc45aafebb0cc99c9a314a209a1f61de62da37548a8be56ac894a"
+    },
+    {
+      "path": "frontend/scripts/verify-recovery.mjs",
+      "sha256": "6b59851a00bb25a24c763c3b39031a410833b6e4d333f8b310f8406d29b5fa39"
+    },
+    {
+      "path": "frontend/scripts/verify-roles.mjs",
+      "sha256": "b8c5e6c930f7efa8c0571ceba30f5f9417b5a6745685d1e7339390e3a93c8a72"
+    }
+  ],
+  "limitations": [
+    "Only Node unit tests and local self-signed TLS test repeated on 17 November",
+    "Does not regenerate coverage, browser, API, load or physical evidence",
+    "Source hashes are a checkpoint after this short run; no commit of the candidate exists",
+    "No production data, SMTP or ESP firmware changed"
+  ]
+}

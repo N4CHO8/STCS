@@ -10,6 +10,9 @@ Los niños son perfiles de atención y no inician sesión en el portal adulto.
 | Datos sensibles | Leer | Sin acceso | Leer y editar | Sin acceso |
 | Actividad y progreso | Leer | Sin acceso | Leer | Sin acceso |
 | Pictogramas del ESP | Crear, editar y retirar | Crear, editar y retirar | Consultar | Sin acceso |
+| Selección de categorías/pictogramas visibles | Configurar por niño | Consultar, sin modificar selección | Consultar | Sin acceso |
+| Fecha de inicio de uso | Registrar y consultar | Sin acceso | Consultar | Sin acceso |
+| Observaciones del docente | Leer las del perfil asignado | Enviar y leer solo las propias | Sin acceso | Sin acceso |
 | Diagnóstico e informes | Publicar y leer | Sin acceso | Leer | Sin acceso |
 | Orientaciones de comunicación | Publicar y leer | Leer | Leer | Sin acceso |
 | Adultos y asignaciones | Sin acceso | Sin acceso | Sin acceso | Crear, editar y desactivar |
@@ -69,3 +72,11 @@ Las cuentas reales se activan/recuperan por código de correo y el titular elige
 Luis es ficticio y tiene un ESP físico. Sus adultos públicos de prueba usan is_private_test y correos ficticios; solo esa marca persistida permite la excepción de activación. El portal no puede modificarla ni mezclar cohortes o convertir esas cuentas en administradores. Los accesos están en README y /demo está retirado.
 
 Las cuentas reales requieren verificación y asignación aprobada. Los cambios persisten y el login no crea tablas, repuebla demos ni reescribe contraseñas. Las orientaciones al docente son texto separado: el especialista debe evitar incluir clínica en ese campo.
+
+## Alcance de administración de equipos — 17/11/2026
+
+Los ESP se entregan previamente configurados y asociados técnicamente a un perfil. Los adultos conservan el acceso por asignaciones autorizadas y las aprobaciones existentes; el cierre TCS-53 no permite al administrador obtener identidades ni datos clínicos. Vincular por posesión, rotar la clave técnica o reasignar equipos íntegramente desde web se difiere a FUT03, sin implementación acreditada. La aprobación técnica verbal informada y la revisión profesional pendiente se distinguen en [A3](historias.md).
+
+## Adaptación y seguimiento — candidato local del 21/11
+
+El catálogo conserva los pictogramas ocultos. Una selección explícita no incorpora automáticamente nuevos pictogramas creados por el docente: decide el especialista. No se puede retirar o mover el último pictograma visible sin ajustar primero la selección. Fecha y observaciones se guardan por perfil; los envíos docentes tienen un identificador para evitar duplicados al reintentar. Las observaciones son apoyos de comunicación, no diagnósticos ni progreso. Esta ampliación requiere la migración local preparada antes de publicarse.

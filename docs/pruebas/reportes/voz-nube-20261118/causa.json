@@ -1,0 +1,7 @@
+{
+  "reproduced": true,
+  "exception": "ValueError",
+  "reason": "Model checksum mismatch",
+  "configExpected": "531c4051502e1acbc10b42437f11679bfce9e3919e1796e51fabd73e01e7fd2e",
+  "configReceived": "7d82d069eccca0f87963bd23c33166fe1ef6d24a6b231543931bfe692397f256"
+}

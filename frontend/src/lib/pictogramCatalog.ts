@@ -233,9 +233,9 @@ export const DEVICE_PICTOGRAM_ASSETS: DevicePictogramAsset[] = [
   },
 ];
 
-// Additional public communication symbols (Lucide, ISC), not patient uploads.
+// Public catalog symbols; provenance and source hashes live in ARASAAC-CATALOG.json.
 // Existing defaults retain their IDs and positions; this is a catalog, not a seed.
-export const ADDITIONAL_PICTOGRAM_ASSETS: DevicePictogramAsset[] =
+const HISTORICAL_ADDITIONAL_PICTOGRAM_ASSETS: DevicePictogramAsset[] =
   Object.entries(additions).flatMap(([category, rows], categoryIndex) =>
     rows.map(([label, message], index) => {
       const number =
@@ -256,16 +256,38 @@ export const ADDITIONAL_PICTOGRAM_ASSETS: DevicePictogramAsset[] =
       };
     }),
   );
-export const ALL_PICTOGRAM_ASSETS = [
+const HISTORICAL_PICTOGRAM_ASSETS = [
   ...DEVICE_PICTOGRAM_ASSETS,
-  ...ADDITIONAL_PICTOGRAM_ASSETS,
+  ...HISTORICAL_ADDITIONAL_PICTOGRAM_ASSETS,
 ];
+// Filter after assigning IDs: removing a choice must never renumber existing records.
+export const REVIEW_PENDING_IMAGE_PATHS = new Set([
+  "/pictograms/extra-49.png",
+  "/pictograms/extra-50.png",
+  "/pictograms/extra-51.png",
+]);
+export const ALL_PICTOGRAM_ASSETS = HISTORICAL_PICTOGRAM_ASSETS.filter(
+  (item) => !REVIEW_PENDING_IMAGE_PATHS.has(item.imagePath),
+);
+export const ADDITIONAL_PICTOGRAM_ASSETS =
+  HISTORICAL_ADDITIONAL_PICTOGRAM_ASSETS.filter(
+    (item) => !REVIEW_PENDING_IMAGE_PATHS.has(item.imagePath),
+  );
 export const DEVICE_IMAGE_PATHS = new Set(
-  ALL_PICTOGRAM_ASSETS.map((item) => item.imagePath),
+  HISTORICAL_PICTOGRAM_ASSETS.map((item) => item.imagePath),
 );
 
 export const isDeviceCategory = (value: string): value is DeviceCategory =>
   DEVICE_CATEGORIES.includes(value as DeviceCategory);
 
 export const getCatalogAsset = (imagePath: string) =>
-  ALL_PICTOGRAM_ASSETS.find((item) => item.imagePath === imagePath);
+  HISTORICAL_PICTOGRAM_ASSETS.find((item) => item.imagePath === imagePath);
+
+export function getImageSourceLabel(imagePath: string | null | undefined) {
+  if (!imagePath) return "";
+  if (REVIEW_PENDING_IMAGE_PATHS.has(imagePath))
+    return "Símbolo anterior · pendiente de revisión";
+  if (DEVICE_IMAGE_PATHS.has(imagePath)) return "ARASAAC";
+  if (imagePath.startsWith("/api/stcs/images/")) return "Imagen propia";
+  return "";
+}

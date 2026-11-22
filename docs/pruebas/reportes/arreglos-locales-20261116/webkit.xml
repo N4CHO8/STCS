@@ -1,0 +1,38 @@
+<testsuites id="" name="" tests="16" failures="0" skipped="0" errors="0" time="32.553273999999995">
+<testsuite name="accessibility.spec.mjs" timestamp="2026-11-16T23:00:42.993Z" hostname="" tests="6" failures="0" skipped="0" time="17.763" errors="0">
+<testcase name="CP-RNF03-A11Y: therapist keyboard and WCAG scan" classname="accessibility.spec.mjs" time="4.745">
+</testcase>
+<testcase name="CP-RNF03-A11Y: teacher keyboard and WCAG scan" classname="accessibility.spec.mjs" time="2.625">
+</testcase>
+<testcase name="CP-RNF03-A11Y: guardian keyboard and WCAG scan" classname="accessibility.spec.mjs" time="4.195">
+</testcase>
+<testcase name="CP-RNF03-A11Y: admin keyboard and WCAG scan" classname="accessibility.spec.mjs" time="2.559">
+</testcase>
+<testcase name="CP-RF10-E01: filtered CSV download is available only in authorized history" classname="accessibility.spec.mjs" time="1.791">
+</testcase>
+<testcase name="CP-RF01-E03: real export 401 removes private data and redirects" classname="accessibility.spec.mjs" time="1.848">
+</testcase>
+</testsuite>
+<testsuite name="portal.spec.mjs" timestamp="2026-11-16T23:00:42.993Z" hostname="" tests="10" failures="0" skipped="0" time="13.966" errors="0">
+<testcase name="CP-RF01-E01: direct URL requires login and invalid credentials show an error" classname="portal.spec.mjs" time="1.007">
+</testcase>
+<testcase name="CP-RF02-E01: specialist selects assigned children and reads the clinical file" classname="portal.spec.mjs" time="1.363">
+</testcase>
+<testcase name="CP-RF03-E01: create, persist, edit and reject a duplicate through the browser" classname="portal.spec.mjs" time="2.873">
+</testcase>
+<testcase name="CP-RF03-E02: invalid upload is rejected and a valid image persists" classname="portal.spec.mjs" time="1.882">
+</testcase>
+<testcase name="CP-RF02-E02: teacher has no clinical controls or private API response" classname="portal.spec.mjs" time="0.846">
+</testcase>
+<testcase name="CP-RF02-E03: guardian sees only their child and cannot edit the board" classname="portal.spec.mjs" time="1.245">
+</testcase>
+<testcase name="CP-RF02-E04: administrator receives numbered profiles without child identities" classname="portal.spec.mjs" time="0.764">
+</testcase>
+<testcase name="CP-RF01-E02: missing server credential clears the portal and redirects to login" classname="portal.spec.mjs" time="1.196">
+</testcase>
+<testcase name="CP-RNF03-E01: API failure shows an error and retry recovers" classname="portal.spec.mjs" time="1.28">
+</testcase>
+<testcase name="CP-RNF03-E02: mobile navigation fits and logout prevents returning to private data" classname="portal.spec.mjs" time="1.51">
+</testcase>
+</testsuite>
+</testsuites>

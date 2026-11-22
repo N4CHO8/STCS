@@ -1,34 +1,60 @@
 # Resultados y defectos
 
-Resultados de software ejecutados en laboratorio aislado y CI. Último CI de referencia: [main 22fa385](https://github.com/N4CHO8/STCS/actions/runs/43925021420), [PR #15](https://github.com/N4CHO8/STCS/pull/15), diez E2E aprobados. [Manifiesto de herramientas y revisiones](reportes/cierre-20261116.json).
+Las cifras siguientes corresponden al 21/11/2026, salvo las pruebas físicas y de nube, que conservan su fecha. Se informa qué se ejecutó y qué permite concluir. Los ensayos de laboratorio usan datos ficticios y PostgreSQL localhost; no modifican datos reales.
 
-| Nivel/caso | Esperado | Observado y evidencia | Alcance |
+| Tipo | Qué se probó | Resultado | Interpretación y evidencia |
 | --- | --- | --- | --- |
-| Unitarias CP-RF03-U01–04, CP-RNF01-U01, CP-RF05-U01–02 | Válidos aceptados e inválidos rechazados | 7/7, [JUnit](reportes/unitarias-cierre.xml) | Validadores reales |
-| Integración | Roles, sesiones, asignación, informes, medios y concurrencia coherentes | 291 comprobaciones, CI y manifiesto | API/PostgreSQL descartable |
-| Resiliencia DB | Error JSON 503 y recuperación del trabajador | 2 checks y reconexión aprobados | Fallos acotados del servidor |
-| Navegador | Recorridos completos y negativos, sin errores críticos JS/CSP | 10/10 Chromium en CI; [JUnit histórico](reportes/e2e.xml) | Sesión, roles, CRUD/imagen, duplicados, 401, error/reintento, móvil y logout |
-| Cobertura | ≥70% de líneas del alcance de servidor | 88,89% de líneas, 74,4% ramas, 97,39% funciones; [reporte](reportes/cobertura-negocio/coverage-summary.json) | Incluye API/proxy/módulos declarados y archivos no ejecutados; excluye UI, C++ y Python |
-| Regresión CP-RF03-U02 | Detectar retirar el límite UTF-8 | Fallo detectado en copia temporal; [registro](reportes/regresion.json) | No se modifica la fuente real |
-| Carga CP-RNF02-L01/L02 | p95 ≤2 s, errores <1% | 63,48/69,42 ms con 5/10 clientes, cero errores; [datos](../calidad/carga-local.json) | Local, 15 s/etapa; no capacidad cloud |
-| Seguridad CP-RNF01-S01 | Analizar y tratar hallazgos | ZAP: 0 altos, 1 medio residual; npm sin vulnerabilidades conocidas; [análisis](../calidad/README.md) | Baseline pasivo sin autenticación |
-| Físicas PF-01–07 | Navegación, imagen/voz conectada, sincronización, cola y recuperación | Conformes informados por Ignacio para el 15/11; [registro](FISICAS_20261115.md) | Un ESP; anexos, conteos y duración exacta pendientes |
-| Aceptación profesional | Tareas/indicadores y aprobación externa real | No realizada; correo enviado | [Protocolo](../validacion/PAUTA.md), TCS-77 |
+| Unitarias | Validación, permisos, sesión, historial, selección y catálogo | 15/15 aprobadas | Reglas y límites seleccionados; no toda combinación de entradas. [JUnit](reportes/arasaac-20261121/unitarias.xml) |
+| Integración | API, base, roles, medios, datos y reintentos | 387 comprobaciones conformes en una suite | No son 387 casos independientes. [Salida](reportes/arasaac-20261121/integracion.txt) |
+| Resiliencia | Dos fallos de base y reconexión del trabajador | 3/3 conformes | JSON 503 y recuperación; no alta disponibilidad cloud. Mismo reporte |
+| TLS del servidor | Rechazo de certificado PostgreSQL no confiable | 1/1 conforme | Prueba del adaptador local, distinta del TLS del ESP. [JUnit](reportes/adaptacion-20261121/unitarias-tls.xml) |
+| E2E | 20 recorridos UI–API–base por motor | 40/40 aprobados, sin omitidos | Chromium/WebKit automatizados, sin ESP físico. [Reporte](reportes/arasaac-20261121/README.md) |
+| Cobertura | Servidor/API/proxy y contratos declarados | 90,05 % líneas; 78,16 % ramas; 97,58 % funciones | Supera ≥70 % de líneas en ese alcance; excluye UI, firmware y Python. [Resumen](reportes/adaptacion-20261121/cobertura/coverage-summary.json) |
+| Voz Python | Configuración fija, autorización, integridad y respuesta | 8/8 aprobadas | No acredita corrección ya desplegada. [Salida](reportes/adaptacion-20261121/voz-python.txt) |
+| Carga | 5/10 clientes, 15 s por etapa | p95 56,47/58,07 ms, 0 errores; 830/1542 peticiones | Perfil local mínimo, sin pictogramas; no capacidad cloud. [Datos](reportes/adaptacion-20261121/carga-local.json) |
+| Seguridad | ZAP pasivo autenticado | 0 altos, 1 medio y 1 informativo | CSP de estilos conserva riesgo residual; no pentest activo. [Datos](reportes/adaptacion-20261121/seguridad-autenticada.json) |
+| Recuperación | SQL, tres medios y seguimiento sintéticos | Conforme | Restauración aislada; no recuperación real cloud/flota. [Reporte](reportes/adaptacion-20261121/recuperacion.json) |
+| Físicas | Nueve escenarios y dos comprobaciones instrumentadas | Conformes con límites registrados | [Físicas](FISICAS_20261115.md), [multicliente](MULTICLIENTE_20261116.md), [PC-01/02](CIERRE.md) |
+| Nube | Recorridos manuales con Chrome, 18/11 | Conformes según autor, excepto D15 voz nueva | Cambios observados en 10–15 s aproximados, sin distribución instrumentada. [Registro](NUBE_20261118.md) |
+| Revisión profesional | Zoom adulto del 20/11 | Pertinencia aprobada en alcance registrado | Sin indicadores cuantificados ni ensayo con menores. [Registro](../validacion/REGISTRO.md) |
+
+Los [planificados y ejecutados](PLAN.md) conservan los casos no realizados: cinco PA completos y el ensayo físico del firmware adaptable. El histórico del 16–18/11 mantiene sus cifras originales y no se reetiqueta como ejecución del candidato actual.
 
 ## Defectos y tratamiento
 
-| ID | Hallazgo | Tratamiento y resultado |
-| --- | --- | --- |
-| D01 | Tarjetas ausentes al reiniciar | PR #7: metadatos separados y atlas; reinicio con cargador confirmado |
-| D02 | Descarga HTTPS/chunked incompleta | PR #6: lectura y hash/tamaño corregidos; recorrido cloud confirmado |
-| D03 | Menú Wi-Fi ausente tras reorganizar UI | PR #9: configuración móvil restaurada y confirmada |
-| D04 | Tactilidad inferior defectuosa | Controles superiores/laterales; mitigación confirmada, defecto físico vigente |
-| D05 | ACK incompatible en firmware recuperado | PR #2/#3: ACK explícito e idempotencia; PF-05 informado conforme, trazas pendientes |
-| D06 | Sin prueba negativa UTF-8 | Caso real y regresión controlada incorporados |
-| D07 | Cabeceras de seguridad ausentes | CSP con nonce y anti-frame; ZAP repetido, excepción de estilos inline documentada |
-| D08 | E2E de sesión competía con redirección | PR #15: transporte sincronizado y 401 real; PR y main aprobados. [Registro](CORRECCION_E2E_SESION_20261116.md) |
-| L-01 | Sin Wi-Fi no hubo voz | Limitación aceptada, no corregida; no se garantiza voz offline |
+Severidad técnica valorada el 17/11: alta si afecta comunicación/sincronización o privacidad; media si degrada operación; baja para infraestructura de pruebas. El registro conserva los fallos corregidos y las limitaciones vigentes.
+
+| ID | Defecto o limitación | Severidad | Corrección / estado | Verificación y evidencia |
+| --- | --- | --- | --- | --- |
+| D01 | Tarjetas ausentes al reiniciar | Alta | [PR #7](https://github.com/N4CHO8/STCS/pull/7): metadatos separados y atlas | Reinicio con cargador conforme según autor; [PF-02/04](FISICAS_20261115.md) |
+| D02 | Descarga HTTPS/chunked incompleta | Alta | [PR #6](https://github.com/N4CHO8/STCS/pull/6): espera de bytes, tamaño y hash | Recorrido cloud físico confirmado; [telemetría v0.8.2](../evidencias/publicacion-20261115/esp-nube-v082.txt) y [verificación cloud](../evidencias/publicacion-20261115/verificacion-nube.json), con fecha/alcance originales |
+| D03 | Menú Wi-Fi ausente tras reorganizar UI | Media | [PR #9](https://github.com/N4CHO8/STCS/pull/9): menú móvil restaurado | PF-06 conforme según propietario |
+| D04 | Tacto inferior defectuoso | Media | Mitigado con controles superiores/laterales; defecto físico vigente | PF-01 conforme para distribución; no hardware reparado |
+| D05 | ACK incompatible con firmware recuperado | Alta | [PR #2](https://github.com/N4CHO8/STCS/pull/2)/[#3](https://github.com/N4CHO8/STCS/pull/3): ACK e idempotencia | API y PF-05 conformes; prueba física sin traza del instante exacto del corte |
+| D06 | Ausencia de negativo UTF-8 | Media | U02 incorporado y mutación controlada | [Regresión detectada](reportes/regresion.json); [JUnit 17/11](reportes/a5-revision-20261117/unitarias-tls.xml) con fuente real aprobada |
+| D07 | Cabeceras de seguridad insuficientes | Media | CSP con nonce/anti-frame y otras cabeceras; medio de estilos inline permanece como riesgo residual | [ZAP histórico](../calidad/README.md) y [autenticado](reportes/arreglos-locales-20261116/seguridad-autenticada.json); no garantía contra XSS |
+| D08 | Test de sesión competía con redirección | Baja, infraestructura | [PR #15](https://github.com/N4CHO8/STCS/pull/15): transporte sincronizado y 401 real | [Fallo y repetición](CORRECCION_E2E_SESION_20261116.md), ambos motores ampliados aprobados |
+| D09 | Filtros limitados a la página de 100 eventos | Media | Filtros SQL sobre conjunto completo y CSV auditado; arreglo local | Integración de más de 100 eventos, filtros/fechas/vacío/límites; [reporte](reportes/arreglos-locales-20261116/integracion-cobertura.txt) |
+| D10 | Correo introducido antes de hidratación podía perderse | Media | Login espera preparación; arreglo local | Recorridos WebKit y Chromium aprobados tras corrección, [ampliación](ARREGLOS_LOCALES_20261116.md) |
+| D11 | 401 de petición antigua podía afectar sesión nueva o dejar datos | Alta, preventiva de privacidad | Invalidación común con revisión de sesión y aborto; arreglo local | CP-RF01-U02 y E03, JUnit nuevo y XML ampliados |
+| D12 | Consulta de voz seguía activa al recargar en WebKit | Media | Cancelación pagehide y reinicio al volver; arreglo local | WebKit ampliado sin errores de petición observados |
+| D13 | Contraste/foco insuficiente en controles seleccionados | Media | Colores y foco ajustados; arreglo local | Cuatro casos axe/teclado por motor; no certificación total |
+| D14 | Carga dependía de fixture preparado por otra ejecución | Baja, infraestructura | Sonda crea y limpia UUID propios | [Carga autosuficiente](reportes/arreglos-locales-20261116/carga-local.json) aprobada |
+| L-01 | Voz sin Wi-Fi no disponible en ensayo | Media, limitación aceptada | Sin síntesis local ni garantía offline; no corregida | PF-02/L-01 según propietario; conservar conexión y alternativa comunicativa del adulto |
+| D15 | Frases nuevas fallan en Vercel por configuración de Piper distinta al hash esperado | Alta | Corrección local empaqueta la configuración revisada y fija modelo; corrección comprobada en local; prueba cloud del 18/11 fallida | 422 confirmado en Vercel y reproducido; ocho pruebas y HTTP real con Piper aprobados localmente. [Reporte](reportes/voz-nube-20261118/README.md) |
 
 Los incidentes de selector de test, limpieza de fixtures y mapas de cobertura se resolvieron en la infraestructura; no se cuentan como defectos clínicos. Los [resultados iniciales](../historico/pruebas/RESULTADOS_INICIALES_20261116.md) y registros de publicación conservan su fecha y versión.
 
-No se calcula un porcentaje global mezclando aserciones, recorridos, etapas y personas. La meta ≥95% del plan integral requiere reconciliar casos y aceptación pendiente. Varios ESP, Safari/teléfonos reales, seguridad autenticada ampliada y mediciones externas siguen fuera de lo acreditado.
+Los límites de cobertura, entorno y aceptación permanecen en el resumen. El cumplimiento por nivel está en el plan; la revisión profesional consta en su registro.
+
+## Ajustes profesionales y regresión — 21/11
+
+La revisión añadió selección visible por niño, fecha de inicio y observaciones del docente. [Reporte y resultados por nivel](reportes/adaptacion-20261121/README.md). Los reportes del 16–18/11 conservan sus cifras: no se reetiquetan como ejecuciones nuevas.
+
+**D16, baja, corregido localmente:** al guardar y recargar de inmediato podían quedar consultas activas del portal o de sesión; WebKit registró errores de acceso durante el abandono de la vista. Se cancelan las consultas al salir y se actualiza la selección confirmada sin una consulta completa redundante. El estado «Consultando voz» distingue la consulta de la preparación. La repetición incluye conservar selección, recarga, cierre de sesión y limpieza de datos privados.
+
+La ampliación también descubrió problemas del fixture: varios escenarios compartían el presupuesto de intentos de login y algunas acciones de prueba no esperaban a que terminara la navegación. Se aislaron los contadores de las cuentas ficticias entre casos, comprobando antes servidor/base localhost, y se esperan estados visibles. No se desactivan límites de producción ni se omiten las comprobaciones de consola.
+
+**D17, media, corregido localmente:** la navegación al portal seguida inmediatamente de `router.refresh()` podía reiniciar la sección tras el primer clic en WebKit. Se conserva una única navegación tras login y la lectura autenticada sin caché. El recorrido ampliado verifica cambio de cuenta docente/especialista, identidad de la sesión y persistencia de la observación en el perfil correcto.
+
+**D18, media, corregido en el candidato:** el enlace de créditos tenía contraste 4,45:1. Se oscureció el texto y las revisiones axe de los cuatro roles pasaron en Chromium y WebKit. [Reporte ARASAAC](reportes/arasaac-20261121/README.md).

@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-21T17:39:43.692Z",
+  "scope": "Isolated localhost PostgreSQL only",
+  "rls": true,
+  "anon_select": false,
+  "authenticated_select": false
+}

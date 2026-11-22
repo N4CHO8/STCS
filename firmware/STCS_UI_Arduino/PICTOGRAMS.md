@@ -1,8 +1,14 @@
 # Pictogramas CAA
 
-La interfaz usa pictogramas de ARASAAC como representacion visual principal,
-acompanados por una etiqueta textual y salida de voz. Las imagenes se compilan
-en el firmware para que la comunicacion visual no dependa de la microSD.
+## Catálogo sincronizado
+
+La web candidata distribuye 91 pictogramas ARASAAC en PNG de 96 × 96, convertidos por el servidor a RGB565. El ESP los descarga con comprobación de tamaño y huella y conserva una caché acotada. La selección por niño depende del especialista. El [catálogo y sus créditos](../../docs/PICTOGRAMAS.md) identifican cada recurso. Este cambio está en local; no se cargó firmware ni se cambió el tablero instalado.
+
+## Recursos incrustados en el firmware
+
+La descripción y la tabla siguientes corresponden a los recursos estáticos de respaldo y de categorías, no a la procedencia del catálogo que llega por red.
+
+El firmware conserva recursos ARASAAC incrustados, generados desde `assets/arasaac`. Son independientes de las imágenes asignadas y sincronizadas desde la web.
 
 ## Fuente y licencia
 

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { spawn } from "node:child_process";
+import { spawn, execFileSync } from "node:child_process";
 import { randomUUID, createHash } from "node:crypto";
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
@@ -9,7 +9,17 @@ assert.equal(process.env.STCS_TEST_ISOLATED, "1");
 const root = resolve("..");
 const raw = resolve(root, ".codex-work", "coverage-" + randomUUID());
 const canonical = raw + "-canonical";
-const reports = resolve(root, "docs/pruebas/reportes/cobertura-negocio");
+const reports = resolve(
+  root,
+  process.env.STCS_COVERAGE_REPORT_DIR ??
+    "docs/pruebas/reportes/cobertura-negocio",
+);
+assert.ok(
+  [
+    resolve(root, ".codex-work") + sep,
+    resolve(root, "docs/pruebas/reportes") + sep,
+  ].some((prefix) => reports.startsWith(prefix)),
+);
 await Promise.all([
   mkdir(raw, { recursive: true }),
   mkdir(canonical, { recursive: true }),
@@ -84,6 +94,8 @@ await run([
   "**/src/lib/permissions.ts",
   "--include",
   "**/src/lib/media-contract.ts",
+  "--include",
+  "**/src/lib/history-contract.ts",
   "--exclude-after-remap",
   "--extension",
   ".ts",
@@ -103,9 +115,15 @@ assert.ok(
 );
 const metadata = {
   generatedAt: new Date().toISOString(),
+  codeCommit: execFileSync("git", ["rev-parse", "HEAD"], {
+    encoding: "utf8",
+  }).trim(),
+  workingTreeDirty:
+    execFileSync("git", ["status", "--porcelain"], { encoding: "utf8" }).trim()
+      .length > 0,
   tool: "c8 9.1.0 / Node V8",
   scope:
-    "All server modules, API route handlers, proxy.ts, permissions.ts and media-contract.ts",
+    "All server modules, API route handlers, proxy.ts, permissions.ts, media-contract.ts and history-contract.ts",
   excluded: "UI, firmware and Python voice runtime; measured separately",
   sourceURLNormalizationOnly: true,
   remapped,

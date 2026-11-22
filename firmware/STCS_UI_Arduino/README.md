@@ -80,3 +80,9 @@ una configuración de laboratorio nunca se importa como actividad de producción
 La primera carga tras cambiar ese ámbito requiere red. Rotar clave al reasignar.
 La preparación de nube, mediciones, recuperación y estado real de instalación
 están en [el cierre técnico](../../docs/historico/CIERRE_STCS_20261115.md).
+
+## Tablero adaptable — v0.8.7-adaptive-board
+
+Versión candidata local; no instalada en el ESP del propietario. La API entrega solo los pictogramas que seleccionó el especialista para ese niño. El inicio oculta categorías sin elementos y, al aplicar un tablero con una sola categoría, abre directamente sus pictogramas. Volver mantiene accesible el inicio y el menú Wi-Fi. Hablar, Volver, Borrar, frase y flechas conservan su distribución.
+
+Los cambios de selección siguen esperando frase vacía y audio terminado antes de sustituir los datos. El catálogo completo permanece en la web. Los límites operativos no cambian: 180 en total, 45 por categoría y cuatro por página. Falta la comprobación física de esta versión; el firmware y tablero actuales se conservan.

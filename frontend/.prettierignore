@@ -1,0 +1,2 @@
+# Vendored Piper config: preserve bytes required by the voice integrity check.
+api/voice-model-config.json

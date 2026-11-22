@@ -8,12 +8,17 @@ about: Definir alcance y criterios verificables; Jira TCS es el tablero vigente
 **Jira:** TCS-___ · **Requerimiento:** RF/RNF-___ · **Objetivo:** OE-___
 **Prioridad:** Must/Should/Could · **Sprint y objetivo:** por completar.
 
-**Criterios**
+**Criterios de aceptación**
 
-- Dado [contexto válido], cuando [acción], entonces [resultado observable].
-- Dado [entrada inválida/acceso prohibido], cuando [acción], entonces [rechazo observable].
+- **CA01** Dado [contexto válido], cuando [acción], entonces [resultado observable].
+- **CA02** Dado [entrada inválida/acceso prohibido], cuando [acción], entonces [rechazo observable].
 
-**Pruebas y evidencia:** IDs, nivel, esperado, obtenido, reporte, fecha y SHA.
+**Tareas**
 
-**Aprobación externa:** Pendiente. Registrar decisión auténtica, nombre, rol,
+- TCS-XX.T1 · [estado]: [trabajo concreto y criterio relacionado].
+- TCS-XX.T2 · [estado]: [verificación y evidencia].
+
+**Pruebas y evidencia:** IDs de caso y criterio CA, nivel, esperado, obtenido, reporte, fecha y SHA.
+
+**Aprobación del stakeholder:** Pendiente. Registrar decisión auténtica, nombre, rol,
 fecha y alcance de escenarios observados; no autoaprobar.

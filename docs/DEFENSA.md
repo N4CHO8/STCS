@@ -1,32 +1,43 @@
-# Defensa de STCS
+# STCS Entrega técnica
 
-Índice de entrega técnica, actualizado el 16/11/2026. La estructura responde a los nueve artefactos de la guía del profesor. Los IDs H3-RF/H3-RNF y la etiqueta exigida `hito3` conservan sus nombres para no romper la trazabilidad.
+STCS es un prototipo de comunicación con pictogramas y voz para niños con TEA que necesitan apoyo comunicativo. Este índice reúne la documentación del semestre, la revisión profesional y la evidencia de sus pruebas.
 
-## Entrega y evidencia
+**[Informe del proyecto](INFORME_HITO3.md)** · [Aplicación](https://0stcs0.vercel.app) · [GitHub](https://github.com/N4CHO8/STCS) · [Jira TCS](https://uandresbello-team-bg7iosbc.atlassian.net/jira/software/projects/TCS).
 
-| Artefacto | Documento principal | Situación |
+| Artefacto | Documento | Qué permite comprobar |
 | --- | --- | --- |
-| A1 Problema, hipótesis, objetivos e indicadores | [Objetivos](objetivos.md) | Objetivos originales y metas propuestas; medición y ratificación externa pendientes |
-| A2 Requerimientos y alcance | [Requerimientos](requerimientos.md) | Incluye prioridad, objetivo, modelos y escenarios de seguridad/eficiencia |
-| A3 Historias y aceptación | [Jira TCS](https://uandresbello-team-bg7iosbc.atlassian.net/jira/software/projects/TCS), [correspondencia](historias.md) | Criterios Dado/Cuando/Entonces; aprobación externa pendiente |
-| A4 Cadena de trazabilidad | [Matriz](trazabilidad.md) | Objetivo, requisito, modelo, HU/sprint, caso, reporte y revisión; conserva pendientes |
-| A5 Plan y resultados de pruebas | [Plan](pruebas/PLAN.md), [resultados](pruebas/RESULTADOS.md) | Software ejecutado; confirmaciones físicas con anexos pendientes |
-| A6 Seguridad y eficiencia | [Calidad](calidad/README.md) | Reportes originales, umbrales, alcance y aviso residual |
-| A7 Modelos y decisiones | [Arquitectura](arquitectura/README.md) | Modelos y tres ADR con alternativas ponderadas |
-| A8 Repositorio y despliegue | [Repositorio](REPOSITORIO.md), README y CHANGELOG | Main protegida y CI; tag final pendiente |
-| A9 Riesgos y deuda | [Riesgos](riesgos.md) | Riesgos materializados, mitigación, contingencia y mejoras priorizadas |
+| A1 | [Objetivos](objetivos.md) | Problema, hipótesis, métricas, origen de la referencia y resultados |
+| A2 | [Requerimientos](requerimientos.md) | Prioridades, alcance y escenarios de calidad |
+| A3 | [Historias](historias.md) | Criterios, tareas y responsables de aprobación |
+| A4 | [Trazabilidad](trazabilidad.md) | Objetivo → requisito/modelo → HU/sprint → caso → reporte → versión |
+| A5 | [Plan](pruebas/PLAN.md), [casos](pruebas/CASOS.md), [resultados](pruebas/RESULTADOS.md) | Planificados y ejecutados, esperado/observado y defectos |
+| A6 | [Calidad](calidad/README.md) | Seguridad, eficiencia y riesgo residual |
+| A7 | [Arquitectura](arquitectura/README.md) | UML y tres decisiones con alternativas ponderadas |
+| A8 | [Repositorio](REPOSITORIO.md) | Organización, PR, CI y reproducción |
+| A9 | [Riesgos](riesgos.md) | Probabilidad, impacto, responsable, contingencia y mejoras |
 
-## Versión técnica de referencia
+El [seguimiento](gestion.md) y las fichas de [Sprint 2](gestion/HISTORIAS_SPRINT2.md) y [Sprint 3](gestion/HISTORIAS_SPRINT3.md) complementan el informe. Los [costos](factibilidad.md) y las [fuentes](antecedentes-y-referencias.md) responden a la retroalimentación del informe anterior.
 
-[Producción](https://0stcs0.vercel.app), [GitHub](https://github.com/N4CHO8/STCS) y [CI de main 22fa385](https://github.com/N4CHO8/STCS/actions/runs/43925021420). La corrección del E2E de sesión está en [PR #15](https://github.com/N4CHO8/STCS/pull/15). Los reportes de carga, cobertura y ZAP identifican sus propias revisiones de ejecución; no se vuelven a fechar al reorganizar documentos.
+## Evidencia y alcance
 
-ESP confirmado: v0.8.6-wifi-status, un equipo, 96 activos. [Registro físico](pruebas/FISICAS_20261115.md). Límite operativo ensayado 180/45, cola de 64, voz sin Wi-Fi no garantizada.
+El corte del 21/11/2026 registra 15 pruebas unitarias, 20 recorridos Chromium, 20 WebKit y una suite de 387 comprobaciones API, todos conformes. La medición de servidor del mismo día dio 90,05 % de cobertura de líneas. [Resultados](pruebas/RESULTADOS.md).
 
-## Cierre que requiere al autor o al evaluador
+Los ensayos automáticos del 21/11 corresponden a un candidato local aislado. El registro de [nube del 18/11](pruebas/NUBE_20261118.md) corresponde a la versión publicada y detectó D15 al generar voces nuevas. Su corrección está comprobada en laboratorio. La documentación distingue estos entornos y no atribuye al despliegue pruebas realizadas sobre otro código.
 
-1. Adjuntar evidencias reales de los ensayos ya comunicados y medir los indicadores acordados; no inventar duración o conteos.
-2. Realizar la revisión profesional, registrar nombre/rol/fecha y aceptación por HU e indicador. El correo está enviado, sin reunión acreditada. [Protocolo](validacion/PAUTA.md).
-3. Verificar lectura de GitHub y Jira desde la cuenta del profesor. Nuestro acceso por conector no demuestra el suyo.
-4. Tras incorporar evidencia y revisar pendientes, congelar el tag `hito3` del commit final. No moverlo para incluir evidencia posterior.
+El firmware habitual de referencia es v0.8.6-wifi-status. v0.8.7-adaptive-board incorpora la adaptación por niño y cuenta con compilación y pruebas de servidor; no tiene comprobación física registrada. El tablero de referencia ensayado tiene 96 elementos. El máximo operativo probado es 180, con 45 por categoría; no es un máximo físico absoluto.
 
-Esta entrega describe una demostración con adultos y datos ficticios. No acredita eficacia clínica, prueba con varios ESP ni autorización de un piloto con menores. La evolución y registros antiguos están separados en [histórico](historico/README.md).
+## Revisión del profesional
+
+Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA, revisó el prototipo por Zoom el 20/11. Aprobó su pertinencia con el alcance [registrado por HU](validacion/REGISTRO.md). La condición de simplificar el tablero por niño se atendió en la implementación. No hubo participación de niños ni medición de eficacia terapéutica, autonomía o tiempos del evaluador.
+
+Heriber es el stakeholder de pertinencia. Las tareas técnicas se verifican con pruebas; los profesores figuran como guías y evaluadores.
+
+## Límites del prototipo
+
+- La voz sin Wi-Fi no está garantizada; la caché conserva solo recursos disponibles.
+- El tacto inferior defectuoso se mitigó con controles superiores y laterales; el hardware no se reparó.
+- La cola conserva hasta 64 eventos y rechaza nuevos registros al llenarse.
+- El AP de configuración permanece activo hasta reiniciar; el equipo requiere alimentación USB de 5 V.
+- La predicción y la gestión web completa del ciclo de vida del hardware son evolución futura.
+
+Las pruebas físicas, incluida la separación de dos ESP y el acceso desde varios computadores, están [registradas con su ejecutor](pruebas/FISICAS_20261115.md). No se confunden confirmaciones manuales con telemetría instrumentada.

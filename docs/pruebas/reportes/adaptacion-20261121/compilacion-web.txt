@@ -1,0 +1,50 @@
+▲ Next.js 16.4.6 (Turbopack)
+✓ Running next.config.mjs took 29ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.1s
+  Running TypeScript ...
+  Finished TypeScript in 3.0s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/4) ...
+  Generating static pages using 11 workers (1/4) 
+  Generating static pages using 11 workers (2/4) 
+  Generating static pages using 11 workers (3/4) 
+✓ Generating static pages using 11 workers (4/4) in 217ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /activate
+├ ƒ /api/auth/activate
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/me
+├ ƒ /api/emotions
+├ ƒ /api/health
+├ ƒ /api/internal/media-jobs
+├ ƒ /api/internal/media-jobs/[key]
+├ ƒ /api/internal/media-run
+├ ƒ /api/internal/media-storage
+├ ƒ /api/records
+├ ƒ /api/stcs/device-events
+├ ƒ /api/stcs/devices/[deviceCode]/config
+├ ƒ /api/stcs/devices/[deviceCode]/events
+├ ƒ /api/stcs/devices/[deviceCode]/media/[pictogramId]/[kind]
+├ ƒ /api/stcs/events
+├ ƒ /api/stcs/events/export
+├ ƒ /api/stcs/images
+├ ƒ /api/stcs/images/[imageId]
+├ ƒ /api/stcs/overview
+├ ƒ /api/stcs/pictograms
+├ ƒ /api/stcs/pictograms/[pictogramId]
+├ ƒ /api/stcs/pictograms/[pictogramId]/audio
+├ ƒ /api/stcs/portal
+└ ƒ /login
+
+
+ƒ Proxy (Middleware)
+
+ƒ  (Dynamic)  server-rendered on demand
+

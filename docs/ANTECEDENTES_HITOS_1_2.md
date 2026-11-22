@@ -57,6 +57,12 @@ H1 contiene objetivos preparatorios; H2 describe un incremento técnico. No conv
 
 ## Evolución técnica de los requisitos
 
-El corte de Hito 2 usaba 20 pictogramas, un máximo 8 por categoría/32 total y recursos embebidos. La entrega actual usa 96 activos, admite 45 por categoría/180 total y conserva cuatro visibles por página. Imágenes y voz propias se preparan en nube y el dispositivo utiliza caché limitada y atlas. La predicción permanece como diseño, no como motor implementado.
+El corte de Hito 2 usaba 20 pictogramas, un máximo 8 por categoría/32 total y recursos embebidos. El tablero de referencia de los ensayos usa 96 activos, admite 45 por categoría/180 total y conserva cuatro visibles por página. Imágenes y voz propias se preparan en nube y el dispositivo utiliza caché limitada y atlas. La predicción permanece como diseño, no como motor implementado.
 
-La actualización ≤15 s declarada en el Hito 2 no acredita tiempos de primera descarga o síntesis en frío actuales. Requiere medición específica. Los criterios técnicos no acreditan eficacia clínica ni aprobación externa.
+La actualización ≤15 s declarada en el Hito 2 no acredita tiempos actuales de primera descarga o síntesis en frío. El ensayo PC-01 del 18/11 midió seis cambios LAN hasta aplicar el tablero: cinco tardaron ≤15 s y uno 16,889 s; no se garantiza ese límite ni se extrapola a Internet. [Medición y método](pruebas/reportes/esp-20261118/README.md). Los criterios técnicos no acreditan eficacia clínica ni aprobación externa.
+
+## Informe acumulativo y retroalimentación del profesor guía
+
+El 18/11/2026 el autor aportó el informe acumulativo Hitos 1/2 de 16 páginas y su revisión de cuatro páginas. El informe usa cinco objetivos en la sección 5.2; [A1](objetivos.md) los distingue como INF-OE para conservar la correspondencia con los siete objetivos H2 anteriores. Registra 57 puntos: 6 de diseño predictivo TCS-72/73 y 51 del resto. No se declara un motor predictivo funcional.
+
+La revisión pide tareas por HU, ficha de avance, pruebas ligadas a criterios, seguimiento de riesgos e impedimentos y un release con video; también recomienda referencias concretas, costos y normativa. La respuesta actual está en [gestión](gestion.md), [casos](pruebas/CASOS.md), [fundamento](antecedentes-y-referencias.md) y [costos](factibilidad.md). Los documentos originales se conservan fuera del repositorio.

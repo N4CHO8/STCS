@@ -1,25 +1,48 @@
 # A5 Plan de pruebas
 
-Plan fechado el 16/11/2026 antes de las nuevas unitarias/carga y ampliaciones de software. Los ensayos físicos del 13–15/11 son anteriores: no se presenta este plan como previo a ellos.
+El plan comprueba los requisitos de [A2](../requerimientos.md) y los criterios de las HU. Cada [caso](CASOS.md) define precondición, pasos, resultado esperado, obtenido y evidencia. Los reportes conservan fecha y revisión; no se mezclan pruebas físicas, aserciones y compilaciones en un porcentaje único.
 
-## Entrada y entorno
+## Alcance y herramientas
 
-Versión identificada, dependencias fijadas, datos ficticios y PostgreSQL/servidor localhost confirmados por los runners. Las escrituras se aíslan de Supabase. [Comandos](../PRUEBAS.md). La aceptación requiere un evaluador distinto del autor.
-
-| Nivel | Casos y negativos | Criterio de salida |
+| Nivel | Qué se comprueba | Herramienta |
 | --- | --- | --- |
-| Unitaria | CP-RF03-U01–04, CP-RNF01-U01, CP-RF05-U01–02: contrato, UTF-8, roles, eventos válidos/inválidos | 7 casos aprobados y JUnit |
-| Integración | Sesiones, revocación/expiración, asignaciones, medios, informes, duplicados y concurrencia | Suite API aprobada en la misma base aislada |
-| Resiliencia | Base inaccesible y recuperación del trabajador | JSON 503 y reconexión sin cerrar el proceso |
-| E2E Chromium | Login/URL, roles, CRUD/duplicados, imagen inválida/válida, 401, error/reintento, móvil/logout | Diez recorridos sin errores críticos JS/CSP; firmware no incluido |
-| Cobertura | Todos los TS del servidor, rutas API, proxy y módulos declarados, incluidos no ejecutados | ≥70% de líneas, detalle de ramas/funciones y mapas válidos |
-| Carga CP-RNF02-L01/L02 | Portal local, 5/10 clientes, 15 s/etapa | p95 ≤2000 ms y errores <1%; no extrapolar a cloud |
-| Seguridad | Dependencias, negativos de acceso y ZAP Baseline pasivo aislado | Tratar altos/críticos y justificar avisos residuales; no pentest completo |
-| Físicas PF-01–08 | Pantalla/voz conectada, sincronización, cola, cortes, ACK, Wi-Fi y varias placas | Registro separado de esperado/observado y origen de confirmación |
-| Aceptación PA-01–05 | Tareas, ayudas, errores y tiempos acordados con el profesional | Resultado y aprobación externa por alcance observado |
+| Unitario | Validación, permisos, sesiones, filtros, selección visible e integridad del catálogo | Node test runner |
+| Integración | API → autorización → PostgreSQL → respuesta; medios y errores de dependencia | Runners aislados, PostgreSQL desechable y servidor TLS local |
+| E2E | Formulario → petición → persistencia → respuesta visible, roles y sesión | Playwright Chromium/WebKit y axe |
+| Calidad | Cobertura de servidor, carga, dependencias y revisión pasiva HTTP | c8, sonda Node, npm audit y ZAP |
+| Física | Navegación, voz, Wi-Fi, reinicio, cola, ACK y separación de equipos | ESP físico y confirmación del ejecutor; telemetría en PC-01/02 |
+| Aceptación | Pertinencia, vocabulario y recorrido del prototipo | Revisión por Zoom y protocolo PA-01–05 |
 
-Regresión controlada: retirar temporalmente el guard UTF-8 en una copia y exigir que CP-RF03-U02 falle; restaurar sin cambiar producción. El build de cobertura usa webpack con mapas, y el build normal se comprueba aparte. ZAP usa araña/análisis pasivo sin autenticación sobre el laboratorio.
+## Entrada
 
-## Salida y límites
+Identificar código, fecha, datos ficticios y dependencias. Las pruebas de escritura exigen servidor y PostgreSQL localhost, `STCS_TEST_ISOLATED=1` y base coincidente. Cada runner crea y elimina sus fixtures. Nunca ejecutar `verify:roles` contra Supabase ni contra un servidor local conectado a producción. [Comandos](../PRUEBAS.md).
 
-Cada ejecución registra fecha, herramienta, revisión, esperado/observado y evidencia accesible. La guía propone ≥95% del plan integral: no se calcula mezclando aserciones API, etapas y personas. Casos no ejecutados siguen pendientes. [Resultados y defectos](RESULTADOS.md), [protocolo externo](../validacion/PAUTA.md).
+## Planificados y ejecutados
+
+La ampliación del candidato se fijó durante la implementación antes de su repetición. El catálogo ARASAAC añade tres unitarias y un recorrido por motor. Parte de las ejecuciones históricas precede a la consolidación documental del plan; esa limitación se conserva y no se cambia la fecha de los reportes.
+
+| Nivel o escenario | Planificados | Ejecutados | No ejecutados | Resultado y evidencia |
+| --- | --- | --- | --- | --- |
+| Unitarias Node | 15 | 15 | 0 | Aprobadas; [21/11](reportes/arasaac-20261121/unitarias.xml), incluye las tres del catálogo |
+| Integración TLS del adaptador | 1 | 1 | 0 | Aprobada; [21/11](reportes/adaptacion-20261121/unitarias-tls.xml) |
+| Suite API | 1 | 1 | 0 | 387 comprobaciones, [21/11](reportes/arasaac-20261121/integracion.txt) |
+| Resiliencia de servidor | 3 | 3 | 0 | Dos caídas de base y una reconexión del trabajador, mismo reporte |
+| E2E Chromium/WebKit | 40 | 40 | 0 | 20 por motor; [Chromium](reportes/arasaac-20261121/chromium.xml), [WebKit](reportes/arasaac-20261121/webkit.xml) |
+| Regresión Python voz | 8 | 8 | 0 | Aprobadas localmente; [reporte](reportes/adaptacion-20261121/voz-python.txt) |
+| Carga por etapas | 2 | 2 | 0 | 5/10 clientes, 15 s; [reporte](reportes/adaptacion-20261121/carga-local.json) |
+| Escenarios de ZAP pasivo autenticado | 13 | 13 | 0 | Respuestas esperadas, un medio residual; [reporte](reportes/adaptacion-20261121/seguridad-autenticada.json) |
+| RLS/privilegios de observaciones | 1 | 1 | 0 | Conforme en base local; [consulta](reportes/adaptacion-20261121/permisos-tabla.json) |
+| Recuperación sintética | 1 | 1 | 0 | SQL, medios y seguimiento; [reporte](reportes/adaptacion-20261121/recuperacion.json) |
+| Escenarios físicos informados | 9 | 9 | 0 | PF-01–08 y MC-WEB-01 conformes según Ignacio; [registro](FISICAS_20261115.md) |
+| Medición de sincronización y TLS físico | 2 | 2 | 0 | PC-01/02, [18/11](CIERRE.md) |
+| Compilación de firmware adaptable | 1 | 1 | 0 | Con credenciales ficticias; [reporte](reportes/adaptacion-20261121/compilacion-firmware.txt) |
+| Ensayo físico CP-ADAPT-P01 | 1 | 0 | 1 | Se conservó el ESP instalado por instrucción del propietario; compilación no equivale a prueba física |
+| Aceptación PA completa según protocolo | 5 | 0 | 5 | Una sesión cualitativa realizada; no equivale a cinco ejecuciones con tiempos y errores. [Registro](../validacion/REGISTRO.md) |
+
+El cumplimiento se expresa por nivel: 15/15 unitarias y 40/40 E2E no demuestran ≥95 % de todo el protocolo. Los casos no ejecutados conservan motivo y relación con R05 en [A9](../riesgos.md).
+
+## Criterios de salida
+
+Los flujos funcionales deben cumplir los criterios y rechazar entradas/accesos inválidos. Cobertura: ≥70 % de líneas en servidor. Carga: p95 ≤2000 ms y errores <1 % por etapa. Seguridad: sin hallazgos altos/críticos sin tratar y justificación de medios residuales. Aceptación: decisión externa limitada a lo observado. Un resultado de laboratorio no certifica la versión publicada ni la interacción física.
+
+Se conservan [resultados y defectos](RESULTADOS.md), reportes por revisión y los casos negativos de [A4](../trazabilidad.md). La regresión UTF-8 se ejecutó sobre una copia controlada: retirar la validación hizo fallar la prueba, sin modificar la fuente entregada.

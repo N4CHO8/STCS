@@ -148,7 +148,7 @@ export function WifiDeviceProvisioner({
         <h2 className="mt-4 font-display text-xl font-black text-stone-600">
           Conexion WiFi del ESP32
         </h2>
-        <p className="mx-auto mt-2 max-w-xs text-sm font-medium text-stone-400">
+        <p className="mx-auto mt-2 max-w-xs text-sm font-medium text-stone-600">
           {message}
         </p>
       </div>
@@ -179,7 +179,7 @@ export function WifiDeviceProvisioner({
           />
         </label>
         <button
-          className="mt-2 inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#518b51] px-4 text-sm font-bold text-white transition hover:bg-[#457745] disabled:opacity-60"
+          className="mt-2 inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#3f713f] px-4 text-sm font-bold text-white transition-colors hover:bg-[#457745] disabled:opacity-60"
           disabled={status === "saving"}
           type="submit"
         >

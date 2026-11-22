@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-11-21T17:54:57.687Z",
+  "codeCommit": "ebfc605612b1ecfa237569e64801eb65ba32f0c1",
+  "workingTreeDirty": true,
+  "environment": "Loopback Next production build and disposable stcs_release_tests; per-run owned fixture, one assigned profile, zero pictograms",
+  "node": "v24.22.1",
+  "machine": {
+    "cpuModel": "12th Gen Intel(R) Core(TM) i5-12450HX",
+    "logicalCpus": 12,
+    "totalMemoryBytes": 16873545728
+  },
+  "endpoint": "/api/stcs/portal",
+  "thresholds": {
+    "p95Milliseconds": 2000,
+    "maximumErrorRateExclusive": 0.01
+  },
+  "stages": [
+    {
+      "concurrency": 5,
+      "plannedDurationSeconds": 15,
+      "elapsedSeconds": 15.068940499999998,
+      "requests": 830,
+      "errors": 0,
+      "errorRate": 0,
+      "p95Milliseconds": 56.470399999998335,
+      "passed": true
+    },
+    {
+      "concurrency": 10,
+      "plannedDurationSeconds": 15,
+      "elapsedSeconds": 15.0486313,
+      "requests": 1542,
+      "errors": 0,
+      "errorRate": 0,
+      "p95Milliseconds": 58.0679999999993,
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Single workstation, authenticated reads only",
+    "One profile without media; not a production volume or fleet test",
+    "Engineering thresholds pending external approval"
+  ]
+}

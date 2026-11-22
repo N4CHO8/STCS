@@ -1,0 +1,35 @@
+(node:4204) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/nacho/OneDrive/Documentos/ChatGPT/STCS/frontend/src/lib/auth.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ CP-RF01-U02: stale or aborted 401 cannot invalidate a newer login (28.408ms)
+(node:4384) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/nacho/OneDrive/Documentos/ChatGPT/STCS/frontend/src/lib/history-contract.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Security report guard accepts both ZAP numeric and textual risk levels (1.0864ms)
+✔ CP-RF10-U01: CSV quotes delimiters and neutralizes formulas including whitespace and full-width prefixes (0.4743ms)
+(node:3468) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/nacho/OneDrive/Documentos/ChatGPT/STCS/frontend/src/lib/server/db.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ CP-RNF01-TLS01: actual PostgreSQL adapter rejects an untrusted server certificate (434.1953ms)
+(node:15928) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/nacho/OneDrive/Documentos/ChatGPT/STCS/frontend/src/lib/server/validation.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ CP-RF03-U01: the spoken phrase is independent from the label and image (1.1898ms)
+✔ CP-RF03-U02: UTF-8 limits prevent truncation on the ESP (0.9276ms)
+✔ CP-RF03-U03: empty, malformed and missing input is rejected (0.5648ms)
+✔ CP-RF03-U04: catalog, uploads, category and positions enforce the contract (0.481ms)
+✔ CP-RNF01-U01: adult permissions deny child and unknown roles (0.8247ms)
+✔ CP-RF05-U01: events preserve identifiers, capture time and valid edge values (0.4009ms)
+✔ CP-RF05-U02: invalid selections, event types and numeric ranges fail (0.5895ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 547.04

@@ -1,0 +1,46 @@
+<testsuites id="" name="" tests="20" failures="0" skipped="0" errors="0" time="46.688949">
+<testsuite name="accessibility.spec.mjs" timestamp="2026-11-21T21:43:47.481Z" hostname="" tests="6" failures="0" skipped="0" time="20.477" errors="0">
+<testcase name="CP-RNF03-A11Y: therapist keyboard and WCAG scan" classname="accessibility.spec.mjs" time="5.697">
+</testcase>
+<testcase name="CP-RNF03-A11Y: teacher keyboard and WCAG scan" classname="accessibility.spec.mjs" time="3.103">
+</testcase>
+<testcase name="CP-RNF03-A11Y: guardian keyboard and WCAG scan" classname="accessibility.spec.mjs" time="5.027">
+</testcase>
+<testcase name="CP-RNF03-A11Y: admin keyboard and WCAG scan" classname="accessibility.spec.mjs" time="2.86">
+</testcase>
+<testcase name="CP-RF10-E01: filtered CSV download is available only in authorized history" classname="accessibility.spec.mjs" time="1.825">
+</testcase>
+<testcase name="CP-RF01-E03: real export 401 removes private data and redirects" classname="accessibility.spec.mjs" time="1.965">
+</testcase>
+</testsuite>
+<testsuite name="portal.spec.mjs" timestamp="2026-11-21T21:43:47.481Z" hostname="" tests="14" failures="0" skipped="0" time="25.014" errors="0">
+<testcase name="CP-RF03-ARASAAC: public credits and complete catalog images without unreviewed choices" classname="portal.spec.mjs" time="2.086">
+</testcase>
+<testcase name="CP-ADAPT-E01: specialist selects visible categories, persists and restores the catalog" classname="portal.spec.mjs" time="2.585">
+</testcase>
+<testcase name="CP-ADAPT-E02: teacher sees selection information without specialist controls" classname="portal.spec.mjs" time="1.231">
+</testcase>
+<testcase name="CP-FOLLOW-E01: specialist start date and teacher observation persist with role boundaries" classname="portal.spec.mjs" time="3.779">
+</testcase>
+<testcase name="CP-RF01-E01: direct URL requires login and invalid credentials show an error" classname="portal.spec.mjs" time="0.98">
+</testcase>
+<testcase name="CP-RF02-E01: specialist selects assigned children and reads the clinical file" classname="portal.spec.mjs" time="1.408">
+</testcase>
+<testcase name="CP-RF03-E01: create, persist, edit and reject a duplicate through the browser" classname="portal.spec.mjs" time="3.011">
+</testcase>
+<testcase name="CP-RF03-E02: invalid upload is rejected and a valid image persists" classname="portal.spec.mjs" time="2.285">
+</testcase>
+<testcase name="CP-RF02-E02: teacher has no clinical controls or private API response" classname="portal.spec.mjs" time="1.047">
+</testcase>
+<testcase name="CP-RF02-E03: guardian sees only their child and cannot edit the board" classname="portal.spec.mjs" time="1.389">
+</testcase>
+<testcase name="CP-RF02-E04: administrator receives numbered profiles without child identities" classname="portal.spec.mjs" time="1.037">
+</testcase>
+<testcase name="CP-RF01-E02: missing server credential clears the portal and redirects to login" classname="portal.spec.mjs" time="1.332">
+</testcase>
+<testcase name="CP-RNF03-E01: API failure shows an error and retry recovers" classname="portal.spec.mjs" time="1.154">
+</testcase>
+<testcase name="CP-RNF03-E02: mobile navigation fits and logout prevents returning to private data" classname="portal.spec.mjs" time="1.69">
+</testcase>
+</testsuite>
+</testsuites>

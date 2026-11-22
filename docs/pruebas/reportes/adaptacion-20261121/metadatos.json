@@ -1,0 +1,138 @@
+{
+  "generatedAt": "2026-11-21T17:59:32.984066+00:00",
+  "baseCommit": "ebfc605612b1ecfa237569e64801eb65ba32f0c1",
+  "workingTreeDirty": true,
+  "environment": "Isolated localhost PostgreSQL, production build of local candidate; no production writes or device flash",
+  "junit": {
+    "unitarias-tls.xml": {
+      "tests": 13,
+      "failures": 0,
+      "skipped": 0
+    },
+    "chromium.xml": {
+      "tests": 19,
+      "failures": 0,
+      "skipped": 0
+    },
+    "webkit.xml": {
+      "tests": 19,
+      "failures": 0,
+      "skipped": 0
+    }
+  },
+  "apiAssertions": 387,
+  "coverageLines": {
+    "total": 4435,
+    "covered": 3994,
+    "skipped": 0,
+    "pct": 90.05
+  },
+  "coverageBranches": {
+    "total": 916,
+    "covered": 716,
+    "skipped": 0,
+    "pct": 78.16
+  },
+  "coverageFunctions": {
+    "total": 124,
+    "covered": 121,
+    "skipped": 0,
+    "pct": 97.58
+  },
+  "voicePythonTests": 8,
+  "firmware": {
+    "candidate": "v0.8.7-adaptive-board",
+    "compiled": true,
+    "programBytes": 1986613,
+    "staticRamBytes": 146616,
+    "testCredentialsOnly": true,
+    "installed": false,
+    "physicalTest": "not executed; owner requested preserving installed ESP"
+  },
+  "sources": [
+    {
+      "file": "frontend/src/lib/server/portal.ts",
+      "sha256": "75b0b11115ca1ae5ee7ad488c4813295f928c1204a3e94e029a8c06529f1ba70"
+    },
+    {
+      "file": "frontend/src/lib/server/board-selection.ts",
+      "sha256": "de3f3a0c67b04b732eae5314e7488f940f4fd3b9a627937a4fb8c1533f870d8c"
+    },
+    {
+      "file": "frontend/src/lib/server/stcsData.ts",
+      "sha256": "536d5185e351b5c21765671f61dceef3292b6dd645247e6a6163907d077dbdac"
+    },
+    {
+      "file": "frontend/src/lib/board-selection.ts",
+      "sha256": "47b092679a266574f18c8d46f91d5ccadbe19af2a08968c4ff262e6d03c2c0c4"
+    },
+    {
+      "file": "frontend/src/lib/auth.ts",
+      "sha256": "a2126294ad024c5265210461424b64a1f5855c3bc62a2943aa5e36e906ef9b1e"
+    },
+    {
+      "file": "frontend/src/app/login/page.tsx",
+      "sha256": "4a9dd6b44d87083503db025d840fa5abd92ae6650f8a37686a1355d069c8123a"
+    },
+    {
+      "file": "frontend/src/components/stcs/portal.tsx",
+      "sha256": "50a6d05cc31505d00b45679ae60fbfcf49830d56809c4a51b18c533af0afca30"
+    },
+    {
+      "file": "frontend/src/components/stcs/views.tsx",
+      "sha256": "2445e19aabe869fc0ec00483b7aa9feb893aaf62ac6821bbb9a33071c35253f4"
+    },
+    {
+      "file": "frontend/src/components/stcs/board-selection.tsx",
+      "sha256": "40ab0dff121ce76b627a8ccf85af9579e4434739e5518b48fde371bbbc1c57f7"
+    },
+    {
+      "file": "frontend/src/components/stcs/professional-follow-up.tsx",
+      "sha256": "e09ebd2274a1c51b9de9a4b6ef09ac7c1c5e4c0d52ba197bc7512d7860aaaaf4"
+    },
+    {
+      "file": "frontend/src/components/stcs/pictogram-voice.tsx",
+      "sha256": "115157b3a5433afbdc5ff7b342d287c489258a0b5898b41d20021cefcadfc5dd"
+    },
+    {
+      "file": "frontend/src/types/portal.ts",
+      "sha256": "15454a99e6c51a2db5f0babec60b527c7c0408204e27bb063b8ed84fd4a252e4"
+    },
+    {
+      "file": "frontend/scripts/verify-roles.mjs",
+      "sha256": "e915bb576383ab832013a1146c6c7c95d6b4a251a2c89a1ec205be56fe7c55de"
+    },
+    {
+      "file": "frontend/scripts/verify-recovery.mjs",
+      "sha256": "790f13ff8b0922958baadaa14c1f296474b82ece654f51ccdc1adff9ce8c72d6"
+    },
+    {
+      "file": "frontend/tests/e2e/portal.spec.mjs",
+      "sha256": "78cd01731cc76e7844c934267a26a3fd7ffea502c09d7c2920e54dec511acb50"
+    },
+    {
+      "file": "frontend/tests/e2e/accessibility.spec.mjs",
+      "sha256": "a9cb11c818ac8304a58de6cfed3d53beb6dd70cd00e837dd1ddd6041f9fcbf8d"
+    },
+    {
+      "file": "frontend/tests/e2e/reset-login-limits.mjs",
+      "sha256": "d5a56823acf3cd79a7a3db08ec5f78bb330e348a560eaa4dfde39e15e292f3d2"
+    },
+    {
+      "file": "frontend/tests/board-selection.test.mjs",
+      "sha256": "d9408d8b5754c9f6e5901b2b40383d38bb151174910db20384354f07ef7317e2"
+    },
+    {
+      "file": "firmware/STCS_UI_Arduino/STCS_Network.cpp",
+      "sha256": "ffe48c5ef617ebb1b8830dc0ea9fa438df1df44419f4604d90833a9a24ac2e4b"
+    },
+    {
+      "file": "firmware/STCS_UI_Arduino/STCS_UI.cpp",
+      "sha256": "8ff3bc4f50d80c1549631c914c4e4abfb37d4453bf0f31ac0f7d2c9bc3a07f0c"
+    },
+    {
+      "file": "supabase/migrations/20261121120000_board_selection.sql",
+      "sha256": "4cd3aef5d77bca4d37e8e5ca05fae0375e0a899ac2dafb9ed64e3bbf90137cbc"
+    }
+  ]
+}

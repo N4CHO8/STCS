@@ -23,6 +23,7 @@ export type DeviceSummary = {
   batteryLevel: number | null;
 };
 export type ChildDetail = {
+  boardSelection?: import("@/lib/board-selection").BoardSelection | null;
   devices?: DeviceSummary[];
   profile: ChildSummary & {
     fullName?: string;
@@ -30,8 +31,15 @@ export type ChildDetail = {
     supportLevel?: string;
     mainContext?: string;
     notes?: string;
+    usageStartedOn?: string | null;
   };
   reports: Report[];
+  observations?: {
+    id: string;
+    author: string;
+    text: string;
+    createdAt: string;
+  }[];
   pictograms: PictogramConfig[];
   overview?: StcsOverview;
   history?: DeviceEvent[];

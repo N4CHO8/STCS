@@ -1,0 +1,244 @@
+{
+  "recordedAt": "2026-11-16T23:17:15.804182+00:00",
+  "date": "2026-11-16",
+  "baseCommit": "ebfc605612b1ecfa237569e64801eb65ba32f0c1",
+  "workingTreeDirty": true,
+  "newCommit": null,
+  "cloudDeployment": false,
+  "scope": "Local isolated verification plus explicitly labelled read-only cloud check and owner-reported physical Safari test",
+  "checks": {
+    "unitAndTLS": 11,
+    "integration": 319,
+    "outage": 2,
+    "workerReconnect": true,
+    "chromium": 16,
+    "webkit": 16,
+    "coverageLines": 89.58,
+    "coverageBranches": 75.87,
+    "coverageFunctions": 97.52,
+    "authenticatedDAST": 13,
+    "readOnlySupabaseTables": 14
+  },
+  "artifactHashes": [
+    {
+      "path": "administracion.json",
+      "sha256": "5c575ff231e006fa6809da551924e34768c0c54298d67dcf166add0f0d8c7984",
+      "bytes": 1081
+    },
+    {
+      "path": "build.txt",
+      "sha256": "147fc0ff0904503c0f91b0c8243be850c4b49cb61dd71a3a63fafb804d160f9b",
+      "bytes": 1499
+    },
+    {
+      "path": "carga-local.json",
+      "sha256": "5c1518c3793530f5e28eb80b1e89ec7b11903fb1abea1cb8f01d2c7142658cc9",
+      "bytes": 1273
+    },
+    {
+      "path": "chromium.xml",
+      "sha256": "d31b5b131a4b30c945459af0f55b7f854c0fd93c5910d5a95dc8687ea53128eb",
+      "bytes": 2667
+    },
+    {
+      "path": "comprobaciones-finales.json",
+      "sha256": "f94de83129be4688977f5e3facd684fe9d96ce101e38585b5a04542ae2b41bb2",
+      "bytes": 415
+    },
+    {
+      "path": "coverage-summary.json",
+      "sha256": "0b5908141b3fd1fd9480c54962d42e1307fac6b2c17641b8e2f132bcbb9b4c44",
+      "bytes": 16851
+    },
+    {
+      "path": "integracion-cobertura.txt",
+      "sha256": "03134493ac86b33b51359fe8314a9545e34ca32d673b34d9714abaea39fa0b8c",
+      "bytes": 10890
+    },
+    {
+      "path": "manual-iphone.json",
+      "sha256": "5d03d5d7eb8ced0dfeffa8d037cd304f75ccb59f362261b05a2bc4b9677ec870",
+      "bytes": 1087
+    },
+    {
+      "path": "metadatos.json",
+      "sha256": "af2e37818ca3bd70ecb031b36a1a11b266534eb861d4d6113e3c99e96380df3d",
+      "bytes": 1211
+    },
+    {
+      "path": "npm-audit.json",
+      "sha256": "ba166cad22a82a15842af75a8e925f9789e29d85c6ec8956416e91dc6c9ffdfc",
+      "bytes": 386
+    },
+    {
+      "path": "recuperacion.json",
+      "sha256": "eac284dcc4bacfb635b91cdd07851629726185268f6b1c3220a8666213a86ffa",
+      "bytes": 1257
+    },
+    {
+      "path": "seguridad-autenticada.json",
+      "sha256": "19b29fa635727f86e7a12656cb8f3d561a576b02fdaf74050241002e5209c67a",
+      "bytes": 3879
+    },
+    {
+      "path": "supabase-readonly.json",
+      "sha256": "073ded45b989134174dc63505aaa881ee8226e8e732c91c0eee695a06911678c",
+      "bytes": 1585
+    },
+    {
+      "path": "unitarias-tls.txt",
+      "sha256": "5f515f19a87b949b92a37e6ffb435939a15f28ece2a6887d86c6f291a496b769",
+      "bytes": 3106
+    },
+    {
+      "path": "verificacion-documentacion.json",
+      "sha256": "885fb1e06487b3a57e0623a65bb48c477adc0bf39da08d955b1677b01b31fb82",
+      "bytes": 92
+    },
+    {
+      "path": "webkit.xml",
+      "sha256": "682be523177c212d874c730e063331ad6d73292e43f406a6f55b5eab50767482",
+      "bytes": 2677
+    }
+  ],
+  "sourceCheckpoint": [
+    {
+      "path": ".github/ISSUE_TEMPLATE/historia-de-usuario.md",
+      "sha256": "adc0a1c7d35c1e93d4c241ee93d3778800c23bcfcf728a01a80f6d12122beac2"
+    },
+    {
+      "path": ".github/workflows/verify.yml",
+      "sha256": "1f80238300307f25922bd588617e3ec9d825de16276e2fc37a26c9a51051af11"
+    },
+    {
+      "path": "frontend/package-lock.json",
+      "sha256": "a72e25c43977fd3af8f10369cf119d2f6004c21ac5798fe669792b8abfa4b1b5"
+    },
+    {
+      "path": "frontend/package.json",
+      "sha256": "8d1a421eb87f259b02dafb91f03cc44a344ba450c8407a00e17b47fc6621cfb7"
+    },
+    {
+      "path": "frontend/playwright.config.mjs",
+      "sha256": "0e1ccd963d0dab4b961adce55474ee96283e7010fa35a0535e9bb9fb843650d8"
+    },
+    {
+      "path": "frontend/scripts/lib/authenticated-dast.mjs",
+      "sha256": "ceb83ee005368a2ef8a12d141e03c5fce94399d38769d895a8ca99d444fab41d"
+    },
+    {
+      "path": "frontend/scripts/measure-quality.mjs",
+      "sha256": "af9f83699dd69f88bd447ed2b700f3fe9cf7a125304be4c423ae08169a90e27b"
+    },
+    {
+      "path": "frontend/scripts/prepare-isolated-db.mjs",
+      "sha256": "14ae3587d4f974fd79599da36f88bbe89bde78aaee4268db07ed6b165d3f3ffa"
+    },
+    {
+      "path": "frontend/scripts/run-business-coverage.mjs",
+      "sha256": "ee8fdff87e99c79941af8eb4cbc34e16218ba684f657934775eb5189d382aba9"
+    },
+    {
+      "path": "frontend/scripts/run-web-quality.mjs",
+      "sha256": "4648da3a0e1d29d98d10f19498e28eaf03d3788623962b87b8086841f3ebd5d1"
+    },
+    {
+      "path": "frontend/scripts/verify-cloud-readonly.mjs",
+      "sha256": "e8b63020194d6e0522c2d28f0a305ea71bd90ac6d530306b081f9a7bcc7114a4"
+    },
+    {
+      "path": "frontend/scripts/verify-recovery.mjs",
+      "sha256": "6b59851a00bb25a24c763c3b39031a410833b6e4d333f8b310f8406d29b5fa39"
+    },
+    {
+      "path": "frontend/scripts/verify-roles.mjs",
+      "sha256": "b8c5e6c930f7efa8c0571ceba30f5f9417b5a6745685d1e7339390e3a93c8a72"
+    },
+    {
+      "path": "frontend/src/app/api/stcs/events/export/route.ts",
+      "sha256": "20d8d09f39b4b3fc097c400d5d180cf4da394bf7f43726995ac26a144f4a3855"
+    },
+    {
+      "path": "frontend/src/app/api/stcs/events/route.ts",
+      "sha256": "28f137a5be1f3ccb41d710f72a90ed4c7d5e958e9efd6f1cc7ff7218ad3ac7ba"
+    },
+    {
+      "path": "frontend/src/app/globals.css",
+      "sha256": "1372f133d759343561444878403122ded7c1e8d668a6a0b8d49beaec806363c4"
+    },
+    {
+      "path": "frontend/src/app/login/page.tsx",
+      "sha256": "524cbbbf0bacd135a4c47ba8e1fa8025092d58e5b7176f1994c16ff79ffe7c39"
+    },
+    {
+      "path": "frontend/src/components/stcs/history.tsx",
+      "sha256": "369ed9086bce184bcde6fed0aae145f58de45c80b7d73420ecab0f16defdb471"
+    },
+    {
+      "path": "frontend/src/components/stcs/pictogram-voice.tsx",
+      "sha256": "bc104b774bb38467fbeab50107ffe668c9c60018926cce2e896b2b58cec01917"
+    },
+    {
+      "path": "frontend/src/components/stcs/portal.tsx",
+      "sha256": "4e4dd57c5ca402e31fc4d5526893db990903d89dfc2fddd6c463eae1400cc3ec"
+    },
+    {
+      "path": "frontend/src/components/stcs/shared.tsx",
+      "sha256": "582199810fd79be482aedfd58657a0df07b7fdd9419cd72d4a93ab9b7d34edb0"
+    },
+    {
+      "path": "frontend/src/components/stcs/views.tsx",
+      "sha256": "980bfc27976a8f749b78ac76f3a80e6f210670813d2bbdc791db0fa171baadfa"
+    },
+    {
+      "path": "frontend/src/components/stcs/wifi-device-provisioner.tsx",
+      "sha256": "61beda79812c222339065864fd22d94b0a5af9d7bc919287664ee03f2f65a8ce"
+    },
+    {
+      "path": "frontend/src/lib/auth.ts",
+      "sha256": "3ad088a63e4fae6524b37bc9ef7f34536680f3335eab782451acddf6bd80ba5e"
+    },
+    {
+      "path": "frontend/src/lib/history-contract.ts",
+      "sha256": "96a73e521c440254c1dd8a880b7780b7c1dbbf2a9ec03bf6636a5a44bc4ca5f8"
+    },
+    {
+      "path": "frontend/src/lib/server/db.ts",
+      "sha256": "9635e5783ef335a7f7382c8162a4cbfdc854d0f179ed06b7bf65d1aa12ddddb6"
+    },
+    {
+      "path": "frontend/src/lib/server/history-filters.ts",
+      "sha256": "d1a724435ab5a50a10d443efb5a27b73269baea30d1f411caa94e7c2899c8fd5"
+    },
+    {
+      "path": "frontend/src/lib/server/stcsData.ts",
+      "sha256": "b79b768b626f0d86d153819dd851bd250ee69fae0e12d738bfef5dd5b76b6d26"
+    },
+    {
+      "path": "frontend/tests/auth-client.test.mjs",
+      "sha256": "980d8657900c3cf4d7021793daf2e9cfe6212a36a2cbb7f2853537ea7205d61d"
+    },
+    {
+      "path": "frontend/tests/e2e/accessibility.spec.mjs",
+      "sha256": "7c45ef23b0b7534001b1023b10949ff09055229e6e8473d78ab797d68d23a829"
+    },
+    {
+      "path": "frontend/tests/history.test.mjs",
+      "sha256": "df0301a1b770862953801d60ca5a8b1cbe4be6dc50405aedf6ca4bfcda10ea85"
+    },
+    {
+      "path": "frontend/tests/tls.test.mjs",
+      "sha256": "778f545f5866c2443151710939e10acc766a0cd9b43bacdc1aecbe4feae7fa4f"
+    },
+    {
+      "path": "supabase/migrations/20261116214529_operation_audit.sql",
+      "sha256": "e54ce704bdd31c3e3f01cfd21672fb6f3fa8d433c69af60f9a2dac0ced5ac0d2"
+    }
+  ],
+  "hashTiming": "Source hashes captured at final local checkpoint, not retrospectively at each run. Individual report timestamps retained. Earlier load/recovery runs preceded subsequent UI-only adjustments. No CI attribution.",
+  "pending": [
+    "TCS-53 full web enrollment/rotation/reassignment",
+    "Production audit migration and publication after final authorization",
+    "Professional acceptance and final evidence attachments"
+  ]
+}

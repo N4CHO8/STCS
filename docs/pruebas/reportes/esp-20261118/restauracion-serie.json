@@ -1,0 +1,19 @@
+{
+  "Port": "COM7",
+  "BytesReceived": 1388,
+  "Firmware": [
+    "v0.8.6-wifi-status"
+  ],
+  "MessageTypes": [
+    "STCS_CACHE|",
+    "STCS_ATLAS|",
+    "STCS_SYNC|",
+    "STCS_BOOT|",
+    "STCS_BOARD|",
+    "STCS_EVENT|",
+    "STCS_HEALTH|"
+  ],
+  "HttpCodes": [
+    "201"
+  ]
+}

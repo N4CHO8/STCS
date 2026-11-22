@@ -1,26 +1,15 @@
-# Alcance final del comunicador físico
+# Alcance del comunicador físico
 
-Decisión del propietario del 16/11/2026: se conserva el ESP terminado con
-firmware v0.8.6-wifi-status. Se actualiza la especificación en Jira para
-describir la implementación entregada, sin atribuir pruebas no ejecutadas.
+Firmware de referencia: v0.8.6-wifi-status. Las decisiones de cierre del propietario del 16–17/11 conservan estas condiciones:
 
-| Historia | Criterio anterior | Alcance aceptado | Estado |
-| --- | --- | --- | --- |
-| TCS-74 | AP individual temporal y cierre automático a cinco minutos | STCS-Config activada desde pantalla, clave local y portal móvil; permanece activa hasta reinicio | Finalizada funcionalmente |
-| TCS-76 | Cola de 256 eventos | Cola persistente LittleFS de 64; ACK e idempotencia; rechazo explícito en la función al llenarse | Finalizada la implementación |
+| Historia | Alcance entregado | Diferencia frente al criterio anterior |
+| --- | --- | --- |
+| TCS-74 | STCS-Config desde pantalla, clave local y portal móvil; activo hasta reinicio | Sin cierre automático a cinco minutos |
+| TCS-76 | Cola LittleFS de 64 pendientes; ACK coincidente, reintento/idempotencia y rechazo al llenarse | 64, no 256 eventos |
+| TCS-53 | Acceso y separación de ESP previamente configurados | Alta/rotación/reasignación web diferidas a FUT03 |
 
-La aceptación del propietario modifica el alcance; no se presenta como
-aprobación externa del Hito 3. Las confirmaciones de pantalla, acceso móvil,
-imagen/voz y reinicio se conservan en WEB_Y_WIFI_20261115 y ARRANQUE_RAPIDO.
-No se carga firmware nuevo en este encargo.
+Los 64 son registros pendientes, no pictogramas. Al llenarse, una acción nueva puede no quedar registrada. La caché no garantiza todos los WAV offline; el autor observó ausencia de voz sin Wi-Fi y aceptó conservarla (L-01). El AP no tiene timeout; la zona táctil inferior sigue defectuosa.
 
-## Límites y comprobaciones separadas
+Pantalla, voz conectada, reinicio, cola/cortes/ACK y configuración móvil están conformes según Ignacio. Dos ESP separados y varios computadores se probaron el 16/11. No hay conteos físicos, duración continua o instante exacto de corte instrumentados; la matriz móvil completa y una flota mayor siguen sin probarse. [Registro físico](pruebas/FISICAS_20261115.md), [multicliente](pruebas/MULTICLIENTE_20261116.md).
 
-- Los 64 son registros pendientes, no pictogramas ni exactamente 64 acciones.
-  Si la cola se llena, nuevas acciones pueden no quedar registradas. No se
-  promete una desconexión ilimitada sin pérdida de registros.
-- La caché es limitada: no se garantiza conservar todos los WAV offline. En el ensayo informado no hubo voz sin Wi-Fi; el propietario acepta mantenerlo (L-01).
-- STCS-Config no se cierra automáticamente y la instalación actual no acredita
-  una política de claves individuales para una flota.
-- [PF-03–05](pruebas/FISICAS_20261115.md): cola, corte y confirmación interrumpida informados conformes por el propietario; faltan anexos, conteos y trazas. No se acredita corte en el instante de escritura/ACK. Matriz móvil y varias placas físicas siguen pendientes.
-- TCS-77 y la aceptación profesional no se cierran por esta decisión técnica.
+El ESP se demostrará en vivo en la defensa, sin anexos audiovisuales adicionales requeridos. La revisión profesional TCS-77 es independiente y sigue pendiente. [Firmware](../firmware/STCS_UI_Arduino/README.md), [alcance A2](requerimientos.md), [estado de entrega](DEFENSA.md).

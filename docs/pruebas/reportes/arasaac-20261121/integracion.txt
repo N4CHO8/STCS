@@ -1,0 +1,17 @@
+▲ Next.js 16.4.6
+- Local:         http://127.0.0.1:3100
+- Network:       http://127.0.0.1:3100
+✓ Ready in 241ms
+✓ Running next.config.mjs took 24ms
+(node:13804) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/nacho/OneDrive/Documentos/ChatGPT/STCS/frontend/src/lib/pictogramCatalog.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\frontend\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS: 387 checks; roles, privacy, assignments, reports, profile editing, pictograms and session revocation.
+▲ Next.js 16.4.6
+- Local:         http://127.0.0.1:3102
+- Network:       http://127.0.0.1:3102
+✓ Ready in 230ms
+✓ Running next.config.mjs took 26ms
+PASS: 2 database outage checks; health and authenticated requests return JSON 503.
+PASS: actual worker survives 503 and reconnects to the loopback API. No audio jobs or data created.

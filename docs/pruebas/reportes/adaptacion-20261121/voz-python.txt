@@ -1,0 +1,14 @@
+test_cold_cache_uses_packaged_config_without_downloading_mutable_json (voice_function_test.VoiceFunctionTest.test_cold_cache_uses_packaged_config_without_downloading_mutable_json) ... ok
+test_corrupt_model_is_rejected_and_temporary_file_removed (voice_function_test.VoiceFunctionTest.test_corrupt_model_is_rejected_and_temporary_file_removed) ... ok
+test_invalid_phrase_never_synthesizes (voice_function_test.VoiceFunctionTest.test_invalid_phrase_never_synthesizes) ... ok
+test_missing_authorization_never_synthesizes (voice_function_test.VoiceFunctionTest.test_missing_authorization_never_synthesizes) ... ok
+test_model_download_is_pinned_to_immutable_revision (voice_function_test.VoiceFunctionTest.test_model_download_is_pinned_to_immutable_revision) ... ok
+STCS_VOICE|stage=synthesis|state=unavailable
+test_model_failure_is_retryable_not_invalid_user_input (voice_function_test.VoiceFunctionTest.test_model_failure_is_retryable_not_invalid_user_input) ... ok
+test_reviewed_config_matches_existing_voice_contract (voice_function_test.VoiceFunctionTest.test_reviewed_config_matches_existing_voice_contract) ... ok
+test_valid_request_returns_generated_wav (voice_function_test.VoiceFunctionTest.test_valid_request_returns_generated_wav) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.111s
+
+OK

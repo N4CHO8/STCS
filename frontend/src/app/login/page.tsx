@@ -9,12 +9,14 @@ import { getAuthSession, saveAuthSession, type AuthSession } from "@/lib/auth";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [ready, setReady] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+    setReady(true);
     const requested = new URLSearchParams(window.location.search)
       .get("email")
       ?.slice(0, 120);
@@ -23,13 +25,18 @@ export default function LoginPage() {
       return;
     }
     let current = true;
-    void getAuthSession()
+    const controller = new AbortController();
+    const cancel = () => controller.abort();
+    window.addEventListener("pagehide", cancel);
+    void getAuthSession(controller.signal)
       .then((session) => {
         if (current && session) router.replace("/");
       })
       .catch(() => undefined);
     return () => {
       current = false;
+      cancel();
+      window.removeEventListener("pagehide", cancel);
     };
   }, [router]);
 
@@ -41,8 +48,9 @@ export default function LoginPage() {
     try {
       const session = await authenticateUser(email, password);
       saveAuthSession(session);
-      router.push("/");
-      router.refresh();
+      // Portal reads the new cookie through no-store API requests on mount.
+      // Refreshing immediately after navigation can remount it over the first click.
+      router.replace("/");
     } catch (error) {
       setErrorMessage(
         error instanceof Error
@@ -60,6 +68,7 @@ export default function LoginPage() {
         <section className="w-full max-w-[920px] overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm lg:grid lg:grid-cols-[1fr_420px]">
           <LoginBrandPanel />
           <LoginForm
+            ready={ready}
             email={email}
             errorMessage={errorMessage}
             isSubmitting={isSubmitting}
@@ -123,12 +132,12 @@ function LoginBrandPanel() {
   return (
     <div className="bg-[#f4f7f1] p-8 lg:p-10">
       <div className="flex items-center gap-3">
-        <div className="grid h-12 w-12 place-items-center rounded-xl bg-[#518b51] font-display text-lg font-black text-white">
+        <div className="grid h-12 w-12 place-items-center rounded-xl bg-[#3f713f] font-display text-lg font-black text-white">
           S
         </div>
         <div>
           <p className="font-display text-xl font-black text-stone-700">STCS</p>
-          <p className="text-xs font-medium text-stone-400">Portal de Apoyo</p>
+          <p className="text-xs font-medium text-stone-600">Portal de Apoyo</p>
         </div>
       </div>
 
@@ -140,6 +149,7 @@ function LoginBrandPanel() {
 }
 
 function LoginForm({
+  ready,
   email,
   errorMessage,
   isSubmitting,
@@ -148,6 +158,7 @@ function LoginForm({
   onSubmit,
   password,
 }: {
+  ready: boolean;
   email: string;
   errorMessage: string;
   isSubmitting: boolean;
@@ -158,7 +169,7 @@ function LoginForm({
 }) {
   return (
     <div className="p-8 lg:p-10">
-      <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-sm font-semibold text-[#518b51]">
+      <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-sm font-semibold text-[#3f713f]">
         <ShieldCheck className="h-4 w-4" />
         Acceso protegido
       </span>
@@ -168,43 +179,58 @@ function LoginForm({
       </h2>
 
       <form className="mt-7 grid gap-4" onSubmit={onSubmit}>
-        <TextInput
-          autoComplete="email"
-          label="Correo electronico"
-          onChange={onEmailChange}
-          placeholder="usuario@stcs.local"
-          type="email"
-          value={email}
-        />
-        <TextInput
-          autoComplete="current-password"
-          label="Contrasena"
-          onChange={onPasswordChange}
-          placeholder="Ingresa tu contrasena"
-          type="password"
-          value={password}
-        />
+        {/* SSR inputs stay disabled until React can preserve typed values. */}
+        <fieldset disabled={!ready} className="contents">
+          <TextInput
+            autoComplete="email"
+            label="Correo electronico"
+            onChange={onEmailChange}
+            placeholder="usuario@stcs.local"
+            type="email"
+            value={email}
+          />
+          <TextInput
+            autoComplete="current-password"
+            label="Contrasena"
+            onChange={onPasswordChange}
+            placeholder="Ingresa tu contrasena"
+            type="password"
+            value={password}
+          />
 
-        <button
-          className="mt-2 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-[#518b51] px-5 text-sm font-black text-white transition hover:bg-[#457745] disabled:opacity-60"
-          disabled={isSubmitting}
-          type="submit"
-        >
-          {isSubmitting ? "Validando..." : "Ingresar"}
-          <ArrowRight className="h-4 w-4" />
-        </button>
+          <button
+            className="mt-2 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-[#3f713f] px-5 text-sm font-black text-white transition hover:bg-[#457745] disabled:opacity-60"
+            disabled={!ready || isSubmitting}
+            type="submit"
+          >
+            {!ready
+              ? "Preparando acceso…"
+              : isSubmitting
+                ? "Validando..."
+                : "Ingresar"}
+            <ArrowRight className="h-4 w-4" />
+          </button>
 
-        {errorMessage ? (
-          <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">
-            {errorMessage}
-          </p>
-        ) : null}
+          {errorMessage ? (
+            <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">
+              {errorMessage}
+            </p>
+          ) : null}
+        </fieldset>
       </form>
       <Link
+        prefetch={false}
         href="/activate"
         className="mt-5 block text-sm font-semibold text-emerald-800 underline"
       >
         Activar o recuperar cuenta
+      </Link>
+      <Link
+        href="/creditos"
+        prefetch={false}
+        className="mt-4 block text-xs text-stone-600 underline"
+      >
+        Créditos de imágenes
       </Link>
     </div>
   );
@@ -232,7 +258,7 @@ function TextInput({
         required
         maxLength={type === "email" ? 120 : 72}
         autoComplete={autoComplete}
-        className="h-12 rounded-xl border border-stone-200 bg-[#fbfbf9] px-4 text-base text-stone-600 outline-none transition focus:border-[#518b51] focus:bg-white focus:ring-4 focus:ring-emerald-50"
+        className="h-12 rounded-xl border border-stone-200 bg-[#fbfbf9] px-4 text-base text-stone-600 outline-none transition focus:border-[#3f713f] focus:bg-white focus:ring-4 focus:ring-emerald-50"
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
         type={type}

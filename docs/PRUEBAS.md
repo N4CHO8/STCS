@@ -1,6 +1,6 @@
 # Ejecutar las pruebas de STCS
 
-[Plan](pruebas/PLAN.md), [resultados y defectos](pruebas/RESULTADOS.md), [calidad](calidad/README.md) y [pruebas físicas](pruebas/FISICAS_20261115.md).
+[Plan](pruebas/PLAN.md), [casos](pruebas/CASOS.md), [resultados y defectos](pruebas/RESULTADOS.md), [calidad](calidad/README.md) y [pruebas físicas](pruebas/FISICAS_20261115.md).
 
 ## Laboratorio aislado
 
@@ -35,10 +35,10 @@ La contraseña del comando es exclusiva del contenedor descartable. Para retirar
 | test:unit | Validadores reales, contrato UTF-8, roles y eventos |
 | test:coverage | API + resiliencia sobre build de medición y cobertura del servidor definido |
 | test:isolated | Sesiones, permisos, medios, asignaciones, límites, idempotencia y caída DB |
-| test:e2e | Diez recorridos Chromium con interfaz/API/base y errores JS/CSP |
+| test:e2e | 20 recorridos Chromium con interfaz/API/base; WebKit mediante STCS_E2E_BROWSER=webkit; reportes separados |
 | node scripts/measure-quality.mjs | Carga local de portal con 5/10 clientes y 15 s por etapa |
 | node scripts/run-web-quality.mjs --dast | ZAP Baseline pasivo sobre el servidor ficticio |
 
-La sonda de carga exige su fixture local preexistente en otra base de laboratorio; no usa una sesión real ni la prepara el bloque anterior. Consultar [configuración y límites de reproducción](calidad/README.md) antes de ejecutarla. `verify:roles` no se invoca contra servidores arbitrarios: exige localhost, STCS_TEST_ISOLATED=1 y coincidencia explícita de la base.
+La sonda de carga local actual crea y retira únicamente sus propios UUID en stcs_release_tests; no necesita la cuenta de una ejecución anterior. La medición histórica conserva su fixture y alcance originales. Consultar [arreglos locales y comandos](pruebas/ARREGLOS_LOCALES_20261116.md) y [calidad](calidad/README.md). `verify:roles` no se invoca contra servidores arbitrarios: exige localhost, STCS_TEST_ISOLATED=1 y coincidencia explícita de la base.
 
 No existe script ESLint: tipos y formato se registran como tales. La suite de correo ficticio no prueba entregabilidad real; Chromium móvil no es Safari/iPhone físico; el build no prueba pantalla/audio. Las pruebas físicas y la aceptación externa se documentan por separado.

@@ -1,5 +1,47 @@
 # Cambios de STCS
 
+## Hito3 Comprobación final
+
+- TCS-83/84/85: historial/CSV y auditoría, sesiones, accesibilidad, selección de tablero por especialista, fecha de inicio y observaciones docentes.
+- TCS-60/D15: configuración Piper empaquetada y modelo fijado para preparar frases nuevas.
+- TCS-85: catálogo ARASAAC y créditos visibles, conservando imágenes propias y referencias históricas.
+- TCS-59/88: migraciones aditivas revisadas, RLS/privilegios de servidor, pruebas aisladas y firmware adaptable v0.8.7.
+- TCS-77: revisión cualitativa de Heriber y alcance real de aprobación; indicadores externos no medidos declarados en A1.
+- La evidencia final de nube y hardware se registra en `docs/pruebas/reportes/comprobacion-final-20261121/`.
+
+
+## Sin publicar — corrección de voz en nube del 18 de noviembre de 2026
+
+- TCS-60/D15: fallo real 422 al generar frases nuevas en Vercel. Configuración local y descarga externa tenían hashes distintos; se conserva y empaqueta la configuración revisada y se fija la revisión del modelo.
+- Ocho pruebas de regresión y petición HTTP local con Piper aprobadas. Errores del servidor se distinguen de entradas inválidas. Producción todavía requiere despliegue y comprobación con el ESP; no se modificaron datos, firmware ni audios existentes.
+
+## Sin publicar — comprobaciones físicas del 18 de noviembre de 2026
+
+- TCS-60: seis cambios LAN instrumentados, tres nuevos y tres reutilizados, todos aplicados; 7,836–16,889 s. Una muestra supera 15 s; se conserva el incumplimiento del KPI histórico. Imágenes/frases nuevas y última reutilización confirmadas por el autor.
+- TCS-59: rechazo TLS físico con clave ficticia y control positivo confiable; tres rechazos y cero peticiones HTTP no confiables. Copia temporal del firmware; respaldo completo restaurado, verificado y confirmado. Sin despliegue ni cambios del firmware habitual.
+
+## Sin publicar — revisión del 18 de noviembre de 2026
+
+- TCS-60/88: ficha del sprint, tareas en las HU existentes, criterios numerados y enlace de los 52 casos a sus criterios. Seguimiento de riesgos e impedimentos, balance técnico y Review externa pendiente.
+- Informe: fundamento CAA con referencias y alternativas concretas; costo informado $30.942 CLP y servicios sin pagos hasta esta fecha. Separación del diseño predictivo y actualización de límites del ESP.
+- Cierre preparado: sincronización medida y TLS físico aún por comprobar, atribución visible y video/confirmación pendientes. Sin commits, despliegues, migraciones ni cambios de firmware.
+
+## Sin publicar — revisión de entrega del 17 de noviembre de 2026
+
+- TCS-60/TCS-88: A1–A9 revisados contra la guía, con objetivos originales, alcance justificado, trazabilidad y evidencia separada por revisión; no aceptación profesional atribuida.
+- TCS-53: cierre para ESP previamente configurados por decisión del propietario; vinculación/rotación/reasignación web diferidas a FUT03, no implementadas. Sustituye ese pendiente del corte del 16/11 sin reescribirlo.
+- TCS-59/TCS-85/TCS-88: catálogo y recuentos de A5, repetición unitaria/TLS del 17/11 con JUnit (11 aprobados) y contraste de seguridad/carga con A2. Reportes anteriores conservados.
+- TCS-88: A8 documenta main protegida y CI de ebfc605/PR #16, plantillas, despliegue reproducible y excepciones históricas. Tag hito3, columna de aprobación del stakeholder y publicación final pendientes. No se modificó el workflow Jira ni se publicó código.
+
+## Sin publicar — verificación local del 16 de noviembre de 2026
+
+- TCS-83: filtros de historial completos y exportación CSV autorizada, seudonimizada y auditada; límites 10.000 eventos/3 MiB y controles de fórmulas.
+- TCS-84/85: contraste y foco, hidratación segura del login, invalidación de sesión tras 401 sin afectar logins nuevos y cancelación de consultas al salir de la página.
+- TCS-59: pruebas TLS/RLS, ZAP autenticado acotado y lectura anónima de Supabase; riesgo residual explícito.
+- TCS-88: carga con fixtures propios, recuperación aislada SQL/medios, cobertura ampliada y laboratorio de revisión. Main exige PR/verify y Sprint 3 está activo; etiquetas de HU alineadas con sus campos.
+- TCS-53: prueba de dos ESP informada por el autor; alta/reasignación web y protocolo de claves aún pendientes. Sin carga de firmware ni despliegue de aplicación.
+- Código y evidencia local pendientes del commit final por instrucción del propietario. [Resultados y límites](docs/pruebas/ARREGLOS_LOCALES_20261116.md).
+
 ## Organización de la entrega para defensa — 16 de noviembre de 2026
 
 - TCS-60/TCS-88: entrada única DEFENSA y artefactos A1–A9; registros de etapas anteriores separados en docs/historico sin alterar reportes originales.
@@ -50,3 +92,10 @@ Referencias: https://github.com/N4CHO8/STCS/pulls.
 - TCS-59: cabeceras, CSP de scripts con nonce y DAST Baseline; aviso medio de estilos inline justificado, sin alertas altas en ese recorrido.
 - Material personal de exposición retirado del árbol actual; se conserva fuera de Git.
 - Aceptación profesional y ensayos físicos no realizados continúan pendientes.
+
+## Candidato local — 21/11/2026
+
+- TCS-85 / H3-RF12: especialista selecciona categorías y pictogramas visibles por niño sin borrar el catálogo; servidor protege permisos y evita dejar vacío el tablero explícito. Firmware v0.8.7 oculta categorías vacías y abre la única categoría al aplicar ese tablero; compilado, no instalado.
+- TCS-85 / H3-RF13: fecha de inicio a cargo del especialista y observaciones docentes con lectura por autor/perfil e idempotencia. Migración aditiva probada solo en localhost.
+- TCS-77/60/85: aprobación profesional y condición de adaptación registradas según las confirmaciones de Ignacio; las diez HU del Sprint 3 conservan separado su cierre técnico y publicación.
+- Se corrigen cancelación de consultas y recarga de selección; pruebas ampliadas con reporte en `docs/pruebas/reportes/adaptacion-20261121/`. Sin commit ni despliegue de este candidato.
