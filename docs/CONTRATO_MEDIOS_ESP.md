@@ -59,7 +59,7 @@ recepción JSON de 256 KiB y copia compacta de 128 KiB. Voces bajo demanda y
 expulsión LRU; no se promete un número fijo de voces offline. Máximo teórico
 de 28 RGB sin audios en esa caché; tras reiniciar faltantes requieren red.
 No equivale a 180 imágenes persistentes, aunque el tablero activo esté en RAM.
-Un atlas sin pérdida de hasta 192 KiB forma parte de esa misma cuota de 512 KiB.
+Un atlas sin pérdida de hasta 384 KiB forma parte de esa misma cuota de 512 KiB.
 Cada bloque recuperado valida longitud y SHA-256. Si el conjunto de imágenes
 cabe y se conserva, permite recuperarlo sin HTTP tras encender; si no, se usa
 la recuperación progresiva. No cambia el formato RGB ni WAV de las API.

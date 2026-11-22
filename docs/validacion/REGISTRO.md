@@ -38,10 +38,10 @@ No se acordaron ni midieron tiempos, errores, ayudas o una referencia inicial po
 | 13:08–18:00 | Pantalla pequeña y varios pasos pueden dificultar el acceso; propone mensajes sencillos, como ayuda | TCS-26/28/30/44/45 | Definir configuración inicial sencilla por niño, elegida por el especialista. El límite técnico de 180 no es una recomendación clínica de cantidad |
 | 19:13–21:22 | Uso cotidiano y formación de familiares | TCS-60/77/85 | Incluir adaptación y acompañamiento; no afirmar autonomía infantil demostrada |
 | 24:22–25:32 | Varios alimentos pueden no representar lo que quiere el niño; propone revisar comida/comer | TCS-30/48 | Adaptar símbolo, nombre y frase al contexto; no sustituir globalmente imágenes sin evaluación |
-| 25:43–26:34 | Registrar cuándo empieza a usar el dispositivo | TCS-85 | Añadir fecha de inicio en la ficha, separada de la creación técnica; pendiente de implementar |
-| 27:11–28:08 | Orientaciones sin datos clínicos para docentes; propone observaciones del docente al especialista | TCS-85/77 | Definir alcance y permisos antes de implementar; docente sin diagnóstico ni progreso |
+| 25:43–26:34 | Registrar cuándo empieza a usar el dispositivo | TCS-85 | Fecha de inicio implementada y comprobada por API en nube; separada de la creación técnica |
+| 27:11–28:08 | Orientaciones sin datos clínicos para docentes; propone observaciones del docente al especialista | TCS-85/77 | Observaciones implementadas: docente escribe las propias y especialista asignado las consulta; sin diagnóstico ni progreso para docentes |
 
-Responsable del seguimiento: Ignacio. La adaptación, fecha de inicio y observaciones docentes se implementaron en el candidato local del 21/11. Publicación y comprobación física del firmware nuevo pendientes; el ESP instalado se conserva por petición del propietario.
+Responsable del seguimiento: Ignacio. La adaptación, fecha de inicio y observaciones docentes se publicaron el 21/11 mediante PR #17. Las pruebas técnicas y físicas posteriores están en el [registro final](../pruebas/reportes/comprobacion-final-20261121/README.md); no se atribuyen como nuevas observaciones de Heriber.
 
 ## Decisión por objetivos e historias
 
@@ -62,7 +62,7 @@ Ignacio aclaró que la condición era simplificar el ESP según las necesidades 
 
 Ignacio precisó que la preocupación del profesional era la combinación de una pantalla pequeña y varios pasos para comunicar: seleccionar, cambiar de página y volver a seleccionar. Se registra como una posible dificultad de acceso que debe evaluarse individualmente, no como una capacidad atribuible a todos los niños con TEA.
 
-La condición afecta TCS-26/31/43 (presentación), TCS-28/44 (recorrido y navegación) y TCS-48 (personalización): el especialista debe poder reducir categorías y pictogramas por niño. Se implementó en local sin borrar el catálogo: solo el especialista asignado guarda la selección; el firmware oculta categorías vacías y abre directamente la única categoría cuando corresponde. La aprobación condicionada no se registra como una prueba física superada: el firmware nuevo aún no está instalado.
+La condición afecta TCS-26/31/43 (presentación), TCS-28/44 (recorrido y navegación) y TCS-48 (personalización): el especialista debe poder reducir categorías y pictogramas por niño. Se implementó y publicó sin borrar el catálogo: solo el especialista asignado guarda la selección; el firmware oculta categorías vacías y abre directamente la única categoría cuando corresponde. La aprobación de pertinencia y su comprobación técnica posterior son registros distintos; el firmware instalado es v0.8.8-adaptive-board.
 
 Ignacio confirmó que Heriber condicionó la aprobación de ese recorrido a la simplificación. La condición está implementada y se verifica en laboratorio; faltan publicación y prueba física. También autorizó implementar fecha de inicio y observaciones docentes. [Cambios y pruebas](../pruebas/reportes/adaptacion-20261121/README.md).
 

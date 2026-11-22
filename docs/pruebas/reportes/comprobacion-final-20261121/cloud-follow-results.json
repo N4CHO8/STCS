@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-22T01:49:10.804Z",
+  "usageDate": "PASS: therapist edit, guardian read, teacher hidden; original restored",
+  "observation": "PASS: teacher write, therapist read, guardian hidden, duplicate idempotent",
+  "browser": "PASS: Chrome published portal and credits, three roles",
+  "pageErrors": [],
+  "serverErrors": []
+}

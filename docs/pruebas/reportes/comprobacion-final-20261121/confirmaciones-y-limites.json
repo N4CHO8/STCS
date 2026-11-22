@@ -1,0 +1,55 @@
+{
+  "date": "2026-11-22",
+  "productionAppCommit": "6defc3b6e8bf847b7f17a650f15ba75d9e4154d2",
+  "firmware": "v0.8.8-adaptive-board",
+  "unitAndTlsTests": 16,
+  "physicalExecutor": "Ignacio Benegas",
+  "physicalConfirmation": {
+    "singleCategory": true,
+    "singlePictogram": true,
+    "fullImage": true,
+    "newPhraseExactVoice": true,
+    "editedPhraseExactVoice": true,
+    "backAndWifiMenu": true,
+    "webSelectionSavedAndPersisted": true,
+    "administratorEnumeratedChildrenOnly": true
+  },
+  "limits": {
+    "activePictograms": 180,
+    "perCategory": 45,
+    "pagesPerCategory": 12,
+    "totalCacheBytes": 524288,
+    "atlasSublimitBytes": 393216,
+    "metadataEventsFreeReserveBytes": 262144,
+    "offlineAudioGuaranteed": false
+  },
+  "catalogueCountPreserved": 97,
+  "finalVisibleCount": 94,
+  "conceptsHiddenPendingReview": [
+    "Inseguridad",
+    "Frustración",
+    "Entusiasmo"
+  ],
+  "sourceHashes": {
+    "firmware/STCS_UI_Arduino/STCS_AudioStorage.h": "3c4a82ad9b974c0a6eee771cb8c6352a19bf1c5a0a80889bfd35a896266633e5",
+    "firmware/STCS_UI_Arduino/STCS_ImageAtlas.cpp": "de1465cf246d9366f6e26f3ec305e684bfd5cc195d110d1b43b4943dc1c1ad7d",
+    "firmware/STCS_UI_Arduino/STCS_Network.cpp": "54b2668ebff7c982d45680266906457c8742add4d0e44b2b0a77ffae98751a9f"
+  },
+  "firmwareBuild": {
+    "programBytes": 1987245,
+    "staticRamBytes": 146616,
+    "binarySha256": "664e796fe7a6b8c46c1e1c093f08c9991669f30008d420597a8a0d169cf7fe77"
+  },
+  "atlas": {
+    "previousSublimitBytes": 196608,
+    "finalSublimitBytes": 393216,
+    "boardPictograms": 94,
+    "uniqueImages": 89,
+    "compressedBytes": 305992,
+    "replacementMs": 4603,
+    "observedCacheBootMs": 496,
+    "bootLoadedPictograms": 94,
+    "oldAtlasBootedDuringMeasurement": true,
+    "note": "Boot measurement read the previous 97-entry atlas, which covered all 94 visible items; a subsequent charger restart is recorded separately."
+  }
+}

@@ -22,9 +22,9 @@ El [seguimiento](gestion.md) y las fichas de [Sprint 2](gestion/HISTORIAS_SPRINT
 
 El corte del 21/11/2026 registra 15 pruebas unitarias, 20 recorridos Chromium, 20 WebKit y una suite de 387 comprobaciones API, todos conformes. La medición de servidor del mismo día dio 90,05 % de cobertura de líneas. [Resultados](pruebas/RESULTADOS.md).
 
-Los ensayos automáticos del 21/11 corresponden a un candidato local aislado. El registro de [nube del 18/11](pruebas/NUBE_20261118.md) corresponde a la versión publicada y detectó D15 al generar voces nuevas. Su corrección está comprobada en laboratorio. La documentación distingue estos entornos y no atribuye al despliegue pruebas realizadas sobre otro código.
+Las suites automáticas del 21/11 usan un laboratorio aislado. La [comprobación final en Vercel](pruebas/reportes/comprobacion-final-20261121/README.md) registra además login, permisos, CSV, seguimiento y voz nueva del código publicado mediante PR #17. D15, detectado el 18/11, quedó resuelto en ese despliegue. Los registros anteriores conservan su versión y resultado originales.
 
-El firmware habitual de referencia es v0.8.6-wifi-status. v0.8.7-adaptive-board incorpora la adaptación por niño y cuenta con compilación y pruebas de servidor; no tiene comprobación física registrada. El tablero de referencia ensayado tiene 96 elementos. El máximo operativo probado es 180, con 45 por categoría; no es un máximo físico absoluto.
+El firmware instalado es v0.8.8-adaptive-board. Su carga y arranque se verificaron tras conservar el respaldo completo del ESP. La adaptación por niño se registra por separado en la comprobación final. El tablero de referencia ensayado tiene 96 elementos. El máximo operativo probado es 180, con 45 por categoría; no es un máximo físico absoluto.
 
 ## Revisión del profesional
 

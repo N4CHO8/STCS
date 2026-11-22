@@ -23,7 +23,7 @@
 #endif
 
 namespace {
-constexpr char VERSION[] = "v0.8.7-adaptive-board";
+constexpr char VERSION[] = "v0.8.8-adaptive-board";
 constexpr uint32_t IMAGE_BYTES = 96 * 96 * 2, AUDIO_MAX_BYTES = 320044;
 constexpr size_t QUEUE_LIMIT = 64;
 // The parsed board can exceed internal Wi-Fi RAM as capacity grows.
@@ -264,8 +264,10 @@ bool apply_document(JsonDocument &document, bool online) {
   uint32_t minimum_psram = ESP.getFreePsram();
   uint16_t ram_copies = 0, missing_images = 0;
   JsonArray items = document["data"]["pictograms"].as<JsonArray>();
-  if (items.isNull() || items.size() > STCS_MAX_PICTOGRAMS)
+  if (items.isNull() || items.size() > STCS_MAX_PICTOGRAMS) {
+    printf("STCS_SYNC|state=invalid_items|count=%u|null=%u\r\n", (unsigned)items.size(), items.isNull());
     return false;
+  }
   // Admission includes two complete image generations, all board structures,
   // 384 KiB of board structures, the HTTP metadata budget and 1 MiB for
   // the measured decoder allocation plus allocator/transport headroom.
@@ -294,8 +296,10 @@ bool apply_document(JsonDocument &document, bool online) {
     return true;
   StcsBoardConfig *board = static_cast<StcsBoardConfig *>(heap_caps_calloc(
       1, sizeof(StcsBoardConfig), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
-  if (!board)
+  if (!board) {
+    printf("STCS_SYNC|state=board_allocation_error\r\n");
     return false;
+  }
   bool valid = true, incomplete = false;
   for (JsonObject item : items) {
     if (online) {
@@ -315,6 +319,7 @@ bool apply_document(JsonDocument &document, bool online) {
     strlcpy(p.audio_hash, item["audioSha256"] | "", sizeof(p.audio_hash));
     p.position = item["position"] | board->count;
     if (!hex_hash(p.image_hash)) {
+      printf("STCS_SYNC|state=invalid_image_hash|index=%u\r\n", board->count - 1);
       valid = false;
       break;
     }
@@ -376,8 +381,10 @@ bool apply_document(JsonDocument &document, bool online) {
       board->count = 0;
     }
     xSemaphoreGive(config_mutex);
-  } else
+  } else {
+    printf("STCS_SYNC|state=board_rejected|valid=%u\r\n", valid);
     valid = false;
+  }
   free_images(*board);
   free(board);
   if (valid)
@@ -397,8 +404,10 @@ bool download_board() {
   HTTPClient http;
   if (!begin_request(http, secure, plain,
                      String("/api/stcs/devices/") + STCS_DEVICE_CODE +
-                         "/config"))
+                         "/config")) {
+    printf("STCS_SYNC|state=request_not_ready|clock=%u\r\n", (unsigned)time(nullptr));
     return false;
+  }
   int status = http.GET();
   // A chunked body reports -1; never compare that sentinel to an unsigned
   // limit.
@@ -420,6 +429,8 @@ bool download_board() {
   LittleFS.mkdir("/v7");
   File incoming = LittleFS.open("/v7/incoming.json", FILE_WRITE);
   if (!incoming) {
+    printf("STCS_SYNC|state=metadata_open_error|free=%u\r\n",
+           (unsigned)(LittleFS.totalBytes() - LittleFS.usedBytes()));
     http.end();
     return false;
   }
@@ -726,8 +737,10 @@ void STCS_Network_Init() {
     }
   }
   saved.close();
-  xTaskCreatePinnedToCore(network_task, "STCS Network", 24576, nullptr, 1,
+  BaseType_t network_started = xTaskCreatePinnedToCore(network_task, "STCS Network", 24576, nullptr, 1,
                           nullptr, 0);
+  printf("STCS_BOOT|network_started=%u|internal_largest=%u\r\n", network_started == pdPASS,
+    (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
   printf("STCS_BOOT|firmware=%s|psram_free=%u\r\n", VERSION,
          (unsigned)ESP.getFreePsram());
 }

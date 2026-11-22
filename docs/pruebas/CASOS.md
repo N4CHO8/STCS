@@ -105,7 +105,7 @@ Este bloque conserva los 16 recorridos de esa ejecución. Con las ampliaciones d
 | CP-FOLLOW-I01 | H3-RF13 / TCS-85/59 | CA05/06 / TCS-59.CA01 | Integración/negativa | Guardar fecha inválida/futura/válida; enviar observación repetida; consultar otro perfil y roles prohibidos | Validación, persistencia, idempotencia y proyecciones autorizadas | Mismo reporte; ampliación de verify:roles |
 | CP-FOLLOW-E01 | H3-RF13 / TCS-85 | CA05/06 | E2E | Especialista guarda fecha; docente envía; especialista consulta y cambia de niño | Fecha persistida y comentario en perfil correcto, sin clínica docente | Mismo reporte, Chromium/WebKit |
 
-Las pruebas de navegador usan datos ficticios y una base localhost confirmada. La ejecución física del firmware adaptable no se realiza por petición de conservar el ESP instalado; no se presenta la compilación como prueba física.
+Las pruebas de navegador usan datos ficticios y una base localhost confirmada. El ensayo físico CP-ADAPT-P01 se realizó el 22/11: selección de una categoría y un pictograma, imagen completa, frase nueva y actualizada, Volver y Wi-Fi conformes según Ignacio. El catálogo se conservó. [Registro final](reportes/comprobacion-final-20261121/README.md).
 
 ## Catálogo ARASAAC del 21 de noviembre
 
