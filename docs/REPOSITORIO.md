@@ -7,14 +7,14 @@
 | Elemento | Estado |
 | --- | --- |
 | Main protegida | PR y `verify` obligatorios, también para administradores; 0 revisores obligatorios, sin revisión independiente atribuida |
-| CI publicado | [PR #17 aprobado](https://github.com/N4CHO8/STCS/actions/runs/44972359096), integrado como main 6defc3b; Vercel READY y comprobaciones de nube registradas |
+| CI publicado | [PR #18 aprobado](https://github.com/N4CHO8/STCS/actions/runs/45025353582), integrado como f8b743f; Vercel READY y comprobaciones de nube registradas. Las revisiones documentales posteriores pasan también por PR y verify |
 | HU y criterios | Historias con criterios Dado/Cuando/Entonces; Heriber como stakeholder de pertinencia y comprobación técnica por pruebas. Revisión profesional del 20/11 registrada. [Detalle A3](historias.md) |
 | Ramas/commits/PR | Convención reciente con ticket; existen PR antiguos sin él y agrupaciones de varias HU |
 | Plantillas | [PR](../.github/PULL_REQUEST_TEMPLATE.md) y [HU](../.github/ISSUE_TEMPLATE/historia-de-usuario.md); enlazan objetivo, requisito, casos y evidencia |
 | Tablero | Por hacer, En curso, Hecho y Listo; falta columna «Aprobada por stakeholder» |
 | Sprints | Tres con objetivo; 37 historias principales asignadas y 7 referencias consolidadas sin sprint |
 | Prioridad y tipo | MoSCoW/requisito en etiquetas; tipo en campo Jira. Etiquetas feat/fix no uniformes en PR antiguos |
-| Versiones | hito-2 conserva el corte anterior; [hito3](https://github.com/N4CHO8/STCS/tree/hito3) fija la entrega actual |
+| Versiones | hito-2 conserva el corte anterior; [hito3](https://github.com/N4CHO8/STCS/tree/hito3) fija la entrega funcional; [hito3-revision-documental-1](https://github.com/N4CHO8/STCS/tree/hito3-revision-documental-1) conserva la documentación corregida, sin mover el tag original |
 
 Las plantillas orientan la revisión; CI no valida automáticamente todos sus campos. [A4](trazabilidad.md) conserva las excepciones sin alterar el historial.
 
@@ -46,7 +46,7 @@ Los artefactos se localizan desde [DEFENSA](DEFENSA.md). Presentaciones/guiones 
 
 Para cambios nuevos: `codex/TCS-<id>-<cambio>`, ticket en cuerpo de commit y PR, requisitos/casos/reportes de la revisión. Se prefiere una HU por cambio; un PR de integración debe declarar todas las HU que reúne.
 
-Muestra: [PR #16](https://github.com/N4CHO8/STCS/pull/16), rama `codex/TCS-60-defensa-documentacion`, commit [ebfc605](https://github.com/N4CHO8/STCS/commit/ebfc605612b1ecfa237569e64801eb65ba32f0c1). Título `Hito3-ValidacionClinica`, cuerpo TCS-60/TCS-88 y CI enlazado arriba. El título no acredita que la revisión clínica haya ocurrido.
+Muestra: [PR #16](https://github.com/N4CHO8/STCS/pull/16), rama `codex/TCS-60-defensa-documentacion`, commit [ebfc605](https://github.com/N4CHO8/STCS/commit/ebfc605612b1ecfa237569e64801eb65ba32f0c1). Título `Hito3-ValidacionClinica`, cuerpo TCS-60/TCS-88 y [su propio CI](https://github.com/N4CHO8/STCS/actions/runs/43932850718). El título no acredita que la revisión clínica haya ocurrido.
 
 Los cuerpos de PR #1–10 no citan ticket; PR #5/#6 comparten rama. A4 conserva su correspondencia por contenido. No se cumple la convención retrospectivamente en toda muestra.
 

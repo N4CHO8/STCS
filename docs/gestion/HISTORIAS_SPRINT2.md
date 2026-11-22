@@ -1,6 +1,6 @@
 # Historias del Sprint 2
 
-Fichas recuperadas de Jira el 21/11/2026. Se conservan IDs y estado histórico; los criterios y el desglose documental no se atribuyen a una planificación previa no acreditada. Las historias de pruebas se entienden como verificación del comportamiento de la HU. TCS-72/73 son trabajo de diseño, no un motor predictivo ejecutado. Aprobación y alcance en [A3](../historias.md).
+Fichas contrastadas con Jira el 22/11/2026. Se conservan IDs y estado histórico; los criterios y el desglose documental no se atribuyen a una planificación previa no acreditada. Las historias de pruebas se entienden como verificación del comportamiento de la HU. TCS-72/73 son trabajo de diseño, no un motor predictivo ejecutado. Aprobación y alcance en [A3](../historias.md).
 
 ## TCS-72 Diseño del flujo de sugerencias en el tablero del ESP32
 
@@ -38,6 +38,10 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 * TCS-26.T1 · Hecha: Ajustar elementos a la pantalla circular.
 * TCS-26.T2 · Hecha: Comprobar texto y controles visibles.
 
+### Aprobación del stakeholder
+
+Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia condicionada a simplificar categorías y pictogramas según cada niño. La condición se implementó y su operación física se confirmó el 22/11/2026; esa comprobación corresponde al ejecutor, no a una nueva evaluación de Heriber.
+
 ## TCS-27 Prueba inicial de interacción táctil
 
 Como usuario del comunicador, quiero seleccionar opciones mediante el tacto para comunicar mi elección sin activar otra opción.
@@ -55,6 +59,10 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 
 * TCS-27.T1 · Hecha: Definir áreas táctiles y respuesta visual.
 * TCS-27.T2 · Hecha: Comprobar selección y evitar la zona inferior defectuosa.
+
+### Aprobación del stakeholder
+
+Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Según la confirmación de Ignacio, no solicitó cambios adicionales en tacto, frase visible o Volver/Borrar; se mantiene la adaptación individual del tablero. No certifica autonomía infantil ni precisión táctil cuantificada.
 
 ## TCS-73 Diseño de integración del sistema predictivo con la plataforma web
 
@@ -92,6 +100,10 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 * TCS-43.T1 · Hecha: Construir el menú y la interfaz base.
 * TCS-43.T2 · Hecha: Comprobar presentación en el ESP.
 
+### Aprobación del stakeholder
+
+Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia condicionada a simplificar categorías y pictogramas según cada niño. La condición se implementó y su operación física se confirmó el 22/11/2026; esa comprobación corresponde al ejecutor, no a una nueva evaluación de Heriber.
+
 ## TCS-47 Implementación de botón volver y limpiar
 
 Como usuario del comunicador, quiero volver al menú y borrar la frase de forma explícita para navegar sin perder selecciones por accidente.
@@ -109,6 +121,10 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 
 * TCS-47.T1 · Hecha: Implementar Volver y Borrar.
 * TCS-47.T2 · Hecha: Comprobar regreso sin pérdida y borrado explícito.
+
+### Aprobación del stakeholder
+
+Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Según la confirmación de Ignacio, no solicitó cambios adicionales en tacto, frase visible o Volver/Borrar; se mantiene la adaptación individual del tablero. No certifica autonomía infantil ni precisión táctil cuantificada.
 
 ## TCS-44 Implementación de navegación entre categorías
 
@@ -128,6 +144,10 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 * TCS-44.T1 · Hecha: Implementar categorías y paginación.
 * TCS-44.T2 · Hecha: Comprobar navegación conservando la frase.
 
+### Aprobación del stakeholder
+
+Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia condicionada a simplificar categorías y pictogramas según cada niño. La condición se implementó y su operación física se confirmó el 22/11/2026; esa comprobación corresponde al ejecutor, no a una nueva evaluación de Heriber.
+
 ## TCS-45 Implementación de selección táctil de pictogramas
 
 Como usuario del comunicador, quiero seleccionar un pictograma mediante el tacto para incorporar mi elección al mensaje.
@@ -146,6 +166,10 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 * TCS-45.T1 · Hecha: Implementar selección y respuesta visual.
 * TCS-45.T2 · Hecha: Comprobar que se añade la opción elegida.
 
+### Aprobación del stakeholder
+
+Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia del vocabulario e interacción mostrados; sin evaluación de eficacia clínica con niños. Las comprobaciones técnicas posteriores se registran por separado.
+
 ## TCS-46 Visualización del mensaje seleccionado
 
 Como usuario del comunicador, quiero leer la frase seleccionada en orden para comprobar el mensaje antes de reproducirlo.
@@ -163,6 +187,10 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 
 * TCS-46.T1 · Hecha: Mostrar la frase en orden.
 * TCS-46.T2 · Hecha: Comprobar que navegar no la borra.
+
+### Aprobación del stakeholder
+
+Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Según la confirmación de Ignacio, no solicitó cambios adicionales en tacto, frase visible o Volver/Borrar; se mantiene la adaptación individual del tablero. No certifica autonomía infantil ni precisión táctil cuantificada.
 
 ## TCS-49 Persistencia de pictogramas en base de datos
 
@@ -235,3 +263,7 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 
 * TCS-48.T1 · Hecha: Implementar edición del tablero por perfil.
 * TCS-48.T2 · Hecha: Comprobar guardado, sincronización y mensaje vigente.
+
+### Aprobación del stakeholder
+
+Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia del vocabulario e interacción mostrados; sin evaluación de eficacia clínica con niños. Las comprobaciones técnicas posteriores se registran por separado.

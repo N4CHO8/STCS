@@ -1,5 +1,8 @@
 # Adaptación del comunicador y seguimiento — 21/11/2026
 
+Este reporte conserva el estado del ensayo local del 21/11. Los pendientes de publicación y hardware aquí descritos se resolvieron después; consultar la [comprobación final del 21–22/11](../comprobacion-final-20261121/README.md). Sus datos originales no se reescriben como una ejecución posterior.
+
+
 Candidato local sobre `ebfc605`, con cambios sin publicar. [Versiones, recuentos y hashes](metadatos.json). Producción y el ESP instalado se conservaron.
 
 ## Cambios comprobados

@@ -56,7 +56,7 @@ La grabación contiene una valoración favorable con observaciones, sin decision
 | TCS-60 | Aprobada por Heriber, según confirmación de Ignacio | Pertinencia del recorrido integrado mostrado; no cierra D15, indicadores técnicos o publicación |
 | TCS-77 | Aprobada por Heriber, según confirmación de Ignacio | Revisión profesional realizada y conclusiones; los ajustes derivados se verifican por separado |
 
-Ignacio aclaró que la condición era simplificar el ESP según las necesidades de cada niño. Para TCS-27/46/47 confirmó que Heriber no pidió cambios adicionales en tacto, frase visible o Volver/Borrar. Ninguna de estas confirmaciones sustituye las mediciones o pruebas físicas pendientes.
+Ignacio aclaró que la condición era simplificar el ESP según las necesidades de cada niño. Para TCS-27/46/47 confirmó que Heriber no pidió cambios adicionales en tacto, frase visible o Volver/Borrar. Estas confirmaciones no sustituyen las mediciones de uso no realizadas; las pruebas físicas posteriores se registran por separado.
 
 ### Aclaración sobre pantalla y complejidad del recorrido
 
@@ -64,7 +64,7 @@ Ignacio precisó que la preocupación del profesional era la combinación de una
 
 La condición afecta TCS-26/31/43 (presentación), TCS-28/44 (recorrido y navegación) y TCS-48 (personalización): el especialista debe poder reducir categorías y pictogramas por niño. Se implementó y publicó sin borrar el catálogo: solo el especialista asignado guarda la selección; el firmware oculta categorías vacías y abre directamente la única categoría cuando corresponde. La aprobación de pertinencia y su comprobación técnica posterior son registros distintos; el firmware instalado es v0.8.8-adaptive-board.
 
-Ignacio confirmó que Heriber condicionó la aprobación de ese recorrido a la simplificación. La condición está implementada y se verifica en laboratorio; faltan publicación y prueba física. También autorizó implementar fecha de inicio y observaciones docentes. [Cambios y pruebas](../pruebas/reportes/adaptacion-20261121/README.md).
+Ignacio confirmó que Heriber condicionó la aprobación de ese recorrido a la simplificación. La condición se publicó y su operación física fue confirmada por Ignacio el 22/11, con firmware v0.8.8-adaptive-board. Es una comprobación técnica posterior, no una nueva evaluación del profesional. También autorizó implementar fecha de inicio y observaciones docentes. [Cambios y pruebas](../pruebas/reportes/adaptacion-20261121/README.md).
 
 | Objetivos/HU | Alcance de la revisión |
 | --- | --- |
@@ -73,7 +73,7 @@ Ignacio confirmó que Heriber condicionó la aprobación de ese recorrido a la s
 | H2-OE5 | Información e historial comentados; cola, ACK y controles de acceso no evaluados |
 | H2-OE6/7 | Pruebas técnicas y diseño predictivo no evaluados |
 | TCS-30/45/48/60/85 | Aprobación de pertinencia/uso confirmada por Ignacio; límites en la tabla anterior |
-| TCS-26/28/31/43/44 | Aprobación condicionada a simplificar por niño, según Ignacio; implementación local y verificación física pendiente |
+| TCS-26/28/31/43/44 | Aprobación condicionada a simplificar por niño, según Ignacio; condición implementada, publicada y confirmada físicamente por Ignacio el 22/11 |
 | TCS-27/46/47 | Tacto, frase visible y Volver/Borrar adecuados, sin cambios adicionales según Ignacio; adaptación general sujeta a la condición anterior |
 | TCS-77 y referencias TCS-61/87 | TCS-77 aprobada según confirmación de Ignacio; las consolidadas remiten a ella, sin extender la decisión a criterios no revisados |
 
