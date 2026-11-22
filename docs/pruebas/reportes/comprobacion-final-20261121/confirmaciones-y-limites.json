@@ -33,7 +33,7 @@
   ],
   "sourceHashes": {
     "firmware/STCS_UI_Arduino/STCS_AudioStorage.h": "3c4a82ad9b974c0a6eee771cb8c6352a19bf1c5a0a80889bfd35a896266633e5",
-    "firmware/STCS_UI_Arduino/STCS_ImageAtlas.cpp": "de1465cf246d9366f6e26f3ec305e684bfd5cc195d110d1b43b4943dc1c1ad7d",
+    "firmware/STCS_UI_Arduino/STCS_ImageAtlas.cpp": "d93f3d797fef0f6bcf0fa0a33e447e08a7c5cd4da9c299dccc21a2d0a71b4c0d",
     "firmware/STCS_UI_Arduino/STCS_Network.cpp": "54b2668ebff7c982d45680266906457c8742add4d0e44b2b0a77ffae98751a9f"
   },
   "firmwareBuild": {

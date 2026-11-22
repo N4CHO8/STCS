@@ -205,8 +205,9 @@ bool STCS_AtlasSave(const char *binding, const StcsBoardConfig &board) {
     file.flush(); file.close();
   }
   free(packet);
-  // Validate every decoded image against its expected SHA before replacing a
-  // working snapshot. Validation of a bad temporary never removes the prior.
+  // Validate every decoded image before publishing the new snapshot. If cache
+  // eviction was necessary, a failure is recovered by downloading again; the
+  // durable board metadata and pending events remain untouched.
   if (ok) {
     ok = open_reader(temp, binding);
     for (size_t i = 0; ok && i < board.count; i++)
