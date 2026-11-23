@@ -1,0 +1,35 @@
+
+> stcs-frontend@1.0.0 test:e2e
+> node scripts/run-web-quality.mjs
+
+(node:11228) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/nacho/OneDrive/Documentos/ChatGPT/STCS/STCS-verificacion-20261122/frontend/src/lib/pictogramCatalog.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to C:\Users\nacho\OneDrive\Documentos\ChatGPT\STCS\STCS-verificacion-20261122\frontend\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 20 tests using 1 worker
+
+(node:14072) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\accessibility.spec.mjs:13:3 › CP-RNF03-A11Y: therapist keyboard and WCAG scan (5.4s)
+  ok  2 tests\e2e\accessibility.spec.mjs:13:3 › CP-RNF03-A11Y: teacher keyboard and WCAG scan (2.1s)
+  ok  3 tests\e2e\accessibility.spec.mjs:13:3 › CP-RNF03-A11Y: guardian keyboard and WCAG scan (3.9s)
+  ok  4 tests\e2e\accessibility.spec.mjs:13:3 › CP-RNF03-A11Y: admin keyboard and WCAG scan (2.1s)
+  ok  5 tests\e2e\accessibility.spec.mjs:80:1 › CP-RF10-E01: filtered CSV download is available only in authorized history (854ms)
+  ok  6 tests\e2e\accessibility.spec.mjs:101:1 › CP-RF01-E03: real export 401 removes private data and redirects (1.0s)
+  ok  7 tests\e2e\portal.spec.mjs:51:1 › CP-RF03-ARASAAC: public credits and complete catalog images without unreviewed choices (2.3s)
+  ok  8 tests\e2e\portal.spec.mjs:113:1 › CP-ADAPT-E01: specialist selects visible categories, persists and restores the catalog (2.4s)
+  ok  9 tests\e2e\portal.spec.mjs:201:1 › CP-ADAPT-E02: teacher sees selection information without specialist controls (1.5s)
+  ok 10 tests\e2e\portal.spec.mjs:217:1 › CP-FOLLOW-E01: specialist start date and teacher observation persist with role boundaries (2.7s)
+  ok 11 tests\e2e\portal.spec.mjs:277:1 › CP-RF01-E01: direct URL requires login and invalid credentials show an error (575ms)
+  ok 12 tests\e2e\portal.spec.mjs:289:1 › CP-RF02-E01: specialist selects assigned children and reads the clinical file (655ms)
+  ok 13 tests\e2e\portal.spec.mjs:303:1 › CP-RF03-E01: create, persist, edit and reject a duplicate through the browser (1.8s)
+  ok 14 tests\e2e\portal.spec.mjs:370:1 › CP-RF03-E02: invalid upload is rejected and a valid image persists (2.4s)
+  ok 15 tests\e2e\portal.spec.mjs:415:1 › CP-RF02-E02: teacher has no clinical controls or private API response (619ms)
+  ok 16 tests\e2e\portal.spec.mjs:433:1 › CP-RF02-E03: guardian sees only their child and cannot edit the board (674ms)
+  ok 17 tests\e2e\portal.spec.mjs:454:1 › CP-RF02-E04: administrator receives numbered profiles without child identities (651ms)
+  ok 18 tests\e2e\portal.spec.mjs:469:1 › CP-RF01-E02: missing server credential clears the portal and redirects to login (832ms)
+  ok 19 tests\e2e\portal.spec.mjs:512:1 › CP-RNF03-E01: API failure shows an error and retry recovers (771ms)
+  ok 20 tests\e2e\portal.spec.mjs:541:1 › CP-RNF03-E02: mobile navigation fits and logout prevents returning to private data (983ms)
+
+  20 passed (1.7m)

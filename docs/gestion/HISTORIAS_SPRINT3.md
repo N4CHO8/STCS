@@ -56,7 +56,7 @@ Como responsable del proyecto, quiero verificar el recorrido integrado con evide
 
 ### Aprobación del stakeholder
 
-Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión por Zoom del 20/11/2026; aprobación de pertinencia y uso confirmada por Ignacio. Alcance: recorrido integrado mostrado con adultos y datos ficticios.
+Flujo aprobado por el stakeholder Heriber Galleguillos en la demostración guiada del 20/11/2026, con adultos y datos ficticios. No incluye seguridad, CI, recuperación ni indicadores técnicos. [Alcance](../validacion/REGISTRO.md).
 
 ## TCS-74 Configuración Wi-Fi móvil del ESP
 
@@ -112,7 +112,7 @@ Como especialista evaluador, quiero revisar el prototipo y registrar observacion
 
 ### Aprobación del stakeholder
 
-Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión por Zoom del 20/11/2026; aprobación de pertinencia y uso confirmada por Ignacio. Alcance: revisión cualitativa del prototipo y sus observaciones; sin participación de niños ni indicadores cuantificados.
+Revisión cualitativa aprobada por el stakeholder Heriber Galleguillos en la demostración guiada del 20/11/2026. No hubo participación de niños, operación autónoma del profesional ni indicadores cuantificados. [Alcance](../validacion/REGISTRO.md).
 
 ## TCS-83 Historial y exportación autorizada
 
@@ -172,7 +172,7 @@ Como adulto responsable, quiero usar formularios y navegación accesibles con er
 
 ### Aprobación del stakeholder
 
-Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión por Zoom del 20/11/2026; aprobación de pertinencia y uso confirmada por Ignacio. Alcance: claridad y pertinencia de las vistas adultas. La simplificación del ESP responde a la condición de adaptar el tablero a cada niño; no implica que Heriber haya probado la versión posterior.
+Flujos web aprobados por el stakeholder Heriber Galleguillos en la demostración guiada del 20/11/2026, dentro de su revisión de claridad y pertinencia. La simplificación del ESP, la fecha de inicio y las observaciones docentes responden a sus comentarios; Heriber no probó la versión posterior. [Alcance](../validacion/REGISTRO.md).
 
 ## TCS-88 CI despliegue y recuperación reproducibles
 

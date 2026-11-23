@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2026-11-22T18:54:08.111Z",
+  "passed": true,
+  "codeCommit": "a3d096f7ab02c16b34c0f8f5779b67ccae79899d",
+  "workingTreeDirty": true,
+  "environment": "Fixed localhost:55432 disposable PostgreSQL container; no production data",
+  "scope": "pg_dump/restore into a new DB plus PNG/RGB/WAV recovery, relationships, password hash, RLS, board selection, start date and teacher observation",
+  "elapsedSeconds": 0.9067073999999999,
+  "files": [
+    {
+      "name": "picture.png",
+      "bytes": 401,
+      "sha256": "7a6b8505f86648052ebd13df8857bc09ea09c22465dc581899f0bdd5ee6e23bd"
+    },
+    {
+      "name": "picture.rgb",
+      "bytes": 18432,
+      "sha256": "1ae7e7ebec56dab4524bf2b043f64372aefb5cfb59e4964b03d46e7fc6d076f7"
+    },
+    {
+      "name": "phrase.wav",
+      "bytes": 3244,
+      "sha256": "2976da01e205a110c9fa41d47659e238a5c6d3c3f3137582f2949853faa201dd"
+    }
+  ],
+  "dumpSha256": "a196f1e19b90024f2dcc18550af86328206b7da62452ea27a97fb4493d9c2116",
+  "limitations": [
+    "Synthetic PNG/RGB and silent WAV validate integrity, not clinical use or Piper synthesis",
+    "No production restore or ESP flash restore performed",
+    "Storage copy uses local files; hosted Storage disaster recovery remains operational work"
+  ],
+  "ownedFixturesAndDestinationRemoved": true
+}

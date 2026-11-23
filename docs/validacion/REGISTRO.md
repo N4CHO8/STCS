@@ -1,6 +1,8 @@
 # Revisión profesional — 20/11/2026
 
-Se revisó el prototipo por Zoom. El profesional valoró la plataforma y propuso ajustes para adaptar el comunicador a cada niño. Fue una revisión cualitativa, sin participación de niños ni mediciones de uso. Las aprobaciones por HU se precisaron después mediante confirmaciones de Ignacio, separadas de lo que se escucha en la grabación.
+Se revisó el prototipo por Zoom. Ignacio operó la web y mostró a Heriber Galleguillos sus flujos con datos ficticios. Después de cada recorrido le solicitó su opinión y Heriber dio su conformidad con lo demostrado, además de proponer mejoras. Heriber observó la demostración guiada: no operó el sistema por su cuenta y no volvió a probar la versión modificada. Fue una revisión cualitativa, sin participación de niños ni mediciones de uso.
+
+Esta descripción incorpora la aclaración del autor del proyecto recibida el 22/11/2026 sobre cómo se condujo la reunión y el alcance de la conformidad. Se usa como registro principal para no repetir esa procedencia en cada tabla. La grabación privada conserva la sesión; los documentos públicos enlazan este registro. La aclaración no añade tiempos, errores, ayudas, citas ni resultados que no se hayan medido.
 
 ## Sesión y evidencia
 
@@ -8,11 +10,12 @@ Se revisó el prototipo por Zoom. El profesional valoró la plataforma y propuso
 | --- | --- |
 | Fecha | 20/11/2026, visible en la grabación |
 | Duración | Archivo de 30 minutos; conversación aproximadamente entre 04:57 y 29:49 |
-| Profesional | Heriber Galleguillos, psicólogo infantojuvenil, especialista en necesidades educativas especiales y trastorno del espectro autista; datos confirmados por Ignacio el 21/11 |
+| Profesional y stakeholder | Heriber Galleguillos, psicólogo infantojuvenil, especialista en necesidades educativas especiales y trastorno del espectro autista |
 | Autorización de cita | Ignacio confirmó el 21/11 que autorizó citar su nombre y comentarios en la entrega al profesor. No se extiende este permiso a publicar la grabación completa |
 | Modalidad | Zoom; Ignacio comparte la web y envía un video del ESP que el profesional comenta |
 | Entorno mostrado | https://0stcs0.vercel.app, perfil ficticio Luis; SHA desplegado y versión del ESP no identificados durante la sesión |
-| Operador | Ignacio demuestra la web; no se observa al profesional operar el ESP o completar tareas autónomas |
+| Operador y alcance | Ignacio operó la web y mostró todos sus flujos. Heriber observó, comentó y aprobó cualitativamente lo demostrado; no operó la web o el ESP ni completó tareas autónomas |
+| Versión posterior | Las mejoras derivadas se publicaron mediante PR #17 y se comprobaron por separado. Heriber no volvió a probar esa versión y no habrá una segunda sesión |
 | Evidencia | Grabación original conservada en privado. Su acceso en la entrega requiere acordarse; no se publican video, capturas ni transcripción |
 
 Los minutos siguientes localizan los comentarios. Son resúmenes, no citas literales. Se revisaron la transcripción local del audio completo y fotogramas de referencia; las pantallas no se inspeccionaron cuadro por cuadro.
@@ -21,13 +24,13 @@ Los minutos siguientes localizan los comentarios. Son resúmenes, no citas liter
 
 | Caso | Observación | Resultado y límite |
 | --- | --- | --- |
-| PA-01: categorías y acceso | 11:23–18:00: comenta el video del comunicador, tamaño y cantidad de pasos | Parcial. Recomienda acceso sencillo y adaptación individual; autonomía, tiempos y errores no medidos |
-| PA-02: frase y navegación | Se explica seleccionar y formar mensajes | Parcial. No se registran dos secuencias completas ejecutadas por el evaluador ni comprobación detallada de volver/borrar |
-| PA-03: editar y comprobar voz | 07:43–08:01: Ignacio informa del fallo de voz nueva | Recorrido no comprobado. No se verifica edición → nueva voz → ESP durante la reunión |
-| PA-04: vocabulario y presentación | 12:05–13:08 y 24:22–25:32: valora pocas distracciones y Hablar verde; cuestiona símbolo genérico de comida | Revisión cualitativa realizada, con observaciones; no demuestra ausencia de sobrecarga en niños ni cumplimiento de una meta numérica |
-| PA-05: información por rol | 24:09–28:08: especialista, ficha y orientaciones docentes | Parcial. Valoración favorable; pide fecha de inicio y sugiere comentarios del docente. No se prueban todos los roles ni restricciones de API |
+| PA-01: categorías y acceso | 11:23–18:00: comenta el video del comunicador, tamaño y cantidad de pasos | Flujo aprobado cualitativamente con la condición de simplificar el tablero por niño. El protocolo completo sigue pendiente: autonomía, tiempo, errores y ayudas no medidos |
+| PA-02: frase y navegación | Ignacio muestra y explica selección, formación de mensajes y navegación | Flujo aprobado cualitativamente en la demostración guiada. El protocolo completo sigue pendiente: Heriber no ejecutó dos secuencias autónomas y no se midieron tiempo, errores o ayudas |
+| PA-03: editar y comprobar voz | Ignacio muestra la personalización web y a las 07:43–08:01 informa el fallo de voz nueva | La pertinencia de personalizar fue aprobada; el recorrido técnico completo edición → nueva voz → ESP no se comprobó en la reunión. D15 se corrigió después y Heriber no probó la versión corregida |
+| PA-04: vocabulario y presentación | 12:05–13:08 y 24:22–25:32: valora pocas distracciones y Hablar verde; cuestiona símbolo genérico de comida | Flujo y presentación aprobados cualitativamente, con la condición de adaptación individual. El protocolo completo sigue pendiente y no demuestra ausencia de sobrecarga en niños ni una meta numérica |
+| PA-05: información por rol | Ignacio muestra especialista, ficha y orientaciones docentes entre 24:09–28:08 | Flujos web mostrados aprobados cualitativamente. Heriber pidió fecha de inicio y sugirió comentarios docentes. No evaluó todos los negativos de rol, restricciones de API, tiempo, errores, ayudas o autonomía |
 
-No se acordaron ni midieron tiempos, errores, ayudas o una referencia inicial por tarea. Los cinco casos no se presentan como cinco pruebas de aceptación aprobadas.
+No se acordaron ni midieron tiempos, errores, ayudas o una referencia inicial por tarea. Los cinco casos PA permanecen pendientes de ejecución completa bajo su protocolo cuantitativo. La conformidad cualitativa de los flujos mostrados se conserva en la misma fila y no se presenta como cinco pruebas PA completas.
 
 ## Comentarios y acciones propuestas
 
@@ -41,22 +44,22 @@ No se acordaron ni midieron tiempos, errores, ayudas o una referencia inicial po
 | 25:43–26:34 | Registrar cuándo empieza a usar el dispositivo | TCS-85 | Fecha de inicio implementada y comprobada por API en nube; separada de la creación técnica |
 | 27:11–28:08 | Orientaciones sin datos clínicos para docentes; propone observaciones del docente al especialista | TCS-85/77 | Observaciones implementadas: docente escribe las propias y especialista asignado las consulta; sin diagnóstico ni progreso para docentes |
 
-Responsable del seguimiento: Ignacio. La adaptación, fecha de inicio y observaciones docentes se publicaron el 21/11 mediante PR #17. Las pruebas técnicas y físicas posteriores están en el [registro final](../pruebas/reportes/comprobacion-final-20261121/README.md); no se atribuyen como nuevas observaciones de Heriber.
+Responsable del seguimiento: Ignacio. La adaptación, fecha de inicio y observaciones docentes se publicaron el 21/11 mediante [PR #17](https://github.com/N4CHO8/STCS/pull/17). Las pruebas técnicas y físicas posteriores están en el [registro final](../pruebas/reportes/comprobacion-final-20261121/README.md); no se atribuyen como nuevas observaciones o aprobaciones de Heriber.
 
 ## Decisión por objetivos e historias
 
-La grabación contiene una valoración favorable con observaciones, sin decisiones formuladas por ID de HU ni medición de los indicadores de A1. Posteriormente, Ignacio confirmó que Heriber aprobó las seis HU siguientes. Se distingue esa confirmación del contenido explícito de la grabación. La reunión no certifica eficacia terapéutica, seguridad informática o un piloto con menores.
+Heriber aprobó los flujos demostrados, aunque la conversación no formuló las decisiones mediante IDs de Jira ni midió los indicadores de A1. La tabla relaciona retrospectivamente cada flujo con sus HU y limita la aprobación a lo observado. La reunión no certifica eficacia terapéutica, seguridad informática, cierre técnico ni un piloto con menores.
 
-| HU | Decisión comunicada por Ignacio después de revisar la grabación | Alcance |
+| HU y criterios identificables | Decisión de la demostración guiada | Alcance y evidencia complementaria |
 | --- | --- | --- |
-| TCS-30 | Aprobada por Heriber, según confirmación de Ignacio | Pertinencia del vocabulario y pictogramas; conservar recomendaciones de adaptación individual |
-| TCS-45 | Aprobada por Heriber, según confirmación de Ignacio | Selección de pictogramas como interacción comunicativa; no prueba táctil autónoma del profesional |
-| TCS-48 | Aprobada por Heriber, según confirmación de Ignacio | Pertinencia de personalizar el tablero; no acredita que la nueva voz funcione en producción |
-| TCS-85 | Aprobada por Heriber, según confirmación de Ignacio | Claridad y pertinencia de las vistas adultas; no certificación integral de accesibilidad |
-| TCS-60 | Aprobada por Heriber, según confirmación de Ignacio | Pertinencia del recorrido integrado mostrado; no cierra D15, indicadores técnicos o publicación |
-| TCS-77 | Aprobada por Heriber, según confirmación de Ignacio | Revisión profesional realizada y conclusiones; los ajustes derivados se verifican por separado |
+| TCS-30, criterios de vocabulario y pictogramas | Flujo aprobado por el stakeholder en la demostración guiada del 20/11/2026 | Aprobación de pertinencia; conservar adaptación individual y revisión de comida/comer |
+| TCS-45, selección como interacción comunicativa | Flujo aprobado por el stakeholder en la demostración guiada | No es una prueba táctil autónoma; estabilidad, bordes y tiempos se respaldan con pruebas físicas separadas |
+| TCS-48, personalización del tablero | Flujo aprobado por el stakeholder en la demostración guiada | Aprobó la pertinencia de editar el apoyo. D15 impidió acreditar voz nueva durante la reunión; [PR #17 y reporte final](../pruebas/reportes/comprobacion-final-20261121/README.md) demuestran la corrección posterior |
+| TCS-85, claridad y pertinencia de vistas adultas | Flujos web aprobados por el stakeholder en la demostración guiada | No es certificación integral de accesibilidad. Solicitó fecha de inicio y observaciones docentes; se implementaron en PR #17 y se probaron sin una segunda revisión profesional |
+| TCS-60, recorrido integrado mostrado | Flujo aprobado por el stakeholder en la demostración guiada | Aprobación cualitativa del recorrido observado; no cierra D15, seguridad, CI, recuperación, métricas ni publicación |
+| TCS-77, revisión profesional | Revisión y conclusiones aprobadas dentro de su alcance cualitativo | Los cinco PA completos siguen pendientes por falta de operación autónoma y mediciones |
 
-Ignacio aclaró que la condición era simplificar el ESP según las necesidades de cada niño. Para TCS-27/46/47 confirmó que Heriber no pidió cambios adicionales en tacto, frase visible o Volver/Borrar. Estas confirmaciones no sustituyen las mediciones de uso no realizadas; las pruebas físicas posteriores se registran por separado.
+La aprobación del recorrido del ESP quedó condicionada a simplificarlo según las necesidades de cada niño. En tacto, frase visible y Volver/Borrar no se solicitaron cambios adicionales durante la demostración. Esto no sustituye las mediciones de uso no realizadas; las pruebas físicas posteriores se registran por separado.
 
 ### Aclaración sobre pantalla y complejidad del recorrido
 
@@ -64,7 +67,7 @@ Ignacio precisó que la preocupación del profesional era la combinación de una
 
 La condición afecta TCS-26/31/43 (presentación), TCS-28/44 (recorrido y navegación) y TCS-48 (personalización): el especialista debe poder reducir categorías y pictogramas por niño. Se implementó y publicó sin borrar el catálogo: solo el especialista asignado guarda la selección; el firmware oculta categorías vacías y abre directamente la única categoría cuando corresponde. La aprobación de pertinencia y su comprobación técnica posterior son registros distintos; el firmware instalado es v0.8.8-adaptive-board.
 
-Ignacio confirmó que Heriber condicionó la aprobación de ese recorrido a la simplificación. La condición se publicó y su operación física fue confirmada por Ignacio el 22/11, con firmware v0.8.8-adaptive-board. Es una comprobación técnica posterior, no una nueva evaluación del profesional. También autorizó implementar fecha de inicio y observaciones docentes. [Cambios y pruebas](../pruebas/reportes/adaptacion-20261121/README.md).
+Heriber condicionó la aprobación de ese recorrido a la simplificación. La condición se publicó y se comprobó en el ESP el 22/11 mediante un ensayo manual con firmware v0.8.8-adaptive-board. Es una comprobación técnica posterior, no una nueva evaluación del profesional. También aprobó incorporar fecha de inicio y observaciones docentes. [Cambios y pruebas](../pruebas/reportes/comprobacion-final-20261121/README.md).
 
 | Objetivos/HU | Alcance de la revisión |
 | --- | --- |
@@ -72,10 +75,10 @@ Ignacio confirmó que Heriber condicionó la aprobación de ese recorrido a la s
 | H2-OE3/4 | Personalización explicada; persistencia, sincronización y nueva voz no comprobadas por el profesional |
 | H2-OE5 | Información e historial comentados; cola, ACK y controles de acceso no evaluados |
 | H2-OE6/7 | Pruebas técnicas y diseño predictivo no evaluados |
-| TCS-30/45/48/60/85 | Aprobación de pertinencia/uso confirmada por Ignacio; límites en la tabla anterior |
-| TCS-26/28/31/43/44 | Aprobación condicionada a simplificar por niño, según Ignacio; condición implementada, publicada y confirmada físicamente por Ignacio el 22/11 |
-| TCS-27/46/47 | Tacto, frase visible y Volver/Borrar adecuados, sin cambios adicionales según Ignacio; adaptación general sujeta a la condición anterior |
-| TCS-77 y referencias TCS-61/87 | TCS-77 aprobada según confirmación de Ignacio; las consolidadas remiten a ella, sin extender la decisión a criterios no revisados |
+| TCS-30/45/48/60/85 | Flujos aprobados por el stakeholder en la demostración guiada; límites en la tabla anterior |
+| TCS-26/28/31/43/44 | Aprobación condicionada a simplificar por niño; condición implementada, publicada y comprobada manualmente en el ESP el 22/11 |
+| TCS-27/46/47 | Tacto, frase visible y Volver/Borrar adecuados en la demostración, sin cambios adicionales; las métricas técnicas y de autonomía se prueban por separado |
+| TCS-77 y referencias TCS-61/87 | TCS-77 aprobada en su alcance cualitativo; las consolidadas remiten a ella sin extender la decisión a criterios no revisados |
 
 Los profesores conservan su función de guías y evaluadores; Heriber es el stakeholder de pertinencia, como se registra en [A3](../historias.md).
 

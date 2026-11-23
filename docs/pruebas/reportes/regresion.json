@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-16T04:11:04.801Z",
-  "codeCommit": "7eb055f385b96e4d9e73ce2929e6f0baa5924e5a",
+  "generatedAt": "2026-11-22T18:25:56.411Z",
+  "codeCommit": "a3d096f7ab02c16b34c0f8f5779b67ccae79899d",
   "mutation": "Disabled UTF-8 byte-length guard in a temporary copy only",
   "expected": "CP-RF03-U02 fails",
   "exitCode": 1,

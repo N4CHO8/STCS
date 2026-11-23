@@ -1,0 +1,17 @@
+{
+  "checkedDate": "2026-11-22",
+  "source": "Vercel get_deployment, alias 0stcs0.vercel.app",
+  "deploymentId": "dpl_HMofrZEWt4D88at8Yj1oEfaMKyap",
+  "state": "READY",
+  "target": "production",
+  "alias": "0stcs0.vercel.app",
+  "project": "frontend",
+  "commit": "a3d096f7ab02c16b34c0f8f5779b67ccae79899d",
+  "functionalTag": "hito3",
+  "functionalCommit": "f8b743fed09de56b73c9a3ab40264e980dd1e461",
+  "documentaryTag": "hito3-revision-documental-1",
+  "sourceComparison": "git diff hito3 a3d096f -- frontend supabase: no differences",
+  "installedFirmwareFromExistingRecord": "v0.8.8-adaptive-board",
+  "firmwareInspectedAgain": false,
+  "productionDataModified": false
+}

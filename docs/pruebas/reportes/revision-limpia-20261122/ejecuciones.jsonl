@@ -1,0 +1,10 @@
+{"name":"preparacion","start":"2026-11-22T15:47:16.2114584-03:00","end":"2026-11-22T15:47:17.5167287-03:00","command":"npm.cmd run test:prepare","exitCode":0,"sha":"a3d096f7ab02c16b34c0f8f5779b67ccae79899d"}
+{"name":"cobertura-integracion","start":"2026-11-22T15:47:17.5661425-03:00","end":"2026-11-22T15:48:32.7330424-03:00","command":"npm.cmd run test:coverage","exitCode":0,"sha":"a3d096f7ab02c16b34c0f8f5779b67ccae79899d"}
+{"name":"build","start":"2026-11-22T15:48:32.7371306-03:00","end":"2026-11-22T15:48:53.8288180-03:00","command":"npm.cmd run build","exitCode":0,"sha":"a3d096f7ab02c16b34c0f8f5779b67ccae79899d"}
+{"name":"navegadores","start":"2026-11-22T15:48:53.8334664-03:00","end":"2026-11-22T15:49:52.2770066-03:00","command":"node node_modules/playwright/cli.js install chromium webkit","exitCode":0,"sha":"a3d096f7ab02c16b34c0f8f5779b67ccae79899d"}
+{"name":"chromium","start":"2026-11-22T15:49:52.2891733-03:00","end":"2026-11-22T15:51:39.4364232-03:00","command":"npm.cmd run test:e2e","exitCode":0,"sha":"a3d096f7ab02c16b34c0f8f5779b67ccae79899d"}
+{"name":"webkit","start":"2026-11-22T15:51:39.4397502-03:00","end":"2026-11-22T15:53:32.9146950-03:00","command":"npm.cmd run test:e2e","exitCode":0,"sha":"a3d096f7ab02c16b34c0f8f5779b67ccae79899d"}
+{"name":"carga","start":"2026-11-22T15:53:32.9225686-03:00","end":"2026-11-22T15:54:06.1626029-03:00","command":"npm.cmd run test:load","exitCode":0,"sha":"a3d096f7ab02c16b34c0f8f5779b67ccae79899d"}
+{"name":"recuperacion","start":"2026-11-22T15:54:06.1703976-03:00","end":"2026-11-22T15:54:08.2228776-03:00","command":"npm.cmd run test:recovery","exitCode":0,"sha":"a3d096f7ab02c16b34c0f8f5779b67ccae79899d"}
+{"name":"seguridad-tls","start":"2026-11-22T15:54:08.2302044-03:00","end":"2026-11-22T15:54:09.8137086-03:00","command":"npm.cmd run test:security","exitCode":0,"sha":"a3d096f7ab02c16b34c0f8f5779b67ccae79899d"}
+{"name":"seguridad-autenticada","start":"2026-11-22T15:54:09.8210683-03:00","end":"2026-11-22T15:54:41.5030167-03:00","command":"npm.cmd run test:dast","exitCode":0,"sha":"a3d096f7ab02c16b34c0f8f5779b67ccae79899d"}

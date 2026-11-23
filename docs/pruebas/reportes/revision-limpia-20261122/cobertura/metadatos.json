@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-11-22T18:48:32.318Z",
+  "codeCommit": "a3d096f7ab02c16b34c0f8f5779b67ccae79899d",
+  "workingTreeDirty": false,
+  "tool": "c8 9.1.0 / Node V8",
+  "scope": "All server modules, API route handlers, proxy.ts, permissions.ts, media-contract.ts and history-contract.ts",
+  "excluded": "UI, firmware and Python voice runtime; measured separately",
+  "sourceURLNormalizationOnly": true,
+  "remapped": 121,
+  "inputs": [
+    {
+      "file": "coverage-22160-1795373307496-0.json",
+      "sha256": "290054d5f15bc1279e7dd03bfb332224ae35ab26e40bb8c3bd8233b806a983cd"
+    },
+    {
+      "file": "coverage-4924-1795373307418-0.json",
+      "sha256": "b62261d48e17d335151d8b1f55d86bbf451c96f66cf7d8f5cdca97fd827628c6"
+    },
+    {
+      "file": "coverage-5148-1795373300354-0.json",
+      "sha256": "67d2a56f3f50ade21cb1da1eaaab1d331d5d3d6575f5a6fac9b3845aa88d54db"
+    }
+  ],
+  "lines": {
+    "total": 4435,
+    "covered": 3994,
+    "skipped": 0,
+    "pct": 90.05
+  },
+  "branches": {
+    "total": 916,
+    "covered": 716,
+    "skipped": 0,
+    "pct": 78.16
+  },
+  "functions": {
+    "total": 124,
+    "covered": 121,
+    "skipped": 0,
+    "pct": 97.58
+  },
+  "thresholdLines": 70,
+  "passed": true
+}

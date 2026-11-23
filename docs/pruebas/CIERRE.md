@@ -16,7 +16,7 @@ PC-02 debe evitar datos reales y no redirigir producción ni alterar certificado
 | Caso / intento | Fecha y operador | Web / firmware / red | Esperado frente a observado | Tiempo / fallo | Evidencia | Decisión |
 | --- | --- | --- | --- | --- | --- | --- |
 | PC-01 | 18/11/2026; captura técnica del agente y confirmación de pantalla/voz por Ignacio | Next.js/Piper local, cuatro pictogramas ficticios, v0.8.6-pc18-lab, Wi-Fi LAN | Seis tableros aplicados; tres frases nuevas y última reutilización confirmadas | Medianas 11,410 s nuevos / 10,020 s reutilizados; máximo 16,889 s | [Reporte y datos](reportes/esp-20261118/README.md) | Ejecución completa; límite histórico de 15 s no garantizado |
-| PC-02 | 18/11/2026; registros del ESP y servidor TLS | Copia del firmware con clave ficticia y CA de ensayo añadida; misma función TLS | Tres conexiones no confiables rechazadas y control confiable funcional | Sin peticiones HTTP en fase no confiable | [Reporte y datos](reportes/esp-20261118/README.md) | Aprobado en el alcance ensayado; respaldo restaurado y confirmado por Ignacio |
+| PC-02 | 18/11/2026; registros del ESP y servidor TLS | Copia del firmware con clave ficticia y CA de ensayo añadida; misma función TLS | Tres conexiones no confiables rechazadas y control confiable funcional | Sin peticiones HTTP en fase no confiable | [Reporte y datos](reportes/esp-20261118/README.md) | Aprobado en el alcance ensayado; restauración del respaldo comprobada manualmente en el ESP |
 
 Herramientas y procedimiento para otra ejecución: [reproducir](herramientas/esp/README.md). No se cambió el firmware habitual: el respaldo completo se restauró y verificó después del ensayo.
 

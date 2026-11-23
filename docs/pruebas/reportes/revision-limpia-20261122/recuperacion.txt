@@ -1,0 +1,5 @@
+
+> stcs-frontend@1.0.0 test:recovery
+> node scripts/verify-recovery.mjs
+
+PASS: disposable database and three media files restored; owned fixtures and destination removed.

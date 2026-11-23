@@ -22,7 +22,7 @@ STCS es un prototipo de Comunicación Aumentativa y Alternativa que combina un c
 
 El semestre avanzó desde la definición del problema y el diseño del Hito 1 hasta la integración del Hito 2 y las pruebas de seguridad, continuidad, privacidad y pertinencia del Hito 3. Se verificaron personalización, persistencia, eventos, historial, configuración Wi-Fi y separación de perfiles. Los ensayos del hardware establecieron un máximo operativo de 180 pictogramas activos, 45 por categoría. El catálogo base publicado incluye 91 opciones ARASAAC; ese número no es el límite de registros activos ni un recuento del tablero instalado.
 
-La revisión con Heriber Galleguillos del 20 de noviembre aportó una aprobación de pertinencia y una condición de adaptar la complejidad a cada niño. Se implementaron selección de categorías y pictogramas por especialista, fecha de inicio y observaciones docentes. Las pruebas del candidato del 21 de noviembre registran 15 unitarias y 40 recorridos de navegador aprobados, una suite de 387 comprobaciones API y 90,05 % de cobertura de líneas en servidor. Estos resultados son de laboratorio; los ensayos físicos y de nube se identifican por separado.
+Heriber Galleguillos aprobó los flujos mostrados en la demostración guiada del 20 de noviembre, con la condición de adaptar la complejidad del tablero a cada niño. Después incorporé selección de categorías y pictogramas, fecha de inicio y observaciones docentes. La repetición limpia del 22 de noviembre sobre a3d096f registró 15 unitarias, 40 recorridos de navegador, una suite de 387 comprobaciones API y 90,05 % de cobertura de líneas en servidor. Son resultados de laboratorio; los ensayos físicos y de nube conservan sus registros propios.
 
 El resultado es un prototipo integrado con evidencia técnica y revisión profesional adulta. No se realizó un ensayo con niños ni se midió eficacia terapéutica. La voz sin Wi-Fi, el tacto inferior y el alcance de la versión instalada forman parte de sus límites. El informe conserva estas distinciones para que los resultados puedan comprobarse sin atribuirles un alcance mayor.
 
@@ -31,6 +31,8 @@ El resultado es un prototipo integrado con evidencia técnica y revisión profes
 La comunicación permite expresar necesidades, preferencias y emociones. Cuando un niño necesita apoyos para comunicarse, la herramienta debe ajustarse a sus capacidades de acceso y al vocabulario que utiliza. En STCS se separó la interacción infantil del trabajo de configuración: el dispositivo presenta opciones y reproduce mensajes, mientras la web permite a los responsables adaptar el contenido y consultar la información autorizada.
 
 Este informe actualiza el documento acumulativo de los Hitos 1 y 2 e incorpora el trabajo del Hito 3. Mantiene sus secciones de problema, objetivos, factibilidad, gestión, diseño, pruebas y conclusiones. Los anexos incluyen las fichas por historia y la trazabilidad; el repositorio conserva los reportes ejecutados y los modelos completos. La evidencia se organiza según los artefactos A1–A9 y también responde a las observaciones sobre Sprint Goal, tareas por HU, impedimentos, review y retrospectiva del informe anterior.
+
+En este documento, TEA significa trastorno del espectro autista; CAA, Comunicación Aumentativa y Alternativa; y MVP, producto mínimo viable, denominado MPV en la rúbrica. HU identifica una historia de usuario y CA, su criterio de aceptación. Uso ESP para referirme al comunicador ESP32-S3, API para la interfaz del servidor y E2E para las pruebas que recorren navegador, servidor y base de datos. CI es la verificación automática de cambios y ADR, el registro de una decisión arquitectónica. El percentil 95 o p95 es el tiempo que no supera el 95 % de las peticiones del ensayo.
 
 ## 2 Contexto y origen del problema
 
@@ -88,12 +90,12 @@ Se conservan los siete objetivos técnicos de Hito 2 y su equivalencia con los c
 
 | Objetivo | Métrica y meta | Referencia y método | Resultado |
 | --- | --- | --- | --- |
-| H2-OE1 Interfaz táctil | ≥3/4 tareas sin ayuda en operación externa | Sin línea base externa; PA-01/02/04 | Funcionamiento físico confirmado por autor; autonomía externa no medida |
-| H2-OE2 Navegación y frase | 2/2 secuencias correctas | Selección/voz frente a orden previsto; PF-01 | Operación conforme; sin tiempos externos |
+| H2-OE1 Interfaz táctil | ≥3/4 tareas sin ayuda en operación externa | Sin línea base externa; PA-01/02/04 | Flujo aprobado por el stakeholder en la demostración guiada del 20/11, condicionado a simplificar por niño. Comprobé el cambio en el ESP el 22/11; autonomía, tiempo, errores y ayudas no medidos |
+| H2-OE2 Navegación y frase | 2/2 secuencias correctas | Selección/voz frente a orden previsto; PF-01 | Flujo aprobado cualitativamente en la demostración guiada. Operación física conforme; dos secuencias autónomas, tiempos, errores y ayudas externos sin medir |
 | H2-OE3 Persistencia | 2/2 cambios persistentes y 0 fugas en negativos elegidos | Guardar, recargar y comparar por perfil; API/E2E | Conforme en casos ejecutados |
 | H2-OE4 Sincronización | 2/2 cambios coincidentes sin recompilar | Seis cambios PC-01 LAN; tiempo descriptivo | 6/6 aplicados; 7,836–16,889 s; no garantía ≤15 s |
 | H2-OE5 Eventos e historial | Una fila por ID reintentado y orden correcto | API y PF-03–05/08 | Suite conforme; pruebas físicas informadas sin conteo instrumentado |
-| H2-OE6 Calidad técnica | Cobertura ≥70 %, p95 ≤2000 ms y errores <1 % | Servidor aislado, c8 y etapas de carga | 90,05 % líneas; p95 56,47/58,07 ms y 0 errores |
+| H2-OE6 Calidad técnica | Cobertura ≥70 %, p95 ≤2000 ms y errores <1 % | Servidor aislado, c8 y etapas de carga, 22/11 | 90,05 % líneas; p95 26,20/40,87 ms y 0 errores; indicadores técnicos sin validación del stakeholder |
 | H2-OE7 Predicción diseñada | Flujo, entradas, elección manual y límites documentados | Revisión del diseño FUT01 | Diseño disponible; motor no implementado |
 
 La revisión del profesional valida pertinencia y observaciones de uso con el alcance registrado, no esos indicadores cuantitativos. En particular, no se midieron autonomía, errores y ayudas por tarea con un evaluador externo. Esta separación evita interpretar conformidad técnica como eficacia terapéutica.
@@ -160,7 +162,7 @@ El ensayo de capacidad avanzó por 64, 128, 160 y 180 pictogramas. El propietari
 | Vercel, Supabase y correo hasta el 18/11 | $0 CLP |
 | Total de adquisición y servicios informado | $30.942 CLP |
 
-El valor proviene de la captura del pedido y la confirmación del autor. No desglosa impuestos/envío ni estima horas, internet, mantenimiento, batería, carcasa o un segundo equipo. Que no se haya pagado por servicios no garantiza gratuidad permanente ni representa el costo de una unidad comercial. [Detalle](factibilidad.md).
+El valor proviene de la captura del pedido y del registro de adquisición del proyecto. No desglosa impuestos/envío ni estima horas, internet, mantenimiento, batería, carcasa o un segundo equipo. Que no se haya pagado por servicios no garantiza gratuidad permanente ni representa el costo de una unidad comercial. [Detalle](factibilidad.md).
 
 ### 7.3 Legal social y operativa
 
@@ -190,7 +192,7 @@ Figura 1. Mapa de probabilidad e impacto según la matriz A9. Permite priorizar 
 
 Los impedimentos incluyen imágenes incompletas, tacto inferior, filtros parciales, sesión antigua y fallo de voz nueva. Sus decisiones, fechas de registro y responsables están en [gestión](gestion.md). No se inventan fechas de inicio o reuniones para completar un historial.
 
-## 9 Planificación historias y tareas
+## 9 Planificación, historias y tareas
 
 ### 9.1 Objetivos de los sprints
 
@@ -200,9 +202,19 @@ Los impedimentos incluyen imágenes incompletas, tacto inferior, filtros parcial
 | 2 | Integrar interfaz, persistencia, sincronización y eventos | Sprint 320; el informe original recoge 23/09–05/10, con atraso posterior informado |
 | 3 | Verificar seguridad, continuidad, privacidad y pertinencia con evidencia | Sprint 321; inicio aproximado 26/10, término programado 23/11 y exposición 27/11 |
 
-No se transforma una fecha programada en fecha real. El autor es responsable de ejecución; Matías Vargas y César Cheuque figuran como profesores guía. Las HU del Sprint 2 registran 57 puntos: 6 de diseño TCS-72/73 y 51 del resto. Esos seis no se presentan como motor predictivo funcional.
+Fui responsable de la ejecución; Matías Vargas y César Cheuque fueron los profesores guía. Conservo las fechas programadas separadas de las reales. Las HU del Sprint 2 registran 57 puntos: 6 de diseño TCS-72/73 y 51 del resto. Los seis puntos de diseño no representan un motor predictivo funcional.
 
 ### 9.2 Ficha de avance y Definition of Done
+
+| Ficha de avance | Hito 2 | Hito 3 |
+| --- | --- | --- |
+| Objetivo | Integrar comunicador, web y persistencia | Verificar privacidad, continuidad y pertinencia |
+| Fechas | Plan 23/09–05/10; atraso informado, sin fecha real de cierre reconstruida | Inicio aproximado 26/10; término previsto 23/11 |
+| Historias y tareas | 13 historias; detalle del Sprint 2 en Anexo A | 10 historias principales y 31 subtareas reales en Anexo A |
+| Logrado | Dispositivo mostrado en vivo al profesor; selección, voz y navegación. La web no se mostró en su totalidad | Roles, adaptación, seguimiento, pruebas y revisión cualitativa, con alcance en §11–12 |
+| Pendiente al cierre de la etapa | Documentar criterios, tareas y evidencia por caso; seguridad y continuidad por ampliar | PA-01–05 completos, métricas externas y límites de §15 |
+| Riesgos y comentarios | Tacto inferior, imágenes y falta de evidencia detallada | D15 corregido; voz offline y pertinencia individual siguen acotadas |
+| Evidencia | Commit 4d63c4c, hito-2 y [antecedentes](ANTECEDENTES_HITOS_1_2.md) | [Reportes limpios](pruebas/reportes/revision-limpia-20261122/README.md) y [registro profesional](validacion/REGISTRO.md) |
 
 El Sprint Goal del Hito 3 es dejar un prototipo integrado y reproducible con privacidad por rol, Wi-Fi, continuidad de eventos y revisión de uso. Las diez historias principales son TCS-53/59/60/74/76/77/83/84/85/88. Los siete tickets consolidados remiten a su historia principal y no suman entregables duplicados.
 
@@ -223,6 +235,8 @@ El camino de modelamiento elegido es UML. Incluye casos de uso, clases, dos esce
 ![Arquitectura del proyecto](gestion/arquitectura.svg)
 
 Figura 2. El navegador y el ESP son clientes HTTPS de la API Next.js en Vercel. La API aplica permisos y accede a SQL, Storage y preparación de voz. No existe una conexión directa entre frontend y Arduino. La figura explica TCS-48/49/53/59/84 y las responsabilidades de integración.
+
+El recorrido de una personalización comienza cuando guardo en la web la imagen, el nombre, la categoría y la frase. La API valida mi sesión, rol y asignación; luego persiste los metadatos en PostgreSQL, la imagen en Storage y solicita la preparación del audio. El ESP consulta por HTTPS la configuración de su perfil con su clave individual, compara versiones y hashes, descarga los medios que cambiaron y actualiza su caché acotada. Al tocar el pictograma, reproduce el audio vigente y envía el evento con un identificador externo; la API lo deduplica, confirma el ACK y lo deja disponible en el historial autorizado. Esta secuencia explica cómo se comunican web y dispositivo sin conexión USB ni enlace directo entre ambos.
 
 ### 10.1 Datos y contratos
 
@@ -287,11 +301,13 @@ ADR-03 eligió nube y caché acotada: permite cambiar imagen/frase sin recompila
 
 Hito 1 definió el entorno, hardware, datos y flujo. Hito 2 produjo selección, navegación, frase, audio, persistencia, sincronización e historial. Hito 3 añadió separación de roles, cuentas reales y ficticias delimitadas, configuración Wi-Fi, cola persistente, caché, medios propios, seguridad y evidencia ampliada. Los filtros/CSV, ajustes profesionales y catálogo se comprobaron en laboratorio y luego se publicaron mediante PR #17. El 22/11 se confirmaron en Vercel y ESP la adaptación y las frases nuevas/actualizadas.
 
-El 22/11 el propietario confirmó además reinicio con cargador USB de 5 V, imágenes disponibles sin esperar descargas, navegación por las cuatro categorías y voz correcta de «Vaso nube». La copia comprimida actual guarda 89 imágenes únicas para 94 pictogramas visibles; no se promete esa conservación para cualquier catálogo o tras la expulsión de la caché.
+El 22/11 comprobé manualmente el reinicio con cargador USB de 5 V, las imágenes disponibles sin esperar descargas, la navegación por las cuatro categorías y la voz de «Vaso nube». El [registro físico](pruebas/reportes/comprobacion-final-20261121/README.md) conserva el alcance del ensayo. La copia comprimida guarda 89 imágenes únicas para 94 pictogramas visibles; el resultado depende del catálogo y de los recursos que sigan en caché.
 
-La cola se implementó en LittleFS, con escritura temporal y renombrado. Cumple el propósito de persistencia aunque la recomendación inicial mencionaba NVS; no se declara que ambos mecanismos sean iguales. El límite es 64, con ID estable y retirada tras ACK coincidente. Si se interrumpe la confirmación, el reintento no debe crear otro evento. El propietario confirmó esos escenarios físicos.
+Implementé la cola en LittleFS, con escritura temporal y renombrado. La recomendación inicial mencionaba NVS; elegí un archivo persistente para conservar los eventos y controlar su reemplazo. El límite es 64, con identificador estable y retirada tras una confirmación de recepción coincidente (ACK). Si se interrumpe la confirmación, el reintento no debe crear otro evento. Comprobé esos escenarios en el ESP mediante el [ensayo manual](pruebas/FISICAS_20261115.md); no instrumenté conteos ni instantes de corte.
 
 ### 11.2 Plan y cumplimiento
+
+La tabla conserva el inventario y los reportes del 21/11. El 22/11 repetí las suites prioritarias desde `a3d096f`, con PostgreSQL aislado: API, resiliencia, cobertura, ambos navegadores, voz Python, TLS, carga, recuperación y seguridad aprobaron. El [registro limpio](pruebas/reportes/revision-limpia-20261122/README.md) contiene comandos, horarios, entorno y salidas; repetir un caso no aumenta el número de casos del plan.
 
 | Nivel o escenario | Planificados | Ejecutados | No ejecutados | Resultado y evidencia |
 | --- | --- | --- | --- | --- |
@@ -305,10 +321,10 @@ La cola se implementó en LittleFS, con escritura temporal y renombrado. Cumple 
 | Escenarios de ZAP pasivo autenticado | 13 | 13 | 0 | Respuestas esperadas, un medio residual; [reporte](pruebas/reportes/adaptacion-20261121/seguridad-autenticada.json) |
 | RLS/privilegios de observaciones | 1 | 1 | 0 | Conforme en base local; [consulta](pruebas/reportes/adaptacion-20261121/permisos-tabla.json) |
 | Recuperación sintética | 1 | 1 | 0 | SQL, medios y seguimiento; [reporte](pruebas/reportes/adaptacion-20261121/recuperacion.json) |
-| Escenarios físicos informados | 9 | 9 | 0 | PF-01–08 y MC-WEB-01 conformes según Ignacio; [registro](pruebas/FISICAS_20261115.md) |
+| Escenarios físicos manuales | 9 | 9 | 0 | PF-01–08 y MC-WEB-01 comprobados manualmente; [registro del ensayo](pruebas/FISICAS_20261115.md) |
 | Medición de sincronización y TLS físico | 2 | 2 | 0 | PC-01/02, [18/11](pruebas/CIERRE.md) |
 | Compilación de firmware adaptable | 1 | 1 | 0 | Con credenciales ficticias; [reporte](pruebas/reportes/adaptacion-20261121/compilacion-firmware.txt) |
-| Ensayo físico CP-ADAPT-P01 | 1 | 1 | 0 | Una categoría/un pictograma, imagen, voz, Volver/Wi-Fi y edición de frase confirmados por Ignacio el 22/11; [registro final](pruebas/reportes/comprobacion-final-20261121/README.md) |
+| Ensayo físico CP-ADAPT-P01 | 1 | 1 | 0 | Comprobé una categoría/un pictograma, imagen, voz, Volver/Wi-Fi y edición de frase en el ESP el 22/11; [registro manual](pruebas/reportes/comprobacion-final-20261121/README.md) |
 | Aceptación PA completa según protocolo | 5 | 0 | 5 | Una sesión cualitativa realizada; no equivale a cinco ejecuciones con tiempos y errores. [Registro](validacion/REGISTRO.md) |
 
 Los denominadores se mantienen por nivel. Las 387 comprobaciones pertenecen a una suite; no se suman a las unitarias para inflar el número de casos. La revisión cualitativa del profesional no se cuenta como cinco ejecuciones PA completas. Parte del plan histórico se consolidó después de pruebas previas; las ampliaciones y repeticiones conservan su fecha. [Plan y condiciones](pruebas/PLAN.md).
@@ -317,13 +333,14 @@ Los denominadores se mantienen por nivel. Las 387 comprobaciones pertenecen a un
 
 | Caso y criterio | Esperado | Obtenido y evidencia |
 | --- | --- | --- |
-| CP-RF03-E01; TCS-48.CA01/02 | Crear, recargar y editar; rechazar duplicado | Conforme en ambos motores; reporte 21/11 |
-| CP-RF02-E02; TCS-59.CA01 | Teacher sin clínica ni progreso | Controles y respuesta API sin datos restringidos |
-| CP-ADAPT-E01; TCS-85.CA04 | Persistir selección visible y conservar catálogo | Conforme en UI/API y en el ESP según confirmación de Ignacio el 22/11 |
-| CP-FOLLOW-E01; TCS-85.CA05/06 | Fecha/observación con permisos y persistencia | Conforme entre docente y especialista; otro perfil no recibe observación |
-| CP-RF03-ARASAAC; H3-RF03 | Cargar 91 opciones y excluir tres pendientes | Conforme en Chromium y WebKit; imágenes a 96 × 96 |
-| PC-01; TCS-60.CA01 | Cambios exactos sin recompilar | Seis cambios aplicados; un tiempo superior al KPI histórico de 15 s |
-| PC-02; TCS-59.CA02 | Rechazar certificado no confiable | Tres rechazos y cero peticiones HTTP; recuperación con certificado confiable |
+| CP-RF03-U02; H3-RF03 | Aceptar 31 bytes de etiqueta y 95 de frase; rechazar 32/96 bytes, incluidos caracteres multibyte | Prueba real aprobada; retirar la regla en copia temporal hizo fallar el caso. [Entradas y aserciones](../frontend/tests/validation.test.mjs), [mutación detectada](pruebas/reportes/regresion.json) |
+| CP-RF03-E01; TCS-48.CA01/02 | Crear, recargar y editar; rechazar duplicado | Conforme en ambos motores sobre a3d096f; [Chromium](pruebas/reportes/revision-limpia-20261122/chromium.xml), [WebKit](pruebas/reportes/revision-limpia-20261122/webkit.xml) |
+| CP-RF02-E02; TCS-59.CA01 | Docente sin clínica ni progreso | Controles y respuesta API sin datos restringidos; caso CP-RF02-E02 en los dos XML anteriores. [Código de prueba](../frontend/tests/e2e/portal.spec.mjs) |
+| CP-ADAPT-E01; TCS-85.CA04 | Persistir selección visible y conservar catálogo | E2E conforme en ambos motores; comprobé manualmente el ESP el 22/11. [Ensayo físico separado](pruebas/reportes/comprobacion-final-20261121/README.md) |
+| CP-FOLLOW-E01; TCS-85.CA05/06 | Fecha/observación con permisos y persistencia | Conforme entre docente y especialista; otro perfil no recibe observación. [Ejecución del 22/11](pruebas/reportes/revision-limpia-20261122/chromium.xml) |
+| CP-RF03-ARASAAC; H3-RF03 | Cargar 91 opciones y excluir tres pendientes | Conforme en Chromium y WebKit; imágenes a 96 × 96. [Ejecución del 22/11](pruebas/reportes/revision-limpia-20261122/webkit.xml) |
+| PC-01; TCS-60.CA01 | Cambios exactos sin recompilar | Seis cambios aplicados; un tiempo superior al KPI histórico de 15 s. [Medición LAN del 18/11](pruebas/reportes/esp-20261118/README.md) |
+| PC-02; TCS-59.CA02 | Rechazar certificado no confiable | Tres rechazos y cero peticiones HTTP; recuperación con certificado confiable. [TLS físico del 18/11](pruebas/reportes/esp-20261118/README.md) |
 
 Los casos completos incluyen precondiciones, pasos, resultado, fecha y reporte en [A5](pruebas/CASOS.md). Se verificaron entradas inválidas, acceso a otros perfiles, sesiones revocadas, errores de red, duplicados y envíos repetidos. La regresión controlada UTF-8 retiró el guard en una copia e hizo fallar la prueba: demuestra detección de ese fallo, no ausencia de todos los bugs.
 
@@ -331,7 +348,7 @@ Los casos completos incluyen precondiciones, pasos, resultado, fecha y reporte e
 
 | ID | Defecto | Tratamiento | Verificación |
 | --- | --- | --- | --- |
-| D01 | Pictogramas ausentes al reiniciar | Metadatos, refresco y atlas | Reinicio con cargador conforme según autor |
+| D01 | Pictogramas ausentes al reiniciar | Metadatos, refresco y atlas | Reinicio con cargador comprobado manualmente en el ESP |
 | D02 | Descargas HTTPS incompletas | Verificar bytes, tamaño y hash | Integración y recorrido físico registrados |
 | D04 | Tacto inferior defectuoso | Controles superiores/laterales | Mitigación confirmada, no reparación |
 | D09 | Filtros aplicados a una sola página | Consulta global y CSV autorizado | API y descarga E2E conformes |
@@ -347,24 +364,26 @@ El [registro completo](pruebas/RESULTADOS.md) conserva severidad, evidencia y al
 
 ### 12.1 Calidad y mediciones
 
+Los resultados de servidor siguientes corresponden a la repetición limpia del 22/11 en `a3d096f`. PC-01/02 conservan su ensayo físico del 18/11; no se repitieron en este corte. [Entorno, comandos y reportes](pruebas/reportes/revision-limpia-20261122/README.md).
+
 | Medida | Meta | Resultado y condición |
 | --- | --- | --- |
 | Cobertura de líneas | ≥70 % del alcance servidor | 90,05 %; ramas 78,16 % y funciones 97,58 % |
-| Carga 5 clientes | p95 ≤2000 ms; errores <1 % | 56,47 ms; 0 errores; 830 peticiones, 15 s, local |
-| Carga 10 clientes | Misma meta | 58,07 ms; 0 errores; 1542 peticiones, 15 s, local |
+| Carga 5 clientes | p95 ≤2000 ms; errores <1 % | 26,20 ms; 0 errores; 960 peticiones, 15 s, local |
+| Carga 10 clientes | Misma meta | 40,87 ms; 0 errores; 1690 peticiones, 15 s, local |
 | Seguridad pasiva | 0 altos/críticos sin tratar; medios explicados | 0 altos, un medio CSP y un informativo; 13 verificaciones autenticadas |
 | Sincronización PC-01 | Coincidencia sin recompilar; contrastar KPI ≤15 s | 6/6 cambios; 7,836–16,889 s; cinco de seis ≤15 s |
 | TLS físico | Sin petición ante certificado no confiable | Tres rechazos, cero HTTP y control confiable funcional |
 
-El medio de CSP se conserva por estilos dinámicos: `style-src unsafe-inline` permite estilos inline. Se mantiene CSP de scripts con nonce, validación y permisos; ello no elimina el riesgo visual si existiera inyección. Su tratamiento y plan están en [A6](calidad/README.md). La auditoría de dependencias y la comprobación anónima de 14 tablas conservaron resultados del 16/11; no se presentan como un escaneo de hoy.
+El medio de CSP se conserva por estilos dinámicos: `style-src unsafe-inline` permite estilos inline. Se mantiene CSP de scripts con nonce, validación y permisos; ello no elimina el riesgo visual si existiera inyección. Su tratamiento y plan están en [A6](calidad/README.md). Repetí la [auditoría de dependencias de producción el 22/11](pruebas/reportes/revision-limpia-20261122/npm-audit.json), con cero vulnerabilidades conocidas. La lectura anónima de 14 tablas conserva su fecha del 16/11. La carga anterior (56,47/58,07 ms) se midió en otro computador: la diferencia no demuestra una optimización del producto.
 
-PC-01 midió hasta aplicación del tablero, no hasta inicio acústico. Sus medianas fueron 11,410 s con recursos nuevos y 10,020 s con recursos reutilizados. Un intento de 16,889 s impide garantizar ≤15 s. Los recorridos manuales de nube del 18/11 fueron conformes según el autor salvo D15, con cambios en aproximadamente 10–15 s. Ese rango no es un promedio instrumentado. [Registros LAN](pruebas/CIERRE.md) y [nube](pruebas/NUBE_20261118.md).
+PC-01 midió hasta aplicación del tablero, no hasta inicio acústico. Sus medianas fueron 11,410 s con recursos nuevos y 10,020 s con recursos reutilizados. Un intento de 16,889 s impide garantizar ≤15 s. Comprobé manualmente los recorridos de nube del 18/11: fueron conformes salvo D15 y los cambios se observaron en aproximadamente 10–15 s. Ese rango no es un promedio instrumentado. [Registros LAN](pruebas/CIERRE.md) y [nube](pruebas/NUBE_20261118.md).
 
 ### 12.2 Review con el profesional
 
 Heriber Galleguillos, psicólogo infantojuvenil especialista en necesidades educativas especiales y TEA, revisó el prototipo por Zoom el 20/11. Autorizó que se usaran su nombre y comentarios en la entrega. Se mostraron datos ficticios y no participaron niños. El video y la transcripción se conservan en privado; el repositorio contiene un registro con minutos y alcance, sin difundir la grabación.
 
-Ignacio confirmó la aprobación de TCS-30/45/48/60/77/85 en pertinencia de uso. Para TCS-26/28/31/43/44 la condición fue simplificar el dispositivo según cada niño. Para TCS-27/46/47 confirmó que no se solicitaron cambios adicionales de tacto, frase visible o Volver/Borrar. Esta información no se convierte en certificación del backend ni en resultados cuantitativos no observados.
+Heriber aprobó los flujos mostrados de TCS-30/45/48/60/77/85 en la demostración guiada. Yo operé la web y consulté su opinión sobre cada flujo. Para TCS-26/28/31/43/44 la condición fue simplificar el dispositivo según cada niño; en TCS-27/46/47 no solicitó cambios adicionales de tacto, frase visible o Volver/Borrar. El [registro principal](validacion/REGISTRO.md) conserva el alcance y la procedencia de esta aclaración. La aprobación no incluye certificación del backend ni resultados cuantitativos.
 
 | Observación | Decisión aplicada | Comprobación disponible |
 | --- | --- | --- |
@@ -393,13 +412,15 @@ La estructura separa `frontend/`, `firmware/`, `supabase/` y `docs/`. La API int
 | Entrega funcional | PR #17 y #18; commit f8b743f fijado por hito3, CI 45025353582 aprobado |
 | Revisión documental | hito3-revision-documental-1 conserva las correcciones de coherencia; no cambia la aplicación ni el firmware |
 
+La presente revisión añade la repetición limpia del 22/11 y la edición final del informe. Se conserva el tag funcional original: estos documentos posteriores no se atribuyen retroactivamente a ese corte. La guía indica que la evidencia añadida después del tag no cuenta para dicho corte; la admisibilidad de una revisión documental posterior corresponde a la comisión. El [cotejo de entrega](REVISION_ENTREGA.md) identifica esta brecha y las demás condiciones de la rúbrica.
+
 Las instrucciones de instalación, variables sin valores secretos, compilación, pruebas y despliegue están en README y [A8](REPOSITORIO.md). Los PR recientes enlazan tickets; existen excepciones históricas que se conservan. Los reportes mantienen la fecha y revisión de su ejecución; el tag original no se modifica al corregir la documentación. Las notas de operación y los respaldos privados no forman parte del informe.
 
 ## 14 Implantación
 
 El primer ámbito es una demostración académica supervisada con adultos y perfiles ficticios. Un eventual uso con niños requiere evaluación individual, condiciones éticas y de datos y seguimiento profesional. No se realizó un estudio comercial TAM/SAM/SOM ni se afirma rentabilidad.
 
-La implantación considera responsables autorizados, red disponible, alimentación, configuración del ESP y un medio alternativo de comunicación ante fallos. La separación de dos ESP fue confirmada por el propietario; no se extrapola a una flota mayor ni a disponibilidad garantizada.
+La implantación considera responsables autorizados, red disponible, alimentación, configuración del ESP y un medio alternativo de comunicación ante fallos. Comprobé manualmente la separación de dos ESP; no se extrapola a una flota mayor ni a disponibilidad garantizada.
 
 ## 15 Riesgos residuales y mejora
 
@@ -435,9 +456,9 @@ El aporte de STCS es un prototipo configurable y trazable, con decisiones justif
 
 Las fuentes se contrastaron el 21/11/2026. La evidencia de STCS corresponde a sus propios reportes, fichas y registro profesional. Los informes y presentaciones de origen conservan sus fechas; la ampliación documental no modifica sus resultados históricos.
 
-## Anexo A Historias criterios y tareas
+## Anexo A Historias, criterios y tareas
 
-Las fichas siguientes reúnen las trece historias de Hito 2 y las diez principales de Hito 3. Los criterios conservan la formulación registrada. El estado técnico, el estado administrativo y la aprobación son dimensiones separadas. Heriber es el stakeholder de pertinencia. Las tareas técnicas se verifican con pruebas; los profesores conservan su función de guías y evaluadores. Las aprobaciones y condiciones del profesional se detallan en la sección 12.2 y en A3.
+Las fichas siguientes reúnen las trece historias de Hito 2 y las diez principales de Hito 3. Consulté las 31 subtareas del Sprint 3 en Jira el 22/11: figuraban cerradas. Ese estado administrativo se conserva y no sustituye la evidencia ni cierra los indicadores pendientes. Los criterios conservan la formulación registrada. El estado técnico, el estado administrativo y la aprobación son dimensiones separadas. Heriber es el stakeholder de pertinencia. Las tareas técnicas se verifican con pruebas; los profesores conservan su función de guías y evaluadores. Las aprobaciones y condiciones del profesional se detallan en la sección 12.2 y en A3.
 
 ### Sprint 2 TCS-72 Diseño del flujo de sugerencias en el tablero del ESP32
 
@@ -467,7 +488,7 @@ Como usuario del comunicador, quiero ver los elementos de la pantalla completos 
 | TCS-26.T1 | Ajustar elementos a la pantalla circular. | Hecha |
 | TCS-26.T2 | Comprobar texto y controles visibles. | Hecha |
 
-**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia condicionada a simplificar categorías y pictogramas según cada niño. La condición se implementó y su operación física se confirmó el 22/11/2026; esa comprobación corresponde al ejecutor, no a una nueva evaluación de Heriber.
+**Aprobación:** flujo aprobado por el stakeholder en la demostración guiada del 20/11/2026, condicionado a simplificar el tablero por niño. La condición se comprobó después en el ESP; Heriber no probó esa versión. [Alcance común](validacion/REGISTRO.md).
 
 ### Sprint 2 TCS-27 Prueba inicial de interacción táctil
 
@@ -483,7 +504,7 @@ Como usuario del comunicador, quiero seleccionar opciones mediante el tacto para
 | TCS-27.T1 | Definir áreas táctiles y respuesta visual. | Hecha |
 | TCS-27.T2 | Comprobar selección y evitar la zona inferior defectuosa. | Hecha |
 
-**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Según la confirmación de Ignacio, no solicitó cambios adicionales en tacto, frase visible o Volver/Borrar; se mantiene la adaptación individual del tablero. No certifica autonomía infantil ni precisión táctil cuantificada.
+**Aprobación:** tacto mostrado aprobado por el stakeholder en la demostración guiada del 20/11/2026, sin cambios adicionales. No certifica autonomía ni precisión táctil cuantificada. [Alcance común](validacion/REGISTRO.md).
 
 ### Sprint 2 TCS-73 Diseño de integración del sistema predictivo con la plataforma web
 
@@ -513,7 +534,7 @@ Como usuario del comunicador, quiero acceder a categorías y controles visibles 
 | TCS-43.T1 | Construir el menú y la interfaz base. | Hecha |
 | TCS-43.T2 | Comprobar presentación en el ESP. | Hecha |
 
-**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia condicionada a simplificar categorías y pictogramas según cada niño. La condición se implementó y su operación física se confirmó el 22/11/2026; esa comprobación corresponde al ejecutor, no a una nueva evaluación de Heriber.
+**Aprobación:** interfaz mostrada aprobada por el stakeholder en la demostración guiada del 20/11/2026, condicionada a simplificar el tablero por niño. La versión posterior se comprobó técnicamente, sin nueva revisión de Heriber. [Alcance común](validacion/REGISTRO.md).
 
 ### Sprint 2 TCS-47 Implementación de botón volver y limpiar
 
@@ -529,7 +550,7 @@ Como usuario del comunicador, quiero volver al menú y borrar la frase de forma 
 | TCS-47.T1 | Implementar Volver y Borrar. | Hecha |
 | TCS-47.T2 | Comprobar regreso sin pérdida y borrado explícito. | Hecha |
 
-**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Según la confirmación de Ignacio, no solicitó cambios adicionales en tacto, frase visible o Volver/Borrar; se mantiene la adaptación individual del tablero. No certifica autonomía infantil ni precisión táctil cuantificada.
+**Aprobación:** Volver/Borrar mostrados aprobados por el stakeholder en la demostración guiada del 20/11/2026, sin cambios adicionales. Tiempo, errores y ayudas no se midieron. [Alcance común](validacion/REGISTRO.md).
 
 ### Sprint 2 TCS-44 Implementación de navegación entre categorías
 
@@ -545,7 +566,7 @@ Como usuario del comunicador, quiero navegar por categorías y páginas conserva
 | TCS-44.T1 | Implementar categorías y paginación. | Hecha |
 | TCS-44.T2 | Comprobar navegación conservando la frase. | Hecha |
 
-**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia condicionada a simplificar categorías y pictogramas según cada niño. La condición se implementó y su operación física se confirmó el 22/11/2026; esa comprobación corresponde al ejecutor, no a una nueva evaluación de Heriber.
+**Aprobación:** navegación mostrada aprobada por el stakeholder en la demostración guiada del 20/11/2026, condicionada a simplificar el recorrido por niño. Heriber no probó la versión posterior. [Alcance común](validacion/REGISTRO.md).
 
 ### Sprint 2 TCS-45 Implementación de selección táctil de pictogramas
 
@@ -561,7 +582,7 @@ Como usuario del comunicador, quiero seleccionar un pictograma mediante el tacto
 | TCS-45.T1 | Implementar selección y respuesta visual. | Hecha |
 | TCS-45.T2 | Comprobar que se añade la opción elegida. | Hecha |
 
-**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia del vocabulario e interacción mostrados; sin evaluación de eficacia clínica con niños. Las comprobaciones técnicas posteriores se registran por separado.
+**Aprobación:** vocabulario y selección mostrados aprobados por el stakeholder en la demostración guiada del 20/11/2026. No hubo evaluación clínica con niños ni operación autónoma. [Alcance común](validacion/REGISTRO.md).
 
 ### Sprint 2 TCS-46 Visualización del mensaje seleccionado
 
@@ -577,7 +598,7 @@ Como usuario del comunicador, quiero leer la frase seleccionada en orden para co
 | TCS-46.T1 | Mostrar la frase en orden. | Hecha |
 | TCS-46.T2 | Comprobar que navegar no la borra. | Hecha |
 
-**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Según la confirmación de Ignacio, no solicitó cambios adicionales en tacto, frase visible o Volver/Borrar; se mantiene la adaptación individual del tablero. No certifica autonomía infantil ni precisión táctil cuantificada.
+**Aprobación:** frase visible mostrada aprobada por el stakeholder en la demostración guiada del 20/11/2026, sin cambios adicionales. No certifica comprensión infantil ni autonomía. [Alcance común](validacion/REGISTRO.md).
 
 ### Sprint 2 TCS-49 Persistencia de pictogramas en base de datos
 
@@ -635,7 +656,7 @@ Como especialista o docente asignado, quiero editar imágenes, nombres, categor�
 | TCS-48.T1 | Implementar edición del tablero por perfil. | Hecha |
 | TCS-48.T2 | Comprobar guardado, sincronización y mensaje vigente. | Hecha |
 
-**Aprobación del stakeholder:** Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia del vocabulario e interacción mostrados; sin evaluación de eficacia clínica con niños. Las comprobaciones técnicas posteriores se registran por separado.
+**Aprobación:** pertinencia de personalizar aprobada por el stakeholder en la demostración guiada del 20/11/2026. D15 se corrigió y comprobó después; Heriber no probó esa versión. [Alcance común](validacion/REGISTRO.md).
 
 ### Sprint 3 TCS-53 Perfiles y dispositivos autorizados
 
@@ -649,6 +670,12 @@ Como adulto responsable asignado, quiero acceder únicamente a mis perfiles y ES
 * **CA02** Dada una credencial ajena o inválida, cuando consulta un ESP, entonces el servidor rechaza sin exponer datos.
 * **CA03** Dados dos ESP asociados a perfiles diferentes, cuando se utilizan y se consultan desde la web, entonces mantienen separada la información de cada perfil.
 
+**Tareas en Jira:**
+
+| Tarea | Trabajo | Estado Jira |
+| --- | --- | --- |
+| [TCS-92](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-92) | Registrar la separación de dos ESP y varios computadores. | Cerrada |
+| [TCS-93](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-93) | Comprobar asignaciones y proyecciones por rol. | Cerrada |
 
 
 ### Sprint 3 TCS-59 Seguridad y aislamiento de datos
@@ -663,6 +690,14 @@ Como adulto responsable, quiero contar con controles de acceso y comunicación s
 * **CA02** Dada comunicación HTTPS, cuando conecta, entonces valida certificado y no expone secretos; RLS y privilegios de servidor se revisan junto al control de API.
 * **CA03** Dado un escaneo o prueba negativa, cuando detecta un hallazgo, entonces se corrige o registra riesgo residual y evidencia reproducible.
 
+**Tareas en Jira:**
+
+| Tarea | Trabajo | Estado Jira |
+| --- | --- | --- |
+| [TCS-99](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-99) | Registrar rechazo de certificado inválido en el ESP físico. | Cerrada |
+| [TCS-100](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-100) | Revisar dependencias, ZAP y acceso anónimo. | Cerrada |
+| [TCS-101](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-101) | Comprobar roles, rutas antiguas y respuestas restringidas. | Cerrada |
+| [TCS-102](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-102) | Verificar seguridad de la versión publicada final. | Cerrada |
 
 
 ### Sprint 3 TCS-60 Aceptación integrada y evidencia de defensa
@@ -679,7 +714,17 @@ Como responsable del proyecto, quiero verificar el recorrido integrado con evide
 
 **Aprobación del stakeholder**
 
-Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión por Zoom del 20/11/2026; aprobación de pertinencia y uso confirmada por Ignacio. Alcance: recorrido integrado mostrado con adultos y datos ficticios.
+Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA, aprobó el flujo mostrado en la demostración guiada del 20/11/2026. Alcance: recorrido integrado operado por mí con adultos y datos ficticios; PA cuantitativo pendiente. [Registro principal](validacion/REGISTRO.md).
+
+**Tareas en Jira:**
+
+| Tarea | Trabajo | Estado Jira |
+| --- | --- | --- |
+| [TCS-116](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-116) | Relacionar requisitos, HU, casos y reportes. | Cerrada |
+| [TCS-117](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-117) | Medir sincronización web–ESP en frío y caché. | Cerrada |
+| [TCS-118](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-118) | Incorporar decisiones reales del profesional. | Cerrada |
+| [TCS-119](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-119) | Cerrar informe, Review y versión de entrega. | Cerrada |
+
 
 ### Sprint 3 TCS-74 Configuración Wi-Fi móvil del ESP
 
@@ -693,6 +738,12 @@ Como adulto junto al ESP, quiero configurar su Wi-Fi desde un celular y ver el e
 * **CA02** Dada asociación al router, cuando cambia, entonces muestra conectado/desconectado; no garantiza Internet/API.
 * **CA03** Dado el alcance aceptado, cuando activa el AP, entonces permanece hasta reiniciar. Sin timeout automático.
 
+**Tareas en Jira:**
+
+| Tarea | Trabajo | Estado Jira |
+| --- | --- | --- |
+| [TCS-94](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-94) | Comprobar cambio de red y texto conectado/desconectado. | Cerrada |
+| [TCS-95](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-95) | Restaurar menú Wi-Fi y formulario móvil. | Cerrada |
 
 
 ### Sprint 3 TCS-76 Cola de 64 eventos y caché del ESP
@@ -707,6 +758,13 @@ Como usuario del comunicador, quiero conservar el tablero y los eventos pendient
 * **CA02** Dada cola llena de 64, cuando intenta encolar otro, entonces rechaza el nuevo registro; no garantiza actividad offline ilimitada.
 * **CA03** Dado un reinicio, cuando recupera, entonces conserva tablero y recursos disponibles con caché limitada. Voz sin Wi-Fi no garantizada.
 
+**Tareas en Jira:**
+
+| Tarea | Trabajo | Estado Jira |
+| --- | --- | --- |
+| [TCS-96](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-96) | Persistir eventos en LittleFS hasta ACK coincidente. | Cerrada |
+| [TCS-97](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-97) | Registrar reinicio, reconexión y reintentos comprobados por el autor. | Cerrada |
+| [TCS-98](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-98) | Definir cola de 64 y límites de voz/caché. | Cerrada |
 
 
 ### Sprint 3 TCS-77 Revisión profesional del prototipo
@@ -723,7 +781,16 @@ Como especialista evaluador, quiero revisar el prototipo y registrar observacion
 
 **Aprobación del stakeholder**
 
-Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión por Zoom del 20/11/2026; aprobación de pertinencia y uso confirmada por Ignacio. Alcance: revisión cualitativa del prototipo y sus observaciones; sin participación de niños ni indicadores cuantificados.
+Heriber Galleguillos aprobó el flujo mostrado en la demostración guiada del 20/11/2026. La revisión fue cualitativa, sin participación de niños ni indicadores cuantificados. [Identidad, rol, alcance y procedencia](validacion/REGISTRO.md).
+
+**Tareas en Jira:**
+
+| Tarea | Trabajo | Estado Jira |
+| --- | --- | --- |
+| [TCS-89](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-89) | Preparar tareas, métricas y registro de decisión. | Cerrada |
+| [TCS-90](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-90) | Realizar reunión con profesional y datos ficticios. | Cerrada |
+| [TCS-91](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-91) | Registrar decisiones por HU y atender observaciones. | Cerrada |
+
 
 ### Sprint 3 TCS-83 Historial y exportación autorizada
 
@@ -737,6 +804,13 @@ Como especialista o apoderado asignado, quiero consultar y exportar de forma aut
 * **CA02** Dado docente, administrador o perfil ajeno, cuando consulta/exporta, entonces no recibe actividad restringida.
 * **CA03** Dado un conjunto filtrado, cuando se implemente exportación completa, entonces usa alias, evita fórmulas CSV y registra su alcance sin datos innecesarios.
 
+**Tareas en Jira:**
+
+| Tarea | Trabajo | Estado Jira |
+| --- | --- | --- |
+| [TCS-103](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-103) | Aplicar migración revisada y publicar el candidato final. | Cerrada |
+| [TCS-104](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-104) | Comprobar permisos, límites y descarga en dos motores. | Cerrada |
+| [TCS-105](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-105) | Implementar filtros globales y CSV autorizado. | Cerrada |
 
 
 ### Sprint 3 TCS-84 Sesiones y cuentas por rol
@@ -752,6 +826,12 @@ Como adulto responsable, quiero activar mi cuenta e iniciar y cerrar una sesión
 * **CA03** Dado admin, cuando gestiona adultos, entonces no elige contraseñas/correos existentes ni recibe identidades infantiles; nuevas asignaciones clínicas requieren aprobación autorizada.
 * **CA04** Dado login, cuando se ejecuta, entonces no crea esquemas ni resetea demos. Solo los entornos de prueba marcados omiten activación.
 
+**Tareas en Jira:**
+
+| Tarea | Trabajo | Estado Jira |
+| --- | --- | --- |
+| [TCS-106](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-106) | Implementar sesiones, activación y revocación. | Cerrada |
+| [TCS-107](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-107) | Comprobar roles, CSRF, child y ausencia de seeds en login. | Cerrada |
 
 
 ### Sprint 3 TCS-85 Uso accesible y recuperación de errores web
@@ -771,7 +851,18 @@ Como adulto responsable, quiero usar formularios y navegación accesibles con er
 
 **Aprobación del stakeholder**
 
-Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión por Zoom del 20/11/2026; aprobación de pertinencia y uso confirmada por Ignacio. Alcance: claridad y pertinencia de las vistas adultas. La simplificación del ESP responde a la condición de adaptar el tablero a cada niño; no implica que Heriber haya probado la versión posterior.
+Heriber Galleguillos aprobó la claridad y pertinencia de las vistas adultas mostradas en la demostración guiada del 20/11/2026. La simplificación del ESP responde a su condición de adaptar el tablero a cada niño; Heriber no probó la versión posterior. [Registro principal](validacion/REGISTRO.md).
+
+**Tareas en Jira:**
+
+| Tarea | Trabajo | Estado Jira |
+| --- | --- | --- |
+| [TCS-108](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-108) | Corregir foco, contraste, sesión y consultas al salir. | Cerrada |
+| [TCS-109](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-109) | Comprobar Chromium, WebKit y recorrido Safari informado. | Cerrada |
+| [TCS-110](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-110) | Revisar claridad de uso con el profesional. | Cerrada |
+| [TCS-111](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-111) | Publicar y comprobar los cambios finales. | Cerrada |
+| [TCS-112](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-112) | Comprobar y presentar atribuciones de los recursos en la interfaz publicada. | Cerrada |
+
 
 ### Sprint 3 TCS-88 CI despliegue y recuperación reproducibles
 
@@ -785,19 +876,28 @@ Como desarrollador, quiero verificar cambios, despliegues y procedimientos de re
 * **CA02** Dado un cambio desplegado, cuando verifica, entonces identifica SHA, URL y salud; secretos permanecen fuera de Git y fixtures fuera de Supabase.
 * **CA03** Dada recuperación, cuando prepara firmware/base, entonces usa versiones registradas, respaldo privado y restauración revisada sin sobrescribir datos posteriores.
 
+**Tareas en Jira:**
+
+| Tarea | Trabajo | Estado Jira |
+| --- | --- | --- |
+| [TCS-113](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-113) | Conservar reportes reproducibles y recuperación sintética. | Cerrada |
+| [TCS-114](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-114) | Preparar ficha de avance, DoD y plan de cierre. | Cerrada |
+| [TCS-115](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-115) | Ejecutar CI, verificar despliegue y crear tag final. | Cerrada |
 
 
 ## Anexo B Matriz de trazabilidad
+
+Repetí las suites prioritarias sobre el commit integrado `a3d096f` con PostgreSQL aislado el 22/11: aprobaron las 387 comprobaciones API, tres de resiliencia, 40 recorridos E2E, ocho pruebas Python de voz, TLS y recuperación. La cobertura fue 90,05 % de líneas; la carga local obtuvo p95 26,20/40,87 ms y cero errores. ZAP confirmó 13/13 respuestas esperadas, sin altos y con el medio CSP ya documentado. Los [reportes y comandos](pruebas/reportes/revision-limpia-20261122/README.md) identifican el entorno efectivo y el SHA, también confirmado en Vercel. Las cifras del 21/11 que aparecen en el informe corresponden al ensayo anterior y se conservan como historial.
 
 La matriz completa, con enlaces y riesgos asociados, está en [A4](trazabilidad.md). Los reportes conservan entorno, fecha y revisión. La publicación y las pruebas físicas posteriores no se atribuyen a la sesión de Heriber.
 
 | Objetivo / requisito | Modelo, HU y sprint | Prueba y resultado | Evidencia y versión |
 | --- | --- | --- | --- |
 | OE3 / H3-RF01 (Must) | [UC1, SEQ2](arquitectura/modelos.md), [TCS-84](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-84); S3: 84 | CP-RNF01-I01, CP-RF01-E01/E02; Sesiones verificadas; comprobación técnica por pruebas, alcance en A3 | [API/E2E](pruebas/RESULTADOS.md); [PR #13](https://github.com/N4CHO8/STCS/pull/13); [PR #15](https://github.com/N4CHO8/STCS/pull/15) |
-| OE3 / H3-RF02 (Must) | [UC2, CL1, SEQ2](arquitectura/modelos.md), [TCS-53](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-53); [TCS-59](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-59); S3: 53, 59 | CP-RNF01-U01/I01, CP-RF02-E01–04; Casos técnicos aprobados; dos ESP conformes según autor el 16/11, demostración presencial prevista | [Permisos](FLUJO_ROLES.md), [resultados](pruebas/RESULTADOS.md); [PR #1](https://github.com/N4CHO8/STCS/pull/1); [PR #5](https://github.com/N4CHO8/STCS/pull/5); [PR #13](https://github.com/N4CHO8/STCS/pull/13) |
-| OE2 / H3-RF03 (Must) | [UC3, SEQ1, ACT1](arquitectura/modelos.md), [TCS-48](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-48); [TCS-49](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-49); [TCS-60](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-60); S2: 48, 49; S3: 60 | CP-RF03-U01–04, CP-RF03-E01/E02, PF-01; Imagen y frase nueva/actualizada confirmadas en nube y ESP; D15 resuelto en PR #17 | [JUnit](pruebas/reportes/unitarias-cierre.xml), [E2E](pruebas/reportes/e2e.xml), [físico](pruebas/FISICAS_20261115.md); [PR #5](https://github.com/N4CHO8/STCS/pull/5); [PR #6](https://github.com/N4CHO8/STCS/pull/6); [PR #13](https://github.com/N4CHO8/STCS/pull/13) |
+| OE3 / H3-RF02 (Must) | [UC2, CL1, SEQ2](arquitectura/modelos.md), [TCS-53](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-53); [TCS-59](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-59); S3: 53, 59 | CP-RNF01-U01/I01, CP-RF02-E01–04; casos técnicos aprobados; dos ESP comprobados manualmente el 16/11 | [Permisos](FLUJO_ROLES.md), [resultados](pruebas/RESULTADOS.md); [PR #1](https://github.com/N4CHO8/STCS/pull/1); [PR #5](https://github.com/N4CHO8/STCS/pull/5); [PR #13](https://github.com/N4CHO8/STCS/pull/13) |
+| OE2 / H3-RF03 (Must) | [UC3, SEQ1, ACT1](arquitectura/modelos.md), [TCS-48](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-48); [TCS-49](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-49); [TCS-60](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-60); S2: 48, 49; S3: 60 | CP-RF03-U01–04, E01/E02 y CP-ADAPT-P01; D15 corregido y frase nueva/editada comprobada en Vercel y ESP | [Comprobación final](pruebas/reportes/comprobacion-final-20261121/README.md); [PR #17](https://github.com/N4CHO8/STCS/pull/17); [tag `hito3`](https://github.com/N4CHO8/STCS/tree/hito3) |
 | OE1 / H3-RF04 (Must) | [UC4, ACT1](arquitectura/modelos.md), [TCS-43](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-43); [TCS-44](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-44); [TCS-45](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-45); [TCS-46](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-46); [TCS-47](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-47); [TCS-85](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-85); S2: 43, 44, 45, 46, 47; S3: 85 | PF-01; Operación física informada y pertinencia revisada; autonomía externa no medida | [Prueba física](pruebas/FISICAS_20261115.md); [PR #5](https://github.com/N4CHO8/STCS/pull/5); [PR #7](https://github.com/N4CHO8/STCS/pull/7); [PR #9](https://github.com/N4CHO8/STCS/pull/9) |
-| OE4 / H3-RF05 (Must) | [UC5, CL1](arquitectura/modelos.md), [TCS-51](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-51); [TCS-52](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-52); [TCS-83](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-83); S2: 51, 52; S3: 83 | CP-RF05-U01/U02/I01, PF-03–05; Persistencia y deduplicación comprobadas; confirmación física del ejecutor y demo presencial prevista, sin conteos instrumentados | [API](pruebas/RESULTADOS.md), [físico](pruebas/FISICAS_20261115.md); [PR #2](https://github.com/N4CHO8/STCS/pull/2); [PR #3](https://github.com/N4CHO8/STCS/pull/3); [PR #5](https://github.com/N4CHO8/STCS/pull/5) |
+| OE4 / H3-RF05 (Must) | [UC5, CL1](arquitectura/modelos.md), [TCS-51](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-51); [TCS-52](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-52); [TCS-83](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-83); S2: 51, 52; S3: 83 | CP-RF05-U01/U02/I01, PF-03–05; Persistencia y deduplicación comprobadas; comprobación manual en el ESP y demo presencial prevista, sin conteos instrumentados | [API](pruebas/RESULTADOS.md), [físico](pruebas/FISICAS_20261115.md); [PR #2](https://github.com/N4CHO8/STCS/pull/2); [PR #3](https://github.com/N4CHO8/STCS/pull/3); [PR #5](https://github.com/N4CHO8/STCS/pull/5) |
 | OE1/OE4 / H3-RF06 (Must) | [UC6](arquitectura/modelos.md), [TCS-74](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-74); S3: 74 | PF-06; Finalizada sin timeout; matriz móvil parcial | [Wi-Fi](pruebas/FISICAS_20261115.md); [PR #9](https://github.com/N4CHO8/STCS/pull/9) |
 | OE3 / H3-RF07 (Should) | [UC8, CL1](arquitectura/modelos.md), [TCS-84](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-84); S3: 84 | CP-RNF01-I01; Separación informe/orientaciones técnica; pertinencia de uso revisada el 20/11, sin eficacia clínica evaluada | [API](pruebas/RESULTADOS.md); [PR #5](https://github.com/N4CHO8/STCS/pull/5) |
 | OE4 / H3-RF08 (Should) | [ACT1, CL1](arquitectura/modelos.md), [TCS-76](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-76); S3: 76 | PF-02–05; Cola 64 aceptada; L-01 sin voz sin Wi-Fi | [Reinicio/cola](pruebas/FISICAS_20261115.md); [PR #7](https://github.com/N4CHO8/STCS/pull/7); [PR #8](https://github.com/N4CHO8/STCS/pull/8) |
@@ -806,13 +906,13 @@ La matriz completa, con enlaces y riesgos asociados, está en [A4](trazabilidad.
 | OE2 / H3-RF11 (Should) | [SEQ1](arquitectura/modelos.md), [TCS-60](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-60); S3: 60 | CP-RF03-U04, ensayo 180/rechazo184; 180 operativos, no máximo físico ni 180 voces offline | [Telemetría](evidencias/publicacion-20261115/capacidad-180-telemetria.txt); [PR #5](https://github.com/N4CHO8/STCS/pull/5) |
 | OE1/OE2 / H3-RF12 (Must) | [UC3/4, CL1, ACT1](arquitectura/modelos.md), [TCS-85](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-85), CA04; S3: 85 | CP-ADAPT-U01/U02/I01/E01/E02/P01; Servidor/UI y ESP físico conformes: categoría única, imagen/voz y edición confirmadas el 22/11 | [Reporte](pruebas/reportes/adaptacion-20261121/README.md); [PR #17](https://github.com/N4CHO8/STCS/pull/17); [hito3](https://github.com/N4CHO8/STCS/tree/hito3) |
 | OE2/OE3 / H3-RF13 (Should) | [UC8, CL1](arquitectura/modelos.md), [TCS-85](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-85), CA05/06; S3: 85 | CP-FOLLOW-I01/E01; Fecha y observaciones conformes en permisos y persistencia | [Reporte](pruebas/reportes/adaptacion-20261121/README.md); [PR #17](https://github.com/N4CHO8/STCS/pull/17); [hito3](https://github.com/N4CHO8/STCS/tree/hito3) |
-| OE3 / H3-RNF01 (Must) | [SEQ2](arquitectura/modelos.md), [TCS-59](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-59); S3: 59 | CP-RNF01-S01/I01, CP-RNF01-TLS01; grupo RLS/DAST; Escaneo acotado; un medio residual | [ZAP/npm](calidad/README.md); [autenticado](pruebas/reportes/arreglos-locales-20261116/seguridad-autenticada.json); [PR #13](https://github.com/N4CHO8/STCS/pull/13) |
-| OE4 / H3-RNF02 (Must) | [SEQ1](arquitectura/modelos.md), [TCS-60](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-60); [TCS-88](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-88); S3: 60, 88 | CP-RNF02-L01/L02; Aprobado en laboratorio: p95 56,47/58,07 ms, 5/10 clientes, cero errores; no capacidad cloud | [Carga ampliada](pruebas/reportes/adaptacion-20261121/carga-local.json); [PR #13](https://github.com/N4CHO8/STCS/pull/13) |
-| OE4 / H3-RNF03 (Should) | [SEQ1/SEQ2](arquitectura/modelos.md), [TCS-88](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-88); S3: 88 | CP-RF03-U02, CP-RNF03-E01/E02, CP-RNF03-A11Y; CI; Local aprobado: 90,05% líneas, 20 recorridos por motor; evidencia local del 21/11 | [Cobertura](calidad/README.md), [CI](https://github.com/N4CHO8/STCS/actions/runs/43925021420); [ampliación](pruebas/reportes/arreglos-locales-20261116/manifest.json); [PR #13](https://github.com/N4CHO8/STCS/pull/13); [PR #15](https://github.com/N4CHO8/STCS/pull/15) |
+| OE3 / H3-RNF01 (Must) | [SEQ2](arquitectura/modelos.md), [TCS-59](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-59); S3: 59 | CP-RF02-E02/E04 y CP-RNF01-S01/I01/TLS01; 13/13 estados, 5/5 negaciones y 0 entregas restringidas; CSP medio declarado | [Casos](pruebas/CASOS.md), [reporte autenticado del 22/11](pruebas/reportes/revision-limpia-20261122/seguridad-autenticada.json), [calidad](calidad/README.md); [PR #13](https://github.com/N4CHO8/STCS/pull/13) |
+| OE4 / H3-RNF02 (Must) | [SEQ1](arquitectura/modelos.md), [TCS-60](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-60); [TCS-88](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-88); S3: 60, 88 | CP-RNF02-L01/L02; localhost, 5/10 clientes, 15 s; p95 26,20/40,87 ms y 0 errores frente a ≤2000 ms/<1 %, ensayo limpio del 22/11 | [Escenario](calidad/README.md), [reporte del 22/11](pruebas/reportes/revision-limpia-20261122/carga-local.json); no mide capacidad cloud |
+| OE4 / H3-RNF03 (Should) | [SEQ1/SEQ2](arquitectura/modelos.md), [TCS-88](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-88); S3: 88 | CP-RF03-U02, CP-RNF03-E01/E02, CP-RNF03-A11Y; CI; Repetición limpia aprobada: 90,05% líneas y 20 recorridos por motor el 22/11, a3d096f | [Cobertura](calidad/README.md), [CI](https://github.com/N4CHO8/STCS/actions/runs/43925021420); [repetición limpia](pruebas/reportes/revision-limpia-20261122/README.md); [PR #13](https://github.com/N4CHO8/STCS/pull/13); [PR #15](https://github.com/N4CHO8/STCS/pull/15) |
 | OE4 / H3-RNF04 (Should) | [ACT1, CL1](arquitectura/modelos.md), [TCS-76](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-76); S3: 76 | CP-RF05-I01, PF-03–05; Conforme informado; conteos/instantes de corte no instrumentados | [Registro](pruebas/FISICAS_20261115.md); [PR #7](https://github.com/N4CHO8/STCS/pull/7) |
-| OE1/OE2 / Aceptación del prototipo | [UC3/4](arquitectura/modelos.md), [TCS-77](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-77); S3: 77 | PA-01–05; [Revisión Zoom 20/11](validacion/REGISTRO.md), con observaciones y sin indicadores medidos | [Protocolo](validacion/PAUTA.md); Aprobación cualitativa confirmada por Ignacio; adaptación física comprobada, indicadores no medidos declarados en A1 |
+| OE1/OE2 / Aceptación del prototipo | [UC3/4](arquitectura/modelos.md), [TCS-77](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-77); S3: 77 | PA-01–05 pendientes de ejecución completa; flujos aprobados cualitativamente en demostración guiada, sin operación autónoma ni métricas | [Protocolo](validacion/PAUTA.md), [registro principal](validacion/REGISTRO.md); la adaptación posterior se comprobó técnicamente y Heriber no la volvió a probar |
 | H2-OE7 / FUT01: diseño, no motor | [Diseño futuro A1](objetivos.md#diseño-conceptual-futuro--h2-oe7--fut01), [TCS-68](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-68); [TCS-69](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-69); [TCS-70](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-70); [TCS-71](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-71); [TCS-72](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-72); [TCS-73](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-73); S1: 68, 69, 70, 71; S2: 72, 73 | Análisis/diseño; Fuera de implementación actual | [Diseño conceptual A1](objetivos.md#diseño-conceptual-futuro--h2-oe7--fut01), [antecedentes](ANTECEDENTES_HITOS_1_2.md); Sin motor entregado |
-| OE3/OE4 / FUT02: verificación multicliente | [CL1/SEQ2](arquitectura/modelos.md), [TCS-53](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-53); S3: 53 | PF-08, MC-WEB-01; Conforme informado: dos ESP y varios computadores; demostración presencial prevista | [Registro 16/11](pruebas/MULTICLIENTE_20261116.md); Confirmación del ejecutor, sin cambio de código |
+| OE3/OE4 / FUT02: verificación multicliente | [CL1/SEQ2](arquitectura/modelos.md), [TCS-53](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-53); S3: 53 | PF-08, MC-WEB-01; Conforme informado: dos ESP y varios computadores; demostración presencial prevista | [Registro 16/11](pruebas/MULTICLIENTE_20261116.md); Registro manual de Ignacio Benegas, sin cambio de código |
 | OE3 / FUT03: mejora futura | [Alcance futuro A2](requerimientos.md#exclusiones-y-evolución), [TCS-53](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-53); [TCS-75](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-75); [TCS-81](https://uandresbello-team-bg7iosbc.atlassian.net/browse/TCS-81); S3: 53; Consolidadas sin sprint: 75, 81 | Sin prueba de implementación; Fuera del alcance entregado; alta por posesión, rotación y reasignación web no implementadas | [Alcance y deuda](riesgos.md); Decisión del propietario 17/11/2026, sin cambio de código |
 
 La adaptación y la generación de voces nuevas se verificaron en Vercel y ESP. Los indicadores externos de A1 no medidos, los cinco PA cuantificados, el residual CSP y la recuperación completa de nube conservan su alcance y limitaciones. [Registro final](pruebas/reportes/comprobacion-final-20261121/README.md).

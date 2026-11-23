@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-11-22T18:54:05.956Z",
+  "codeCommit": "a3d096f7ab02c16b34c0f8f5779b67ccae79899d",
+  "workingTreeDirty": false,
+  "environment": "Loopback Next production build and disposable stcs_release_tests; per-run owned fixture, one assigned profile, zero pictograms",
+  "node": "v24.11.1",
+  "machine": {
+    "cpuModel": "AMD Ryzen 5 3600 6-Core Processor              ",
+    "logicalCpus": 12,
+    "totalMemoryBytes": 17077329920
+  },
+  "endpoint": "/api/stcs/portal",
+  "thresholds": {
+    "p95Milliseconds": 2000,
+    "maximumErrorRateExclusive": 0.01
+  },
+  "stages": [
+    {
+      "concurrency": 5,
+      "plannedDurationSeconds": 15,
+      "elapsedSeconds": 15.0142812,
+      "requests": 960,
+      "errors": 0,
+      "errorRate": 0,
+      "p95Milliseconds": 26.20429999999942,
+      "passed": true
+    },
+    {
+      "concurrency": 10,
+      "plannedDurationSeconds": 15,
+      "elapsedSeconds": 15.067704399999998,
+      "requests": 1690,
+      "errors": 0,
+      "errorRate": 0,
+      "p95Milliseconds": 40.87299999999959,
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Single workstation, authenticated reads only",
+    "One profile without media; not a production volume or fleet test",
+    "Engineering thresholds pending external approval"
+  ]
+}

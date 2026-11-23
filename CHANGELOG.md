@@ -1,5 +1,12 @@
 # Cambios de STCS
 
+## TCS-60/77/88 — entrega documental final
+
+- Informe acumulativo en Markdown, Word y PDF, con subtareas del Sprint 3 consultadas en Jira, aprobación guiada delimitada y cifras de la revisión limpia.
+- Reportes del 22/11 sobre a3d096f: API, E2E, cobertura, voz, TLS, carga, seguridad y recuperación aisladas; se conserva el historial.
+- Índice de defensa y cotejo de la rúbrica oficial, las dos retroalimentaciones y la deuda pendiente.
+- Sin cambios de comportamiento de web, firmware o base de datos. Presentación y guion fuera del repositorio.
+
 ## Revisión documental del 22/11/2026
 
 - TCS-60/88: informe, fichas de HU y registro profesional alineados con las comprobaciones de nube y ESP; se mantienen los límites de la revisión cualitativa.
