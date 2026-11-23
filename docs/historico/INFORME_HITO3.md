@@ -66,9 +66,9 @@ OE1–OE4 son agrupaciones de medición del cierre, distintas de los números or
 
 La revisión por Zoom prevista utilizará adultos y datos ficticios. El profesional deberá conocer las limitaciones, acordar tareas/metas antes de la sesión y emitir observaciones sobre el alcance que realmente revise. Una revisión experta no demuestra comprensión de pictogramas por niños ni eficacia terapéutica.
 
-**Evidencia A1 por incorporar:** fecha y rol del evaluador, consentimiento para citar su participación, tareas acordadas, datos brutos, cálculo de indicadores, comparación con metas y decisión auténtica. Si la meta no se alcanza, registrar el resultado y la causa; no reemplazarlo por una aprobación genérica.
+En este corte no se contaba con una revisión profesional ni mediciones externas de los indicadores.
 
-El correo ya fue enviado por el autor. No se ha comunicado una reunión confirmada ni respuesta del profesional. Consultar al profesor si la revisión experta adulta satisface el tipo de validación requerido para este hito; la guía solicita medición con usuarios y validación del stakeholder.
+El correo ya fue enviado por el autor. En este corte no se había confirmado una reunión ni recibido respuesta del profesional.
 
 <!-- PAGEBREAK -->
 
@@ -153,7 +153,7 @@ users contiene cuentas adultas y registros child internos. student_profiles enla
 
 Relaciones esenciales: adulto 1 a N asignaciones; niño 1 a N asignaciones; perfil 1 a N pictogramas y dispositivos; dispositivo 1 a N eventos; varios pictogramas pueden reutilizar un audio por contenido. Este es un resumen lógico, no un DDL ni una afirmación de que exista un ORM. Las migraciones y consultas determinan los nombres físicos.
 
-A7 adopta el camino UML: entidades/clases, secuencias y representaciones simplificadas de uso/actividad en docs/arquitectura/modelos.md. Confirmar con el profesor si requiere notación UML formal adicional. Las vistas simplificadas no se presentan como un segundo camino completo C4+BPMN.
+A7 adopta el camino UML: entidades/clases, secuencias y representaciones simplificadas de uso/actividad en docs/arquitectura/modelos.md. Las vistas simplificadas no constituyen un segundo camino completo C4+BPMN.
 
 <!-- PAGEBREAK -->
 
@@ -194,7 +194,7 @@ Las pruebas de escritura se ejecutan en PostgreSQL descartable en localhost. ver
 
 Los diez E2E incluyen login/URL directa, especialista con dos perfiles, CRUD/duplicados, imagen inválida/válida, docente sin clínica, apoderado limitado, admin numerado, credencial ausente y redirección, error API recuperable y vista móvil/logout. La expiración real de JWT se comprueba en API; quitar una cookie en navegador no simula el transcurso de dos horas. Chromium 390×844 no equivale a Safari ni a teléfonos físicos.
 
-La cobertura abarca src/lib/server, rutas src/app/api, proxy.ts y permissions.ts/media-contract.ts. No incluye UI, C++ del firmware ni Python. No se declara 88,89% de todo STCS. Tampoco se calcula un porcentaje global del plan mezclando aserciones API, casos E2E, etapas de carga y personas; el ≥95% integral de la rúbrica requiere un denominador reconciliado y aceptación pendiente.
+La cobertura abarca src/lib/server, rutas src/app/api, proxy.ts y permissions.ts/media-contract.ts. No incluye UI, C++ del firmware ni Python. El 88,89% corresponde a ese alcance. No se calcula un porcentaje global del plan mezclando aserciones API, casos E2E, etapas de carga y personas, que son unidades distintas; la aceptación estaba pendiente en este corte.
 
 Comandos: npm ci, npm run test:unit, npm run test:coverage, npm run build, npm run typecheck, npm run test:isolated y npm run test:e2e, conforme a package.json y docs/PRUEBAS.md. Los runners requieren la base aislada preparada; no copiar el entorno de producción. Los SHA y herramientas exactos se conservan en docs/pruebas/reportes/cierre-20261116.json.
 
@@ -290,7 +290,7 @@ Antes de una intervención real se respalda el destino, se revisan migraciones y
 
 TCS-74 y TCS-76 permanecen Finalizadas en su alcance aceptado; reciben las confirmaciones físicas y L-01. TCS-77 permanece Tareas por hacer: correo enviado, reunión y aprobación pendientes. TCS-60 conserva la aceptación integrada previa al piloto pendiente; faltan revisión profesional, seguridad física/datos y mediciones no acreditadas. Los criterios técnicos más amplios de TCS-53/59/83/84/85/88 no se cierran por redactar anexos ni por una prueba con un solo equipo.
 
-**Antes de entregar:** incorporar evidencias, verificar acceso de lectura al profesor, reconciliar pendientes de Jira y congelar tag hito3 en el commit final revisado. No crear una etiqueta móvil ni afirmar que existe antes de publicarla. La presentación será el 27/11: 10 minutos de explicación y 5 de demostración; este informe aporta la evidencia técnica, no reemplaza la defensa ni la revisión externa.
+Al cierre de este registro estaban pendientes la publicación de las evidencias finales y del tag hito3. La presentación estaba programada para el 27/11, con 10 minutos de explicación y 5 de demostración.
 
 <!-- PAGEBREAK -->
 
@@ -301,7 +301,7 @@ Escala de probabilidad e impacto de 1 a 3; nivel es su producto. Los valores son
 | Riesgo y requisito | P/I/Nivel | Estado y mitigación | Contingencia o deuda |
 | --- | --- | --- | --- |
 | L-01 Ausencia de voz sin Wi-Fi, H3-RF03/08 | 3/3/9 alto | Materializado en ensayo informado; conservar diseño aceptado | Conexión disponible y apoyo comunicativo alternativo del adulto; evaluar con profesional |
-| Falta de aceptación externa, OE1/2 y A3 | 3/3/9 alto | Correo enviado, sin reunión confirmada | Acordar sesión/metas; consultar alternativa con profesor si no responde |
+| Falta de aceptación externa, OE1/2 y A3 | 3/3/9 alto | Correo enviado, sin reunión confirmada | Acordar sesión y metas; buscar otra contraparte profesional si no responde |
 | Acceso indebido a datos, H3-RF02 | 2/3/6 alto | Autorización servidor y negativos ejecutados | Ampliar revisión autenticada y mantener datos ficticios |
 | Cola llena, H3-RF05/08 | 2/3/6 alto | Límite 64; rechazo de nuevos eventos; ensayo informado | Anexar conteos/trazas; no prometer registro ilimitado offline |
 | Zona táctil inferior, H3-RF04 | 3/2/6 alto | Controles superiores; defecto físico persiste | Supervisión, evaluar hardware antes de uso real |
@@ -336,7 +336,7 @@ El autor completará estos espacios con materiales reales. Cada anexo debe indic
 
 ### Fuentes técnicas y académicas
 
-Guía Hito 3 Qué debes entregar cómo se ve correcto y rúbrica, INSW422, Matías Vargas, 10/11/2026; retroalimentación individual de Hito 2 aportada por Ignacio; informes y presentaciones de Sprint 1 y Hito 2. Los originales no se redistribuyen. Objetivos/equivalencias y hashes de procedencia están en docs/ANTECEDENTES_HITOS_1_2.md y docs/evidencias/hito3-20261116/antecedentes.json.
+Informes y presentaciones de Sprint 1 y Hito 2. Los originales no se redistribuyen. Objetivos/equivalencias y hashes de procedencia están en docs/ANTECEDENTES_HITOS_1_2.md y docs/evidencias/hito3-20261116/antecedentes.json.
 
 Artefactos de STCS: objetivos.md, requerimientos.md, historias.md, trazabilidad.md, pruebas/PLAN_HITO3.md, pruebas/CIERRE_20261116.md, pruebas/FISICAS_20261115.md, calidad/README.md, arquitectura/modelos.md y ADR-01/02/03, REPOSITORIO_HITO3.md, riesgos.md, README y CHANGELOG. Los reportes originales identifican herramientas, revisión y límites.
 

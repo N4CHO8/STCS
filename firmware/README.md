@@ -27,7 +27,7 @@ Al revisar el equipo conectado el 12 de noviembre de 2026 se identificó
 No se recuperó el fuente de esa versión instalada: no sobrescribirla ni
 atribuirle cambios de este repositorio sin verificar el firmware que se carga.
 Pantalla, tacto y reproducción de «Agua» fueron confirmados por el propietario;
-la sincronización completa permanece pendiente. Consultar el protocolo de aceptación en `docs/validacion/PAUTA_HITO3.md`.
+la sincronización completa estaba pendiente en ese corte. Las comprobaciones posteriores constan en el [registro final](../docs/pruebas/reportes/comprobacion-final-20261121/README.md).
 
 ## Responsabilidades esperadas
 

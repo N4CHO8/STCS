@@ -21,7 +21,7 @@ Las cifras siguientes corresponden al 21/11/2026, salvo las pruebas físicas y d
 | Revisión profesional | Zoom adulto del 20/11 | Pertinencia aprobada en alcance registrado | Sin indicadores cuantificados ni ensayo con menores. [Registro](../validacion/REGISTRO.md) |
 | Repetición limpia | `a3d096f`, 22/11, PostgreSQL aislado | 387 comprobaciones API, 3 de resiliencia, 40/40 E2E, 8/8 voz Python y TLS conformes; cobertura 90,05 % | Carga p95 26,20/40,87 ms y 0 errores; recuperación conforme; ZAP 13/13, 0 altos y CSP medio conservado. Complementa las 15 unitarias, tipos/build y regresión. [Registro completo](reportes/revision-limpia-20261122/README.md) |
 
-Los [planificados y ejecutados](PLAN.md) registran también el ensayo físico de adaptación del 22/11. Los cinco PA cuantificados del protocolo original siguen sin ejecutarse: la aprobación cualitativa no los reemplaza. El histórico del 16–18/11 mantiene sus cifras originales y no se reetiqueta como ejecución del candidato actual.
+Los [planificados y ejecutados](PLAN.md) registran también el ensayo físico de adaptación del 22/11. Los cinco casos de aceptación tienen aprobación cualitativa con el alcance registrado, pero no mediciones completas de ejecución autónoma, tiempos, errores y ayudas. El histórico del 16–18/11 mantiene sus cifras originales y no se reetiqueta como ejecución del candidato actual.
 
 ## Defectos y tratamiento
 

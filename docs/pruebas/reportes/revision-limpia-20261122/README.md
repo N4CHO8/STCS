@@ -53,4 +53,4 @@ Vercel confirmó el 22/11 que la demo sirve `a3d096f` en estado READY. El tag fu
 
 ## Límites que permanecen
 
-PA-01–05 siguen pendientes de ejecución completa; la aprobación cualitativa de Heriber permanece en el [registro principal](../../../validacion/REGISTRO.md). Esta repetición no mide uso con niños, autonomía, carga cloud ni recuperación real de Supabase/ESP. Los reportes históricos sobre `ebfc605` con cambios conservan sus fechas, hashes y resultados originales.
+La aprobación cualitativa de Heriber consta en el [registro principal](../../../validacion/REGISTRO.md); los tiempos, errores, ayudas y autonomía no se midieron. Esta repetición no mide uso con niños, autonomía, carga cloud ni recuperación real de Supabase/ESP. Los reportes históricos sobre `ebfc605` con cambios conservan sus fechas, hashes y resultados originales.

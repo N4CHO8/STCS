@@ -66,9 +66,9 @@ La cobertura es del servidor, no de UI/firmware/Python. La carga es local con un
 
 ## Revisión profesional y alcance de la medición
 
-La revisión se realizó por Zoom el 20/11 con datos ficticios. El [registro](validacion/REGISTRO.md) recoge comentarios sobre presentación, vocabulario, acompañamiento, fecha de inicio y observaciones docentes. No se midieron tiempos, errores, ayudas o autonomía ni se validaron indicadores por objetivo; esos indicadores se registran como no medidos. No habrá una segunda sesión: la [pauta](validacion/PAUTA.md) conserva los cinco PA como pendientes de ejecución completa.
+La revisión se realizó por Zoom el 20/11 con datos ficticios. El [registro](validacion/REGISTRO.md) recoge comentarios sobre presentación, vocabulario, acompañamiento, fecha de inicio y observaciones docentes. No se midieron tiempos, errores, ayudas o autonomía ni se validaron indicadores por objetivo; esos indicadores se registran como no medidos.
 
-No se registró un primer intento autónomo del profesional como referencia inicial. Este comentó un video del ESP enviado durante la reunión; eso no mide autonomía táctil. Los resultados no observados quedan como no evaluables. Una meta no alcanzada conserva su valor y explicación; no se cambia después para aprobarla.
+No se registró un primer intento autónomo del profesional como referencia inicial. Heriber comentó un video del ESP enviado durante la reunión; no operó el dispositivo.
 
 ## Diseño conceptual futuro — H2-OE7 / FUT01
 

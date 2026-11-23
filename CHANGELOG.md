@@ -1,10 +1,16 @@
 # Cambios de STCS
 
+## TCS-60/77 — documentación del 23/11/2026
+
+- Resultados de aceptación consolidados en los casos y el registro profesional: aprobación guiada, condiciones y mediciones no realizadas.
+- Retirados documentos de preparación duplicados y referencias a criterios de calificación; conservados los resultados, fechas y versiones de los ensayos.
+- Informe acumulativo Word/PDF actualizado con los mismos resultados técnicos.
+
 ## TCS-60/77/88 — entrega documental final
 
 - Informe acumulativo en Markdown, Word y PDF, con subtareas del Sprint 3 consultadas en Jira, aprobación guiada delimitada y cifras de la revisión limpia.
 - Reportes del 22/11 sobre a3d096f: API, E2E, cobertura, voz, TLS, carga, seguridad y recuperación aisladas; se conserva el historial.
-- Índice de defensa y cotejo de la rúbrica oficial, las dos retroalimentaciones y la deuda pendiente.
+- Índice de evidencia técnica, resultados y deuda pendiente.
 - Sin cambios de comportamiento de web, firmware o base de datos. Presentación y guion fuera del repositorio.
 
 ## Revisión documental del 22/11/2026
@@ -79,7 +85,7 @@
 - TCS-60: siete pruebas unitarias reales y regresión en copia temporal;
   cobertura delimitada a tres módulos.
 - TCS-88: carga HTTP aislada en localhost y nueva suite en CI.
-- TCS-77: pauta de medición/aprobación externa pendiente; no hay reunión
+- TCS-77: medición y aprobación externas pendientes al corte; no hay reunión
   realizada ni tag final hito3 en esta fecha.
 
 ## Publicaciones del 15 de noviembre de 2026

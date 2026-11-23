@@ -1,6 +1,6 @@
 # Prueba multicliente del 16 de noviembre de 2026
 
-Ejecutor y observador: Ignacio Benegas. Fuente: confirmación explícita del propietario en esta conversación. No es una ejecución instrumentada ni observación directa del agente. Las pruebas conservan su cierre informado y se mostrarán en vivo; el video recomendado por el profesor el 18/11 es un entregable de cierre independiente, todavía pendiente.
+Ejecutor y observador: Ignacio Benegas. Fuente: confirmación explícita del propietario en esta conversación. No es una ejecución instrumentada ni observación directa del agente. Las pruebas conservan su cierre informado. No se dispone de un video de respaldo de la demostración final.
 
 | Caso | Esperado | Resultado comunicado | Alcance |
 | --- | --- | --- | --- |
