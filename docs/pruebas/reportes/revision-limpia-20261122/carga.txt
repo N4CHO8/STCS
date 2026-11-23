@@ -1,0 +1,5 @@
+
+> stcs-frontend@1.0.0 test:load
+> node scripts/measure-quality.mjs
+
+{"stages":[{"concurrency":5,"plannedDurationSeconds":15,"elapsedSeconds":15.0142812,"requests":960,"errors":0,"errorRate":0,"p95Milliseconds":26.20429999999942,"passed":true},{"concurrency":10,"plannedDurationSeconds":15,"elapsedSeconds":15.067704399999998,"requests":1690,"errors":0,"errorRate":0,"p95Milliseconds":40.87299999999959,"passed":true}],"passed":true}

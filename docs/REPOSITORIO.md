@@ -58,7 +58,7 @@ En Jira, el PR se enlaza como vínculo o comentario técnico. La aprobación se 
 | --- | --- | --- |
 | S1 (202) | Alcance y base técnica del comunicador | Cerrado |
 | S2 (320) | Integrar ESP, web y Supabase; coherencia de requisitos/diseño/pruebas | Cerrado, retraso histórico conservado |
-| S3 (321) | Verificar prototipo, trazabilidad y revisión profesional | Activo; inicio aproximado 26/10 según autor, término previsto 23/11; exposición 27/11 |
+| S3 (321) | Verificar prototipo, trazabilidad y revisión profesional | Activo; inicio aproximado 26/10 registrado manualmente, término previsto 23/11; exposición 27/11 |
 
 MoSCoW y prioridad High/Medium son campos distintos. Las fechas administrativas no prueban aceptación. [Snapshot de sprints](evidencias/a8-repositorio-20261117.json).
 
@@ -71,6 +71,10 @@ CI verifica código, pero no ejecuta todas las sondas de carga/DAST/recuperació
 ## Identificación y reproducción de la entrega
 
 Los reportes del 21/11 identifican el commit base `ebfc605` y las huellas de sus fuentes. La compilación y las pruebas corresponden a esa revisión con cambios, no al despliegue del commit base. Se preservan los PR históricos y las excepciones de convención; no se reescribe el historial para aparentar una metodología distinta.
+
+El 22/11 repetí desde el árbol limpio `a3d096f` la instalación, 15 unitarias, tipos, compilación y la regresión controlada CP-RF03-U02. Después de iniciar Docker amplié la repetición con PostgreSQL aislado; los comandos, fechas y resultados efectivos están en el [registro de revisión limpia](pruebas/reportes/revision-limpia-20261122/README.md). Los reportes del 21/11 conservan su procedencia original.
+
+La inspección de Vercel del 22/11 confirmó que `0stcs0.vercel.app` sirve `a3d096f` mediante `dpl_HMofrZEWt4D88at8Yj1oEfaMKyap`, estado READY. El tag funcional `hito3` conserva `f8b743f`; `git diff hito3 a3d096f -- frontend supabase` no presenta diferencias. El firmware instalado continúa identificado por su registro físico como v0.8.8-adaptive-board. [Identificación del despliegue](pruebas/reportes/revision-limpia-20261122/despliegue.json).
 
 Una versión de entrega se identifica por el commit integrado, su CI y despliegue y un tag inmutable `hito3`. El [registro final](pruebas/reportes/comprobacion-final-20261121/README.md) distingue las comprobaciones de Vercel, el firmware físico y las suites aisladas. Los reportes previos mantienen sus versiones; el tag no cambia sus resultados originales.
 

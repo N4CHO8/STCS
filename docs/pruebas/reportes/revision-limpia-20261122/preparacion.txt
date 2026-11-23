@@ -1,0 +1,5 @@
+
+> stcs-frontend@1.0.0 test:prepare
+> node scripts/prepare-isolated-db.mjs
+
+Disposable local PostgreSQL prepared. No seed or production connection.

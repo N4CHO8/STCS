@@ -15,10 +15,11 @@ Las cifras siguientes corresponden al 21/11/2026, salvo las pruebas físicas y d
 | Seguridad | ZAP pasivo autenticado | 0 altos, 1 medio y 1 informativo | CSP de estilos conserva riesgo residual; no pentest activo. [Datos](reportes/adaptacion-20261121/seguridad-autenticada.json) |
 | Recuperación | SQL, tres medios y seguimiento sintéticos | Conforme | Restauración aislada; no recuperación real cloud/flota. [Reporte](reportes/adaptacion-20261121/recuperacion.json) |
 | Físicas | Nueve escenarios y dos comprobaciones instrumentadas | Conformes con límites registrados | [Físicas](FISICAS_20261115.md), [multicliente](MULTICLIENTE_20261116.md), [PC-01/02](CIERRE.md) |
-| Nube | Recorridos manuales con Chrome, 18/11 | Conformes según autor, excepto D15 voz nueva | Cambios observados en 10–15 s aproximados, sin distribución instrumentada. [Registro](NUBE_20261118.md) |
+| Nube | Recorridos manuales con Chrome, 18/11 | Flujos comprobados manualmente, excepto D15 voz nueva | Cambios observados en 10–15 s aproximados, sin distribución instrumentada. [Registro](NUBE_20261118.md) |
 | Nube final | Tres roles, permisos, CSV, seguimiento, créditos y nueva voz | Conforme sobre main 6defc3b | [Resultados y alcance](reportes/comprobacion-final-20261121/README.md); fecha original restaurada y observación sintética retirada |
-| Adaptación física | Una categoría/un pictograma, web persistente y voz editada | Conforme según Ignacio el 22/11 | [Comprobación final](reportes/comprobacion-final-20261121/README.md); registros y aprobación profesional separados |
+| Adaptación física | Una categoría/un pictograma, web persistente y voz editada | Comprobada manualmente en el ESP el 22/11 | [Comprobación final](reportes/comprobacion-final-20261121/README.md); la prueba técnica posterior se separa de la aprobación profesional |
 | Revisión profesional | Zoom adulto del 20/11 | Pertinencia aprobada en alcance registrado | Sin indicadores cuantificados ni ensayo con menores. [Registro](../validacion/REGISTRO.md) |
+| Repetición limpia | `a3d096f`, 22/11, PostgreSQL aislado | 387 comprobaciones API, 3 de resiliencia, 40/40 E2E, 8/8 voz Python y TLS conformes; cobertura 90,05 % | Carga p95 26,20/40,87 ms y 0 errores; recuperación conforme; ZAP 13/13, 0 altos y CSP medio conservado. Complementa las 15 unitarias, tipos/build y regresión. [Registro completo](reportes/revision-limpia-20261122/README.md) |
 
 Los [planificados y ejecutados](PLAN.md) registran también el ensayo físico de adaptación del 22/11. Los cinco PA cuantificados del protocolo original siguen sin ejecutarse: la aprobación cualitativa no los reemplaza. El histórico del 16–18/11 mantiene sus cifras originales y no se reetiqueta como ejecución del candidato actual.
 
@@ -28,9 +29,9 @@ Severidad técnica valorada el 17/11: alta si afecta comunicación/sincronizaci�
 
 | ID | Defecto o limitación | Severidad | Corrección / estado | Verificación y evidencia |
 | --- | --- | --- | --- | --- |
-| D01 | Tarjetas ausentes al reiniciar | Alta | [PR #7](https://github.com/N4CHO8/STCS/pull/7): metadatos separados y atlas | Reinicio con cargador conforme según autor; [PF-02/04](FISICAS_20261115.md) |
+| D01 | Tarjetas ausentes al reiniciar | Alta | [PR #7](https://github.com/N4CHO8/STCS/pull/7): metadatos separados y atlas | Reinicio con cargador comprobado manualmente en el ESP; [PF-02/04](FISICAS_20261115.md) |
 | D02 | Descarga HTTPS/chunked incompleta | Alta | [PR #6](https://github.com/N4CHO8/STCS/pull/6): espera de bytes, tamaño y hash | Recorrido cloud físico confirmado; [telemetría v0.8.2](../evidencias/publicacion-20261115/esp-nube-v082.txt) y [verificación cloud](../evidencias/publicacion-20261115/verificacion-nube.json), con fecha/alcance originales |
-| D03 | Menú Wi-Fi ausente tras reorganizar UI | Media | [PR #9](https://github.com/N4CHO8/STCS/pull/9): menú móvil restaurado | PF-06 conforme según propietario |
+| D03 | Menú Wi-Fi ausente tras reorganizar UI | Media | [PR #9](https://github.com/N4CHO8/STCS/pull/9): menú móvil restaurado | PF-06 comprobado manualmente por Ignacio |
 | D04 | Tacto inferior defectuoso | Media | Mitigado con controles superiores/laterales; defecto físico vigente | PF-01 conforme para distribución; no hardware reparado |
 | D05 | ACK incompatible con firmware recuperado | Alta | [PR #2](https://github.com/N4CHO8/STCS/pull/2)/[#3](https://github.com/N4CHO8/STCS/pull/3): ACK e idempotencia | API y PF-05 conformes; prueba física sin traza del instante exacto del corte |
 | D06 | Ausencia de negativo UTF-8 | Media | U02 incorporado y mutación controlada | [Regresión detectada](reportes/regresion.json); [JUnit 17/11](reportes/a5-revision-20261117/unitarias-tls.xml) con fuente real aprobada |
@@ -42,7 +43,7 @@ Severidad técnica valorada el 17/11: alta si afecta comunicación/sincronizaci�
 | D12 | Consulta de voz seguía activa al recargar en WebKit | Media | Cancelación pagehide y reinicio al volver; publicado mediante PR #17 | WebKit ampliado sin errores de petición observados |
 | D13 | Contraste/foco insuficiente en controles seleccionados | Media | Colores y foco ajustados; publicado mediante PR #17 | Cuatro casos axe/teclado por motor; no certificación total |
 | D14 | Carga dependía de fixture preparado por otra ejecución | Baja, infraestructura | Sonda crea y limpia UUID propios | [Carga autosuficiente](reportes/arreglos-locales-20261116/carga-local.json) aprobada |
-| L-01 | Voz sin Wi-Fi no disponible en ensayo | Media, limitación aceptada | Sin síntesis local ni garantía offline; no corregida | PF-02/L-01 según propietario; conservar conexión y alternativa comunicativa del adulto |
+| L-01 | Voz sin Wi-Fi no disponible en ensayo | Media, limitación aceptada | Sin síntesis local ni garantía offline; no corregida | PF-02/L-01, registro manual de Ignacio; conservar conexión y alternativa comunicativa del adulto |
 | D15 | Preparación de frases nuevas fallaba en Vercel | Alta | Configuración Piper empaquetada y modelo fijado; publicada en PR #17 | 8 pruebas Python y nueva frase generada en Vercel en 4,97 s, WAV de 72.118 bytes; [registro final](reportes/comprobacion-final-20261121/README.md) |
 | D19 | Atlas ARASAAC excedía 192 KiB y no cabían dos copias grandes durante actualización | Media | Sublímite de 384 KiB dentro de la misma caché de 512 KiB; expulsión controlada con el paquete completo en PSRAM | 94 pictogramas y 89 imágenes guardadas en 305.992 bytes; reemplazo verificado en 4.603 ms; [registro final](reportes/comprobacion-final-20261121/README.md) |
 

@@ -6,6 +6,8 @@ El 18/11 se añadió evidencia física del ESP: [PC-01/02](../pruebas/reportes/e
 
 ## Medida pedida frente a resultado
 
+**Repetición sobre commit integrado, 22/11:** `a3d096f` aprobó nuevamente la cobertura (90,05 % líneas), TLS y los 13 escenarios ZAP; se conservó un medio CSP y un informativo, sin altos. En este PC (Ryzen 5 3600), carga dio p95 26,20/40,87 ms y cero errores para 5/10 clientes. [Reporte, entorno y comandos](../pruebas/reportes/revision-limpia-20261122/README.md). La tabla siguiente conserva las mediciones históricas del 21/11 para distinguir los ensayos.
+
 | Escenario | Medida pedida en A2 | Resultado observado | Evaluación y evidencia |
 | --- | --- | --- | --- |
 | H3-RNF02 Eficiencia, 5 clientes | p95 ≤2000 ms y errores <1%; portal local autenticado, 15 s, pausa 50 ms | 830 peticiones; p95 **56,47 ms**; 0 errores, **0%**; duración real 15,069 s | Cumple la etapa; [reporte generado](../pruebas/reportes/adaptacion-20261121/carga-local.json) |

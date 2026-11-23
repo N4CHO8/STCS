@@ -10,7 +10,7 @@ El [Sprint 2](gestion/HISTORIAS_SPRINT2.md) conserva trece fichas y distingue el
 
 El stakeholder de pertinencia es **Heriber Galleguillos**, psicólogo infantojuvenil especialista en NEE y TEA. La revisión por Zoom se realizó el 20/11/2026 con adultos y datos ficticios. El [registro](validacion/REGISTRO.md) conserva aprobaciones, observaciones y límites por HU.
 
-TCS-30/45/48/60/77/85 tienen aprobación de pertinencia confirmada por Ignacio. La simplificación por niño es la condición comunicada para TCS-26/28/31/43/44. Para TCS-27/46/47 no se solicitaron cambios adicionales, según esa confirmación. No se atribuye al profesional la comprobación técnica de código posterior a la sesión.
+Los flujos vinculados con TCS-30/45/48/60/77/85 fueron aprobados por Heriber durante la demostración guiada del 20/11/2026. La simplificación por niño fue la condición para TCS-26/28/31/43/44; en TCS-27/46/47 no solicitó cambios adicionales sobre tacto, frase visible o Volver/Borrar. El [registro principal](validacion/REGISTRO.md) delimita esa aprobación. La comprobación técnica de cambios posteriores no se atribuye al profesional.
 
 Las tareas de desarrollo, seguridad, persistencia, despliegue y recuperación se verifican con sus pruebas; no llevan una aprobación de stakeholder atribuida a los profesores. Matías Vargas y César Cheuque conservan su función de profesores guía y evaluadores, no de aprobadores clínicos.
 

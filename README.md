@@ -2,9 +2,9 @@
 
 Prototipo de comunicación aumentativa con ESP32-S3 táctil y una plataforma web para sus responsables.
 
-El [índice de entrega](docs/DEFENSA.md) reúne los artefactos, las pruebas y el alcance de la revisión profesional.
+**[Defensa y evidencias](docs/DEFENSA.md)** reúne los nueve artefactos y las respuestas verificables a la retroalimentación del profesor. Para revisar la entrega, comenzar por la [repetición limpia del 22/11](docs/pruebas/reportes/revision-limpia-20261122/README.md), continuar por el [informe](docs/INFORME_HITO3.md) y recorrer la [trazabilidad](docs/trazabilidad.md).
 
-**[Defensa y evidencias](docs/DEFENSA.md)** reúne los nueve artefactos solicitados por el profesor. [Estado de las pruebas](docs/pruebas/RESULTADOS.md) y [trazabilidad](docs/trazabilidad.md).
+Informe para entregar: [PDF](docs/entrega/Informe_STCS_Hitos_1_2_3.pdf) y [Word editable](docs/entrega/Informe_STCS_Hitos_1_2_3.docx). La [revisión frente a la rúbrica](docs/REVISION_ENTREGA.md) identifica los cambios y las brechas pendientes. El texto fuente es docs/INFORME_HITO3.md.
 
 ## Producto entregado
 

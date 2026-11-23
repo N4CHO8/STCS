@@ -39,7 +39,7 @@ Los permisos concretos están en [FLUJO_ROLES](FLUJO_ROLES.md). La administraci�
 | Wi-Fi, caché y eventos | Incluidos | Sincronizar y conservar lo disponible; OE4 | Cola de 64, caché acotada, AP sin timeout; voz offline no garantizada |
 | Informes/orientaciones | Incluidos | Apoyar al docente sin exponer diagnóstico; OE3 | Separación de campos y permisos; sin diagnóstico automático |
 | Historial y CSV | Incluidos | Revisar actividad autorizada; OE4 | Consulta publicada; filtros/CSV/auditoría ampliados probados en laboratorio |
-| Multicliente | Verificación acotada | Separación por perfil; OE3/OE4 | Dos ESP y varios computadores conformes según autor; no flota mayor |
+| Multicliente | Verificación acotada | Separación por perfil; OE3/OE4 | Dos ESP y varios computadores comprobados manualmente el 16/11; no se ensayó una flota mayor |
 | Revisión profesional | Realizada el 20/11 | Contrastar pertinencia; OE1/OE2 | Zoom adulto, datos ficticios; sin menores |
 
 ## Exclusiones y evolución

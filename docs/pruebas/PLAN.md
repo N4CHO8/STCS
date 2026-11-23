@@ -10,7 +10,7 @@ El plan comprueba los requisitos de [A2](../requerimientos.md) y los criterios d
 | Integración | API → autorización → PostgreSQL → respuesta; medios y errores de dependencia | Runners aislados, PostgreSQL desechable y servidor TLS local |
 | E2E | Formulario → petición → persistencia → respuesta visible, roles y sesión | Playwright Chromium/WebKit y axe |
 | Calidad | Cobertura de servidor, carga, dependencias y revisión pasiva HTTP | c8, sonda Node, npm audit y ZAP |
-| Física | Navegación, voz, Wi-Fi, reinicio, cola, ACK y separación de equipos | ESP físico y confirmación del ejecutor; telemetría en PC-01/02 |
+| Física | Navegación, voz, Wi-Fi, reinicio, cola, ACK y separación de equipos | Ensayos manuales identificados por fecha y ejecutor; telemetría instrumentada solo en PC-01/02 |
 | Aceptación | Pertinencia, vocabulario y recorrido del prototipo | Revisión por Zoom y protocolo PA-01–05 |
 
 ## Entrada
@@ -33,7 +33,7 @@ La ampliación del candidato se fijó durante la implementación antes de su rep
 | Escenarios de ZAP pasivo autenticado | 13 | 13 | 0 | Respuestas esperadas, un medio residual; [reporte](reportes/adaptacion-20261121/seguridad-autenticada.json) |
 | RLS/privilegios de observaciones | 1 | 1 | 0 | Conforme en base local; [consulta](reportes/adaptacion-20261121/permisos-tabla.json) |
 | Recuperación sintética | 1 | 1 | 0 | SQL, medios y seguimiento; [reporte](reportes/adaptacion-20261121/recuperacion.json) |
-| Escenarios físicos informados | 9 | 9 | 0 | PF-01–08 y MC-WEB-01 conformes según Ignacio; [registro](FISICAS_20261115.md) |
+| Escenarios físicos manuales | 9 | 9 | 0 | PF-01–08 y MC-WEB-01 comprobados manualmente el 15–16/11; sin conteos ni tiempos instrumentados. [Registro](FISICAS_20261115.md) |
 | Medición de sincronización y TLS físico | 2 | 2 | 0 | PC-01/02, [18/11](CIERRE.md) |
 | Compilación de firmware adaptable | 1 | 1 | 0 | Con credenciales ficticias; [reporte](reportes/adaptacion-20261121/compilacion-firmware.txt) |
 | Ensayo físico CP-ADAPT-P01 | 1 | 1 | 0 | Una categoría/un pictograma, imagen, voz, Volver/Wi-Fi y edición de frase confirmados por Ignacio el 22/11; [registro final](reportes/comprobacion-final-20261121/README.md) |
@@ -42,6 +42,8 @@ La ampliación del candidato se fijó durante la implementación antes de su rep
 El cumplimiento se expresa por nivel: 15/15 unitarias y 40/40 E2E no demuestran ≥95 % de todo el protocolo. Los casos no ejecutados conservan motivo y relación con R05 en [A9](../riesgos.md).
 
 ## Criterios de salida
+
+La [repetición limpia del 22/11](reportes/revision-limpia-20261122/README.md) vuelve a comprobar API, resiliencia, cobertura, Chromium/WebKit, voz Python, TLS, carga, recuperación y ZAP sobre `a3d096f`. No aumenta la cantidad de casos planificados: es una nueva ejecución de los mismos escenarios. Los cinco PA completos siguen pendientes.
 
 Los flujos funcionales deben cumplir los criterios y rechazar entradas/accesos inválidos. Cobertura: ≥70 % de líneas en servidor. Carga: p95 ≤2000 ms y errores <1 % por etapa. Seguridad: sin hallazgos altos/críticos sin tratar y justificación de medios residuales. Aceptación: decisión externa limitada a lo observado. Un resultado de laboratorio no certifica la versión publicada ni la interacción física.
 

@@ -6,7 +6,7 @@
 
 Se encontraron los once archivos modificados y el registro multicliente no versionado de la sesión anterior. Todavía no existía implementación de CSV o aprovisionamiento web en esos cambios. Se preservó un parche anterior y copias privadas en `%LOCALAPPDATA%/STCS-private/antes-arreglos-20261116`. Los respaldos privados de firmware siguen presentes; no se escribió memoria del ESP.
 
-El puerto enumerado es COM7. No hubo mensajes durante la lectura serial de seis segundos; no se atribuye una versión nueva por esa inspección. El propietario confirmó categorías y «Wi-Fi conectado» después del apagado. La prueba con dos ESP del mismo día mantiene su origen de [confirmación del ejecutor](MULTICLIENTE_20261116.md).
+El puerto enumerado es COM7. No hubo mensajes durante la lectura serial de seis segundos; no se atribuye una versión nueva por esa inspección. Ignacio registró manualmente categorías y «Wi-Fi conectado» después del apagado. La prueba con dos ESP del mismo día mantiene su origen de [registro manual del ensayo](MULTICLIENTE_20261116.md).
 
 ## Implementación
 
@@ -39,7 +39,7 @@ Los archivos de esta ejecución se reúnen en [reportes/arreglos-locales-2026111
 | Carga local | p95 ≤2 s, errores <1 %; 5 y 10 clientes, 15 s por etapa | 775/1490 peticiones, cero errores; p95 52,64/55,32 ms. Un perfil sin pictogramas: no es volumen de producción ni capacidad de flota |
 | Recuperación aislada | Base nueva, relaciones y hashes de PNG/RGB/WAV iguales | Conforme; destino y fixtures propios eliminados. WAV silencioso sintético: prueba integridad, no voz Piper |
 | ZAP autenticado | Respuestas permitidas/prohibidas de cuatro roles y anónimo; inspección pasiva de HTTP/activos | 13 verificaciones, 0 avisos altos; 1 medio `style-src unsafe-inline` y 1 informativo. No se ejecutaron ataques activos |
-| Safari físico, laboratorio aislado | Menú, cambio de dos perfiles y descarga CSV | Conforme según Ignacio, iPhone 17/Safari; sin versión de sistema ni adjuntos |
+| Safari físico, laboratorio aislado | Menú, cambio de dos perfiles y descarga CSV | Comprobado manualmente por Ignacio en iPhone 17/Safari; sin versión de sistema ni adjuntos |
 | Dependencias | Sin vulnerabilidades conocidas en el análisis disponible | npm audit: 0 detectadas; no demuestra ausencia de vulnerabilidades desconocidas |
 | Supabase publicado, solo lectura | Validar clave anónima y comprobar que no puede obtener filas | 14 tablas protegidas: cero filas o denegación por permisos. Solo GET de identificadores; no se seleccionaron identidades ni se modificaron datos |
 

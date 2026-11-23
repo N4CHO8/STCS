@@ -40,7 +40,7 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 
 ### Aprobación del stakeholder
 
-Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia condicionada a simplificar categorías y pictogramas según cada niño. La condición se implementó y su operación física se confirmó el 22/11/2026; esa comprobación corresponde al ejecutor, no a una nueva evaluación de Heriber.
+Flujo aprobado por el stakeholder en la demostración guiada del 20/11/2026, condicionado a simplificar el tablero por niño. La condición se comprobó después en el ESP; Heriber no probó esa versión. [Alcance común](../validacion/REGISTRO.md).
 
 ## TCS-27 Prueba inicial de interacción táctil
 
@@ -62,7 +62,7 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 
 ### Aprobación del stakeholder
 
-Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Según la confirmación de Ignacio, no solicitó cambios adicionales en tacto, frase visible o Volver/Borrar; se mantiene la adaptación individual del tablero. No certifica autonomía infantil ni precisión táctil cuantificada.
+Tacto mostrado aprobado por el stakeholder en la demostración guiada del 20/11/2026, sin cambios adicionales. No certifica autonomía ni precisión táctil cuantificada. [Alcance común](../validacion/REGISTRO.md).
 
 ## TCS-73 Diseño de integración del sistema predictivo con la plataforma web
 
@@ -102,7 +102,7 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 
 ### Aprobación del stakeholder
 
-Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia condicionada a simplificar categorías y pictogramas según cada niño. La condición se implementó y su operación física se confirmó el 22/11/2026; esa comprobación corresponde al ejecutor, no a una nueva evaluación de Heriber.
+Interfaz mostrada aprobada por el stakeholder en la demostración guiada del 20/11/2026, condicionada a simplificar el tablero por niño. La versión posterior se comprobó técnicamente, sin nueva revisión de Heriber. [Alcance común](../validacion/REGISTRO.md).
 
 ## TCS-47 Implementación de botón volver y limpiar
 
@@ -124,7 +124,7 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 
 ### Aprobación del stakeholder
 
-Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Según la confirmación de Ignacio, no solicitó cambios adicionales en tacto, frase visible o Volver/Borrar; se mantiene la adaptación individual del tablero. No certifica autonomía infantil ni precisión táctil cuantificada.
+Volver/Borrar mostrados aprobados por el stakeholder en la demostración guiada del 20/11/2026, sin cambios adicionales. Tiempo, errores y ayudas no se midieron. [Alcance común](../validacion/REGISTRO.md).
 
 ## TCS-44 Implementación de navegación entre categorías
 
@@ -146,7 +146,7 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 
 ### Aprobación del stakeholder
 
-Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia condicionada a simplificar categorías y pictogramas según cada niño. La condición se implementó y su operación física se confirmó el 22/11/2026; esa comprobación corresponde al ejecutor, no a una nueva evaluación de Heriber.
+Navegación mostrada aprobada por el stakeholder en la demostración guiada del 20/11/2026, condicionada a simplificar el recorrido por niño. Heriber no probó la versión posterior. [Alcance común](../validacion/REGISTRO.md).
 
 ## TCS-45 Implementación de selección táctil de pictogramas
 
@@ -168,7 +168,7 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 
 ### Aprobación del stakeholder
 
-Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia del vocabulario e interacción mostrados; sin evaluación de eficacia clínica con niños. Las comprobaciones técnicas posteriores se registran por separado.
+Vocabulario y selección mostrados aprobados por el stakeholder en la demostración guiada del 20/11/2026. No hubo evaluación clínica con niños ni operación autónoma. [Alcance común](../validacion/REGISTRO.md).
 
 ## TCS-46 Visualización del mensaje seleccionado
 
@@ -190,7 +190,7 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 
 ### Aprobación del stakeholder
 
-Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Según la confirmación de Ignacio, no solicitó cambios adicionales en tacto, frase visible o Volver/Borrar; se mantiene la adaptación individual del tablero. No certifica autonomía infantil ni precisión táctil cuantificada.
+Frase visible mostrada aprobada por el stakeholder en la demostración guiada del 20/11/2026, sin cambios adicionales. No certifica comprensión infantil ni autonomía. [Alcance común](../validacion/REGISTRO.md).
 
 ## TCS-49 Persistencia de pictogramas en base de datos
 
@@ -266,4 +266,4 @@ Estado histórico: **Finalizada**. [Ticket](https://uandresbello-team-bg7iosbc.a
 
 ### Aprobación del stakeholder
 
-Heriber Galleguillos, psicólogo infantojuvenil especialista en NEE y TEA. Revisión cualitativa por Zoom del 20/11/2026; decisión comunicada por Ignacio después de revisar la grabación. Aprobación de pertinencia del vocabulario e interacción mostrados; sin evaluación de eficacia clínica con niños. Las comprobaciones técnicas posteriores se registran por separado.
+Pertinencia de personalizar aprobada por el stakeholder en la demostración guiada del 20/11/2026. D15 se corrigió y comprobó después; Heriber no probó esa versión. [Alcance común](../validacion/REGISTRO.md).
