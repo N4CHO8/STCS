@@ -22,7 +22,7 @@ Fecha de cierre parcial: 16/11/2026. El plan nuevo se escribió antes de unitari
 
 ## Cobertura y cumplimiento del plan
 
-Se ejecutaron 7/7 casos unitarios nuevos y 2/2 etapas de carga planificadas. La suite histórica de integración está ejecutada. La aceptación sigue sin ejecutar. No se calcula un 100% mezclando 291 aserciones con historias, etapas de carga y participantes: son unidades distintas. La cifra de ≥95% de todo el plan de rúbrica y ≥70% global de negocio no se acredita todavía.
+Se ejecutaron 7/7 casos unitarios nuevos y 2/2 etapas de carga planificadas. La suite histórica de integración está ejecutada. La aceptación sigue sin ejecutar. No se calcula un porcentaje global mezclando 291 aserciones con historias, etapas de carga y participantes, que son unidades distintas. Este corte no acredita el cumplimiento integral del plan ni una cobertura global de la lógica de negocio.
 
 ## Defectos y correcciones observadas
 

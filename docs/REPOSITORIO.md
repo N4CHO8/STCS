@@ -2,7 +2,7 @@
 
 [GitHub](https://github.com/N4CHO8/STCS), [Jira TCS](https://uandresbello-team-bg7iosbc.atlassian.net/jira/software/projects/TCS), [web](https://0stcs0.vercel.app). Configuración e historial comprobados el 17/11. [Registro](evidencias/a8-repositorio-20261117.json).
 
-## Estado frente al criterio del profesor
+## Control de versiones y evidencia
 
 | Elemento | Estado |
 | --- | --- |
@@ -48,7 +48,7 @@ Para cambios nuevos: `codex/TCS-<id>-<cambio>`, ticket en cuerpo de commit y PR,
 
 Muestra: [PR #16](https://github.com/N4CHO8/STCS/pull/16), rama `codex/TCS-60-defensa-documentacion`, commit [ebfc605](https://github.com/N4CHO8/STCS/commit/ebfc605612b1ecfa237569e64801eb65ba32f0c1). Título `Hito3-ValidacionClinica`, cuerpo TCS-60/TCS-88 y [su propio CI](https://github.com/N4CHO8/STCS/actions/runs/43932850718). El título no acredita que la revisión clínica haya ocurrido.
 
-Los cuerpos de PR #1–10 no citan ticket; PR #5/#6 comparten rama. A4 conserva su correspondencia por contenido. No se cumple la convención retrospectivamente en toda muestra.
+Los cuerpos de PR #1–10 no citan ticket; PR #5/#6 comparten rama. A4 conserva su correspondencia por contenido. La convención no se aplicó de forma uniforme en esos cambios históricos.
 
 En Jira, el PR se enlaza como vínculo o comentario técnico. La aprobación se registra por separado con nombre, rol, fecha y alcance; `Closes #12` de GitHub no sustituye un enlace TCS.
 

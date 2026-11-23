@@ -11,7 +11,7 @@ El plan comprueba los requisitos de [A2](../requerimientos.md) y los criterios d
 | E2E | Formulario → petición → persistencia → respuesta visible, roles y sesión | Playwright Chromium/WebKit y axe |
 | Calidad | Cobertura de servidor, carga, dependencias y revisión pasiva HTTP | c8, sonda Node, npm audit y ZAP |
 | Física | Navegación, voz, Wi-Fi, reinicio, cola, ACK y separación de equipos | Ensayos manuales identificados por fecha y ejecutor; telemetría instrumentada solo en PC-01/02 |
-| Aceptación | Pertinencia, vocabulario y recorrido del prototipo | Revisión por Zoom y protocolo PA-01–05 |
+| Aceptación | Pertinencia, vocabulario y recorrido del prototipo | Demostración guiada por Zoom y casos PA-01–05 |
 
 ## Entrada
 
@@ -37,13 +37,13 @@ La ampliación del candidato se fijó durante la implementación antes de su rep
 | Medición de sincronización y TLS físico | 2 | 2 | 0 | PC-01/02, [18/11](CIERRE.md) |
 | Compilación de firmware adaptable | 1 | 1 | 0 | Con credenciales ficticias; [reporte](reportes/adaptacion-20261121/compilacion-firmware.txt) |
 | Ensayo físico CP-ADAPT-P01 | 1 | 1 | 0 | Una categoría/un pictograma, imagen, voz, Volver/Wi-Fi y edición de frase confirmados por Ignacio el 22/11; [registro final](reportes/comprobacion-final-20261121/README.md) |
-| Aceptación PA completa según protocolo | 5 | 0 | 5 | Una sesión cualitativa realizada; no equivale a cinco ejecuciones con tiempos y errores. [Registro](../validacion/REGISTRO.md) |
+| Aceptación PA con medición completa | 5 | 0 | 5 | Una sesión cualitativa realizada; no equivale a cinco ejecuciones con tiempos y errores. [Registro](../validacion/REGISTRO.md) |
 
-El cumplimiento se expresa por nivel: 15/15 unitarias y 40/40 E2E no demuestran ≥95 % de todo el protocolo. Los casos no ejecutados conservan motivo y relación con R05 en [A9](../riesgos.md).
+El cumplimiento se expresa por nivel: 15/15 unitarias y 40/40 E2E no representan el cumplimiento de todo el plan. Los casos no ejecutados conservan motivo y relación con R05 en [A9](../riesgos.md).
 
 ## Criterios de salida
 
-La [repetición limpia del 22/11](reportes/revision-limpia-20261122/README.md) vuelve a comprobar API, resiliencia, cobertura, Chromium/WebKit, voz Python, TLS, carga, recuperación y ZAP sobre `a3d096f`. No aumenta la cantidad de casos planificados: es una nueva ejecución de los mismos escenarios. Los cinco PA completos siguen pendientes.
+La [repetición limpia del 22/11](reportes/revision-limpia-20261122/README.md) vuelve a comprobar API, resiliencia, cobertura, Chromium/WebKit, voz Python, TLS, carga, recuperación y ZAP sobre `a3d096f`. No aumenta la cantidad de casos planificados: es una nueva ejecución de los mismos escenarios. Los cinco casos de aceptación conservan sus mediciones pendientes.
 
 Los flujos funcionales deben cumplir los criterios y rechazar entradas/accesos inválidos. Cobertura: ≥70 % de líneas en servidor. Carga: p95 ≤2000 ms y errores <1 % por etapa. Seguridad: sin hallazgos altos/críticos sin tratar y justificación de medios residuales. Aceptación: decisión externa limitada a lo observado. Un resultado de laboratorio no certifica la versión publicada ni la interacción física.
 
